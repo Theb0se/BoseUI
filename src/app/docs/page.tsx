@@ -8,6 +8,34 @@ export const metadata: Metadata = {
   title: "Documentation & CLI Guide",
   description:
     "Getting started with BoseUI, the Two-File Contribution Workflow, and shadcn CLI installation.",
+  alternates: {
+    canonical: `${SITE_CONFIG.url}/docs`,
+  },
+  openGraph: {
+    title: `Documentation & CLI Guide · ${SITE_CONFIG.name}`,
+    description:
+      "Getting started with BoseUI, the Two-File Contribution Workflow, and shadcn CLI installation.",
+    url: `${SITE_CONFIG.url}/docs`,
+    siteName: SITE_CONFIG.name,
+    type: "article",
+    images: [
+      {
+        url: SITE_CONFIG.ogImage,
+        width: 1200,
+        height: 630,
+        alt: `${SITE_CONFIG.name} Documentation & CLI Guide`,
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Documentation & CLI Guide · ${SITE_CONFIG.name}`,
+    description:
+      "Getting started with BoseUI, the Two-File Contribution Workflow, and shadcn CLI installation.",
+    creator: "@Theb0se",
+    images: [SITE_CONFIG.ogImage],
+  },
 };
 
 const SHADCN_INSTALL_SNIPPET = `# Install any BoseUI component directly via the official shadcn CLI:

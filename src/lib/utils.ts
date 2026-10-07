@@ -43,6 +43,7 @@ export const SITE_CONFIG = {
   description:
     "BoseUI is a free, open-source React component library built with Framer Motion, Tailwind CSS, and TypeScript. Copy, paste, or install with one CLI command. Crafted by Rishabh Bose.",
   url: "https://boseui.site",
+  ogImage: "/OG.png",
   author: {
     name: "Rishabh Bose",
     portfolio: "https://theb0se.vercel.app/",
@@ -51,3 +52,4 @@ export const SITE_CONFIG = {
     repo: "https://github.com/Theb0se/bose-ui",
   },
 } as const;
+

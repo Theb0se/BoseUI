@@ -50,6 +50,9 @@ export const metadata: Metadata = {
     shortcut: "/boseui-logo.png",
     apple: "/boseui-logo.png",
   },
+  alternates: {
+    canonical: SITE_CONFIG.url,
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -59,10 +62,11 @@ export const metadata: Metadata = {
     siteName: SITE_CONFIG.name,
     images: [
       {
-        url: "/boseui-logo.png",
-        width: 512,
-        height: 512,
-        alt: "BoseUI Logo",
+        url: SITE_CONFIG.ogImage,
+        width: 1200,
+        height: 630,
+        alt: `${SITE_CONFIG.name} — Modern React components built to copy and ship`,
+        type: "image/png",
       },
     ],
   },
@@ -71,7 +75,7 @@ export const metadata: Metadata = {
     title: `${SITE_CONFIG.name} — Crafted by ${SITE_CONFIG.author.name}`,
     description: SITE_CONFIG.description,
     creator: "@Theb0se",
-    images: ["/boseui-logo.png"],
+    images: [SITE_CONFIG.ogImage],
   },
 };
 
