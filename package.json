@@ -25,6 +25,8 @@
     "sync": "tsx scripts/generate-registry.ts && tsx scripts/generate-seo.ts && tsx scripts/validate-registry.ts && tsx scripts/seo-audit.ts"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.15.0",
     "lucide-react": "^0.469.0",
