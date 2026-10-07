@@ -1,0 +1,46 @@
+{
+  "name": "bose-ui",
+  "version": "1.0.0",
+  "private": false,
+  "description": "BoseUI — Kinetic UI components that make modern web interfaces feel alive. Crafted by Rishabh Bose.",
+  "author": {
+    "name": "Rishabh Bose",
+    "url": "https://theb0se.vercel.app/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Theb0se/bose-ui.git"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm run sync && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "component:new": "tsx scripts/component-new.ts",
+    "registry:generate": "tsx scripts/generate-registry.ts",
+    "registry:validate": "tsx scripts/validate-registry.ts",
+    "seo:generate": "tsx scripts/generate-seo.ts",
+    "seo:audit": "tsx scripts/seo-audit.ts",
+    "sync": "tsx scripts/generate-registry.ts && tsx scripts/generate-seo.ts && tsx scripts/validate-registry.ts && tsx scripts/seo-audit.ts"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.15.0",
+    "lucide-react": "^0.469.0",
+    "next": "^14.2.25",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

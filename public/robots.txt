@@ -1,0 +1,8 @@
+# BoseUI Search Crawler Directives
+User-agent: *
+Allow: /
+Allow: /components/
+Allow: /docs
+Allow: /r/
+
+Sitemap: https://boseui.site/sitemap.xml

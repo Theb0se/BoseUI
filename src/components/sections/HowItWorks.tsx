@@ -1,0 +1,153 @@
+"use client";
+
+import React, { useState } from "react";
+import Link from "next/link";
+import {
+  ArrowUpRight,
+  Check,
+  Copy,
+  FileCode2,
+  Feather,
+  Terminal,
+} from "lucide-react";
+import { copyToClipboard } from "@/lib/utils";
+
+const WORKFLOW_STEPS = [
+  {
+    step: "01",
+    tag: "STEP 1",
+    title: "Install in One Command",
+    icon: Terminal,
+    description:
+      "Add any component directly into your React or Next.js project using the shadcn CLI, or simply copy and paste the code.",
+    code: "npx shadcn@latest add https://boseui.site/r/magnetic-button.json",
+  },
+  {
+    step: "02",
+    tag: "STEP 2",
+    title: "You Own the Code",
+    icon: Feather,
+    description:
+      "Components are saved right inside your project folder. Tweak the Tailwind classes, TypeScript props, or Framer Motion animations anytime.",
+    code: "src/components/ui/magnetic-button.tsx",
+  },
+  {
+    step: "03",
+    tag: "STEP 3",
+    title: "Add New Components Easily",
+    icon: FileCode2,
+    description:
+      "Building a new component? Create <Name>.tsx + <Name>.meta.ts and run npm run sync to update the docs and CLI registry automatically.",
+    code: "npm run component:new TiltCard && npm run sync",
+  },
+];
+
+const REGISTRY_ARTIFACTS = [
+  { label: "Registry JSON", path: "/registry.json" },
+  { label: "LLM Docs", path: "/llms.txt" },
+  { label: "Sitemap", path: "/sitemap.xml" },
+];
+
+export function HowItWorks() {
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+  const handleCopy = async (code: string, idx: number) => {
+    const ok = await copyToClipboard(code);
+    if (ok) {
+      setCopiedIndex(idx);
+      setTimeout(() => setCopiedIndex(null), 1800);
+    }
+  };
+
+  return (
+    <section className="border-b border-neutral-200 bg-white dark:border-[#1A1A1A] dark:bg-black">
+      <div className="mx-auto max-w-[1280px] border-x border-neutral-200 dark:border-[#1A1A1A]">
+        {/* Section Header */}
+        <div className="flex flex-col justify-between gap-6 border-b border-neutral-200 px-5 py-14 dark:border-[#1A1A1A] sm:flex-row sm:items-end sm:px-8 sm:py-16">
+          <div>
+            <div className="font-mono text-[11px] uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
+              // HOW IT WORKS
+            </div>
+            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.035em] text-black dark:text-white sm:text-4xl">
+              Simple to install. Easy to edit.
+            </h2>
+            <p className="mt-2.5 max-w-xl text-sm leading-relaxed text-neutral-600 dark:text-neutral-400 sm:text-base">
+              Every component is built with Framer Motion, Tailwind CSS, and
+              TypeScript—no complex setup or extra dependencies required.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            {REGISTRY_ARTIFACTS.map((artifact) => (
+              <Link
+                key={artifact.path}
+                href={artifact.path}
+                className="inline-flex items-center gap-1 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-1.5 font-mono text-[11px] text-neutral-600 transition-colors hover:border-black hover:text-black dark:border-[#262626] dark:bg-[#0A0A0A] dark:text-neutral-400 dark:hover:border-white dark:hover:text-white"
+              >
+                <span>{artifact.path}</span>
+                <ArrowUpRight className="h-3 w-3" />
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* 3-Column Process Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          {WORKFLOW_STEPS.map((card, idx) => {
+            const Icon = card.icon;
+            const isCopied = copiedIndex === idx;
+            return (
+              <div
+                key={card.step}
+                className={`flex flex-col justify-between gap-8 p-6 sm:p-8 ${
+                  idx !== WORKFLOW_STEPS.length - 1
+                    ? "border-b border-neutral-200 dark:border-[#1A1A1A] md:border-b-0 md:border-r"
+                    : ""
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-50 text-black dark:border-[#262626] dark:bg-[#0C0C0C] dark:text-white">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <div className="flex items-center gap-2 font-mono text-[11px]">
+                      <span className="text-neutral-400 dark:text-neutral-600">
+                        /{card.step}
+                      </span>
+                      <span className="tracking-wider text-neutral-500">
+                        {card.tag}
+                      </span>
+                    </div>
+                  </div>
+
+                  <h3 className="mt-6 text-lg font-semibold tracking-tight text-black dark:text-white">
+                    {card.title}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-neutral-600 dark:text-neutral-400 sm:text-sm">
+                    {card.description}
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between gap-2 rounded-xl border border-neutral-200 bg-neutral-50 px-3.5 py-2.5 font-mono text-[11px] text-neutral-800 dark:border-[#222222] dark:bg-[#080808] dark:text-neutral-300">
+                  <span className="truncate">{card.code}</span>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(card.code, idx)}
+                    aria-label={`Copy ${card.title} snippet`}
+                    className="shrink-0 cursor-pointer rounded-md p-1 text-neutral-400 transition-colors hover:bg-neutral-200/70 hover:text-black dark:hover:bg-[#1A1A1A] dark:hover:text-white"
+                  >
+                    {isCopied ? (
+                      <Check className="h-3.5 w-3.5 text-black dark:text-white" />
+                    ) : (
+                      <Copy className="h-3.5 w-3.5" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
