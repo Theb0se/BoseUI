@@ -278,10 +278,17 @@ export function cn(...inputs: ClassValue[]) {
     "registry",
     "generated-demos.tsx"
   );
+  const demoImportLines = demoDynamicEntries
+    .map(
+      ({ componentName }) =>
+        `import { ${componentName} } from "@/components/ui/${componentName}";`
+    )
+    .join("\n");
+
   const demoMapLines = demoDynamicEntries
     .map(
       ({ slug, componentName }) =>
-        `  "${slug}": dynamic(() => import("@/components/ui/${componentName}").then((mod: any) => createComponentDemo("${slug}", mod.default || mod.${componentName})), { ssr: false }),`
+        `  "${slug}": createComponentDemo("${slug}", ${componentName}),`
     )
     .join("\n");
 
@@ -293,8 +300,8 @@ export function cn(...inputs: ClassValue[]) {
 // ============================================================================
 
 import type React from "react";
-import dynamic from "next/dynamic";
 import { createComponentDemo } from "@/registry/ComponentDemoWrapper";
+${demoImportLines}
 
 export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
 ${demoMapLines}

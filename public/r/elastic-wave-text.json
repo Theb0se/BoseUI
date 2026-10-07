@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "elastic-wave-text",
+  "type": "registry:ui",
+  "title": "Elastic Wave Text",
+  "author": "Rishabh Bose <https://theb0se.vercel.app/>",
+  "description": "Plucked-string kinetic typography that propagates a damped transverse wave across every character on hover or click.",
+  "dependencies": [
+    "framer-motion",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "files": [
+    {
+      "path": "components/ui/elastic-wave-text.tsx",
+      "content": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { Waves } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ElasticWaveTextProps {\n  /** Text string to ripple across. Default: \"Harmonic Transverse Wave\" */\n  text?: string;\n  /** Peak vertical wave amplitude in pixels. Default: -14 */\n  amplitude?: number;\n  /** Hooke's Law spring stiffness coefficient. Default: 420 */\n  stiffness?: number;\n  /** Spring damping coefficient. Default: 14 */\n  damping?: number;\n  className?: string;\n}\n\nexport function ElasticWaveText({\n  text = \"Harmonic Transverse Wave\",\n  amplitude = -14,\n  stiffness = 420,\n  damping = 14,\n  className,\n}: ElasticWaveTextProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [wavePulse, setWavePulse] = useState(0);\n\n  const triggerWave = () => {\n    if (!shouldReduceMotion) {\n      setWavePulse((p) => p + 1);\n    }\n  };\n\n  const chars = text.split(\"\");\n\n  return (\n    <button\n      type=\"button\"\n      onClick={triggerWave}\n      onMouseEnter={triggerWave}\n      className={cn(\n        \"group inline-flex flex-col items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-7 py-6 text-center transition-colors hover:border-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[#222222] dark:bg-[#0A0A0A] dark:hover:border-white dark:focus-visible:ring-white\",\n        className\n      )}\n    >\n      <span className=\"sr-only\">{text}</span>\n\n      <div\n        aria-hidden=\"true\"\n        className=\"flex flex-wrap items-center justify-center text-xl font-bold tracking-tight text-black sm:text-2xl dark:text-white\"\n      >\n        {chars.map((char, idx) => {\n          if (char === \" \") {\n            return (\n              <span key={idx} className=\"inline-block w-[0.32em]\">\n                &nbsp;\n              </span>\n            );\n          }\n\n          return (\n            <motion.span\n              key={`${wavePulse}-${idx}`}\n              initial={{ y: 0 }}\n              animate={\n                wavePulse > 0 && !shouldReduceMotion\n                  ? { y: [0, amplitude, -amplitude * 0.45, 0] }\n                  : { y: 0 }\n              }\n              transition={{\n                duration: 0.52,\n                delay: idx * 0.024,\n                ease: \"easeInOut\",\n              }}\n              className=\"inline-block select-none\"\n            >\n              {char}\n            </motion.span>\n          );\n        })}\n      </div>\n\n      <span className=\"inline-flex items-center gap-1.5 text-[11px] text-neutral-400\">\n        <Waves className=\"h-3.5 w-3.5\" />\n        <span>Hover or click to pluck transverse glyph wave</span>\n      </span>\n    </button>\n  );\n}\n\nexport default ElasticWaveText;\n",
+      "type": "registry:ui",
+      "target": "components/ui/elastic-wave-text.tsx"
+    },
+    {
+      "path": "lib/utils.ts",
+      "content": "import { type ClassValue, clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib",
+      "target": "lib/utils.ts"
+    }
+  ]
+}

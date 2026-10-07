@@ -70,6 +70,69 @@ export const PULSE_COMPONENTS: PulseComponentCatalogEntry[] = [
     "sourceCode": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { Layers, ArrowUpRight, Sparkles, Terminal } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface StackCardItem {\n  id: string;\n  badge: string;\n  title: string;\n  metric: string;\n  subtitle: string;\n}\n\nexport interface AccordionStackCardsProps {\n  /** Array of stack card items. Defaults to a 3-card telemetry deck. */\n  items?: StackCardItem[];\n  /** Spring stiffness coefficient for deck expansion and rotation. Default: 300 */\n  stiffness?: number;\n  /** Spring damping coefficient for deck expansion and rotation. Default: 25 */\n  damping?: number;\n  className?: string;\n}\n\nconst DEFAULT_CARDS: StackCardItem[] = [\n  {\n    id: \"spring-core\",\n    badge: \"01 // PHYSICS ENGINE\",\n    title: \"Hooke's Law Solver\",\n    metric: \"120 Hz\",\n    subtitle: \"Continuous velocity-preserving spring interpolation\",\n  },\n  {\n    id: \"gpu-compositor\",\n    badge: \"02 // COMPOSITOR\",\n    title: \"Zero React Re-Renders\",\n    metric: \"0.0 ms\",\n    subtitle: \"Direct MotionValue & CSS mask-image projection\",\n  },\n  {\n    id: \"shadcn-cli\",\n    badge: \"03 // DISTRIBUTION\",\n    title: \"Shadcn Registry v2\",\n    metric: \"1-Click\",\n    subtitle: \"Copy-paste source ownership with strict TypeScript\",\n  },\n];\n\nexport function AccordionStackCards({\n  items = DEFAULT_CARDS,\n  stiffness = 300,\n  damping = 25,\n  className,\n}: AccordionStackCardsProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [deck, setDeck] = useState<StackCardItem[]>(items);\n  const [isExpanded, setIsExpanded] = useState(false);\n\n  const cycleFrontCard = () => {\n    setDeck((prev) => {\n      if (prev.length <= 1) return prev;\n      const [first, ...rest] = prev;\n      return [...rest, first!];\n    });\n  };\n\n  return (\n    <div\n      onMouseEnter={() => setIsExpanded(true)}\n      onMouseLeave={() => setIsExpanded(false)}\n      className={cn(\n        \"relative flex min-h-[260px] w-full max-w-sm flex-col items-center justify-center py-4\",\n        className\n      )}\n    >\n      <div className=\"relative h-[200px] w-full\">\n        {deck.map((card, index) => {\n          const isFront = index === 0;\n          const yOffset = isExpanded ? index * 54 : index * 12;\n          const scale = isExpanded ? 1 : 1 - index * 0.05;\n          const opacity = isExpanded ? 1 : 1 - index * 0.22;\n\n          return (\n            <motion.div\n              key={card.id}\n              layout\n              role=\"button\"\n              tabIndex={0}\n              aria-label={`${card.title} — ${card.subtitle}. Click to cycle stack.`}\n              onFocus={() => setIsExpanded(true)}\n              onBlur={() => setIsExpanded(false)}\n              onClick={cycleFrontCard}\n              onKeyDown={(e) => {\n                if (e.key === \"Enter\" || e.key === \" \") {\n                  e.preventDefault();\n                  cycleFrontCard();\n                }\n              }}\n              animate={{\n                y: yOffset,\n                scale: shouldReduceMotion ? 1 : scale,\n                opacity,\n                zIndex: deck.length - index,\n              }}\n              transition={\n                shouldReduceMotion\n                  ? { duration: 0 }\n                  : { type: \"spring\", stiffness, damping }\n              }\n              className={cn(\n                \"absolute inset-x-0 top-0 cursor-pointer select-none rounded-2xl border p-5 shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white\",\n                isFront\n                  ? \"border-neutral-300 bg-white hover:border-black dark:border-[#2E2E2E] dark:bg-[#0D0D0D] dark:hover:border-white\"\n                  : \"border-neutral-200 bg-neutral-50/95 dark:border-[#222222] dark:bg-[#141414]/95\"\n              )}\n            >\n              <div className=\"flex items-center justify-between gap-2\">\n                <span className=\"inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400\">\n                  {index === 0 ? (\n                    <Sparkles className=\"h-3 w-3 text-black dark:text-white\" />\n                  ) : index === 1 ? (\n                    <Layers className=\"h-3 w-3\" />\n                  ) : (\n                    <Terminal className=\"h-3 w-3\" />\n                  )}\n                  {card.badge}\n                </span>\n\n                <span className=\"inline-flex items-center gap-1 rounded-full border border-neutral-200 bg-neutral-100 px-2 py-0.5 font-mono text-[10px] font-bold text-black dark:border-[#262626] dark:bg-[#1B1B1B] dark:text-white\">\n                  {card.metric}\n                  <ArrowUpRight className=\"h-2.5 w-2.5\" />\n                </span>\n              </div>\n\n              <div className=\"mt-2.5 text-sm font-semibold text-black dark:text-white\">\n                {card.title}\n              </div>\n              <p className=\"mt-0.5 text-xs text-neutral-500 dark:text-neutral-400\">\n                {card.subtitle}\n              </p>\n            </motion.div>\n          );\n        })}\n      </div>\n\n      <div className=\"mt-4 text-center text-[11px] text-neutral-400 dark:text-neutral-500\">\n        Hover to fan out deck • Click any card to cycle stack\n      </div>\n    </div>\n  );\n}\n\nexport default AccordionStackCards;\n"
   },
   {
+    "id": "aurora-flux-surface",
+    "slug": "aurora-flux-surface",
+    "componentName": "AuroraFluxSurface",
+    "filePath": "src/components/ui/AuroraFluxSurface.tsx",
+    "title": "Aurora Flux Surface",
+    "description": "GPU-composited ambient aurora canvas where dual radial luminance fields with contrasting spring mass chase the pointer.",
+    "tagline": "Dual-mass GPU radial aurora surface with zero React re-renders.",
+    "category": "Backgrounds",
+    "badges": [
+      "New",
+      "Dual-Mass Spring",
+      "GPU Composited"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "aurora flux surface",
+      "ambient glow background",
+      "radial gradient cursor",
+      "framer motion aurora",
+      "hero background surface"
+    ],
+    "features": [
+      "Pairs a low-mass leading radial orb (m=0.4) with a high-mass trailing orb (m=1.4) for organic fluidseparation.",
+      "Composited directly via Framer Motion useMotionTemplate with zero React state re-renders.",
+      "Monochrome architectural dot overlay preserving BoseUI's high-contrast aesthetic."
+    ],
+    "accessibility": [
+      "Marks all ambient luminance and dot texture layers with aria-hidden='true'.",
+      "Freezes luminance orb coordinates when prefers-reduced-motion is active.",
+      "Preserves WCAG AA contrast inside the foreground container."
+    ],
+    "props": [
+      {
+        "name": "orbRadius",
+        "type": "number",
+        "default": "260",
+        "description": "Radius of the primary radial luminance field in pixels."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "180",
+        "description": "Spring stiffness coefficient for the leading luminance orb."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "24",
+        "description": "Spring damping coefficient controlling luminance trail decay."
+      }
+    ],
+    "usageCode": "import { AuroraFluxSurface } from \"@/components/ui/aurora-flux-surface\";\n\nexport function Example() {\n  return (\n    <AuroraFluxSurface orbRadius={260} stiffness={180} damping={24} />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/aurora-flux-surface.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useRef } from \"react\";\nimport {\n  motion,\n  useMotionTemplate,\n  useMotionValue,\n  useSpring,\n  useReducedMotion,\n} from \"framer-motion\";\nimport { Sparkles } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface AuroraFluxSurfaceProps {\n  /** Radius of the primary luminance orb in pixels. Default: 260 */\n  orbRadius?: number;\n  /** Spring stiffness coefficient for the leading aurora orb. Default: 180 */\n  stiffness?: number;\n  /** Spring damping coefficient for the leading aurora orb. Default: 24 */\n  damping?: number;\n  /** Optional foreground content */\n  children?: React.ReactNode;\n  className?: string;\n}\n\nexport function AuroraFluxSurface({\n  orbRadius = 260,\n  stiffness = 180,\n  damping = 24,\n  children,\n  className,\n}: AuroraFluxSurfaceProps) {\n  const containerRef = useRef<HTMLDivElement | null>(null);\n  const shouldReduceMotion = useReducedMotion() ?? false;\n\n  const mouseX = useMotionValue(200);\n  const mouseY = useMotionValue(115);\n\n  // Primary low-mass orb\n  const orb1X = useSpring(mouseX, { stiffness, damping, mass: 0.4 });\n  const orb1Y = useSpring(mouseY, { stiffness, damping, mass: 0.4 });\n\n  // Secondary high-mass trailing orb\n  const orb2X = useSpring(mouseX, {\n    stiffness: Math.max(60, stiffness * 0.45),\n    damping: damping * 1.1,\n    mass: 1.4,\n  });\n  const orb2Y = useSpring(mouseY, {\n    stiffness: Math.max(60, stiffness * 0.45),\n    damping: damping * 1.1,\n    mass: 1.4,\n  });\n\n  const auroraGradient = useMotionTemplate`\n    radial-gradient(${orbRadius}px circle at ${orb1X}px ${orb1Y}px, rgba(120, 120, 120, 0.22), transparent 75%),\n    radial-gradient(${orbRadius * 1.25}px circle at ${orb2X}px ${orb2Y}px, rgba(160, 160, 160, 0.14), transparent 80%)\n  `;\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n    if (shouldReduceMotion) return;\n    const el = containerRef.current;\n    if (!el) return;\n    const rect = el.getBoundingClientRect();\n    mouseX.set(e.clientX - rect.left);\n    mouseY.set(e.clientY - rect.top);\n  };\n\n  return (\n    <div\n      ref={containerRef}\n      onMouseMove={handleMouseMove}\n      className={cn(\n        \"relative flex min-h-[230px] w-full max-w-lg items-center justify-center overflow-hidden rounded-2xl border border-neutral-200 bg-white p-8 dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      {/* Dual-Spring Coupled Luminance Field */}\n      <motion.div\n        aria-hidden=\"true\"\n        style={{ background: auroraGradient }}\n        className=\"pointer-events-none absolute inset-0\"\n      />\n\n      {/* Subtle architectural dot texture */}\n      <div\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute inset-0 bg-[radial-gradient(#d4d4d4_1px,transparent_1px)] [background-size:20px_20px] opacity-45 dark:bg-[radial-gradient(#242424_1px,transparent_1px)]\"\n      />\n\n      <div className=\"relative z-10 text-center\">\n        {children || (\n          <div className=\"inline-flex flex-col items-center rounded-2xl border border-neutral-200/90 bg-white/85 px-5 py-3.5 shadow-sm backdrop-blur-md dark:border-[#262626] dark:bg-[#111111]/85\">\n            <span className=\"inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-widest text-neutral-500\">\n              <Sparkles className=\"h-3.5 w-3.5 text-black dark:text-white\" />\n              Coupled Luminance Flux\n            </span>\n            <span className=\"mt-1 text-xs font-semibold text-black dark:text-white\">\n              Dual-mass radial aurora chasing pointer\n            </span>\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n\nexport default AuroraFluxSurface;\n"
+  },
+  {
     "id": "cipher-scramble-text",
     "slug": "cipher-scramble-text",
     "componentName": "CipherScrambleText",
@@ -137,6 +200,62 @@ export const PULSE_COMPONENTS: PulseComponentCatalogEntry[] = [
       "tailwind-merge"
     ],
     "sourceCode": "\"use client\";\n\nimport React, { useCallback, useEffect, useRef, useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { Terminal, RefreshCw } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface CipherScrambleTextProps {\n  /** Target decoded text string. Default: \"ZERO-DEPENDENCY KINETIC PRIMITIVES\" */\n  text?: string;\n  /** Pool of cipher characters used during scramble permutation. */\n  charset?: string;\n  /** Duration of each scramble frame tick in milliseconds. Default: 28 */\n  frameInterval?: number;\n  /** Number of scramble cycles per character before locking in. Default: 2 */\n  cyclesPerChar?: number;\n  className?: string;\n}\n\nconst DEFAULT_CHARSET = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&*+<>?\";\n\nexport function CipherScrambleText({\n  text = \"ZERO-DEPENDENCY KINETIC PRIMITIVES\",\n  charset = DEFAULT_CHARSET,\n  frameInterval = 28,\n  cyclesPerChar = 2,\n  className,\n}: CipherScrambleTextProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [displayed, setDisplayed] = useState<string>(text);\n  const [isScrambling, setIsScrambling] = useState(false);\n  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);\n\n  const stopScramble = useCallback(() => {\n    if (timerRef.current) {\n      clearInterval(timerRef.current);\n      timerRef.current = null;\n    }\n    setIsScrambling(false);\n  }, []);\n\n  const triggerScramble = useCallback(() => {\n    if (shouldReduceMotion) {\n      setDisplayed(text);\n      return;\n    }\n\n    stopScramble();\n    setIsScrambling(true);\n\n    let step = 0;\n    const totalSteps = text.length * cyclesPerChar;\n\n    timerRef.current = setInterval(() => {\n      step += 1;\n      const lockedCount = Math.floor(step / cyclesPerChar);\n\n      const nextStr = text\n        .split(\"\")\n        .map((char, idx) => {\n          if (char === \" \") return \" \";\n          if (idx < lockedCount) return char;\n          const randomIndex = Math.floor(Math.random() * charset.length);\n          return charset[randomIndex] || char;\n        })\n        .join(\"\");\n\n      setDisplayed(nextStr);\n\n      if (step >= totalSteps) {\n        setDisplayed(text);\n        stopScramble();\n      }\n    }, frameInterval);\n  }, [text, charset, frameInterval, cyclesPerChar, shouldReduceMotion, stopScramble]);\n\n  useEffect(() => {\n    setDisplayed(text);\n    return () => stopScramble();\n  }, [text, stopScramble]);\n\n  return (\n    <motion.button\n      type=\"button\"\n      onClick={triggerScramble}\n      onMouseEnter={triggerScramble}\n      onFocus={triggerScramble}\n      whileTap={shouldReduceMotion ? undefined : { scale: 0.985 }}\n      transition={{ type: \"spring\", stiffness: 360, damping: 24 }}\n      className={cn(\n        \"group relative inline-flex w-full max-w-lg flex-col items-start justify-between gap-3 rounded-2xl border border-neutral-200 bg-white p-6 text-left transition-colors hover:border-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[#222222] dark:bg-[#0A0A0A] dark:hover:border-white dark:focus-visible:ring-white\",\n        className\n      )}\n    >\n      {/* Screen-reader stable text */}\n      <span className=\"sr-only\">{text}</span>\n\n      <div className=\"flex w-full items-center justify-between text-[11px] font-medium uppercase tracking-widest text-neutral-400\">\n        <span className=\"inline-flex items-center gap-1.5 font-mono\">\n          <Terminal className=\"h-3.5 w-3.5 text-black dark:text-white\" />\n          {isScrambling ? \"DECODING_STREAM...\" : \"CIPHER_LOCKED\"}\n        </span>\n        <RefreshCw\n          aria-hidden=\"true\"\n          className={cn(\n            \"h-3.5 w-3.5 transition-transform duration-300\",\n            isScrambling && \"rotate-180 text-black dark:text-white\"\n          )}\n        />\n      </div>\n\n      <div\n        aria-hidden=\"true\"\n        className=\"font-mono text-base font-bold tracking-tight text-black sm:text-lg dark:text-white\"\n      >\n        {displayed}\n      </div>\n\n      <div className=\"text-[11px] text-neutral-500 dark:text-neutral-400\">\n        Hover, focus, or click to trigger cryptographic glyph wave\n      </div>\n    </motion.button>\n  );\n}\n\nexport default CipherScrambleText;\n"
+  },
+  {
+    "id": "constellation-mesh-field",
+    "slug": "constellation-mesh-field",
+    "componentName": "ConstellationMeshField",
+    "filePath": "src/components/ui/ConstellationMeshField.tsx",
+    "title": "Constellation Mesh Field",
+    "description": "Interactive SVG vertex constellation surface that dynamically tethers proximity edges to the pointer with spring-scaled nodes.",
+    "tagline": "Interactive SVG constellation graph with pointer proximity edges.",
+    "category": "Backgrounds",
+    "badges": [
+      "New",
+      "SVG Graph",
+      "Proximity Mesh"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "constellation mesh field",
+      "particle network background",
+      "connected nodes svg",
+      "framer motion background",
+      "interactive graph surface"
+    ],
+    "features": [
+      "Crisp vector SVG constellation lattice that scales cleanly to any container resolution.",
+      "Real-time Euclidean distance culling that draws opacity-graded edges between the pointer and nearby vertices.",
+      "Spring-inflated vertex radii when captured within the pointer's connection radius."
+    ],
+    "accessibility": [
+      "Decorative SVG graph layer is marked aria-hidden='true'.",
+      "Disables dynamic edge tethering when prefers-reduced-motion is enabled.",
+      "Maintains high foreground text contrast inside a translucent HUD card."
+    ],
+    "props": [
+      {
+        "name": "connectRadius",
+        "type": "number",
+        "default": "130",
+        "description": "Maximum Euclidean distance in viewBox units to connect pointer edges."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "description": "Optional foreground content rendered above the constellation mesh."
+      }
+    ],
+    "usageCode": "import { ConstellationMeshField } from \"@/components/ui/constellation-mesh-field\";\n\nexport function Example() {\n  return (\n    <ConstellationMeshField connectRadius={130} />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/constellation-mesh-field.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useRef, useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { Share2 } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ConstellationMeshFieldProps {\n  /** Proximity distance threshold in pixels to connect cursor to mesh vertices. Default: 130 */\n  connectRadius?: number;\n  /** Optional foreground content */\n  children?: React.ReactNode;\n  className?: string;\n}\n\ninterface MeshVertex {\n  id: string;\n  x: number;\n  y: number;\n}\n\nconst VERTICES: MeshVertex[] = [\n  { id: \"v1\", x: 52, y: 46 },\n  { id: \"v2\", x: 148, y: 38 },\n  { id: \"v3\", x: 262, y: 54 },\n  { id: \"v4\", x: 348, y: 42 },\n  { id: \"v5\", x: 84, y: 118 },\n  { id: \"v6\", x: 198, y: 112 },\n  { id: \"v7\", x: 310, y: 124 },\n  { id: \"v8\", x: 48, y: 188 },\n  { id: \"v9\", x: 156, y: 184 },\n  { id: \"v10\", x: 258, y: 192 },\n  { id: \"v11\", x: 354, y: 180 },\n];\n\nexport function ConstellationMeshField({\n  connectRadius = 130,\n  children,\n  className,\n}: ConstellationMeshFieldProps) {\n  const containerRef = useRef<HTMLDivElement | null>(null);\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [pointer, setPointer] = useState<{ x: number; y: number } | null>(null);\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n    if (shouldReduceMotion) return;\n    const el = containerRef.current;\n    if (!el) return;\n    const rect = el.getBoundingClientRect();\n    // Normalize coordinates into 400x230 SVG viewBox space\n    const normX = ((e.clientX - rect.left) / rect.width) * 400;\n    const normY = ((e.clientY - rect.top) / rect.height) * 230;\n    setPointer({ x: normX, y: normY });\n  };\n\n  return (\n    <div\n      ref={containerRef}\n      onMouseMove={handleMouseMove}\n      onMouseLeave={() => setPointer(null)}\n      className={cn(\n        \"relative flex min-h-[230px] w-full max-w-lg items-center justify-center overflow-hidden rounded-2xl border border-neutral-200 bg-white p-6 dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      {/* Interactive SVG Constellation Graph */}\n      <svg\n        aria-hidden=\"true\"\n        viewBox=\"0 0 400 230\"\n        className=\"pointer-events-none absolute inset-0 h-full w-full\"\n      >\n        {/* Static ambient mesh edges between close vertices */}\n        {VERTICES.map((a, i) =>\n          VERTICES.slice(i + 1).map((b) => {\n            const dist = Math.hypot(a.x - b.x, a.y - b.y);\n            if (dist > 125) return null;\n            return (\n              <line\n                key={`${a.id}-${b.id}`}\n                x1={a.x}\n                y1={a.y}\n                x2={b.x}\n                y2={b.y}\n                stroke=\"currentColor\"\n                strokeWidth=\"1\"\n                className=\"text-neutral-200/70 dark:text-[#1D1D1D]\"\n              />\n            );\n          })\n        )}\n\n        {/* Dynamic pointer-coupled proximity edges */}\n        {pointer &&\n          VERTICES.map((v) => {\n            const dist = Math.hypot(pointer.x - v.x, pointer.y - v.y);\n            if (dist > connectRadius) return null;\n            const opacity = Math.max(0.15, 1 - dist / connectRadius);\n            return (\n              <line\n                key={`ptr-${v.id}`}\n                x1={pointer.x}\n                y1={pointer.y}\n                x2={v.x}\n                y2={v.y}\n                stroke=\"currentColor\"\n                strokeOpacity={opacity}\n                strokeWidth=\"1.5\"\n                className=\"text-black dark:text-white\"\n              />\n            );\n          })}\n\n        {/* Constellation Vertices */}\n        {VERTICES.map((v) => {\n          const dist = pointer\n            ? Math.hypot(pointer.x - v.x, pointer.y - v.y)\n            : Infinity;\n          const active = dist <= connectRadius;\n          return (\n            <motion.circle\n              key={v.id}\n              cx={v.x}\n              cy={v.y}\n              animate={{ r: active ? 4.2 : 2.5 }}\n              transition={{ type: \"spring\", stiffness: 360, damping: 20 }}\n              className={cn(\n                \"fill-current transition-colors\",\n                active\n                  ? \"text-black dark:text-white\"\n                  : \"text-neutral-300 dark:text-neutral-700\"\n              )}\n            />\n          );\n        })}\n      </svg>\n\n      <div className=\"relative z-10 text-center\">\n        {children || (\n          <div className=\"inline-flex flex-col items-center rounded-2xl border border-neutral-200/90 bg-white/90 px-5 py-3.5 shadow-sm backdrop-blur-md dark:border-[#262626] dark:bg-[#111111]/90\">\n            <span className=\"inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-widest text-neutral-500\">\n              <Share2 className=\"h-3.5 w-3.5 text-black dark:text-white\" />\n              Constellation Graph\n            </span>\n            <span className=\"mt-1 text-xs font-semibold text-black dark:text-white\">\n              Sweep cursor to tether proximity edges\n            </span>\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n\nexport default ConstellationMeshField;\n"
   },
   {
     "id": "cursor-follower",
@@ -366,6 +485,344 @@ export const PULSE_COMPONENTS: PulseComponentCatalogEntry[] = [
       "tailwind-merge"
     ],
     "sourceCode": "\"use client\";\n\nimport React, { useRef, useState } from \"react\";\nimport {\n  motion,\n  useMotionValue,\n  useSpring,\n  useTransform,\n  useReducedMotion,\n  type MotionValue,\n} from \"framer-motion\";\nimport {\n  Home,\n  Terminal,\n  Sparkles,\n  Layers,\n  Settings,\n  Compass,\n} from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ElasticDockItem {\n  id: string;\n  label: string;\n  icon: React.ReactNode;\n  badge?: string | number;\n  onClick?: () => void;\n}\n\nexport interface ElasticDockProps {\n  /** Array of dock items to render. Defaults to a 6-item studio toolbar. */\n  items?: ElasticDockItem[];\n  /** Resting icon button size in pixels. Default: 46 */\n  baseSize?: number;\n  /** Peak magnified icon button size in pixels on hover. Default: 72 */\n  magnifiedSize?: number;\n  /** Pointer proximity radius in pixels affecting neighboring items. Default: 140 */\n  distance?: number;\n  /** Hooke's Law spring stiffness coefficient. Default: 320 */\n  stiffness?: number;\n  /** Spring damping coefficient. Default: 22 */\n  damping?: number;\n  /** Controlled or initial active item id */\n  defaultActiveId?: string;\n  /** Callback fired when an item is selected */\n  onSelect?: (id: string) => void;\n  className?: string;\n}\n\nconst DEFAULT_ITEMS: ElasticDockItem[] = [\n  { id: \"overview\", label: \"Overview\", icon: <Home className=\"h-5 w-5\" /> },\n  { id: \"explore\", label: \"Explore\", icon: <Compass className=\"h-5 w-5\" /> },\n  {\n    id: \"primitives\",\n    label: \"Primitives\",\n    icon: <Layers className=\"h-5 w-5\" />,\n    badge: \"12\",\n  },\n  { id: \"kinetic\", label: \"Kinetic Lab\", icon: <Sparkles className=\"h-5 w-5\" /> },\n  { id: \"cli\", label: \"CLI Registry\", icon: <Terminal className=\"h-5 w-5\" /> },\n  { id: \"settings\", label: \"Settings\", icon: <Settings className=\"h-5 w-5\" /> },\n];\n\ninterface DockIconButtonProps {\n  item: ElasticDockItem;\n  isActive: boolean;\n  mouseX: MotionValue<number>;\n  baseSize: number;\n  magnifiedSize: number;\n  distance: number;\n  stiffness: number;\n  damping: number;\n  shouldReduceMotion: boolean;\n  onSelect: () => void;\n  onKeyNav: (e: React.KeyboardEvent<HTMLButtonElement>) => void;\n  buttonRef: (el: HTMLButtonElement | null) => void;\n}\n\nfunction DockIconButton({\n  item,\n  isActive,\n  mouseX,\n  baseSize,\n  magnifiedSize,\n  distance,\n  stiffness,\n  damping,\n  shouldReduceMotion,\n  onSelect,\n  onKeyNav,\n  buttonRef,\n}: DockIconButtonProps) {\n  const localRef = useRef<HTMLButtonElement | null>(null);\n  const [isHovered, setIsHovered] = useState(false);\n  const [isFocused, setIsFocused] = useState(false);\n\n  const distanceFromPointer = useTransform(mouseX, (val) => {\n    const bounds = localRef.current?.getBoundingClientRect();\n    if (!bounds || val === -Infinity) return Infinity;\n    return val - (bounds.x + bounds.width / 2);\n  });\n\n  const targetSize = useTransform(\n    distanceFromPointer,\n    [-distance, 0, distance],\n    [baseSize, magnifiedSize, baseSize]\n  );\n\n  const targetLift = useTransform(\n    distanceFromPointer,\n    [-distance, 0, distance],\n    [0, -8, 0]\n  );\n\n  const springSize = useSpring(targetSize, {\n    stiffness,\n    damping,\n    mass: 0.5,\n  });\n\n  const springLift = useSpring(targetLift, {\n    stiffness,\n    damping,\n    mass: 0.5,\n  });\n\n  const showTooltip = isHovered || isFocused;\n\n  return (\n    <div className=\"relative flex flex-col items-center\">\n      {/* Floating HUD Tooltip */}\n      <motion.div\n        initial={false}\n        animate={{\n          opacity: showTooltip ? 1 : 0,\n          y: showTooltip ? -8 : 2,\n          scale: showTooltip ? 1 : 0.92,\n        }}\n        transition={{ duration: 0.14, ease: \"easeOut\" }}\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute -top-9 z-20 whitespace-nowrap rounded-md border border-neutral-200 bg-white/95 px-2.5 py-1 text-[11px] font-medium tracking-tight text-black shadow-sm backdrop-blur-md dark:border-[#262626] dark:bg-[#111111]/95 dark:text-white\"\n      >\n        {item.label}\n      </motion.div>\n\n      <motion.button\n        ref={(el) => {\n          localRef.current = el;\n          buttonRef(el);\n        }}\n        type=\"button\"\n        aria-label={item.label}\n        aria-current={isActive ? \"page\" : undefined}\n        onClick={() => {\n          onSelect();\n          item.onClick?.();\n        }}\n        onKeyDown={onKeyNav}\n        onMouseEnter={() => setIsHovered(true)}\n        onMouseLeave={() => setIsHovered(false)}\n        onFocus={() => setIsFocused(true)}\n        onBlur={() => setIsFocused(false)}\n        whileTap={shouldReduceMotion ? undefined : { scale: 0.9 }}\n        style={{\n          width: shouldReduceMotion ? baseSize : springSize,\n          height: shouldReduceMotion ? baseSize : springSize,\n          y: shouldReduceMotion ? 0 : springLift,\n        }}\n        className={cn(\n          \"group relative flex items-center justify-center rounded-2xl border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white\",\n          isActive\n            ? \"border-black bg-black text-white dark:border-white dark:bg-white dark:text-black\"\n            : \"border-neutral-200/90 bg-neutral-50/90 text-neutral-700 hover:border-neutral-400 hover:bg-white hover:text-black dark:border-[#222222] dark:bg-[#121212] dark:text-neutral-300 dark:hover:border-[#383838] dark:hover:bg-[#1A1A1A] dark:hover:text-white\"\n        )}\n      >\n        <span className=\"pointer-events-none flex items-center justify-center\">\n          {item.icon}\n        </span>\n\n        {item.badge !== undefined && (\n          <span className=\"pointer-events-none absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full border border-white bg-black px-1 text-[9px] font-bold text-white dark:border-[#0A0A0A] dark:bg-white dark:text-black\">\n            {item.badge}\n          </span>\n        )}\n      </motion.button>\n\n      {/* Active spring indicator dot */}\n      <div className=\"mt-1.5 flex h-1.5 items-center justify-center\">\n        {isActive && (\n          <motion.span\n            layoutId=\"elastic-dock-active-dot\"\n            transition={\n              shouldReduceMotion\n                ? { duration: 0 }\n                : { type: \"spring\", stiffness: 380, damping: 26 }\n            }\n            className=\"h-1.5 w-1.5 rounded-full bg-black dark:bg-white\"\n          />\n        )}\n      </div>\n    </div>\n  );\n}\n\nexport function ElasticDock({\n  items = DEFAULT_ITEMS,\n  baseSize = 46,\n  magnifiedSize = 68,\n  distance = 140,\n  stiffness = 320,\n  damping = 22,\n  defaultActiveId = \"kinetic\",\n  onSelect,\n  className,\n}: ElasticDockProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const mouseX = useMotionValue(-Infinity);\n  const [activeId, setActiveId] = useState<string>(\n    defaultActiveId || items[0]?.id || \"\"\n  );\n  const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);\n\n  const handleKeyDown = (\n    index: number,\n    e: React.KeyboardEvent<HTMLButtonElement>\n  ) => {\n    if (e.key === \"ArrowRight\") {\n      e.preventDefault();\n      const next = (index + 1) % items.length;\n      buttonRefs.current[next]?.focus();\n    } else if (e.key === \"ArrowLeft\") {\n      e.preventDefault();\n      const prev = (index - 1 + items.length) % items.length;\n      buttonRefs.current[prev]?.focus();\n    } else if (e.key === \"Home\") {\n      e.preventDefault();\n      buttonRefs.current[0]?.focus();\n    } else if (e.key === \"End\") {\n      e.preventDefault();\n      buttonRefs.current[items.length - 1]?.focus();\n    }\n  };\n\n  return (\n    <motion.div\n      role=\"toolbar\"\n      aria-label=\"Application dock navigation\"\n      onMouseMove={(e) => {\n        if (!shouldReduceMotion) {\n          mouseX.set(e.clientX);\n        }\n      }}\n      onMouseLeave={() => mouseX.set(-Infinity)}\n      className={cn(\n        \"inline-flex items-end gap-2.5 rounded-3xl border border-neutral-200/90 bg-white/85 px-4 pb-2 pt-3 shadow-sm backdrop-blur-xl dark:border-[#222222] dark:bg-[#0A0A0A]/85\",\n        className\n      )}\n    >\n      {items.map((item, idx) => (\n        <DockIconButton\n          key={item.id}\n          item={item}\n          isActive={activeId === item.id}\n          mouseX={mouseX}\n          baseSize={baseSize}\n          magnifiedSize={magnifiedSize}\n          distance={distance}\n          stiffness={stiffness}\n          damping={damping}\n          shouldReduceMotion={shouldReduceMotion}\n          onSelect={() => {\n            setActiveId(item.id);\n            onSelect?.(item.id);\n          }}\n          onKeyNav={(e) => handleKeyDown(idx, e)}\n          buttonRef={(el) => {\n            buttonRefs.current[idx] = el;\n          }}\n        />\n      ))}\n    </motion.div>\n  );\n}\n\nexport default ElasticDock;\n"
+  },
+  {
+    "id": "elastic-snap-sortable",
+    "slug": "elastic-snap-sortable",
+    "componentName": "ElasticSnapSortable",
+    "filePath": "src/components/ui/ElasticSnapSortable.tsx",
+    "title": "Elastic Snap Sortable",
+    "description": "Reorderable priority queue where list items swap positions with Hooke's Law layout spring projection and full keyboard arrow-key control.",
+    "tagline": "Spring-projected reorderable list with keyboard arrow sorting.",
+    "category": "Motion",
+    "badges": [
+      "New",
+      "Layout Reorder",
+      "Keyboard Sort"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "elastic snap sortable",
+      "animated sortable list",
+      "reorderable list framer motion",
+      "priority queue ui",
+      "layout projection list"
+    ],
+    "features": [
+      "Automatic FLIP layout projection via Framer Motion layout prop when rows swap positions.",
+      "Full keyboard reordering using ArrowUp and ArrowDown keys directly on focused list items.",
+      "Tactile up/down stepper triggers for single-click touch and pointer sorting."
+    ],
+    "accessibility": [
+      "Implements role='list' and role='listitem' with live position announcements in aria-label.",
+      "Supports ArrowUp and ArrowDown keyboard reordering without requiring pointer drag dexterity.",
+      "Snaps reordered rows instantaneously when prefers-reduced-motion is enabled."
+    ],
+    "props": [
+      {
+        "name": "items",
+        "type": "SortableTaskItem[]",
+        "description": "Initial array of task items containing id, title, and priority tag."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "380",
+        "description": "Spring stiffness coefficient for row swap layout projection."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "26",
+        "description": "Spring damping coefficient controlling row settle oscillation."
+      }
+    ],
+    "usageCode": "import { ElasticSnapSortable } from \"@/components/ui/elastic-snap-sortable\";\n\nexport function Example() {\n  return (\n    <ElasticSnapSortable stiffness={380} damping={26} />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/elastic-snap-sortable.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { GripVertical, ArrowUp, ArrowDown } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SortableTaskItem {\n  id: string;\n  title: string;\n  tag: string;\n}\n\nexport interface ElasticSnapSortableProps {\n  /** Initial array of sortable items. */\n  items?: SortableTaskItem[];\n  /** Spring stiffness coefficient for layout reordering. Default: 380 */\n  stiffness?: number;\n  /** Spring damping coefficient for layout reordering. Default: 26 */\n  damping?: number;\n  /** Callback fired when item order changes */\n  onReorder?: (items: SortableTaskItem[]) => void;\n  className?: string;\n}\n\nconst DEFAULT_ITEMS: SortableTaskItem[] = [\n  { id: \"task-1\", title: \"GPU Radial Mask Compositor\", tag: \"P0\" },\n  { id: \"task-2\", title: \"Hooke's Law Velocity Solver\", tag: \"P1\" },\n  { id: \"task-3\", title: \"Shadcn v2 Registry Manifests\", tag: \"P2\" },\n  { id: \"task-4\", title: \"WAI-ARIA Reduced Motion Audit\", tag: \"P3\" },\n];\n\nexport function ElasticSnapSortable({\n  items: initialItems = DEFAULT_ITEMS,\n  stiffness = 380,\n  damping = 26,\n  onReorder,\n  className,\n}: ElasticSnapSortableProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [list, setList] = useState<SortableTaskItem[]>(initialItems);\n  const [activeId, setActiveId] = useState<string | null>(null);\n\n  const moveItem = (index: number, direction: -1 | 1) => {\n    const targetIndex = index + direction;\n    if (targetIndex < 0 || targetIndex >= list.length) return;\n    const next = [...list];\n    const [moved] = next.splice(index, 1);\n    next.splice(targetIndex, 0, moved!);\n    setList(next);\n    setActiveId(moved!.id);\n    onReorder?.(next);\n  };\n\n  return (\n    <div\n      role=\"list\"\n      aria-label=\"Sortable priority queue\"\n      className={cn(\n        \"flex w-full max-w-sm flex-col gap-2 rounded-2xl border border-neutral-200 bg-white p-4 dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      <div className=\"mb-1 flex items-center justify-between px-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-400\">\n        <span>Priority Queue</span>\n        <span className=\"font-mono\">Click arrows or use ↑/↓ keys</span>\n      </div>\n\n      {list.map((item, idx) => {\n        const isActive = activeId === item.id;\n\n        return (\n          <motion.div\n            key={item.id}\n            layout\n            role=\"listitem\"\n            tabIndex={0}\n            aria-label={`${item.title}, priority ${item.tag}, position ${idx + 1} of ${list.length}. Use Up and Down arrow keys to reorder.`}\n            onFocus={() => setActiveId(item.id)}\n            onBlur={() => setActiveId(null)}\n            onKeyDown={(e) => {\n              if (e.key === \"ArrowUp\") {\n                e.preventDefault();\n                moveItem(idx, -1);\n              } else if (e.key === \"ArrowDown\") {\n                e.preventDefault();\n                moveItem(idx, 1);\n              }\n            }}\n            transition={\n              shouldReduceMotion\n                ? { duration: 0 }\n                : { type: \"spring\", stiffness, damping }\n            }\n            className={cn(\n              \"group flex items-center justify-between gap-3 rounded-xl border px-3.5 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white\",\n              isActive\n                ? \"border-black bg-neutral-50 shadow-sm dark:border-white dark:bg-[#141414]\"\n                : \"border-neutral-200 bg-white hover:border-neutral-400 dark:border-[#222222] dark:bg-[#0D0D0D] dark:hover:border-[#383838]\"\n            )}\n          >\n            <div className=\"flex items-center gap-2.5\">\n              <GripVertical\n                aria-hidden=\"true\"\n                className=\"h-4 w-4 shrink-0 text-neutral-400\"\n              />\n              <span className=\"rounded bg-neutral-100 px-1.5 py-0.5 font-mono text-[10px] font-bold text-black dark:bg-[#1E1E1E] dark:text-white\">\n                {item.tag}\n              </span>\n              <span className=\"text-xs font-semibold text-black dark:text-white\">\n                {item.title}\n              </span>\n            </div>\n\n            <div className=\"flex items-center gap-1\">\n              <button\n                type=\"button\"\n                tabIndex={-1}\n                disabled={idx === 0}\n                aria-label={`Move ${item.title} up`}\n                onClick={() => moveItem(idx, -1)}\n                className=\"flex h-6 w-6 items-center justify-center rounded-md border border-neutral-200 text-neutral-500 transition-colors hover:border-black hover:text-black disabled:opacity-25 dark:border-[#262626] dark:hover:border-white dark:hover:text-white\"\n              >\n                <ArrowUp className=\"h-3 w-3\" />\n              </button>\n              <button\n                type=\"button\"\n                tabIndex={-1}\n                disabled={idx === list.length - 1}\n                aria-label={`Move ${item.title} down`}\n                onClick={() => moveItem(idx, 1)}\n                className=\"flex h-6 w-6 items-center justify-center rounded-md border border-neutral-200 text-neutral-500 transition-colors hover:border-black hover:text-black disabled:opacity-25 dark:border-[#262626] dark:hover:border-white dark:hover:text-white\"\n              >\n                <ArrowDown className=\"h-3 w-3\" />\n              </button>\n            </div>\n          </motion.div>\n        );\n      })}\n    </div>\n  );\n}\n\nexport default ElasticSnapSortable;\n"
+  },
+  {
+    "id": "elastic-tag-input",
+    "slug": "elastic-tag-input",
+    "componentName": "ElasticTagInput",
+    "filePath": "src/components/ui/ElasticTagInput.tsx",
+    "title": "Elastic Tag Input",
+    "description": "Tokenized multi-tag input with Hooke's Law pill pop-in, FLIP layout reflow, and a two-step Backspace warning wiggle before deletion.",
+    "tagline": "Tokenized pill input with layout springs and Backspace warning wiggle.",
+    "category": "Inputs",
+    "badges": [
+      "New",
+      "Token Input",
+      "Layout Reflow"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "elastic tag input",
+      "chip input react",
+      "multi tag input tailwind",
+      "framer motion tag input",
+      "tokenized input ui"
+    ],
+    "features": [
+      "Automatic FLIP layout reflow across remaining pills when a tag is inserted or removed.",
+      "Two-press Backspace safety that highlights and wiggles the last tag before deleting it.",
+      "Normalizes whitespace into clean kebab-case tokens automatically."
+    ],
+    "accessibility": [
+      "Each tag pill includes a dedicated button with aria-label='Remove tag X'.",
+      "Supports Enter and comma keys to commit new tags and Backspace to remove.",
+      "Disables scale pop-in and warning wiggle when prefers-reduced-motion is active."
+    ],
+    "props": [
+      {
+        "name": "defaultTags",
+        "type": "string[]",
+        "default": "[\"framer-motion\", \"spring-physics\", \"shadcn-v2\"]",
+        "description": "Initial list of keyword tags rendered inside the field."
+      },
+      {
+        "name": "maxTags",
+        "type": "number",
+        "default": "8",
+        "description": "Maximum number of tags allowed before locking the input."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "380",
+        "description": "Hooke's Law spring stiffness for tag pop-in and layout reflow."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "24",
+        "description": "Spring damping coefficient controlling pill settle."
+      }
+    ],
+    "usageCode": "import { ElasticTagInput } from \"@/components/ui/elastic-tag-input\";\n\nexport function Example() {\n  return (\n    <ElasticTagInput\n      defaultTags={[\"framer-motion\", \"spring-physics\", \"shadcn-v2\"]}\n      maxTags={8}\n    />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/elastic-tag-input.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { AnimatePresence, motion, useReducedMotion } from \"framer-motion\";\nimport { Plus, X, Tag } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ElasticTagInputProps {\n  /** Initial array of tag strings. */\n  defaultTags?: string[];\n  /** Maximum number of tags allowed. Default: 8 */\n  maxTags?: number;\n  /** Input placeholder text. Default: \"Add tag & press Enter...\" */\n  placeholder?: string;\n  /** Spring stiffness coefficient for tag pill pop-in and reflow. Default: 380 */\n  stiffness?: number;\n  /** Spring damping coefficient for tag pill pop-in and reflow. Default: 24 */\n  damping?: number;\n  /** Callback fired when tag list changes */\n  onChange?: (tags: string[]) => void;\n  className?: string;\n}\n\nconst DEFAULT_TAGS = [\"framer-motion\", \"spring-physics\", \"shadcn-v2\"];\n\nexport function ElasticTagInput({\n  defaultTags = DEFAULT_TAGS,\n  maxTags = 8,\n  placeholder = \"Add tag & press Enter...\",\n  stiffness = 380,\n  damping = 24,\n  onChange,\n  className,\n}: ElasticTagInputProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [tags, setTags] = useState<string[]>(defaultTags);\n  const [inputValue, setInputValue] = useState(\"\");\n  const [pendingDeleteLast, setPendingDeleteLast] = useState(false);\n\n  const commitTags = (next: string[]) => {\n    setTags(next);\n    onChange?.(next);\n  };\n\n  const addTag = (raw: string) => {\n    const cleaned = raw.trim().toLowerCase().replace(/\\s+/g, \"-\");\n    if (!cleaned || tags.includes(cleaned) || tags.length >= maxTags) return;\n    commitTags([...tags, cleaned]);\n    setInputValue(\"\");\n    setPendingDeleteLast(false);\n  };\n\n  const removeTag = (target: string) => {\n    commitTags(tags.filter((t) => t !== target));\n    setPendingDeleteLast(false);\n  };\n\n  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {\n    if (e.key === \"Enter\" || e.key === \",\") {\n      e.preventDefault();\n      addTag(inputValue);\n    } else if (e.key === \"Backspace\" && inputValue === \"\" && tags.length > 0) {\n      if (!pendingDeleteLast) {\n        setPendingDeleteLast(true);\n      } else {\n        const last = tags[tags.length - 1];\n        if (last) removeTag(last);\n      }\n    } else {\n      setPendingDeleteLast(false);\n    }\n  };\n\n  return (\n    <div\n      className={cn(\n        \"w-full max-w-md rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      <div className=\"mb-2.5 flex items-center justify-between text-xs\">\n        <span className=\"inline-flex items-center gap-1.5 font-semibold text-black dark:text-white\">\n          <Tag className=\"h-3.5 w-3.5\" />\n          <span>Registry Keywords</span>\n        </span>\n        <span className=\"font-mono text-[10px] text-neutral-400\">\n          {tags.length}/{maxTags} tags\n        </span>\n      </div>\n\n      <div className=\"flex flex-wrap items-center gap-1.5 rounded-xl border border-neutral-200 bg-neutral-50/70 p-2 focus-within:border-black dark:border-[#262626] dark:bg-[#121212] dark:focus-within:border-white\">\n        <AnimatePresence mode=\"popLayout\" initial={false}>\n          {tags.map((tag, idx) => {\n            const isWarned =\n              pendingDeleteLast && idx === tags.length - 1;\n\n            return (\n              <motion.span\n                key={tag}\n                layout\n                initial={\n                  shouldReduceMotion\n                    ? { opacity: 1 }\n                    : { scale: 0.6, opacity: 0 }\n                }\n                animate={{\n                  scale: 1,\n                  opacity: 1,\n                  x:\n                    isWarned && !shouldReduceMotion\n                      ? [0, -4, 4, -3, 3, 0]\n                      : 0,\n                }}\n                exit={\n                  shouldReduceMotion\n                    ? { opacity: 0 }\n                    : { scale: 0.6, opacity: 0 }\n                }\n                transition={{ type: \"spring\", stiffness, damping }}\n                className={cn(\n                  \"inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 font-mono text-xs font-medium transition-colors\",\n                  isWarned\n                    ? \"border-black bg-black text-white dark:border-white dark:bg-white dark:text-black\"\n                    : \"border-neutral-200 bg-white text-black dark:border-[#2A2A2A] dark:bg-[#1B1B1B] dark:text-white\"\n                )}\n              >\n                <span>#{tag}</span>\n                <button\n                  type=\"button\"\n                  aria-label={`Remove tag ${tag}`}\n                  onClick={() => removeTag(tag)}\n                  className=\"rounded p-0.5 opacity-60 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-current\"\n                >\n                  <X className=\"h-3 w-3\" />\n                </button>\n              </motion.span>\n            );\n          })}\n        </AnimatePresence>\n\n        <div className=\"flex min-w-[140px] flex-1 items-center gap-1\">\n          <input\n            type=\"text\"\n            value={inputValue}\n            disabled={tags.length >= maxTags}\n            placeholder={\n              tags.length >= maxTags ? \"Max tags reached\" : placeholder\n            }\n            aria-label=\"Add keyword tag\"\n            onChange={(e) => {\n              setInputValue(e.target.value);\n              setPendingDeleteLast(false);\n            }}\n            onKeyDown={handleKeyDown}\n            className=\"w-full bg-transparent px-1.5 py-1 text-xs text-black placeholder:text-neutral-400 focus:outline-none dark:text-white\"\n          />\n          {inputValue.trim() && (\n            <button\n              type=\"button\"\n              aria-label=\"Add current tag\"\n              onClick={() => addTag(inputValue)}\n              className=\"flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-black text-white dark:bg-white dark:text-black\"\n            >\n              <Plus className=\"h-3 w-3\" />\n            </button>\n          )}\n        </div>\n      </div>\n\n      <div className=\"mt-2 text-[10px] text-neutral-400\">\n        Press Enter to add • Press Backspace twice to confirm removal\n      </div>\n    </div>\n  );\n}\n\nexport default ElasticTagInput;\n"
+  },
+  {
+    "id": "elastic-wave-text",
+    "slug": "elastic-wave-text",
+    "componentName": "ElasticWaveText",
+    "filePath": "src/components/ui/ElasticWaveText.tsx",
+    "title": "Elastic Wave Text",
+    "description": "Plucked-string kinetic typography that propagates a damped transverse wave across every character on hover or click.",
+    "tagline": "Transverse sinusoidal wave propagation across headline glyphs.",
+    "category": "Text",
+    "badges": [
+      "New",
+      "Wave Physics",
+      "A11y Safe"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "elastic wave text",
+      "wave text animation react",
+      "plucked string typography",
+      "framer motion text wave",
+      "kinetic headline"
+    ],
+    "features": [
+      "Phase-delayed vertical oscillation that ripples sequentially from the first glyph to the last.",
+      "Secondary harmonic rebound (-0.45x crest) before settling at baseline.",
+      "Screen-reader safe sr-only canonical string paired with aria-hidden visual glyphs."
+    ],
+    "accessibility": [
+      "Exposes a single uninterrupted sr-only string for assistive technologies.",
+      "Operable as a focusable button via Enter or Space keys.",
+      "Suppresses transverse wave displacement when prefers-reduced-motion is active."
+    ],
+    "props": [
+      {
+        "name": "text",
+        "type": "string",
+        "default": "\"Harmonic Transverse Wave\"",
+        "description": "Headline string rendered along the transverse wave."
+      },
+      {
+        "name": "amplitude",
+        "type": "number",
+        "default": "-14",
+        "description": "Peak vertical wave crest displacement in pixels."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "420",
+        "description": "Spring stiffness coefficient for glyph oscillation."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "14",
+        "description": "Damping coefficient controlling wave crest decay."
+      }
+    ],
+    "usageCode": "import { ElasticWaveText } from \"@/components/ui/elastic-wave-text\";\n\nexport function Example() {\n  return (\n    <ElasticWaveText text=\"Harmonic Transverse Wave\" amplitude={-14} />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/elastic-wave-text.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { Waves } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ElasticWaveTextProps {\n  /** Text string to ripple across. Default: \"Harmonic Transverse Wave\" */\n  text?: string;\n  /** Peak vertical wave amplitude in pixels. Default: -14 */\n  amplitude?: number;\n  /** Hooke's Law spring stiffness coefficient. Default: 420 */\n  stiffness?: number;\n  /** Spring damping coefficient. Default: 14 */\n  damping?: number;\n  className?: string;\n}\n\nexport function ElasticWaveText({\n  text = \"Harmonic Transverse Wave\",\n  amplitude = -14,\n  stiffness = 420,\n  damping = 14,\n  className,\n}: ElasticWaveTextProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [wavePulse, setWavePulse] = useState(0);\n\n  const triggerWave = () => {\n    if (!shouldReduceMotion) {\n      setWavePulse((p) => p + 1);\n    }\n  };\n\n  const chars = text.split(\"\");\n\n  return (\n    <button\n      type=\"button\"\n      onClick={triggerWave}\n      onMouseEnter={triggerWave}\n      className={cn(\n        \"group inline-flex flex-col items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-7 py-6 text-center transition-colors hover:border-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[#222222] dark:bg-[#0A0A0A] dark:hover:border-white dark:focus-visible:ring-white\",\n        className\n      )}\n    >\n      <span className=\"sr-only\">{text}</span>\n\n      <div\n        aria-hidden=\"true\"\n        className=\"flex flex-wrap items-center justify-center text-xl font-bold tracking-tight text-black sm:text-2xl dark:text-white\"\n      >\n        {chars.map((char, idx) => {\n          if (char === \" \") {\n            return (\n              <span key={idx} className=\"inline-block w-[0.32em]\">\n                &nbsp;\n              </span>\n            );\n          }\n\n          return (\n            <motion.span\n              key={`${wavePulse}-${idx}`}\n              initial={{ y: 0 }}\n              animate={\n                wavePulse > 0 && !shouldReduceMotion\n                  ? { y: [0, amplitude, -amplitude * 0.45, 0] }\n                  : { y: 0 }\n              }\n              transition={{\n                duration: 0.52,\n                delay: idx * 0.024,\n                ease: \"easeInOut\",\n              }}\n              className=\"inline-block select-none\"\n            >\n              {char}\n            </motion.span>\n          );\n        })}\n      </div>\n\n      <span className=\"inline-flex items-center gap-1.5 text-[11px] text-neutral-400\">\n        <Waves className=\"h-3.5 w-3.5\" />\n        <span>Hover or click to pluck transverse glyph wave</span>\n      </span>\n    </button>\n  );\n}\n\nexport default ElasticWaveText;\n"
+  },
+  {
+    "id": "expandable-bento-card",
+    "slug": "expandable-bento-card",
+    "componentName": "ExpandableBentoCard",
+    "filePath": "src/components/ui/ExpandableBentoCard.tsx",
+    "title": "Expandable Bento Card",
+    "description": "Interactive bento surface that expands inline with Hooke's Law spring height projection to reveal secondary diagnostic modules.",
+    "tagline": "Inline-expanding bento card with spring height projection.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "Bento UI",
+      "Layout Spring"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "expandable bento card",
+      "collapsible card react",
+      "framer motion accordion card",
+      "bento grid card",
+      "spring height animation"
+    ],
+    "features": [
+      "Smooth inline height and layout projection powered by Framer Motion layout and AnimatePresence.",
+      "Rotational spring chevron indicator synchronized with expansion state.",
+      "Zero layout shift on neighboring grid cells when paired with layout-aware containers."
+    ],
+    "accessibility": [
+      "Header trigger is a semantic button with aria-expanded state announcement.",
+      "Supports Enter and Space keys to toggle expansion.",
+      "Collapses transition duration when prefers-reduced-motion is enabled."
+    ],
+    "props": [
+      {
+        "name": "badge",
+        "type": "string",
+        "default": "\"RUNTIME_TELEMETRY\"",
+        "description": "Eyebrow badge label displayed above the card heading."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "\"GPU Compositor Pipeline\"",
+        "description": "Primary heading text of the bento card."
+      },
+      {
+        "name": "defaultExpanded",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether the diagnostic drawer is expanded on initial mount."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "320",
+        "description": "Spring stiffness coefficient for height expansion."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "26",
+        "description": "Spring damping coefficient controlling expansion settle."
+      }
+    ],
+    "usageCode": "import { ExpandableBentoCard } from \"@/components/ui/expandable-bento-card\";\n\nexport function Example() {\n  return (\n    <ExpandableBentoCard\n      badge=\"RUNTIME_TELEMETRY\"\n      title=\"GPU Compositor Pipeline\"\n    />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/expandable-bento-card.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { AnimatePresence, motion, useReducedMotion } from \"framer-motion\";\nimport { ChevronDown, Cpu, Gauge, Sparkles } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ExpandableBentoCardProps {\n  /** Card header badge text. Default: \"RUNTIME_TELEMETRY\" */\n  badge?: string;\n  /** Primary card title. Default: \"GPU Compositor Pipeline\" */\n  title?: string;\n  /** Short summary shown in both states. */\n  summary?: string;\n  /** Initial expanded state. Default: false */\n  defaultExpanded?: boolean;\n  /** Hooke's Law spring stiffness coefficient. Default: 320 */\n  stiffness?: number;\n  /** Spring damping coefficient. Default: 26 */\n  damping?: number;\n  className?: string;\n}\n\nexport function ExpandableBentoCard({\n  badge = \"RUNTIME_TELEMETRY\",\n  title = \"GPU Compositor Pipeline\",\n  summary = \"Click to expand live sub-pixel spring diagnostics and frame budget metrics.\",\n  defaultExpanded = false,\n  stiffness = 320,\n  damping = 26,\n  className,\n}: ExpandableBentoCardProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [expanded, setExpanded] = useState(defaultExpanded);\n\n  return (\n    <motion.div\n      layout\n      transition={\n        shouldReduceMotion\n          ? { duration: 0.01 }\n          : { type: \"spring\", stiffness, damping }\n      }\n      className={cn(\n        \"w-full max-w-sm overflow-hidden rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition-colors hover:border-neutral-400 dark:border-[#222222] dark:bg-[#0A0A0A] dark:hover:border-[#383838]\",\n        className\n      )}\n    >\n      <button\n        type=\"button\"\n        aria-expanded={expanded}\n        onClick={() => setExpanded((prev) => !prev)}\n        className=\"flex w-full items-start justify-between gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white\"\n      >\n        <div>\n          <span className=\"inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-neutral-400\">\n            <Sparkles className=\"h-3 w-3 text-black dark:text-white\" />\n            {badge}\n          </span>\n          <h3 className=\"mt-1 text-base font-semibold text-black dark:text-white\">\n            {title}\n          </h3>\n          <p className=\"mt-1 text-xs leading-relaxed text-neutral-500 dark:text-neutral-400\">\n            {summary}\n          </p>\n        </div>\n\n        <motion.span\n          animate={{ rotate: expanded ? 180 : 0 }}\n          transition={\n            shouldReduceMotion\n              ? { duration: 0 }\n              : { type: \"spring\", stiffness: 360, damping: 24 }\n          }\n          className=\"mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-black dark:border-[#262626] dark:bg-[#141414] dark:text-white\"\n        >\n          <ChevronDown className=\"h-4 w-4\" />\n        </motion.span>\n      </button>\n\n      <AnimatePresence initial={false}>\n        {expanded && (\n          <motion.div\n            key=\"expanded-content\"\n            initial={{ opacity: 0, height: 0 }}\n            animate={{ opacity: 1, height: \"auto\" }}\n            exit={{ opacity: 0, height: 0 }}\n            transition={\n              shouldReduceMotion\n                ? { duration: 0.01 }\n                : { type: \"spring\", stiffness, damping }\n            }\n            className=\"overflow-hidden\"\n          >\n            <div className=\"mt-4 grid grid-cols-2 gap-2.5 border-t border-neutral-200 pt-4 dark:border-[#1F1F1F]\">\n              <div className=\"rounded-2xl border border-neutral-200/80 bg-neutral-50 p-3 dark:border-[#222222] dark:bg-[#121212]\">\n                <div className=\"flex items-center gap-1.5 text-[10px] font-semibold uppercase text-neutral-400\">\n                  <Gauge className=\"h-3 w-3\" />\n                  Frame Budget\n                </div>\n                <div className=\"mt-1 font-mono text-sm font-bold text-black dark:text-white\">\n                  0.42 ms\n                </div>\n                <div className=\"text-[10px] text-neutral-500\">\n                  120fps locked\n                </div>\n              </div>\n\n              <div className=\"rounded-2xl border border-neutral-200/80 bg-neutral-50 p-3 dark:border-[#222222] dark:bg-[#121212]\">\n                <div className=\"flex items-center gap-1.5 text-[10px] font-semibold uppercase text-neutral-400\">\n                  <Cpu className=\"h-3 w-3\" />\n                  Re-Renders\n                </div>\n                <div className=\"mt-1 font-mono text-sm font-bold text-black dark:text-white\">\n                  0 / sec\n                </div>\n                <div className=\"text-[10px] text-neutral-500\">\n                  MotionValue direct\n                </div>\n              </div>\n            </div>\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </motion.div>\n  );\n}\n\nexport default ExpandableBentoCard;\n"
+  },
+  {
+    "id": "floating-compass-nav",
+    "slug": "floating-compass-nav",
+    "componentName": "FloatingCompassNav",
+    "filePath": "src/components/ui/FloatingCompassNav.tsx",
+    "title": "Floating Compass Nav",
+    "description": "Viewport-anchored floating navigation pod that snaps elastically across four corner quadrants (NW, NE, SW, SE) via spring layout projection.",
+    "tagline": "Four-quadrant corner-snapping floating navigation pod.",
+    "category": "Navigation",
+    "badges": [
+      "New",
+      "Corner Snap",
+      "Layout Spring"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "floating compass nav",
+      "corner snap pip",
+      "picture in picture nav",
+      "framer motion layout snap",
+      "floating toolbar react"
+    ],
+    "features": [
+      "Four-corner magnetic quadrant snapping (NW, NE, SW, SE) powered by Framer Motion layout projection.",
+      "On-pod directional quadrant buttons plus dashed corner anchor targets.",
+      "Configurable Hooke's Law stiffness and damping for travel trajectory."
+    ],
+    "accessibility": [
+      "Every corner anchor target and directional button includes a descriptive aria-label.",
+      "Fully operable via Tab and Enter/Space keys without requiring drag gestures.",
+      "Snaps instantaneously across quadrants when prefers-reduced-motion is active."
+    ],
+    "props": [
+      {
+        "name": "defaultQuadrant",
+        "type": "\"NW\" | \"NE\" | \"SW\" | \"SE\"",
+        "default": "\"SE\"",
+        "description": "Initial corner quadrant where the navigation pod is anchored."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "300",
+        "description": "Spring stiffness coefficient for cross-viewport corner snapping."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "24",
+        "description": "Spring damping coefficient controlling corner arrival bounce."
+      }
+    ],
+    "usageCode": "import { FloatingCompassNav } from \"@/components/ui/floating-compass-nav\";\n\nexport function Example() {\n  return (\n    <FloatingCompassNav defaultQuadrant=\"SE\" stiffness={300} damping={24} />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/floating-compass-nav.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { Compass, CornerUpLeft, CornerUpRight, CornerDownLeft, CornerDownRight } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport type QuadrantId = \"NW\" | \"NE\" | \"SW\" | \"SE\";\n\nexport interface FloatingCompassNavProps {\n  /** Initial corner quadrant. Default: \"SE\" */\n  defaultQuadrant?: QuadrantId;\n  /** Spring stiffness coefficient for corner snap projection. Default: 300 */\n  stiffness?: number;\n  /** Spring damping coefficient for corner snap projection. Default: 24 */\n  damping?: number;\n  className?: string;\n}\n\nconst QUADRANTS: Array<{ id: QuadrantId; label: string; classes: string }> = [\n  { id: \"NW\", label: \"Top-Left\", classes: \"top-3 left-3\" },\n  { id: \"NE\", label: \"Top-Right\", classes: \"top-3 right-3\" },\n  { id: \"SW\", label: \"Bottom-Left\", classes: \"bottom-3 left-3\" },\n  { id: \"SE\", label: \"Bottom-Right\", classes: \"bottom-3 right-3\" },\n];\n\nexport function FloatingCompassNav({\n  defaultQuadrant = \"SE\",\n  stiffness = 300,\n  damping = 24,\n  className,\n}: FloatingCompassNavProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [quadrant, setQuadrant] = useState<QuadrantId>(defaultQuadrant);\n\n  const activeSpec =\n    QUADRANTS.find((q) => q.id === quadrant) || QUADRANTS[3]!;\n\n  return (\n    <div\n      className={cn(\n        \"relative flex h-[230px] w-full max-w-md select-none items-center justify-center overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50/70 p-4 dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      {/* Corner Quadrant Targets */}\n      {QUADRANTS.map((q) => (\n        <button\n          key={q.id}\n          type=\"button\"\n          aria-label={`Snap navigation pod to ${q.label} (${q.id})`}\n          onClick={() => setQuadrant(q.id)}\n          className={cn(\n            \"absolute flex h-9 w-9 items-center justify-center rounded-xl border border-dashed font-mono text-[10px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white\",\n            q.classes,\n            quadrant === q.id\n              ? \"border-transparent opacity-0\"\n              : \"border-neutral-300 text-neutral-400 hover:border-black hover:text-black dark:border-[#2A2A2A] dark:hover:border-white dark:hover:text-white\"\n          )}\n        >\n          {q.id}\n        </button>\n      ))}\n\n      {/* Center Stage Prompt */}\n      <div className=\"text-center\">\n        <div className=\"font-mono text-[11px] font-semibold uppercase tracking-widest text-neutral-400\">\n          QUADRANT_ANCHOR // {quadrant}\n        </div>\n        <p className=\"mt-1 text-xs text-neutral-500 dark:text-neutral-400\">\n          Click any corner marker or directional button to snap pod\n        </p>\n      </div>\n\n      {/* Spring-Projected Floating Navigation Pod */}\n      <motion.div\n        layout\n        transition={\n          shouldReduceMotion\n            ? { duration: 0.01 }\n            : { type: \"spring\", stiffness, damping }\n        }\n        className={cn(\n          \"absolute z-10 flex items-center gap-1.5 rounded-2xl border border-black bg-black p-1.5 text-white shadow-lg dark:border-white dark:bg-white dark:text-black\",\n          activeSpec.classes\n        )}\n      >\n        <div className=\"flex items-center gap-1.5 px-2 font-mono text-[11px] font-bold\">\n          <Compass className=\"h-3.5 w-3.5\" />\n          <span>{quadrant}</span>\n        </div>\n\n        <div className=\"flex items-center gap-0.5 rounded-xl bg-white/15 p-0.5 dark:bg-black/10\">\n          <button\n            type=\"button\"\n            aria-label=\"Snap North-West\"\n            onClick={() => setQuadrant(\"NW\")}\n            className=\"rounded-lg p-1 hover:bg-white/20 dark:hover:bg-black/15\"\n          >\n            <CornerUpLeft className=\"h-3 w-3\" />\n          </button>\n          <button\n            type=\"button\"\n            aria-label=\"Snap North-East\"\n            onClick={() => setQuadrant(\"NE\")}\n            className=\"rounded-lg p-1 hover:bg-white/20 dark:hover:bg-black/15\"\n          >\n            <CornerUpRight className=\"h-3 w-3\" />\n          </button>\n          <button\n            type=\"button\"\n            aria-label=\"Snap South-West\"\n            onClick={() => setQuadrant(\"SW\")}\n            className=\"rounded-lg p-1 hover:bg-white/20 dark:hover:bg-black/15\"\n          >\n            <CornerDownLeft className=\"h-3 w-3\" />\n          </button>\n          <button\n            type=\"button\"\n            aria-label=\"Snap South-East\"\n            onClick={() => setQuadrant(\"SE\")}\n            className=\"rounded-lg p-1 hover:bg-white/20 dark:hover:bg-black/15\"\n          >\n            <CornerDownRight className=\"h-3 w-3\" />\n          </button>\n        </div>\n      </motion.div>\n    </div>\n  );\n}\n\nexport default FloatingCompassNav;\n"
   },
   {
     "id": "gravity-well-portal",
@@ -653,6 +1110,144 @@ export const PULSE_COMPONENTS: PulseComponentCatalogEntry[] = [
     "sourceCode": "\"use client\";\n\nimport React, { useRef, useState } from \"react\";\nimport {\n  motion,\n  useMotionTemplate,\n  useMotionValue,\n  useSpring,\n  useReducedMotion,\n} from \"framer-motion\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface InteractiveGridBeamProps {\n  /** Grid cell size in pixels. Default: 32 */\n  gridSize?: number;\n  /** Radius of the cursor-tracked grid illumination mask in pixels. Default: 220 */\n  glowRadius?: number;\n  /** Spring stiffness coefficient for cursor spotlight tracking. Default: 280 */\n  stiffness?: number;\n  /** Spring damping coefficient for cursor spotlight tracking. Default: 26 */\n  damping?: number;\n  /** Foreground content rendered above the interactive grid matrix */\n  children?: React.ReactNode;\n  className?: string;\n}\n\ninterface PulseTrace {\n  id: number;\n  x: number;\n  y: number;\n}\n\nexport function InteractiveGridBeam({\n  gridSize = 32,\n  glowRadius = 220,\n  stiffness = 280,\n  damping = 26,\n  children,\n  className,\n}: InteractiveGridBeamProps) {\n  const containerRef = useRef<HTMLDivElement | null>(null);\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [isHovered, setIsHovered] = useState(false);\n  const [pulses, setPulses] = useState<PulseTrace[]>([]);\n\n  const mouseX = useMotionValue(-1000);\n  const mouseY = useMotionValue(-1000);\n\n  const smoothX = useSpring(mouseX, { stiffness, damping, mass: 0.3 });\n  const smoothY = useSpring(mouseY, { stiffness, damping, mass: 0.3 });\n\n  const activeX = shouldReduceMotion ? mouseX : smoothX;\n  const activeY = shouldReduceMotion ? mouseY : smoothY;\n\n  const maskImage = useMotionTemplate`radial-gradient(${glowRadius}px circle at ${activeX}px ${activeY}px, rgba(0,0,0,1) 0%, rgba(0,0,0,0.35) 55%, transparent 100%)`;\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n    const el = containerRef.current;\n    if (!el) return;\n    const rect = el.getBoundingClientRect();\n    mouseX.set(e.clientX - rect.left);\n    mouseY.set(e.clientY - rect.top);\n  };\n\n  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {\n    if (shouldReduceMotion) return;\n    const el = containerRef.current;\n    if (!el) return;\n    const rect = el.getBoundingClientRect();\n    const rawX = e.clientX - rect.left;\n    const rawY = e.clientY - rect.top;\n\n    // Snap beam origin to nearest grid intersection\n    const snappedX = Math.round(rawX / gridSize) * gridSize;\n    const snappedY = Math.round(rawY / gridSize) * gridSize;\n    const id = Date.now() + Math.random();\n\n    setPulses((prev) => [...prev.slice(-3), { id, x: snappedX, y: snappedY }]);\n  };\n\n  const gridBackgroundStyle: React.CSSProperties = {\n    backgroundSize: `${gridSize}px ${gridSize}px`,\n    backgroundImage:\n      \"linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)\",\n  };\n\n  return (\n    <div\n      ref={containerRef}\n      onMouseMove={handleMouseMove}\n      onMouseEnter={() => setIsHovered(true)}\n      onMouseLeave={() => setIsHovered(false)}\n      onClick={handleClick}\n      className={cn(\n        \"group relative flex min-h-[240px] w-full cursor-crosshair items-center justify-center overflow-hidden rounded-2xl border border-neutral-200 bg-white p-8 dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      {/* Base ambient low-contrast architectural grid */}\n      <div\n        aria-hidden=\"true\"\n        style={gridBackgroundStyle}\n        className=\"pointer-events-none absolute inset-0 text-neutral-200/55 dark:text-[#1A1A1A]\"\n      />\n\n      {/* Cursor-masked high-contrast kinetic grid overlay */}\n      <motion.div\n        aria-hidden=\"true\"\n        style={{\n          ...gridBackgroundStyle,\n          WebkitMaskImage: maskImage,\n          maskImage,\n          opacity: isHovered ? 1 : 0,\n        }}\n        className=\"pointer-events-none absolute inset-0 text-black/45 transition-opacity duration-300 dark:text-white/45\"\n      />\n\n      {/* Interactive orthogonal light beams emitted on click */}\n      {!shouldReduceMotion &&\n        pulses.map((pulse) => (\n          <React.Fragment key={pulse.id}>\n            {/* Horizontal propagating beam */}\n            <motion.div\n              aria-hidden=\"true\"\n              initial={{ scaleX: 0, opacity: 0.9 }}\n              animate={{ scaleX: 1.6, opacity: 0 }}\n              transition={{ duration: 0.75, ease: \"easeOut\" }}\n              style={{ top: pulse.y, left: 0, right: 0 }}\n              className=\"pointer-events-none absolute h-[1.5px] origin-center bg-gradient-to-r from-transparent via-black to-transparent dark:via-white\"\n            />\n            {/* Vertical propagating beam */}\n            <motion.div\n              aria-hidden=\"true\"\n              initial={{ scaleY: 0, opacity: 0.9 }}\n              animate={{ scaleY: 1.6, opacity: 0 }}\n              transition={{ duration: 0.75, ease: \"easeOut\" }}\n              style={{ left: pulse.x, top: 0, bottom: 0 }}\n              className=\"pointer-events-none absolute w-[1.5px] origin-center bg-gradient-to-b from-transparent via-black to-transparent dark:via-white\"\n            />\n            {/* Intersection node pulse */}\n            <motion.div\n              aria-hidden=\"true\"\n              initial={{ scale: 0.4, opacity: 1 }}\n              animate={{ scale: 2.8, opacity: 0 }}\n              transition={{ duration: 0.65, ease: \"easeOut\" }}\n              style={{ left: pulse.x - 4, top: pulse.y - 4 }}\n              className=\"pointer-events-none absolute h-2 w-2 rounded-full bg-black dark:bg-white\"\n            />\n          </React.Fragment>\n        ))}\n\n      {/* Foreground Content */}\n      <div className=\"relative z-10 text-center\">\n        {children || (\n          <div className=\"mx-auto max-w-xs rounded-2xl border border-neutral-200/90 bg-white/90 px-5 py-4 shadow-sm backdrop-blur-md dark:border-[#262626] dark:bg-[#111111]/90\">\n            <div className=\"text-xs font-semibold uppercase tracking-widest text-neutral-400\">\n              Interactive Grid Matrix\n            </div>\n            <div className=\"mt-1 text-sm font-semibold text-black dark:text-white\">\n              Move cursor or click any intersection\n            </div>\n            <p className=\"mt-1 text-[11px] text-neutral-500\">\n              Snaps orthogonal light beams to {gridSize}px coordinates.\n            </p>\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n\nexport default InteractiveGridBeam;\n"
   },
   {
+    "id": "kinetic-drawer-sheet",
+    "slug": "kinetic-drawer-sheet",
+    "componentName": "KineticDrawerSheet",
+    "filePath": "src/components/ui/KineticDrawerSheet.tsx",
+    "title": "Kinetic Drawer Sheet",
+    "description": "Bottom gesture sheet featuring Peek and Full spring detents, velocity-projected flick transitions, and rubber-band over-drag.",
+    "tagline": "Multi-detent bottom gesture sheet with rubber-band over-drag.",
+    "category": "Overlays",
+    "badges": [
+      "New",
+      "Detent Snap",
+      "Gesture Sheet"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "kinetic drawer sheet",
+      "bottom sheet react",
+      "ios drawer detent",
+      "framer motion bottom sheet",
+      "gesture modal"
+    ],
+    "features": [
+      "Two-stage detent snapping (Peek and Full) responsive to vertical pan velocity and displacement.",
+      "Rubber-band drag elasticity at the top boundary.",
+      "Explicit button detent switcher for non-gesture pointer and keyboard accessibility."
+    ],
+    "accessibility": [
+      "Implements role='dialog' and aria-modal='true' with Escape key dismissal.",
+      "Includes a dedicated Expand/Peek button so keyboard users can switch detents without dragging.",
+      "Disables vertical drag physics when prefers-reduced-motion is enabled."
+    ],
+    "props": [
+      {
+        "name": "triggerLabel",
+        "type": "string",
+        "default": "\"Open Gesture Drawer\"",
+        "description": "Text rendered inside the drawer trigger button."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "\"Multi-Detent Spring Sheet\"",
+        "description": "Heading title displayed inside the drawer sheet."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "320",
+        "description": "Hooke's Law spring stiffness for sheet entry and detent transitions."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "28",
+        "description": "Spring damping coefficient controlling sheet settle."
+      }
+    ],
+    "usageCode": "import { KineticDrawerSheet } from \"@/components/ui/kinetic-drawer-sheet\";\n\nexport function Example() {\n  return (\n    <KineticDrawerSheet\n      triggerLabel=\"Open Gesture Drawer\"\n      title=\"Multi-Detent Spring Sheet\"\n    />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/kinetic-drawer-sheet.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useEffect, useState } from \"react\";\nimport {\n  AnimatePresence,\n  motion,\n  useReducedMotion,\n  type PanInfo,\n} from \"framer-motion\";\nimport { PanelBottomOpen, Sparkles, X } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport type DrawerDetent = \"peek\" | \"full\";\n\nexport interface KineticDrawerSheetProps {\n  /** Trigger button label. Default: \"Open Gesture Drawer\" */\n  triggerLabel?: string;\n  /** Drawer heading title. Default: \"Multi-Detent Spring Sheet\" */\n  title?: string;\n  /** Spring stiffness coefficient for sheet slide and detent snapping. Default: 320 */\n  stiffness?: number;\n  /** Spring damping coefficient for sheet slide and detent snapping. Default: 28 */\n  damping?: number;\n  className?: string;\n}\n\nexport function KineticDrawerSheet({\n  triggerLabel = \"Open Gesture Drawer\",\n  title = \"Multi-Detent Spring Sheet\",\n  stiffness = 320,\n  damping = 28,\n  className,\n}: KineticDrawerSheetProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [isOpen, setIsOpen] = useState(false);\n  const [detent, setDetent] = useState<DrawerDetent>(\"peek\");\n\n  useEffect(() => {\n    if (!isOpen) return;\n    const onKeyDown = (e: KeyboardEvent) => {\n      if (e.key === \"Escape\") {\n        setIsOpen(false);\n      }\n    };\n    window.addEventListener(\"keydown\", onKeyDown);\n    return () => window.removeEventListener(\"keydown\", onKeyDown);\n  }, [isOpen]);\n\n  const handleDragEnd = (\n    _e: MouseEvent | TouchEvent | PointerEvent,\n    info: PanInfo\n  ) => {\n    if (info.offset.y > 75 || info.velocity.y > 400) {\n      if (detent === \"full\") {\n        setDetent(\"peek\");\n      } else {\n        setIsOpen(false);\n      }\n    } else if (info.offset.y < -50 || info.velocity.y < -350) {\n      setDetent(\"full\");\n    }\n  };\n\n  return (\n    <div className={cn(\"inline-block\", className)}>\n      <button\n        type=\"button\"\n        aria-haspopup=\"dialog\"\n        aria-expanded={isOpen}\n        onClick={() => {\n          setDetent(\"peek\");\n          setIsOpen(true);\n        }}\n        className=\"inline-flex h-11 items-center gap-2 rounded-2xl border border-neutral-200 bg-white px-5 text-xs font-semibold text-black shadow-sm transition-colors hover:border-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[#222222] dark:bg-[#0A0A0A] dark:text-white dark:hover:border-white dark:focus-visible:ring-white\"\n      >\n        <PanelBottomOpen className=\"h-4 w-4\" />\n        <span>{triggerLabel}</span>\n      </button>\n\n      <AnimatePresence>\n        {isOpen && (\n          <div className=\"fixed inset-0 z-50 flex items-end justify-center p-4 sm:p-6\">\n            {/* Backdrop */}\n            <motion.div\n              initial={{ opacity: 0 }}\n              animate={{ opacity: 1 }}\n              exit={{ opacity: 0 }}\n              transition={{ duration: 0.18 }}\n              onClick={() => setIsOpen(false)}\n              aria-hidden=\"true\"\n              className=\"fixed inset-0 bg-black/50 backdrop-blur-sm\"\n            />\n\n            {/* Bottom Detent Sheet */}\n            <motion.div\n              layout\n              role=\"dialog\"\n              aria-modal=\"true\"\n              aria-label={title}\n              initial={{ y: \"100%\", opacity: 0.5 }}\n              animate={{ y: 0, opacity: 1 }}\n              exit={{ y: \"100%\", opacity: 0 }}\n              transition={\n                shouldReduceMotion\n                  ? { duration: 0.01 }\n                  : { type: \"spring\", stiffness, damping }\n              }\n              drag={shouldReduceMotion ? false : \"y\"}\n              dragConstraints={{ top: 0, bottom: 0 }}\n              dragElastic={0.32}\n              onDragEnd={handleDragEnd}\n              className=\"relative z-10 w-full max-w-md overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 text-left shadow-2xl dark:border-[#262626] dark:bg-[#0D0D0D]\"\n            >\n              {/* Grab Bar */}\n              <div\n                aria-hidden=\"true\"\n                className=\"mx-auto mb-4 h-1.5 w-12 cursor-grab rounded-full bg-neutral-200 active:cursor-grabbing dark:bg-[#262626]\"\n              />\n\n              <div className=\"flex items-center justify-between gap-3\">\n                <div className=\"flex items-center gap-2.5\">\n                  <div className=\"flex h-9 w-9 items-center justify-center rounded-xl border border-neutral-200 bg-neutral-50 text-black dark:border-[#262626] dark:bg-[#141414] dark:text-white\">\n                    <Sparkles className=\"h-4 w-4\" />\n                  </div>\n                  <div>\n                    <h3 className=\"text-sm font-semibold text-black dark:text-white\">\n                      {title}\n                    </h3>\n                    <p className=\"font-mono text-[10px] uppercase text-neutral-400\">\n                      DETENT: {detent.toUpperCase()} • DRAG UP/DOWN\n                    </p>\n                  </div>\n                </div>\n\n                <button\n                  type=\"button\"\n                  aria-label=\"Close drawer\"\n                  onClick={() => setIsOpen(false)}\n                  className=\"flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 text-neutral-500 transition-colors hover:border-black hover:text-black dark:border-[#262626] dark:hover:border-white dark:hover:text-white\"\n                >\n                  <X className=\"h-4 w-4\" />\n                </button>\n              </div>\n\n              <p className=\"mt-4 text-xs leading-relaxed text-neutral-600 dark:text-neutral-300\">\n                Flick upward or press the detent toggle below to expand full\n                diagnostics. Flick downward or press Escape to dismiss.\n              </p>\n\n              {detent === \"full\" && (\n                <motion.div\n                  initial={{ opacity: 0, y: 8 }}\n                  animate={{ opacity: 1, y: 0 }}\n                  className=\"mt-4 rounded-2xl border border-neutral-200 bg-neutral-50 p-4 font-mono text-xs dark:border-[#1F1F1F] dark:bg-[#141414]\"\n                >\n                  <div className=\"flex justify-between py-1\">\n                    <span className=\"text-neutral-400\">Spring Solver:</span>\n                    <span className=\"font-semibold text-black dark:text-white\">\n                      k={stiffness}, c={damping}\n                    </span>\n                  </div>\n                  <div className=\"flex justify-between py-1\">\n                    <span className=\"text-neutral-400\">Drag Elasticity:</span>\n                    <span className=\"font-semibold text-black dark:text-white\">\n                      0.32 (Rubber-Band)\n                    </span>\n                  </div>\n                </motion.div>\n              )}\n\n              <div className=\"mt-5 flex items-center justify-between gap-2\">\n                <button\n                  type=\"button\"\n                  onClick={() =>\n                    setDetent((d) => (d === \"peek\" ? \"full\" : \"peek\"))\n                  }\n                  className=\"rounded-xl border border-neutral-200 px-3.5 py-2 text-xs font-semibold text-black transition-colors hover:border-black dark:border-[#262626] dark:text-white dark:hover:border-white\"\n                >\n                  {detent === \"peek\" ? \"Expand Full Detent\" : \"Snap to Peek\"}\n                </button>\n                <button\n                  type=\"button\"\n                  onClick={() => setIsOpen(false)}\n                  className=\"rounded-xl bg-black px-4 py-2 text-xs font-semibold text-white dark:bg-white dark:text-black\"\n                >\n                  Done\n                </button>\n              </div>\n            </motion.div>\n          </div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n\nexport default KineticDrawerSheet;\n"
+  },
+  {
+    "id": "kinetic-rolling-counter",
+    "slug": "kinetic-rolling-counter",
+    "componentName": "KineticRollingCounter",
+    "filePath": "src/components/ui/KineticRollingCounter.tsx",
+    "title": "Kinetic Rolling Counter",
+    "description": "Mechanical odometer numeric ticker where each digit column spins independently along a vertical 0-9 reel using Hooke's Law springs.",
+    "tagline": "Mechanical odometer ticker with vertical 0-9 spring reels.",
+    "category": "Text",
+    "badges": [
+      "New",
+      "Odometer Reel",
+      "Tabular Nums"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": true,
+    "keywords": [
+      "kinetic rolling counter",
+      "odometer number ticker",
+      "slot machine counter react",
+      "framer motion number counter",
+      "rolling digits ui"
+    ],
+    "features": [
+      "Independent 0–9 vertical digit reels that roll proportionally to the numeric delta in each place value.",
+      "Tabular monospace geometry preventing horizontal layout jitter during high-speed increments.",
+      "Screen-reader live status region paired with aria-hidden visual reels."
+    ],
+    "accessibility": [
+      "Provides an sr-only role='status' live region announcing the complete number cleanly.",
+      "Marks the 0–9 vertical reel strips with aria-hidden='true' to prevent screen readers from reading all 10 digits per column.",
+      "Snaps digit reels immediately without vertical travel when prefers-reduced-motion is active."
+    ],
+    "props": [
+      {
+        "name": "defaultValue",
+        "type": "number",
+        "default": "1248",
+        "description": "Initial non-negative integer displayed on the odometer."
+      },
+      {
+        "name": "step",
+        "type": "number",
+        "default": "17",
+        "description": "Amount added or subtracted per stepper click."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "340",
+        "description": "Hooke's Law spring stiffness for vertical digit reel travel."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "26",
+        "description": "Spring damping coefficient controlling reel settle bounce."
+      }
+    ],
+    "usageCode": "import { KineticRollingCounter } from \"@/components/ui/kinetic-rolling-counter\";\n\nexport function Example() {\n  return (\n    <KineticRollingCounter defaultValue={1248} step={17} stiffness={340} damping={26} />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/kinetic-rolling-counter.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { Minus, Plus } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface KineticRollingCounterProps {\n  /** Initial integer value. Default: 1248 */\n  defaultValue?: number;\n  /** Increment step size. Default: 17 */\n  step?: number;\n  /** Hooke's Law spring stiffness coefficient for digit reel rotation. Default: 340 */\n  stiffness?: number;\n  /** Spring damping coefficient for digit reel rotation. Default: 26 */\n  damping?: number;\n  className?: string;\n}\n\nconst DIGITS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];\n\ninterface DigitReelColumnProps {\n  digit: number;\n  stiffness: number;\n  damping: number;\n  shouldReduceMotion: boolean;\n}\n\nfunction DigitReelColumn({\n  digit,\n  stiffness,\n  damping,\n  shouldReduceMotion,\n}: DigitReelColumnProps) {\n  return (\n    <div\n      aria-hidden=\"true\"\n      className=\"relative h-9 w-6 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 font-mono text-lg font-bold tabular-nums text-black dark:border-[#262626] dark:bg-[#141414] dark:text-white\"\n    >\n      <motion.div\n        animate={{ y: `-${digit * 10}%` }}\n        transition={\n          shouldReduceMotion\n            ? { duration: 0 }\n            : { type: \"spring\", stiffness, damping }\n        }\n        className=\"flex flex-col items-center\"\n      >\n        {DIGITS.map((n) => (\n          <span\n            key={n}\n            className=\"flex h-9 w-6 items-center justify-center leading-none\"\n          >\n            {n}\n          </span>\n        ))}\n      </motion.div>\n    </div>\n  );\n}\n\nexport function KineticRollingCounter({\n  defaultValue = 1248,\n  step = 17,\n  stiffness = 340,\n  damping = 26,\n  className,\n}: KineticRollingCounterProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [count, setCount] = useState<number>(Math.max(0, defaultValue));\n\n  const formatted = String(Math.max(0, count)).padStart(4, \"0\");\n  const digitArray = formatted.split(\"\").map((ch) => Number(ch) || 0);\n\n  return (\n    <div\n      className={cn(\n        \"inline-flex items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 py-3 shadow-sm dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      <button\n        type=\"button\"\n        aria-label={`Decrease counter by ${step}`}\n        onClick={() => setCount((c) => Math.max(0, c - step))}\n        className=\"flex h-8 w-8 items-center justify-center rounded-xl border border-neutral-200 text-neutral-600 transition-colors hover:border-black hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[#262626] dark:text-neutral-300 dark:hover:border-white dark:hover:text-white dark:focus-visible:ring-white\"\n      >\n        <Minus className=\"h-3.5 w-3.5\" />\n      </button>\n\n      {/* Screen-reader live region */}\n      <span className=\"sr-only\" role=\"status\" aria-live=\"polite\">\n        Current value: {count}\n      </span>\n\n      {/* Mechanical Odometer Digit Reels */}\n      <div className=\"flex items-center gap-1\">\n        {digitArray.map((d, idx) => (\n          <DigitReelColumn\n            key={idx}\n            digit={d}\n            stiffness={stiffness}\n            damping={damping}\n            shouldReduceMotion={shouldReduceMotion}\n          />\n        ))}\n      </div>\n\n      <button\n        type=\"button\"\n        aria-label={`Increase counter by ${step}`}\n        onClick={() => setCount((c) => c + step)}\n        className=\"flex h-8 w-8 items-center justify-center rounded-xl border border-black bg-black text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-white dark:bg-white dark:text-black dark:focus-visible:ring-white\"\n      >\n        <Plus className=\"h-3.5 w-3.5\" />\n      </button>\n    </div>\n  );\n}\n\nexport default KineticRollingCounter;\n"
+  },
+  {
     "id": "kinetic-slider",
     "slug": "kinetic-slider",
     "componentName": "KineticSlider",
@@ -733,6 +1328,149 @@ export const PULSE_COMPONENTS: PulseComponentCatalogEntry[] = [
     "sourceCode": "\"use client\";\n\nimport React, { useRef, useState, useEffect } from \"react\";\nimport {\n  motion,\n  useMotionValue,\n  useSpring,\n  useVelocity,\n  useTransform,\n  useReducedMotion,\n} from \"framer-motion\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface KineticSliderProps {\n  /** Field label displayed above the slider track. Default: \"Spring Tension\" */\n  label?: string;\n  /** Controlled numeric value */\n  value?: number;\n  /** Uncontrolled initial numeric value. Default: 64 */\n  defaultValue?: number;\n  /** Minimum value. Default: 0 */\n  min?: number;\n  /** Maximum value. Default: 100 */\n  max?: number;\n  /** Increment step size. Default: 1 */\n  step?: number;\n  /** Unit suffix appended to displayed value (e.g. \"%\", \"Hz\", \"ms\"). Default: \"%\" */\n  unit?: string;\n  /** Hooke's Law spring stiffness coefficient. Default: 340 */\n  stiffness?: number;\n  /** Spring damping coefficient. Default: 24 */\n  damping?: number;\n  /** Callback fired when value changes */\n  onChange?: (value: number) => void;\n  className?: string;\n}\n\nexport function KineticSlider({\n  label = \"Spring Tension\",\n  value: controlledValue,\n  defaultValue = 64,\n  min = 0,\n  max = 100,\n  step = 1,\n  unit = \"%\",\n  stiffness = 340,\n  damping = 24,\n  onChange,\n  className,\n}: KineticSliderProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const trackRef = useRef<HTMLDivElement | null>(null);\n\n  const [internalValue, setInternalValue] = useState<number>(() =>\n    Math.min(max, Math.max(min, defaultValue))\n  );\n  const [isDragging, setIsDragging] = useState(false);\n  const [isHovered, setIsHovered] = useState(false);\n  const [isFocused, setIsFocused] = useState(false);\n\n  const currentValue =\n    controlledValue !== undefined ? controlledValue : internalValue;\n  const range = Math.max(1, max - min);\n  const normalizedPct = ((currentValue - min) / range) * 100;\n\n  const pctMotion = useMotionValue(normalizedPct);\n  const springPct = useSpring(pctMotion, {\n    stiffness,\n    damping,\n    mass: 0.4,\n  });\n\n  // Rubber-band overdrag horizontal stretch in pixels\n  const overdragX = useMotionValue(0);\n  const springOverdragX = useSpring(overdragX, {\n    stiffness: 420,\n    damping: 26,\n  });\n\n  // Velocity-reactive tooltip tilt\n  const pctVelocity = useVelocity(springPct);\n  const rawTilt = useTransform(pctVelocity, [-250, 0, 250], [-14, 0, 14]);\n  const tooltipRotate = useSpring(rawTilt, {\n    stiffness: 320,\n    damping: 20,\n  });\n\n  const fillWidth = useTransform(springPct, (v) => `${Math.max(0, Math.min(100, v))}%`);\n\n  useEffect(() => {\n    pctMotion.set(((currentValue - min) / range) * 100);\n  }, [currentValue, min, range, pctMotion]);\n\n  const commitValue = (nextRaw: number) => {\n    const stepped = Math.round((nextRaw - min) / step) * step + min;\n    const clamped = Math.min(max, Math.max(min, Number(stepped.toFixed(4))));\n    if (controlledValue === undefined) {\n      setInternalValue(clamped);\n    }\n    onChange?.(clamped);\n  };\n\n  const updateFromClientX = (clientX: number) => {\n    const track = trackRef.current;\n    if (!track) return;\n    const rect = track.getBoundingClientRect();\n    const rawRatio = (clientX - rect.left) / rect.width;\n\n    if (rawRatio < 0) {\n      const excessPx = clientX - rect.left;\n      const rubber = -Math.log1p(Math.abs(excessPx)) * 3.2;\n      overdragX.set(shouldReduceMotion ? 0 : rubber);\n      commitValue(min);\n    } else if (rawRatio > 1) {\n      const excessPx = clientX - rect.right;\n      const rubber = Math.log1p(Math.abs(excessPx)) * 3.2;\n      overdragX.set(shouldReduceMotion ? 0 : rubber);\n      commitValue(max);\n    } else {\n      overdragX.set(0);\n      commitValue(min + rawRatio * range);\n    }\n  };\n\n  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {\n    e.currentTarget.setPointerCapture(e.pointerId);\n    setIsDragging(true);\n    updateFromClientX(e.clientX);\n  };\n\n  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {\n    if (!isDragging) return;\n    updateFromClientX(e.clientX);\n  };\n\n  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {\n    if (e.currentTarget.hasPointerCapture(e.pointerId)) {\n      e.currentTarget.releasePointerCapture(e.pointerId);\n    }\n    setIsDragging(false);\n    overdragX.set(0);\n  };\n\n  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {\n    const largeStep = step * 10;\n    if (e.key === \"ArrowRight\" || e.key === \"ArrowUp\") {\n      e.preventDefault();\n      commitValue(currentValue + step);\n    } else if (e.key === \"ArrowLeft\" || e.key === \"ArrowDown\") {\n      e.preventDefault();\n      commitValue(currentValue - step);\n    } else if (e.key === \"PageUp\") {\n      e.preventDefault();\n      commitValue(currentValue + largeStep);\n    } else if (e.key === \"PageDown\") {\n      e.preventDefault();\n      commitValue(currentValue - largeStep);\n    } else if (e.key === \"Home\") {\n      e.preventDefault();\n      commitValue(min);\n    } else if (e.key === \"End\") {\n      e.preventDefault();\n      commitValue(max);\n    }\n  };\n\n  const showBubble = isDragging || isHovered || isFocused;\n\n  return (\n    <motion.div\n      style={{ x: shouldReduceMotion ? 0 : springOverdragX }}\n      className={cn(\n        \"w-full max-w-sm select-none rounded-2xl border border-neutral-200 bg-white p-5 dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      <div className=\"mb-4 flex items-center justify-between text-xs\">\n        <span className=\"font-semibold tracking-tight text-black dark:text-white\">\n          {label}\n        </span>\n        <span className=\"font-mono text-xs font-medium tabular-nums text-neutral-500 dark:text-neutral-400\">\n          {currentValue}\n          {unit}\n        </span>\n      </div>\n\n      {/* Interactive Slider Track */}\n      <div\n        ref={trackRef}\n        role=\"slider\"\n        tabIndex={0}\n        aria-label={label}\n        aria-valuemin={min}\n        aria-valuemax={max}\n        aria-valuenow={currentValue}\n        aria-valuetext={`${currentValue}${unit}`}\n        onPointerDown={handlePointerDown}\n        onPointerMove={handlePointerMove}\n        onPointerUp={handlePointerUp}\n        onPointerCancel={handlePointerUp}\n        onMouseEnter={() => setIsHovered(true)}\n        onMouseLeave={() => setIsHovered(false)}\n        onFocus={() => setIsFocused(true)}\n        onBlur={() => setIsFocused(false)}\n        onKeyDown={handleKeyDown}\n        className=\"group relative flex h-9 cursor-ew-resize touch-none items-center rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white\"\n      >\n        {/* Background Rail */}\n        <motion.div\n          animate={{\n            height: isDragging ? 10 : isHovered ? 8 : 6,\n          }}\n          transition={{ type: \"spring\", stiffness: 360, damping: 26 }}\n          className=\"relative w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-[#1E1E1E]\"\n        >\n          {/* Active Fill Bar */}\n          <motion.div\n            style={{\n              width: shouldReduceMotion ? `${normalizedPct}%` : fillWidth,\n            }}\n            className=\"h-full rounded-full bg-black dark:bg-white\"\n          />\n        </motion.div>\n\n        {/* Thumb + Velocity-Reactive Floating Pill */}\n        <motion.div\n          style={{\n            left: shouldReduceMotion ? `${normalizedPct}%` : fillWidth,\n          }}\n          className=\"pointer-events-none absolute top-1/2 -translate-x-1/2 -translate-y-1/2\"\n        >\n          {/* Floating Velocity Pill */}\n          <motion.div\n            initial={false}\n            animate={{\n              opacity: showBubble ? 1 : 0,\n              y: showBubble ? -30 : -18,\n              scale: showBubble ? 1 : 0.85,\n            }}\n            style={{\n              rotate: shouldReduceMotion ? 0 : tooltipRotate,\n            }}\n            transition={{ type: \"spring\", stiffness: 380, damping: 22 }}\n            aria-hidden=\"true\"\n            className=\"absolute left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-black px-2 py-0.5 font-mono text-[10px] font-semibold tabular-nums text-white shadow-sm dark:bg-white dark:text-black\"\n          >\n            {currentValue}\n            {unit}\n          </motion.div>\n\n          {/* Tactile Thumb */}\n          <motion.div\n            animate={{\n              scaleX: isDragging && !shouldReduceMotion ? 1.18 : 1,\n              scaleY: isDragging && !shouldReduceMotion ? 0.9 : 1,\n              scale: isHovered || isFocused ? 1.08 : 1,\n            }}\n            transition={{ type: \"spring\", stiffness: 400, damping: 22 }}\n            className=\"h-5 w-5 rounded-full border-2 border-black bg-white shadow-sm dark:border-white dark:bg-[#0A0A0A]\"\n          />\n        </motion.div>\n      </div>\n\n      <div className=\"mt-2 flex justify-between font-mono text-[10px] text-neutral-400\">\n        <span>\n          {min}\n          {unit}\n        </span>\n        <span>\n          {max}\n          {unit}\n        </span>\n      </div>\n    </motion.div>\n  );\n}\n\nexport default KineticSlider;\n"
   },
   {
+    "id": "kinetic-step-indicator",
+    "slug": "kinetic-step-indicator",
+    "componentName": "KineticStepIndicator",
+    "filePath": "src/components/ui/KineticStepIndicator.tsx",
+    "title": "Kinetic Step Indicator",
+    "description": "Multi-step workflow progress bar with spring-filled liquid connector tubes, elastic checkmark badges, and direct step jumping.",
+    "tagline": "Multi-step workflow stepper with liquid spring connector tubes.",
+    "category": "Navigation",
+    "badges": [
+      "New",
+      "Stepper UI",
+      "Spring Fill"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "kinetic step indicator",
+      "animated stepper react",
+      "multi step progress bar",
+      "framer motion stepper",
+      "workflow progress ui"
+    ],
+    "features": [
+      "Origin-left scaleX spring connector tubes that fill and drain smoothly between step nodes.",
+      "Direct click-to-jump step buttons paired with sequential Prev and Next controls.",
+      "Elastic scale pulse on the currently active step node."
+    ],
+    "accessibility": [
+      "Marks the active step button with aria-current='step' and descriptive step aria-labels.",
+      "Supports both direct Tab selection on step nodes and sequential Prev/Next buttons.",
+      "Disables connector tube spring oscillation when prefers-reduced-motion is active."
+    ],
+    "props": [
+      {
+        "name": "steps",
+        "type": "StepSpec[]",
+        "description": "Array of workflow steps containing id, label, and caption."
+      },
+      {
+        "name": "defaultStep",
+        "type": "number",
+        "default": "1",
+        "description": "Initial 0-based active step index."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "320",
+        "description": "Spring stiffness coefficient for connector tube fill and node scale."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "25",
+        "description": "Spring damping coefficient controlling connector fill settle."
+      }
+    ],
+    "usageCode": "import { KineticStepIndicator } from \"@/components/ui/kinetic-step-indicator\";\n\nexport function Example() {\n  return (\n    <KineticStepIndicator defaultStep={1} stiffness={320} damping={25} />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/kinetic-step-indicator.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { Check } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface StepSpec {\n  id: string;\n  label: string;\n  caption: string;\n}\n\nexport interface KineticStepIndicatorProps {\n  /** Array of workflow steps. */\n  steps?: StepSpec[];\n  /** Initial active 0-based step index. Default: 1 */\n  defaultStep?: number;\n  /** Spring stiffness coefficient for connector liquid fill. Default: 320 */\n  stiffness?: number;\n  /** Spring damping coefficient for connector liquid fill. Default: 25 */\n  damping?: number;\n  className?: string;\n}\n\nconst DEFAULT_STEPS: StepSpec[] = [\n  { id: \"scaffold\", label: \"Scaffold\", caption: \"Two-file .tsx + .meta.ts\" },\n  { id: \"physics\", label: \"Spring Solver\", caption: \"Hooke's Law tuning\" },\n  { id: \"registry\", label: \"Sync CLI\", caption: \"Shadcn v2 JSON\" },\n  { id: \"ship\", label: \"Verify\", caption: \"100/100 SEO audit\" },\n];\n\nexport function KineticStepIndicator({\n  steps = DEFAULT_STEPS,\n  defaultStep = 1,\n  stiffness = 320,\n  damping = 25,\n  className,\n}: KineticStepIndicatorProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [currentStep, setCurrentStep] = useState<number>(defaultStep);\n\n  return (\n    <div\n      role=\"group\"\n      aria-label=\"Workflow progress steps\"\n      className={cn(\n        \"w-full max-w-md rounded-2xl border border-neutral-200 bg-white p-5 dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      {/* Nodes & Liquid Connector Tubes */}\n      <div className=\"flex items-center justify-between\">\n        {steps.map((step, idx) => {\n          const isCompleted = idx < currentStep;\n          const isCurrent = idx === currentStep;\n\n          return (\n            <React.Fragment key={step.id}>\n              <motion.button\n                type=\"button\"\n                aria-current={isCurrent ? \"step\" : undefined}\n                aria-label={`Step ${idx + 1}: ${step.label} — ${step.caption}`}\n                onClick={() => setCurrentStep(idx)}\n                animate={{\n                  scale: isCurrent && !shouldReduceMotion ? 1.12 : 1,\n                }}\n                transition={{ type: \"spring\", stiffness, damping }}\n                className={cn(\n                  \"relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border font-mono text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white\",\n                  isCompleted || isCurrent\n                    ? \"border-black bg-black text-white dark:border-white dark:bg-white dark:text-black\"\n                    : \"border-neutral-200 bg-neutral-50 text-neutral-400 hover:border-neutral-400 dark:border-[#262626] dark:bg-[#141414]\"\n                )}\n              >\n                {isCompleted ? <Check className=\"h-4 w-4\" /> : idx + 1}\n              </motion.button>\n\n              {idx < steps.length - 1 && (\n                <div className=\"relative mx-2 h-1 flex-1 overflow-hidden rounded-full bg-neutral-200 dark:bg-[#1F1F1F]\">\n                  <motion.div\n                    initial={false}\n                    animate={{\n                      scaleX: idx < currentStep ? 1 : 0,\n                    }}\n                    transition={\n                      shouldReduceMotion\n                        ? { duration: 0 }\n                        : { type: \"spring\", stiffness, damping }\n                    }\n                    className=\"h-full w-full origin-left bg-black dark:bg-white\"\n                  />\n                </div>\n              )}\n            </React.Fragment>\n          );\n        })}\n      </div>\n\n      {/* Active Step Telemetry Readout */}\n      <div className=\"mt-4 flex items-center justify-between border-t border-neutral-100 pt-3 text-xs dark:border-[#1B1B1B]\">\n        <div>\n          <span className=\"font-semibold text-black dark:text-white\">\n            {steps[currentStep]?.label}\n          </span>\n          <span className=\"ml-2 text-neutral-500 dark:text-neutral-400\">\n            {steps[currentStep]?.caption}\n          </span>\n        </div>\n\n        <div className=\"flex items-center gap-1.5\">\n          <button\n            type=\"button\"\n            disabled={currentStep === 0}\n            onClick={() => setCurrentStep((s) => Math.max(0, s - 1))}\n            className=\"rounded-lg border border-neutral-200 px-2 py-1 text-[11px] font-semibold text-black disabled:opacity-30 dark:border-[#262626] dark:text-white\"\n          >\n            Prev\n          </button>\n          <button\n            type=\"button\"\n            disabled={currentStep === steps.length - 1}\n            onClick={() =>\n              setCurrentStep((s) => Math.min(steps.length - 1, s + 1))\n            }\n            className=\"rounded-lg bg-black px-2.5 py-1 text-[11px] font-semibold text-white disabled:opacity-30 dark:bg-white dark:text-black\"\n          >\n            Next\n          </button>\n        </div>\n      </div>\n    </div>\n  );\n}\n\nexport default KineticStepIndicator;\n"
+  },
+  {
+    "id": "kinetic-swipe-button",
+    "slug": "kinetic-swipe-button",
+    "componentName": "KineticSwipeButton",
+    "filePath": "src/components/ui/KineticSwipeButton.tsx",
+    "title": "Kinetic Swipe Button",
+    "description": "Slide-to-execute actuator switch with a spring-tethered thumb that locks upon crossing the completion threshold or recoils elastically.",
+    "tagline": "Slide-to-execute actuator track with elastic spring recoil.",
+    "category": "Buttons",
+    "badges": [
+      "New",
+      "Slide Actuator",
+      "Spring Recoil"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": true,
+    "keywords": [
+      "kinetic swipe button",
+      "slide to confirm",
+      "slide to unlock react",
+      "framer motion swipe button",
+      "safety switch ui"
+    ],
+    "features": [
+      "Pointer-captured horizontal actuator thumb coupled to a Hooke's Law spring.",
+      "Snaps into locked confirmation when dragged past the threshold ratio or recoils smoothly to origin if released early.",
+      "Includes a one-click reset state after confirmation."
+    ],
+    "accessibility": [
+      "Thumb actuator is a semantic button supporting Enter and Space keys for single-keystroke completion.",
+      "Respects prefers-reduced-motion by disabling continuous spring interpolation.",
+      "Maintains high-contrast focus-visible ring indicators."
+    ],
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "default": "\"Slide to Deploy Production\"",
+        "description": "Prompt label displayed along the actuator track."
+      },
+      {
+        "name": "completedLabel",
+        "type": "string",
+        "default": "\"Deployment Triggered\"",
+        "description": "Confirmation label displayed once the swipe completes."
+      },
+      {
+        "name": "threshold",
+        "type": "number",
+        "default": "0.78",
+        "description": "Track fraction (0.5 to 0.95) required to lock confirmation."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "360",
+        "description": "Spring stiffness coefficient for thumb travel and recoil."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "26",
+        "description": "Spring damping coefficient controlling thumb snap-back."
+      }
+    ],
+    "usageCode": "import { KineticSwipeButton } from \"@/components/ui/kinetic-swipe-button\";\n\nexport function Example() {\n  return (\n    <KineticSwipeButton\n      label=\"Slide to Deploy Production\"\n      completedLabel=\"Deployment Triggered\"\n      threshold={0.78}\n    />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/kinetic-swipe-button.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useRef, useState } from \"react\";\nimport {\n  motion,\n  useMotionValue,\n  useSpring,\n  useTransform,\n  useReducedMotion,\n} from \"framer-motion\";\nimport { ArrowRight, Check, RotateCcw } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface KineticSwipeButtonProps {\n  /** Track instruction text before completion. Default: \"Slide to Deploy Production\" */\n  label?: string;\n  /** Text displayed when locked at the right end. Default: \"Deployment Triggered\" */\n  completedLabel?: string;\n  /** Completion threshold ratio (0.5 to 0.95). Default: 0.78 */\n  threshold?: number;\n  /** Spring stiffness coefficient for thumb snap-back. Default: 360 */\n  stiffness?: number;\n  /** Spring damping coefficient for thumb snap-back. Default: 26 */\n  damping?: number;\n  /** Callback fired when swipe crosses completion threshold */\n  onComplete?: () => void;\n  className?: string;\n}\n\nexport function KineticSwipeButton({\n  label = \"Slide to Deploy Production\",\n  completedLabel = \"Deployment Triggered\",\n  threshold = 0.78,\n  stiffness = 360,\n  damping = 26,\n  onComplete,\n  className,\n}: KineticSwipeButtonProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const trackRef = useRef<HTMLDivElement | null>(null);\n  const [isDragging, setIsDragging] = useState(false);\n  const [isCompleted, setIsCompleted] = useState(false);\n  const startXRef = useRef<number>(0);\n\n  const dragX = useMotionValue(0);\n  const springX = useSpring(dragX, { stiffness, damping, mass: 0.4 });\n  const textOpacity = useTransform(springX, [0, 140], [1, 0]);\n\n  const getMaxTravel = () => {\n    const track = trackRef.current;\n    if (!track) return 220;\n    return Math.max(0, track.clientWidth - 52);\n  };\n\n  const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {\n    if (isCompleted) return;\n    e.currentTarget.setPointerCapture(e.pointerId);\n    setIsDragging(true);\n    startXRef.current = e.clientX - dragX.get();\n  };\n\n  const handlePointerMove = (e: React.PointerEvent<HTMLButtonElement>) => {\n    if (!isDragging || isCompleted) return;\n    const maxTravel = getMaxTravel();\n    const nextX = Math.max(0, Math.min(maxTravel, e.clientX - startXRef.current));\n    dragX.set(nextX);\n  };\n\n  const handlePointerUp = (e: React.PointerEvent<HTMLButtonElement>) => {\n    if (!isDragging) return;\n    if (e.currentTarget.hasPointerCapture(e.pointerId)) {\n      e.currentTarget.releasePointerCapture(e.pointerId);\n    }\n    setIsDragging(false);\n\n    const maxTravel = getMaxTravel();\n    if (dragX.get() >= maxTravel * threshold) {\n      dragX.set(maxTravel);\n      setIsCompleted(true);\n      onComplete?.();\n    } else {\n      dragX.set(0);\n    }\n  };\n\n  const resetSwipe = () => {\n    setIsCompleted(false);\n    dragX.set(0);\n  };\n\n  return (\n    <div\n      ref={trackRef}\n      className={cn(\n        \"relative flex h-14 w-full max-w-xs select-none items-center overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 p-1.5 dark:border-[#222222] dark:bg-[#0D0D0D]\",\n        className\n      )}\n    >\n      {/* Center Track Label */}\n      {!isCompleted ? (\n        <motion.span\n          style={{ opacity: shouldReduceMotion ? 1 : textOpacity }}\n          className=\"pointer-events-none mx-auto pl-8 text-xs font-semibold tracking-tight text-neutral-500 dark:text-neutral-400\"\n        >\n          {label}\n        </motion.span>\n      ) : (\n        <button\n          type=\"button\"\n          onClick={resetSwipe}\n          className=\"mx-auto inline-flex items-center gap-1.5 text-xs font-semibold text-black dark:text-white\"\n        >\n          <Check className=\"h-4 w-4\" />\n          <span>{completedLabel}</span>\n          <RotateCcw className=\"ml-1 h-3 w-3 text-neutral-400\" />\n        </button>\n      )}\n\n      {/* Draggable Magnetic Actuator Thumb */}\n      {!isCompleted && (\n        <motion.button\n          type=\"button\"\n          aria-label={label}\n          onPointerDown={handlePointerDown}\n          onPointerMove={handlePointerMove}\n          onPointerUp={handlePointerUp}\n          onPointerCancel={handlePointerUp}\n          onKeyDown={(e) => {\n            if (e.key === \"Enter\" || e.key === \" \") {\n              e.preventDefault();\n              dragX.set(getMaxTravel());\n              setIsCompleted(true);\n              onComplete?.();\n            }\n          }}\n          style={{ x: shouldReduceMotion ? 0 : springX }}\n          className=\"absolute left-1.5 flex h-11 w-11 cursor-grab touch-none items-center justify-center rounded-xl bg-black text-white shadow-sm active:cursor-grabbing focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:bg-white dark:text-black dark:focus-visible:ring-white\"\n        >\n          <ArrowRight className=\"h-4 w-4\" />\n        </motion.button>\n      )}\n    </div>\n  );\n}\n\nexport default KineticSwipeButton;\n"
+  },
+  {
     "id": "liquid-pill-tabs",
     "slug": "liquid-pill-tabs",
     "componentName": "LiquidPillTabs",
@@ -798,6 +1536,68 @@ export const PULSE_COMPONENTS: PulseComponentCatalogEntry[] = [
       "tailwind-merge"
     ],
     "sourceCode": "\"use client\";\n\nimport React, { useId, useRef, useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface LiquidTabItem {\n  id: string;\n  label: string;\n  badge?: string | number;\n}\n\nexport interface LiquidPillTabsProps {\n  /** Array of tab definitions. Defaults to a 4-item studio view switcher. */\n  tabs?: LiquidTabItem[];\n  /** Controlled active tab ID */\n  activeTab?: string;\n  /** Initial active tab ID for uncontrolled usage */\n  defaultActiveTab?: string;\n  /** Spring stiffness coefficient for pill morphing. Default: 380 */\n  stiffness?: number;\n  /** Spring damping coefficient for pill morphing. Default: 26 */\n  damping?: number;\n  /** Callback fired when active tab changes */\n  onChange?: (id: string) => void;\n  className?: string;\n}\n\nconst DEFAULT_TABS: LiquidTabItem[] = [\n  { id: \"preview\", label: \"Preview\" },\n  { id: \"physics\", label: \"Spring Config\", badge: \"3\" },\n  { id: \"code\", label: \"Source\" },\n  { id: \"a11y\", label: \"Accessibility\" },\n];\n\nexport function LiquidPillTabs({\n  tabs = DEFAULT_TABS,\n  activeTab: controlledActive,\n  defaultActiveTab = \"preview\",\n  stiffness = 380,\n  damping = 26,\n  onChange,\n  className,\n}: LiquidPillTabsProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const instanceId = useId();\n  const [internalActive, setInternalActive] = useState<string>(\n    defaultActiveTab || tabs[0]?.id || \"\"\n  );\n  const [hoveredId, setHoveredId] = useState<string | null>(null);\n  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);\n\n  const currentActive =\n    controlledActive !== undefined ? controlledActive : internalActive;\n\n  const selectTab = (id: string) => {\n    if (controlledActive === undefined) {\n      setInternalActive(id);\n    }\n    onChange?.(id);\n  };\n\n  const handleKeyDown = (\n    index: number,\n    e: React.KeyboardEvent<HTMLButtonElement>\n  ) => {\n    if (e.key === \"ArrowRight\") {\n      e.preventDefault();\n      const nextIdx = (index + 1) % tabs.length;\n      const nextTab = tabs[nextIdx];\n      if (nextTab) {\n        selectTab(nextTab.id);\n        tabRefs.current[nextIdx]?.focus();\n      }\n    } else if (e.key === \"ArrowLeft\") {\n      e.preventDefault();\n      const prevIdx = (index - 1 + tabs.length) % tabs.length;\n      const prevTab = tabs[prevIdx];\n      if (prevTab) {\n        selectTab(prevTab.id);\n        tabRefs.current[prevIdx]?.focus();\n      }\n    } else if (e.key === \"Home\") {\n      e.preventDefault();\n      const first = tabs[0];\n      if (first) {\n        selectTab(first.id);\n        tabRefs.current[0]?.focus();\n      }\n    } else if (e.key === \"End\") {\n      e.preventDefault();\n      const lastIdx = tabs.length - 1;\n      const last = tabs[lastIdx];\n      if (last) {\n        selectTab(last.id);\n        tabRefs.current[lastIdx]?.focus();\n      }\n    }\n  };\n\n  return (\n    <div\n      role=\"tablist\"\n      aria-label=\"View mode tabs\"\n      onMouseLeave={() => setHoveredId(null)}\n      className={cn(\n        \"relative inline-flex flex-wrap items-center gap-1 rounded-2xl border border-neutral-200 bg-neutral-100/80 p-1.5 backdrop-blur-md dark:border-[#222222] dark:bg-[#0D0D0D]\",\n        className\n      )}\n    >\n      {tabs.map((tab, idx) => {\n        const isActive = currentActive === tab.id;\n        const isHovered = hoveredId === tab.id;\n\n        return (\n          <button\n            key={tab.id}\n            ref={(el) => {\n              tabRefs.current[idx] = el;\n            }}\n            type=\"button\"\n            role=\"tab\"\n            aria-selected={isActive}\n            tabIndex={isActive ? 0 : -1}\n            onClick={() => selectTab(tab.id)}\n            onMouseEnter={() => setHoveredId(tab.id)}\n            onKeyDown={(e) => handleKeyDown(idx, e)}\n            className={cn(\n              \"relative z-10 inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white\",\n              isActive\n                ? \"text-white dark:text-black\"\n                : \"text-neutral-600 hover:text-black dark:text-neutral-400 dark:hover:text-white\"\n            )}\n          >\n            {/* Hover Ghost Pill */}\n            {isHovered && !isActive && (\n              <motion.span\n                layoutId={`${instanceId}-hover-pill`}\n                aria-hidden=\"true\"\n                transition={\n                  shouldReduceMotion\n                    ? { duration: 0 }\n                    : { type: \"spring\", stiffness: 420, damping: 30 }\n                }\n                className=\"pointer-events-none absolute inset-0 -z-10 rounded-xl bg-neutral-200/70 dark:bg-[#1B1B1B]\"\n              />\n            )}\n\n            {/* Primary Active Liquid Pill */}\n            {isActive && (\n              <motion.span\n                layoutId={`${instanceId}-active-pill`}\n                aria-hidden=\"true\"\n                transition={\n                  shouldReduceMotion\n                    ? { duration: 0 }\n                    : {\n                        type: \"spring\",\n                        stiffness,\n                        damping,\n                        mass: 0.6,\n                      }\n                }\n                className=\"pointer-events-none absolute inset-0 -z-10 rounded-xl bg-black shadow-sm dark:bg-white\"\n              />\n            )}\n\n            <span>{tab.label}</span>\n\n            {tab.badge !== undefined && (\n              <span\n                className={cn(\n                  \"rounded-full px-1.5 py-0.2 text-[10px] font-bold tabular-nums transition-colors\",\n                  isActive\n                    ? \"bg-white/20 text-white dark:bg-black/15 dark:text-black\"\n                    : \"bg-neutral-200 text-neutral-700 dark:bg-[#1F1F1F] dark:text-neutral-300\"\n                )}\n              >\n                {tab.badge}\n              </span>\n            )}\n          </button>\n        );\n      })}\n    </div>\n  );\n}\n\nexport default LiquidPillTabs;\n"
+  },
+  {
+    "id": "magnetic-breadcrumb",
+    "slug": "magnetic-breadcrumb",
+    "componentName": "MagneticBreadcrumb",
+    "filePath": "src/components/ui/MagneticBreadcrumb.tsx",
+    "title": "Magnetic Breadcrumb",
+    "description": "Hierarchical breadcrumb navigation trail with a spring-projected hover capsule and subtle vertical lift across path segments.",
+    "tagline": "Breadcrumb navigation trail with spring-projected hover capsule.",
+    "category": "Navigation",
+    "badges": [
+      "New",
+      "Shared Layout",
+      "WAI-ARIA"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "magnetic breadcrumb",
+      "animated breadcrumbs",
+      "sliding pill breadcrumb",
+      "framer motion navigation",
+      "hierarchy trail ui"
+    ],
+    "features": [
+      "Shared layoutId hover pill that glides smoothly between path segments using Hooke's Law springs.",
+      "Instance-scoped layout IDs via React useId for multi-instance page safety.",
+      "Semantic ordered list structure with active segment switching."
+    ],
+    "accessibility": [
+      "Wraps an ordered list (<ol>) inside a <nav aria-label='Breadcrumb'> landmark.",
+      "Marks the active path segment with aria-current='page' and separators with aria-hidden='true'.",
+      "Disables vertical lift and pill glide animations when prefers-reduced-motion is enabled."
+    ],
+    "props": [
+      {
+        "name": "items",
+        "type": "BreadcrumbSegment[]",
+        "description": "Ordered array of breadcrumb path segments with id and label."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "380",
+        "description": "Hooke's Law spring stiffness for the sliding hover capsule."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "26",
+        "description": "Spring damping coefficient controlling capsule oscillation."
+      }
+    ],
+    "usageCode": "import { MagneticBreadcrumb } from \"@/components/ui/magnetic-breadcrumb\";\n\nexport function Example() {\n  return (\n    <MagneticBreadcrumb stiffness={380} damping={26} />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/magnetic-breadcrumb.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useId, useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { ChevronRight, Home } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface BreadcrumbSegment {\n  id: string;\n  label: string;\n  href?: string;\n}\n\nexport interface MagneticBreadcrumbProps {\n  /** Ordered array of breadcrumb path segments. */\n  items?: BreadcrumbSegment[];\n  /** Spring stiffness coefficient for sliding hover pill. Default: 380 */\n  stiffness?: number;\n  /** Spring damping coefficient for sliding hover pill. Default: 26 */\n  damping?: number;\n  /** Callback fired when a segment is clicked */\n  onSelect?: (id: string) => void;\n  className?: string;\n}\n\nconst DEFAULT_SEGMENTS: BreadcrumbSegment[] = [\n  { id: \"root\", label: \"Workspace\" },\n  { id: \"registry\", label: \"Registry v2\" },\n  { id: \"primitives\", label: \"Primitives\" },\n  { id: \"kinetic\", label: \"MagneticBreadcrumb\" },\n];\n\nexport function MagneticBreadcrumb({\n  items = DEFAULT_SEGMENTS,\n  stiffness = 380,\n  damping = 26,\n  onSelect,\n  className,\n}: MagneticBreadcrumbProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const instanceId = useId();\n  const [activeId, setActiveId] = useState<string>(\n    items[items.length - 1]?.id || \"kinetic\"\n  );\n  const [hoveredId, setHoveredId] = useState<string | null>(null);\n\n  return (\n    <nav\n      aria-label=\"Breadcrumb\"\n      onMouseLeave={() => setHoveredId(null)}\n      className={cn(\n        \"inline-flex flex-wrap items-center gap-1 rounded-2xl border border-neutral-200 bg-white px-3 py-2 shadow-sm dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      <ol className=\"flex flex-wrap items-center gap-1\">\n        {items.map((segment, index) => {\n          const isCurrent = activeId === segment.id;\n          const isHovered = hoveredId === segment.id;\n\n          return (\n            <li key={segment.id} className=\"flex items-center gap-1\">\n              <motion.button\n                type=\"button\"\n                aria-current={isCurrent ? \"page\" : undefined}\n                onClick={() => {\n                  setActiveId(segment.id);\n                  onSelect?.(segment.id);\n                }}\n                onMouseEnter={() => setHoveredId(segment.id)}\n                onFocus={() => setHoveredId(segment.id)}\n                whileHover={shouldReduceMotion ? undefined : { y: -1 }}\n                whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}\n                transition={{ type: \"spring\", stiffness, damping }}\n                className={cn(\n                  \"relative z-10 inline-flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white\",\n                  isCurrent\n                    ? \"font-semibold text-black dark:text-white\"\n                    : \"text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white\"\n                )}\n              >\n                {isHovered && (\n                  <motion.span\n                    layoutId={`${instanceId}-crumb-pill`}\n                    aria-hidden=\"true\"\n                    transition={\n                      shouldReduceMotion\n                        ? { duration: 0 }\n                        : { type: \"spring\", stiffness, damping }\n                    }\n                    className=\"pointer-events-none absolute inset-0 -z-10 rounded-xl bg-neutral-100 dark:bg-[#181818]\"\n                  />\n                )}\n\n                {index === 0 && <Home className=\"h-3.5 w-3.5\" />}\n                <span>{segment.label}</span>\n              </motion.button>\n\n              {index < items.length - 1 && (\n                <ChevronRight\n                  aria-hidden=\"true\"\n                  className=\"h-3.5 w-3.5 text-neutral-300 dark:text-neutral-600\"\n                />\n              )}\n            </li>\n          );\n        })}\n      </ol>\n    </nav>\n  );\n}\n\nexport default MagneticBreadcrumb;\n"
   },
   {
     "id": "magnetic-button",
@@ -880,6 +1680,149 @@ export const PULSE_COMPONENTS: PulseComponentCatalogEntry[] = [
     "sourceCode": "\"use client\";\n\nimport React, { useRef, useState } from \"react\";\nimport {\n  motion,\n  useMotionValue,\n  useSpring,\n  useReducedMotion,\n  type HTMLMotionProps,\n} from \"framer-motion\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface MagneticButtonProps\n  extends Omit<HTMLMotionProps<\"button\">, \"children\"> {\n  children: React.ReactNode;\n  /** Pull intensity multiplier (0.1 to 1). Default: 0.35 */\n  strength?: number;\n  /** Spring stiffness. Default: 180 */\n  stiffness?: number;\n  /** Spring damping. Default: 15 */\n  damping?: number;\n  /** Spring mass. Default: 0.2 */\n  mass?: number;\n  /** Visual style preset */\n  variant?: \"primary\" | \"secondary\" | \"outline\" | \"glow\";\n  /** Size preset */\n  size?: \"sm\" | \"md\" | \"lg\";\n}\n\nexport function MagneticButton({\n  children,\n  className,\n  strength = 0.35,\n  stiffness = 180,\n  damping = 15,\n  mass = 0.2,\n  variant = \"primary\",\n  size = \"md\",\n  onMouseMove,\n  onMouseLeave,\n  ...props\n}: MagneticButtonProps) {\n  const ref = useRef<HTMLButtonElement>(null);\n  const shouldReduceMotion = useReducedMotion();\n  const [isHovered, setIsHovered] = useState(false);\n\n  const rawX = useMotionValue(0);\n  const rawY = useMotionValue(0);\n\n  const springConfig = { stiffness, damping, mass };\n  const x = useSpring(rawX, springConfig);\n  const y = useSpring(rawY, springConfig);\n\n  const innerX = useSpring(useMotionValue(0), {\n    stiffness: stiffness * 1.2,\n    damping,\n    mass,\n  });\n  const innerY = useSpring(useMotionValue(0), {\n    stiffness: stiffness * 1.2,\n    damping,\n    mass,\n  });\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {\n    if (!ref.current || shouldReduceMotion) return;\n\n    const rect = ref.current.getBoundingClientRect();\n    const centerX = rect.left + rect.width / 2;\n    const centerY = rect.top + rect.height / 2;\n\n    const deltaX = (e.clientX - centerX) * strength;\n    const deltaY = (e.clientY - centerY) * strength;\n\n    rawX.set(deltaX);\n    rawY.set(deltaY);\n    innerX.set(deltaX * 0.35);\n    innerY.set(deltaY * 0.35);\n\n    onMouseMove?.(e);\n  };\n\n  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {\n    setIsHovered(false);\n    rawX.set(0);\n    rawY.set(0);\n    innerX.set(0);\n    innerY.set(0);\n    onMouseLeave?.(e);\n  };\n\n  const variantStyles: Record<\n    NonNullable<MagneticButtonProps[\"variant\"]>,\n    string\n  > = {\n    primary:\n      \"bg-black text-white hover:bg-neutral-800 border border-black dark:bg-white dark:text-black dark:hover:bg-neutral-200 dark:border-white\",\n    secondary:\n      \"bg-neutral-100 text-black hover:bg-neutral-200 border border-neutral-200 dark:bg-[#141414] dark:text-white dark:hover:bg-[#1F1F1F] dark:border-[#262626]\",\n    outline:\n      \"bg-transparent text-black border border-neutral-300 hover:border-black hover:bg-black/5 dark:text-white dark:border-[#262626] dark:hover:border-white dark:hover:bg-white/5\",\n    glow:\n      \"bg-white text-black border border-black/40 hover:border-black shadow-sm dark:bg-[#0A0A0A] dark:text-white dark:border-white/40 dark:hover:border-white dark:shadow-[0_0_24px_-4px_rgba(255,255,255,0.22)]\",\n  };\n\n  const sizeStyles: Record<NonNullable<MagneticButtonProps[\"size\"]>, string> = {\n    sm: \"px-3.5 py-2 text-xs rounded-lg gap-1.5\",\n    md: \"px-5 py-2.5 text-sm rounded-xl gap-2\",\n    lg: \"px-6 py-3 text-sm rounded-xl gap-2.5\",\n  };\n\n  return (\n    <motion.button\n      ref={ref}\n      type=\"button\"\n      onMouseEnter={() => setIsHovered(true)}\n      onMouseMove={handleMouseMove}\n      onMouseLeave={handleMouseLeave}\n      style={{\n        x: shouldReduceMotion ? 0 : x,\n        y: shouldReduceMotion ? 0 : y,\n      }}\n      whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}\n      className={cn(\n        \"relative inline-flex items-center justify-center font-medium tracking-tight transition-colors duration-200 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white focus-visible:ring-offset-2\",\n        variantStyles[variant],\n        sizeStyles[size],\n        className\n      )}\n      {...props}\n    >\n      <span\n        aria-hidden=\"true\"\n        className={cn(\n          \"pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300\",\n          isHovered ? \"opacity-100\" : \"opacity-0\"\n        )}\n        style={{\n          background:\n            \"radial-gradient(circle at center, rgba(128,128,128,0.12), transparent 70%)\",\n        }}\n      />\n\n      <motion.span\n        style={{\n          x: shouldReduceMotion ? 0 : innerX,\n          y: shouldReduceMotion ? 0 : innerY,\n        }}\n        className=\"relative z-10 inline-flex items-center gap-2\"\n      >\n        {children}\n      </motion.span>\n    </motion.button>\n  );\n}\n"
   },
   {
+    "id": "magnetic-popover-menu",
+    "slug": "magnetic-popover-menu",
+    "componentName": "MagneticPopoverMenu",
+    "filePath": "src/components/ui/MagneticPopoverMenu.tsx",
+    "title": "Magnetic Popover Menu",
+    "description": "Floating command popover menu with origin-scaled spring entry, a shared-layout magnetic row highlight, and keyboard arrow navigation.",
+    "tagline": "Floating command popover with shared-layout magnetic row highlight.",
+    "category": "Overlays",
+    "badges": [
+      "New",
+      "Command Menu",
+      "WAI-ARIA"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "magnetic popover menu",
+      "animated dropdown menu",
+      "command menu popover",
+      "framer motion popover",
+      "floating menu react"
+    ],
+    "features": [
+      "Origin-top-left Hooke's Law spring scale and elevation entry animation.",
+      "Shared layoutId highlight pill that glides smoothly between menu items on pointer hover or keyboard focus.",
+      "Automatic outside-click and Escape key dismissal."
+    ],
+    "accessibility": [
+      "Implements role='menu' and role='menuitem' with aria-haspopup='menu' and aria-expanded on the trigger.",
+      "Supports ArrowUp and ArrowDown keyboard navigation across menu items.",
+      "Disables scale and highlight glide animations when prefers-reduced-motion is active."
+    ],
+    "props": [
+      {
+        "name": "triggerLabel",
+        "type": "string",
+        "default": "\"Quick Actions\"",
+        "description": "Text label displayed inside the popover trigger button."
+      },
+      {
+        "name": "items",
+        "type": "PopoverCommandItem[]",
+        "description": "Array of command items with id, label, shortcut, and icon."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "380",
+        "description": "Spring stiffness coefficient for popover entry and highlight glide."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "26",
+        "description": "Spring damping coefficient controlling popover settle."
+      }
+    ],
+    "usageCode": "import { MagneticPopoverMenu } from \"@/components/ui/magnetic-popover-menu\";\n\nexport function Example() {\n  return (\n    <MagneticPopoverMenu triggerLabel=\"Quick Actions\" stiffness={380} damping={26} />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/magnetic-popover-menu.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useEffect, useId, useRef, useState } from \"react\";\nimport { AnimatePresence, motion, useReducedMotion } from \"framer-motion\";\nimport {\n  Command,\n  Copy,\n  Sparkles,\n  Terminal,\n  Share2,\n  ChevronDown,\n} from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface PopoverCommandItem {\n  id: string;\n  label: string;\n  shortcut: string;\n  icon: React.ReactNode;\n}\n\nexport interface MagneticPopoverMenuProps {\n  /** Trigger button label. Default: \"Quick Actions\" */\n  triggerLabel?: string;\n  /** Array of popover menu items. */\n  items?: PopoverCommandItem[];\n  /** Hooke's Law spring stiffness coefficient. Default: 380 */\n  stiffness?: number;\n  /** Spring damping coefficient. Default: 26 */\n  damping?: number;\n  /** Callback fired when an item is selected */\n  onSelect?: (id: string) => void;\n  className?: string;\n}\n\nconst DEFAULT_ITEMS: PopoverCommandItem[] = [\n  {\n    id: \"install\",\n    label: \"Copy CLI Command\",\n    shortcut: \"⌘C\",\n    icon: <Terminal className=\"h-3.5 w-3.5\" />,\n  },\n  {\n    id: \"source\",\n    label: \"Copy .tsx Source\",\n    shortcut: \"⌘S\",\n    icon: <Copy className=\"h-3.5 w-3.5\" />,\n  },\n  {\n    id: \"tune\",\n    label: \"Tune Spring Constants\",\n    shortcut: \"⌘K\",\n    icon: <Sparkles className=\"h-3.5 w-3.5\" />,\n  },\n  {\n    id: \"share\",\n    label: \"Share Component URL\",\n    shortcut: \"⌘U\",\n    icon: <Share2 className=\"h-3.5 w-3.5\" />,\n  },\n];\n\nexport function MagneticPopoverMenu({\n  triggerLabel = \"Quick Actions\",\n  items = DEFAULT_ITEMS,\n  stiffness = 380,\n  damping = 26,\n  onSelect,\n  className,\n}: MagneticPopoverMenuProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const instanceId = useId();\n  const containerRef = useRef<HTMLDivElement | null>(null);\n  const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);\n\n  const [isOpen, setIsOpen] = useState(false);\n  const [activeIndex, setActiveIndex] = useState<number>(0);\n\n  useEffect(() => {\n    if (!isOpen) return;\n    const handleOutside = (e: MouseEvent) => {\n      if (\n        containerRef.current &&\n        !containerRef.current.contains(e.target as Node)\n      ) {\n        setIsOpen(false);\n      }\n    };\n    const handleEsc = (e: KeyboardEvent) => {\n      if (e.key === \"Escape\") {\n        setIsOpen(false);\n      }\n    };\n    window.addEventListener(\"mousedown\", handleOutside);\n    window.addEventListener(\"keydown\", handleEsc);\n    return () => {\n      window.removeEventListener(\"mousedown\", handleOutside);\n      window.removeEventListener(\"keydown\", handleEsc);\n    };\n  }, [isOpen]);\n\n  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {\n    if (!isOpen) return;\n    if (e.key === \"ArrowDown\") {\n      e.preventDefault();\n      const next = (activeIndex + 1) % items.length;\n      setActiveIndex(next);\n      itemRefs.current[next]?.focus();\n    } else if (e.key === \"ArrowUp\") {\n      e.preventDefault();\n      const prev = (activeIndex - 1 + items.length) % items.length;\n      setActiveIndex(prev);\n      itemRefs.current[prev]?.focus();\n    }\n  };\n\n  return (\n    <div\n      ref={containerRef}\n      onKeyDown={handleKeyDown}\n      className={cn(\"relative inline-block\", className)}\n    >\n      <motion.button\n        type=\"button\"\n        aria-haspopup=\"menu\"\n        aria-expanded={isOpen}\n        onClick={() => setIsOpen((prev) => !prev)}\n        whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}\n        className=\"inline-flex h-11 items-center gap-2 rounded-2xl border border-neutral-200 bg-white px-4 text-xs font-semibold text-black shadow-sm transition-colors hover:border-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[#222222] dark:bg-[#0A0A0A] dark:text-white dark:hover:border-white dark:focus-visible:ring-white\"\n      >\n        <Command className=\"h-3.5 w-3.5\" />\n        <span>{triggerLabel}</span>\n        <ChevronDown\n          className={cn(\n            \"h-3.5 w-3.5 text-neutral-400 transition-transform duration-200\",\n            isOpen && \"rotate-180 text-black dark:text-white\"\n          )}\n        />\n      </motion.button>\n\n      <AnimatePresence>\n        {isOpen && (\n          <motion.div\n            role=\"menu\"\n            aria-label={triggerLabel}\n            initial={\n              shouldReduceMotion\n                ? { opacity: 0 }\n                : { opacity: 0, scale: 0.92, y: -6 }\n            }\n            animate={{ opacity: 1, scale: 1, y: 0 }}\n            exit={\n              shouldReduceMotion\n                ? { opacity: 0 }\n                : { opacity: 0, scale: 0.94, y: -4 }\n            }\n            transition={{ type: \"spring\", stiffness, damping }}\n            className=\"absolute left-0 top-full z-30 mt-2 w-60 origin-top-left rounded-2xl border border-neutral-200 bg-white p-1.5 shadow-xl dark:border-[#262626] dark:bg-[#0D0D0D]\"\n          >\n            {items.map((item, idx) => {\n              const isHighlighted = activeIndex === idx;\n\n              return (\n                <button\n                  key={item.id}\n                  ref={(el) => {\n                    itemRefs.current[idx] = el;\n                  }}\n                  type=\"button\"\n                  role=\"menuitem\"\n                  onMouseEnter={() => setActiveIndex(idx)}\n                  onFocus={() => setActiveIndex(idx)}\n                  onClick={() => {\n                    onSelect?.(item.id);\n                    setIsOpen(false);\n                  }}\n                  className=\"relative z-10 flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-xs font-medium text-black transition-colors focus-visible:outline-none dark:text-white\"\n                >\n                  {isHighlighted && (\n                    <motion.span\n                      layoutId={`${instanceId}-popover-highlight`}\n                      aria-hidden=\"true\"\n                      transition={\n                        shouldReduceMotion\n                          ? { duration: 0 }\n                          : { type: \"spring\", stiffness: 420, damping: 28 }\n                      }\n                      className=\"pointer-events-none absolute inset-0 -z-10 rounded-xl bg-neutral-100 dark:bg-[#1A1A1A]\"\n                    />\n                  )}\n\n                  <span className=\"flex items-center gap-2.5\">\n                    {item.icon}\n                    <span>{item.label}</span>\n                  </span>\n\n                  <kbd className=\"rounded border border-neutral-200 bg-white px-1.5 py-0.5 font-mono text-[10px] text-neutral-400 dark:border-[#262626] dark:bg-[#121212]\">\n                    {item.shortcut}\n                  </kbd>\n                </button>\n              );\n            })}\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n\nexport default MagneticPopoverMenu;\n"
+  },
+  {
+    "id": "morphing-action-button",
+    "slug": "morphing-action-button",
+    "componentName": "MorphingActionButton",
+    "filePath": "src/components/ui/MorphingActionButton.tsx",
+    "title": "Morphing Action Button",
+    "description": "Multi-phase stateful pill button that morphs its bounding width across Idle, Compiling, and Published states using spring layout projection.",
+    "tagline": "Stateful width-morphing pill button with spring layout projection.",
+    "category": "Buttons",
+    "badges": [
+      "New",
+      "Stateful Morph",
+      "Layout Spring"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": true,
+    "keywords": [
+      "morphing action button",
+      "stateful loading button",
+      "animated submit button",
+      "framer motion button",
+      "pill width morph"
+    ],
+    "features": [
+      "Seamless bounding-width interpolation between Idle, Loading, Success, and Error states via Framer Motion layout.",
+      "Directional vertical label swap powered by AnimatePresence mode='popLayout'.",
+      "Optional harmonic error shake state."
+    ],
+    "accessibility": [
+      "Uses aria-live='polite' so screen readers announce state transitions as they occur.",
+      "Preserves keyboard focus across all state transitions.",
+      "Disables width spring oscillation and horizontal shake when prefers-reduced-motion is enabled."
+    ],
+    "props": [
+      {
+        "name": "idleLabel",
+        "type": "string",
+        "default": "\"Publish Registry\"",
+        "description": "Button text rendered in the resting idle state."
+      },
+      {
+        "name": "loadingLabel",
+        "type": "string",
+        "default": "\"Compiling...\"",
+        "description": "Button text rendered during the async loading phase."
+      },
+      {
+        "name": "successLabel",
+        "type": "string",
+        "default": "\"Published v2.4\"",
+        "description": "Button text rendered when the action succeeds."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "380",
+        "description": "Spring stiffness coefficient for pill width projection."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "26",
+        "description": "Spring damping coefficient for pill width projection."
+      }
+    ],
+    "usageCode": "import { MorphingActionButton } from \"@/components/ui/morphing-action-button\";\n\nexport function Example() {\n  return (\n    <MorphingActionButton\n      idleLabel=\"Publish Registry\"\n      loadingLabel=\"Compiling...\"\n      successLabel=\"Published v2.4\"\n    />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/morphing-action-button.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { AnimatePresence, motion, useReducedMotion } from \"framer-motion\";\nimport { ArrowRight, Check, Loader2, AlertTriangle } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport type ActionPhase = \"idle\" | \"loading\" | \"success\" | \"error\";\n\nexport interface MorphingActionButtonProps {\n  /** Label shown in resting idle phase. Default: \"Publish Registry\" */\n  idleLabel?: string;\n  /** Label shown during async loading phase. Default: \"Compiling...\" */\n  loadingLabel?: string;\n  /** Label shown upon completion. Default: \"Published v2.4\" */\n  successLabel?: string;\n  /** Simulate an error state on every second click for demo purposes. Default: false */\n  simulateError?: boolean;\n  /** Hooke's Law spring stiffness coefficient for pill width morphing. Default: 380 */\n  stiffness?: number;\n  /** Spring damping coefficient for pill width morphing. Default: 26 */\n  damping?: number;\n  className?: string;\n}\n\nexport function MorphingActionButton({\n  idleLabel = \"Publish Registry\",\n  loadingLabel = \"Compiling...\",\n  successLabel = \"Published v2.4\",\n  simulateError = false,\n  stiffness = 380,\n  damping = 26,\n  className,\n}: MorphingActionButtonProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [phase, setPhase] = useState<ActionPhase>(\"idle\");\n  const [runCount, setRunCount] = useState(0);\n\n  const handleTrigger = () => {\n    if (phase === \"loading\") return;\n    if (phase !== \"idle\") {\n      setPhase(\"idle\");\n      return;\n    }\n\n    setPhase(\"loading\");\n    const nextRun = runCount + 1;\n    setRunCount(nextRun);\n\n    setTimeout(() => {\n      if (simulateError && nextRun % 2 === 0) {\n        setPhase(\"error\");\n      } else {\n        setPhase(\"success\");\n      }\n      setTimeout(() => {\n        setPhase(\"idle\");\n      }, 1800);\n    }, 950);\n  };\n\n  return (\n    <motion.button\n      layout\n      type=\"button\"\n      aria-live=\"polite\"\n      onClick={handleTrigger}\n      animate={\n        phase === \"error\" && !shouldReduceMotion\n          ? { x: [0, -7, 7, -4, 4, 0] }\n          : { x: 0 }\n      }\n      transition={\n        shouldReduceMotion\n          ? { duration: 0.01 }\n          : { type: \"spring\", stiffness, damping }\n      }\n      className={cn(\n        \"relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full border px-6 text-xs font-semibold shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 dark:focus-visible:ring-white\",\n        phase === \"idle\" &&\n          \"border-black bg-black text-white hover:opacity-90 dark:border-white dark:bg-white dark:text-black\",\n        phase === \"loading\" &&\n          \"border-neutral-300 bg-neutral-100 text-neutral-700 dark:border-[#262626] dark:bg-[#141414] dark:text-neutral-300\",\n        phase === \"success\" &&\n          \"border-black bg-white text-black dark:border-white dark:bg-[#0D0D0D] dark:text-white\",\n        phase === \"error\" &&\n          \"border-neutral-800 bg-neutral-900 text-white dark:border-neutral-300 dark:bg-neutral-200 dark:text-black\",\n        className\n      )}\n    >\n      <AnimatePresence mode=\"popLayout\" initial={false}>\n        {phase === \"idle\" && (\n          <motion.span\n            key=\"idle\"\n            initial={{ opacity: 0, y: 10 }}\n            animate={{ opacity: 1, y: 0 }}\n            exit={{ opacity: 0, y: -10 }}\n            transition={{ duration: 0.15 }}\n            className=\"inline-flex items-center gap-2 whitespace-nowrap\"\n          >\n            <span>{idleLabel}</span>\n            <ArrowRight className=\"h-3.5 w-3.5\" />\n          </motion.span>\n        )}\n\n        {phase === \"loading\" && (\n          <motion.span\n            key=\"loading\"\n            initial={{ opacity: 0, y: 10 }}\n            animate={{ opacity: 1, y: 0 }}\n            exit={{ opacity: 0, y: -10 }}\n            transition={{ duration: 0.15 }}\n            className=\"inline-flex items-center gap-2 whitespace-nowrap\"\n          >\n            <Loader2 className=\"h-3.5 w-3.5 animate-spin\" />\n            <span>{loadingLabel}</span>\n          </motion.span>\n        )}\n\n        {phase === \"success\" && (\n          <motion.span\n            key=\"success\"\n            initial={{ opacity: 0, scale: 0.85 }}\n            animate={{ opacity: 1, scale: 1 }}\n            exit={{ opacity: 0, scale: 0.85 }}\n            transition={{ type: \"spring\", stiffness: 420, damping: 22 }}\n            className=\"inline-flex items-center gap-2 whitespace-nowrap\"\n          >\n            <Check className=\"h-4 w-4\" />\n            <span>{successLabel}</span>\n          </motion.span>\n        )}\n\n        {phase === \"error\" && (\n          <motion.span\n            key=\"error\"\n            initial={{ opacity: 0, scale: 0.85 }}\n            animate={{ opacity: 1, scale: 1 }}\n            exit={{ opacity: 0, scale: 0.85 }}\n            transition={{ duration: 0.15 }}\n            className=\"inline-flex items-center gap-2 whitespace-nowrap\"\n          >\n            <AlertTriangle className=\"h-3.5 w-3.5\" />\n            <span>Build Failed • Retry</span>\n          </motion.span>\n        )}\n      </AnimatePresence>\n    </motion.button>\n  );\n}\n\nexport default MorphingActionButton;\n"
+  },
+  {
     "id": "morphing-dialog",
     "slug": "morphing-dialog",
     "componentName": "MorphingDialog",
@@ -955,6 +1898,150 @@ export const PULSE_COMPONENTS: PulseComponentCatalogEntry[] = [
     "sourceCode": "\"use client\";\n\nimport React, { useEffect, useId, useRef, useState } from \"react\";\nimport {\n  AnimatePresence,\n  motion,\n  useReducedMotion,\n  type PanInfo,\n} from \"framer-motion\";\nimport { Sparkles, X, ArrowUpRight } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface MorphingDialogProps {\n  /** Trigger button title text. Default: \"Inspect Spring Telemetry\" */\n  triggerTitle?: string;\n  /** Subtitle shown inside the compact trigger card. Default: \"Click to expand shared-layout surface\" */\n  triggerSubtitle?: string;\n  /** Modal dialog heading. Default: \"Hooke's Law Telemetry Architecture\" */\n  dialogTitle?: string;\n  /** Modal dialog body description. */\n  dialogDescription?: string;\n  /** Controlled open state */\n  open?: boolean;\n  /** Callback when open state changes */\n  onOpenChange?: (open: boolean) => void;\n  /** Spring stiffness coefficient for shared layout projection. Default: 290 */\n  stiffness?: number;\n  /** Spring damping coefficient for shared layout projection. Default: 26 */\n  damping?: number;\n  /** Optional custom content inside the expanded dialog body */\n  children?: React.ReactNode;\n  className?: string;\n}\n\nexport function MorphingDialog({\n  triggerTitle = \"Inspect Spring Telemetry\",\n  triggerSubtitle = \"Click to expand shared-layout surface\",\n  dialogTitle = \"Hooke's Law Telemetry Architecture\",\n  dialogDescription = \"Every BoseUI overlay morphs directly from the bounding box of its origin trigger using GPU-accelerated layout projection, complete with vertical drag-to-dismiss elasticity.\",\n  open: controlledOpen,\n  onOpenChange,\n  stiffness = 290,\n  damping = 26,\n  children,\n  className,\n}: MorphingDialogProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const uniqueId = useId();\n  const layoutId = `morphing-dialog-${uniqueId}`;\n\n  const [internalOpen, setInternalOpen] = useState(false);\n  const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen;\n\n  const triggerRef = useRef<HTMLButtonElement | null>(null);\n  const closeButtonRef = useRef<HTMLButtonElement | null>(null);\n\n  const setOpen = (next: boolean) => {\n    if (controlledOpen === undefined) {\n      setInternalOpen(next);\n    }\n    onOpenChange?.(next);\n    if (!next) {\n      requestAnimationFrame(() => {\n        triggerRef.current?.focus();\n      });\n    }\n  };\n\n  useEffect(() => {\n    if (!isOpen) return;\n\n    const timer = requestAnimationFrame(() => {\n      closeButtonRef.current?.focus();\n    });\n\n    const handleKeyDown = (e: KeyboardEvent) => {\n      if (e.key === \"Escape\") {\n        e.preventDefault();\n        setOpen(false);\n      }\n    };\n\n    window.addEventListener(\"keydown\", handleKeyDown);\n    return () => {\n      cancelAnimationFrame(timer);\n      window.removeEventListener(\"keydown\", handleKeyDown);\n    };\n  });\n\n  const handleDragEnd = (\n    _event: MouseEvent | TouchEvent | PointerEvent,\n    info: PanInfo\n  ) => {\n    if (Math.abs(info.offset.y) > 85 || Math.abs(info.velocity.y) > 420) {\n      setOpen(false);\n    }\n  };\n\n  const springConfig = shouldReduceMotion\n    ? { duration: 0.01 }\n    : { type: \"spring\" as const, stiffness, damping };\n\n  return (\n    <div className={cn(\"relative inline-block\", className)}>\n      {/* Origin Trigger Card */}\n      <motion.button\n        ref={triggerRef}\n        type=\"button\"\n        layoutId={layoutId}\n        onClick={() => setOpen(true)}\n        aria-haspopup=\"dialog\"\n        aria-expanded={isOpen}\n        transition={springConfig}\n        className=\"group flex items-center gap-3.5 rounded-2xl border border-neutral-200 bg-white px-5 py-4 text-left shadow-sm transition-colors hover:border-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[#222222] dark:bg-[#0A0A0A] dark:hover:border-white dark:focus-visible:ring-white\"\n      >\n        <motion.div\n          layoutId={`${layoutId}-icon`}\n          transition={springConfig}\n          className=\"flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neutral-200 bg-neutral-50 text-black dark:border-[#262626] dark:bg-[#141414] dark:text-white\"\n        >\n          <Sparkles className=\"h-4 w-4\" />\n        </motion.div>\n\n        <div className=\"pr-2\">\n          <motion.div\n            layoutId={`${layoutId}-title`}\n            transition={springConfig}\n            className=\"text-sm font-semibold text-black dark:text-white\"\n          >\n            {triggerTitle}\n          </motion.div>\n          <motion.div\n            layoutId={`${layoutId}-subtitle`}\n            transition={springConfig}\n            className=\"mt-0.5 text-xs text-neutral-500 dark:text-neutral-400\"\n          >\n            {triggerSubtitle}\n          </motion.div>\n        </div>\n\n        <ArrowUpRight className=\"ml-auto h-4 w-4 text-neutral-400 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-black dark:group-hover:text-white\" />\n      </motion.button>\n\n      {/* Shared-Element Expanded Modal Overlay */}\n      <AnimatePresence>\n        {isOpen && (\n          <div className=\"fixed inset-0 z-50 flex items-center justify-center p-4\">\n            {/* Backdrop */}\n            <motion.div\n              initial={{ opacity: 0 }}\n              animate={{ opacity: 1 }}\n              exit={{ opacity: 0 }}\n              transition={{ duration: 0.18 }}\n              onClick={() => setOpen(false)}\n              aria-hidden=\"true\"\n              className=\"fixed inset-0 bg-black/50 backdrop-blur-sm\"\n            />\n\n            {/* Dialog Surface */}\n            <motion.div\n              role=\"dialog\"\n              aria-modal=\"true\"\n              aria-labelledby={`${uniqueId}-heading`}\n              aria-describedby={`${uniqueId}-desc`}\n              layoutId={layoutId}\n              transition={springConfig}\n              drag={shouldReduceMotion ? false : \"y\"}\n              dragConstraints={{ top: 0, bottom: 0 }}\n              dragElastic={0.35}\n              onDragEnd={handleDragEnd}\n              className=\"relative z-10 w-full max-w-md overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 text-left shadow-2xl dark:border-[#262626] dark:bg-[#0D0D0D]\"\n            >\n              {/* Drag Handle Indicator */}\n              <div\n                aria-hidden=\"true\"\n                className=\"mx-auto mb-4 h-1 w-10 rounded-full bg-neutral-200 dark:bg-[#262626]\"\n              />\n\n              <div className=\"flex items-start justify-between gap-4\">\n                <div className=\"flex items-center gap-3\">\n                  <motion.div\n                    layoutId={`${layoutId}-icon`}\n                    transition={springConfig}\n                    className=\"flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neutral-200 bg-neutral-50 text-black dark:border-[#262626] dark:bg-[#141414] dark:text-white\"\n                  >\n                    <Sparkles className=\"h-4 w-4\" />\n                  </motion.div>\n                  <div>\n                    <motion.h3\n                      id={`${uniqueId}-heading`}\n                      layoutId={`${layoutId}-title`}\n                      transition={springConfig}\n                      className=\"text-base font-semibold text-black dark:text-white\"\n                    >\n                      {dialogTitle}\n                    </motion.h3>\n                    <motion.p\n                      layoutId={`${layoutId}-subtitle`}\n                      transition={springConfig}\n                      className=\"text-xs text-neutral-500 dark:text-neutral-400\"\n                    >\n                      Shared-element projection • Drag vertically to dismiss\n                    </motion.p>\n                  </div>\n                </div>\n\n                <button\n                  ref={closeButtonRef}\n                  type=\"button\"\n                  aria-label=\"Close dialog\"\n                  onClick={() => setOpen(false)}\n                  className=\"flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 text-neutral-500 transition-colors hover:border-black hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[#262626] dark:hover:border-white dark:hover:text-white dark:focus-visible:ring-white\"\n                >\n                  <X className=\"h-4 w-4\" />\n                </button>\n              </div>\n\n              <motion.div\n                initial={{ opacity: 0, y: 6 }}\n                animate={{ opacity: 1, y: 0 }}\n                exit={{ opacity: 0, y: 4 }}\n                transition={{ delay: 0.05, duration: 0.18 }}\n                className=\"mt-5\"\n              >\n                <p\n                  id={`${uniqueId}-desc`}\n                  className=\"text-xs leading-relaxed text-neutral-600 dark:text-neutral-300\"\n                >\n                  {dialogDescription}\n                </p>\n\n                {children || (\n                  <div className=\"mt-4 grid grid-cols-3 gap-2 rounded-2xl border border-neutral-200 bg-neutral-50 p-3 dark:border-[#1F1F1F] dark:bg-[#141414]\">\n                    <div>\n                      <div className=\"text-[10px] uppercase tracking-wider text-neutral-400\">\n                        Stiffness\n                      </div>\n                      <div className=\"mt-0.5 font-mono text-xs font-semibold text-black dark:text-white\">\n                        {stiffness} N/m\n                      </div>\n                    </div>\n                    <div>\n                      <div className=\"text-[10px] uppercase tracking-wider text-neutral-400\">\n                        Damping\n                      </div>\n                      <div className=\"mt-0.5 font-mono text-xs font-semibold text-black dark:text-white\">\n                        {damping} Ns/m\n                      </div>\n                    </div>\n                    <div>\n                      <div className=\"text-[10px] uppercase tracking-wider text-neutral-400\">\n                        Dismiss\n                      </div>\n                      <div className=\"mt-0.5 font-mono text-xs font-semibold text-black dark:text-white\">\n                        &gt;85px / Esc\n                      </div>\n                    </div>\n                  </div>\n                )}\n\n                <div className=\"mt-5 flex justify-end\">\n                  <button\n                    type=\"button\"\n                    onClick={() => setOpen(false)}\n                    className=\"rounded-xl bg-black px-4 py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90 dark:bg-white dark:text-black\"\n                  >\n                    Done\n                  </button>\n                </div>\n              </motion.div>\n            </motion.div>\n          </div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n\nexport default MorphingDialog;\n"
   },
   {
+    "id": "parallax-tilt-card",
+    "slug": "parallax-tilt-card",
+    "componentName": "ParallaxTiltCard",
+    "filePath": "src/components/ui/ParallaxTiltCard.tsx",
+    "title": "Parallax Tilt Card",
+    "description": "Multi-depth 3D spatial card featuring three independent Z-planes that shift at graduated parallax ratios under pointer movement.",
+    "tagline": "Three-plane spatial parallax card with coupled 3D tilt.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "3D Parallax",
+      "Zero Re-renders"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": true,
+    "keywords": [
+      "parallax tilt card",
+      "3d depth card",
+      "spatial ui card",
+      "framer motion parallax",
+      "multi layer tilt card"
+    ],
+    "features": [
+      "Three graduated parallax translation planes (±6px, ±16px, ±26px) coupled with ±14° 3D perspective rotation.",
+      "Driven entirely by Framer Motion useTransform and useSpring with zero React state re-renders.",
+      "Automatic spring return to neutral equilibrium on pointer leave."
+    ],
+    "accessibility": [
+      "Marks decorative background dot matrix planes with aria-hidden='true'.",
+      "Disables all 3D rotation and parallax plane displacement when prefers-reduced-motion is active.",
+      "Preserves semantic heading and paragraph hierarchy for screen readers."
+    ],
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "default": "\"Spatial Depth Plane\"",
+        "description": "Primary heading rendered on the foreground elevation plane."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "\"Three independent Z-planes translate at graduated ratios...\"",
+        "description": "Supporting description text rendered below the title."
+      },
+      {
+        "name": "maxTilt",
+        "type": "number",
+        "default": "14",
+        "description": "Peak 3D tilt angle in degrees along X and Y axes."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "240",
+        "description": "Hooke's Law spring stiffness for tilt and plane parallax."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "22",
+        "description": "Spring damping coefficient controlling settle oscillation."
+      }
+    ],
+    "usageCode": "import { ParallaxTiltCard } from \"@/components/ui/parallax-tilt-card\";\n\nexport function Example() {\n  return (\n    <ParallaxTiltCard\n      title=\"Spatial Depth Plane\"\n      maxTilt={14}\n      stiffness={240}\n      damping={22}\n    />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/parallax-tilt-card.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useRef } from \"react\";\nimport {\n  motion,\n  useMotionValue,\n  useSpring,\n  useTransform,\n  useReducedMotion,\n} from \"framer-motion\";\nimport { Cpu, Layers, Sparkles } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ParallaxTiltCardProps {\n  /** Card title heading. Default: \"Spatial Depth Plane\" */\n  title?: string;\n  /** Supporting card description. */\n  subtitle?: string;\n  /** Peak 3D rotation angle in degrees. Default: 14 */\n  maxTilt?: number;\n  /** Hooke's Law spring stiffness coefficient. Default: 240 */\n  stiffness?: number;\n  /** Spring damping coefficient. Default: 22 */\n  damping?: number;\n  className?: string;\n}\n\nexport function ParallaxTiltCard({\n  title = \"Spatial Depth Plane\",\n  subtitle = \"Three independent Z-planes translate at graduated ratios under pointer movement.\",\n  maxTilt = 14,\n  stiffness = 240,\n  damping = 22,\n  className,\n}: ParallaxTiltCardProps) {\n  const cardRef = useRef<HTMLDivElement | null>(null);\n  const shouldReduceMotion = useReducedMotion() ?? false;\n\n  const pctX = useMotionValue(0);\n  const pctY = useMotionValue(0);\n\n  const smoothX = useSpring(pctX, { stiffness, damping, mass: 0.4 });\n  const smoothY = useSpring(pctY, { stiffness, damping, mass: 0.4 });\n\n  const rotateX = useTransform(smoothY, [-1, 1], [maxTilt, -maxTilt]);\n  const rotateY = useTransform(smoothX, [-1, 1], [-maxTilt, maxTilt]);\n\n  // Graduated multi-plane parallax offsets\n  const layer1X = useTransform(smoothX, [-1, 1], [-6, 6]);\n  const layer1Y = useTransform(smoothY, [-1, 1], [-6, 6]);\n\n  const layer2X = useTransform(smoothX, [-1, 1], [-16, 16]);\n  const layer2Y = useTransform(smoothY, [-1, 1], [-16, 16]);\n\n  const layer3X = useTransform(smoothX, [-1, 1], [-26, 26]);\n  const layer3Y = useTransform(smoothY, [-1, 1], [-26, 26]);\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n    if (shouldReduceMotion) return;\n    const el = cardRef.current;\n    if (!el) return;\n    const rect = el.getBoundingClientRect();\n    const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;\n    const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;\n    pctX.set(nx);\n    pctY.set(ny);\n  };\n\n  const handleMouseLeave = () => {\n    pctX.set(0);\n    pctY.set(0);\n  };\n\n  return (\n    <div\n      style={{ perspective: \"1100px\" }}\n      className={cn(\"w-full max-w-sm select-none\", className)}\n    >\n      <motion.div\n        ref={cardRef}\n        onMouseMove={handleMouseMove}\n        onMouseLeave={handleMouseLeave}\n        style={{\n          rotateX: shouldReduceMotion ? 0 : rotateX,\n          rotateY: shouldReduceMotion ? 0 : rotateY,\n          transformStyle: \"preserve-3d\",\n        }}\n        className=\"group relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-colors hover:border-neutral-400 dark:border-[#222222] dark:bg-[#0A0A0A] dark:hover:border-[#383838]\"\n      >\n        {/* Depth Plane 1: Background Blueprint Grid */}\n        <motion.div\n          aria-hidden=\"true\"\n          style={{\n            x: shouldReduceMotion ? 0 : layer1X,\n            y: shouldReduceMotion ? 0 : layer1Y,\n          }}\n          className=\"pointer-events-none absolute -inset-6 bg-[radial-gradient(#d4d4d4_1px,transparent_1px)] [background-size:16px_16px] opacity-60 dark:bg-[radial-gradient(#262626_1px,transparent_1px)]\"\n        />\n\n        {/* Depth Plane 2: Floating Mid-Ground Telemetry Module */}\n        <motion.div\n          style={{\n            x: shouldReduceMotion ? 0 : layer2X,\n            y: shouldReduceMotion ? 0 : layer2Y,\n          }}\n          className=\"relative z-10 mb-5 flex items-center justify-between rounded-2xl border border-neutral-200/90 bg-neutral-50/90 p-3.5 backdrop-blur-md dark:border-[#262626] dark:bg-[#141414]/90\"\n        >\n          <div className=\"flex items-center gap-2.5\">\n            <div className=\"flex h-9 w-9 items-center justify-center rounded-xl bg-black text-white dark:bg-white dark:text-black\">\n              <Cpu className=\"h-4 w-4\" />\n            </div>\n            <div>\n              <div className=\"font-mono text-[10px] font-semibold uppercase text-neutral-400\">\n                PLANE_02 // PARALLAX\n              </div>\n              <div className=\"text-xs font-semibold text-black dark:text-white\">\n                ±{maxTilt}° Coupled Tilt\n              </div>\n            </div>\n          </div>\n\n          <Layers className=\"h-4 w-4 text-neutral-400\" />\n        </motion.div>\n\n        {/* Depth Plane 3: High-Elevation Foreground Badge & Copy */}\n        <motion.div\n          style={{\n            x: shouldReduceMotion ? 0 : layer3X,\n            y: shouldReduceMotion ? 0 : layer3Y,\n          }}\n          className=\"relative z-20\"\n        >\n          <span className=\"inline-flex items-center gap-1 rounded-full bg-black px-2.5 py-0.5 font-mono text-[10px] font-semibold text-white dark:bg-white dark:text-black\">\n            <Sparkles className=\"h-3 w-3\" />\n            Z-INDEX +26PX\n          </span>\n          <h3 className=\"mt-2.5 text-base font-semibold text-black dark:text-white\">\n            {title}\n          </h3>\n          <p className=\"mt-1 text-xs leading-relaxed text-neutral-500 dark:text-neutral-400\">\n            {subtitle}\n          </p>\n        </motion.div>\n      </motion.div>\n    </div>\n  );\n}\n\nexport default ParallaxTiltCard;\n"
+  },
+  {
+    "id": "peel-reveal-card",
+    "slug": "peel-reveal-card",
+    "componentName": "PeelRevealCard",
+    "filePath": "src/components/ui/PeelRevealCard.tsx",
+    "title": "Peel Reveal Card",
+    "description": "Dual-layer vault card with a spring-hinged top cover that peels upward on hover or keyboard activation to reveal sensitive credentials.",
+    "tagline": "Spring-hinged top cover that peels back to reveal vault data.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "Vault Reveal",
+      "Spring Hinge"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "peel reveal card",
+      "secret key reveal ui",
+      "api key card react",
+      "framer motion reveal card",
+      "curtain peel animation"
+    ],
+    "features": [
+      "Spring-hinged cover sheet that lifts upward with 3D rotateX perspective on hover or click.",
+      "Built-in one-click clipboard copy button inside the underlying vault layer.",
+      "Full keyboard toggle support via Enter and Space keys."
+    ],
+    "accessibility": [
+      "Cover layer implements role='button' with aria-expanded and descriptive aria-label.",
+      "Underlying Copy Key button is directly focusable via Tab.",
+      "Disables 3D tilt and spring oscillation when prefers-reduced-motion is enabled."
+    ],
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "default": "\"Production Secret Key\"",
+        "description": "Heading text displayed on the protective cover layer."
+      },
+      {
+        "name": "secretValue",
+        "type": "string",
+        "default": "\"bose_live_98f72a41c09e3b1d\"",
+        "description": "Hidden string revealed inside the vault layer when peeled."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "300",
+        "description": "Spring stiffness coefficient for the curtain peel motion."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "24",
+        "description": "Spring damping coefficient controlling curtain settle."
+      }
+    ],
+    "usageCode": "import { PeelRevealCard } from \"@/components/ui/peel-reveal-card\";\n\nexport function Example() {\n  return (\n    <PeelRevealCard\n      title=\"Production Secret Key\"\n      secretValue=\"bose_live_98f72a41c09e3b1d\"\n    />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/peel-reveal-card.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { Eye, KeyRound, Copy, Check } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface PeelRevealCardProps {\n  /** Cover layer title. Default: \"Production Secret Key\" */\n  title?: string;\n  /** Secret payload revealed underneath the peel cover. Default: \"bose_live_98f72a41c09e3b1d\" */\n  secretValue?: string;\n  /** Hooke's Law spring stiffness coefficient for curtain peel. Default: 300 */\n  stiffness?: number;\n  /** Spring damping coefficient for curtain peel. Default: 24 */\n  damping?: number;\n  className?: string;\n}\n\nexport function PeelRevealCard({\n  title = \"Production Secret Key\",\n  secretValue = \"bose_live_98f72a41c09e3b1d\",\n  stiffness = 300,\n  damping = 24,\n  className,\n}: PeelRevealCardProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [isPeeled, setIsPeeled] = useState(false);\n  const [copied, setCopied] = useState(false);\n\n  const handleCopy = (e: React.MouseEvent<HTMLButtonElement>) => {\n    e.stopPropagation();\n    if (typeof navigator !== \"undefined\" && navigator.clipboard) {\n      navigator.clipboard.writeText(secretValue).catch(() => {});\n    }\n    setCopied(true);\n    setTimeout(() => setCopied(false), 1500);\n  };\n\n  return (\n    <div\n      onMouseEnter={() => setIsPeeled(true)}\n      onMouseLeave={() => setIsPeeled(false)}\n      className={cn(\n        \"relative h-[168px] w-full max-w-sm select-none overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-950 p-6 text-white shadow-sm dark:border-[#262626] dark:bg-white dark:text-black\",\n        className\n      )}\n    >\n      {/* Underlying Vault Layer */}\n      <div className=\"flex h-full flex-col justify-between\">\n        <div className=\"flex items-center justify-between text-xs\">\n          <span className=\"inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-neutral-400 dark:text-neutral-500\">\n            <KeyRound className=\"h-3.5 w-3.5\" />\n            VAULT_DECRYPTED\n          </span>\n          <button\n            type=\"button\"\n            onClick={handleCopy}\n            className=\"inline-flex items-center gap-1 rounded-lg bg-white/15 px-2.5 py-1 font-mono text-[10px] font-semibold text-white transition-colors hover:bg-white/25 dark:bg-black/10 dark:text-black dark:hover:bg-black/20\"\n          >\n            {copied ? (\n              <>\n                <Check className=\"h-3 w-3\" />\n                Copied\n              </>\n            ) : (\n              <>\n                <Copy className=\"h-3 w-3\" />\n                Copy Key\n              </>\n            )}\n          </button>\n        </div>\n\n        <div>\n          <div className=\"font-mono text-sm font-bold tracking-tight\">\n            {secretValue}\n          </div>\n          <p className=\"mt-1 text-[11px] text-neutral-400 dark:text-neutral-500\">\n            Move cursor away or press button to re-seal cover\n          </p>\n        </div>\n      </div>\n\n      {/* Spring-Hinged Frosted Peel Cover */}\n      <motion.div\n        role=\"button\"\n        tabIndex={0}\n        aria-expanded={isPeeled}\n        aria-label={`${title}. Activate or hover to peel back cover and reveal secret key.`}\n        onClick={() => setIsPeeled((prev) => !prev)}\n        onKeyDown={(e) => {\n          if (e.key === \"Enter\" || e.key === \" \") {\n            e.preventDefault();\n            setIsPeeled((prev) => !prev);\n          }\n        }}\n        animate={{\n          y: isPeeled ? \"-76%\" : \"0%\",\n          rotateX: isPeeled && !shouldReduceMotion ? 14 : 0,\n        }}\n        transition={\n          shouldReduceMotion\n            ? { duration: 0.01 }\n            : { type: \"spring\", stiffness, damping }\n        }\n        className=\"absolute inset-0 z-10 flex cursor-pointer flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-6 text-black shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[#262626] dark:bg-[#0D0D0D] dark:text-white dark:focus-visible:ring-white\"\n      >\n        <div className=\"flex items-center justify-between\">\n          <span className=\"inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 font-mono text-[10px] font-semibold text-black dark:border-[#262626] dark:bg-[#141414] dark:text-white\">\n            <Eye className=\"h-3 w-3\" />\n            Hover or Click to Peel\n          </span>\n          <span className=\"font-mono text-[10px] text-neutral-400\">\n            SHA-256\n          </span>\n        </div>\n\n        <div>\n          <h3 className=\"text-base font-semibold\">{title}</h3>\n          <p className=\"mt-0.5 font-mono text-xs tracking-widest text-neutral-400\">\n            ••••••••••••••••••••••••\n          </p>\n        </div>\n      </motion.div>\n    </div>\n  );\n}\n\nexport default PeelRevealCard;\n"
+  },
+  {
     "id": "radial-menu-orb",
     "slug": "radial-menu-orb",
     "componentName": "RadialMenuOrb",
@@ -1021,6 +2108,149 @@ export const PULSE_COMPONENTS: PulseComponentCatalogEntry[] = [
       "tailwind-merge"
     ],
     "sourceCode": "\"use client\";\n\nimport React, { useEffect, useState } from \"react\";\nimport { AnimatePresence, motion, useReducedMotion } from \"framer-motion\";\nimport {\n  Plus,\n  Sparkles,\n  Copy,\n  Share2,\n  Bookmark,\n  Terminal,\n} from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface RadialOrbAction {\n  id: string;\n  label: string;\n  icon: React.ReactNode;\n  onClick?: () => void;\n}\n\nexport interface RadialMenuOrbProps {\n  /** Array of satellite actions distributed along the polar ring. */\n  actions?: RadialOrbAction[];\n  /** Orbit radius in pixels from center trigger to satellite buttons. Default: 78 */\n  radius?: number;\n  /** Hooke's Law spring stiffness for radial blossom. Default: 340 */\n  stiffness?: number;\n  /** Spring damping coefficient for radial blossom. Default: 22 */\n  damping?: number;\n  /** Callback fired when an action is selected */\n  onSelect?: (id: string) => void;\n  className?: string;\n}\n\nconst DEFAULT_ACTIONS: RadialOrbAction[] = [\n  { id: \"inspect\", label: \"Inspect\", icon: <Sparkles className=\"h-4 w-4\" /> },\n  { id: \"cli\", label: \"Copy CLI\", icon: <Terminal className=\"h-4 w-4\" /> },\n  { id: \"duplicate\", label: \"Clone\", icon: <Copy className=\"h-4 w-4\" /> },\n  { id: \"bookmark\", label: \"Save\", icon: <Bookmark className=\"h-4 w-4\" /> },\n  { id: \"share\", label: \"Share\", icon: <Share2 className=\"h-4 w-4\" /> },\n];\n\nexport function RadialMenuOrb({\n  actions = DEFAULT_ACTIONS,\n  radius = 78,\n  stiffness = 340,\n  damping = 22,\n  onSelect,\n  className,\n}: RadialMenuOrbProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [isOpen, setIsOpen] = useState(false);\n  const [lastSelected, setLastSelected] = useState<string>(\"Ready\");\n\n  useEffect(() => {\n    if (!isOpen) return;\n    const onKeyDown = (e: KeyboardEvent) => {\n      if (e.key === \"Escape\") {\n        setIsOpen(false);\n      }\n    };\n    window.addEventListener(\"keydown\", onKeyDown);\n    return () => window.removeEventListener(\"keydown\", onKeyDown);\n  }, [isOpen]);\n\n  return (\n    <div\n      className={cn(\n        \"relative flex min-h-[230px] w-full max-w-xs flex-col items-center justify-center\",\n        className\n      )}\n    >\n      {/* Orbital Ring Guide */}\n      <AnimatePresence>\n        {isOpen && (\n          <motion.div\n            aria-hidden=\"true\"\n            initial={{ scale: 0.4, opacity: 0 }}\n            animate={{ scale: 1, opacity: 1 }}\n            exit={{ scale: 0.4, opacity: 0 }}\n            transition={\n              shouldReduceMotion\n                ? { duration: 0 }\n                : { type: \"spring\", stiffness, damping }\n            }\n            style={{ width: radius * 2, height: radius * 2 }}\n            className=\"pointer-events-none absolute rounded-full border border-dashed border-neutral-300 dark:border-[#2A2A2A]\"\n          />\n        )}\n      </AnimatePresence>\n\n      {/* Polar Satellite Action Buttons */}\n      <AnimatePresence>\n        {isOpen &&\n          actions.map((action, index) => {\n            const angleDeg = (360 / actions.length) * index - 90;\n            const angleRad = (angleDeg * Math.PI) / 180;\n            const targetX = Math.cos(angleRad) * radius;\n            const targetY = Math.sin(angleRad) * radius;\n\n            return (\n              <motion.button\n                key={action.id}\n                type=\"button\"\n                aria-label={action.label}\n                initial={\n                  shouldReduceMotion\n                    ? { x: targetX, y: targetY, opacity: 1 }\n                    : { x: 0, y: 0, scale: 0.3, opacity: 0 }\n                }\n                animate={{ x: targetX, y: targetY, scale: 1, opacity: 1 }}\n                exit={\n                  shouldReduceMotion\n                    ? { opacity: 0 }\n                    : { x: 0, y: 0, scale: 0.3, opacity: 0 }\n                }\n                whileHover={shouldReduceMotion ? undefined : { scale: 1.14 }}\n                whileTap={shouldReduceMotion ? undefined : { scale: 0.92 }}\n                transition={\n                  shouldReduceMotion\n                    ? { duration: 0 }\n                    : {\n                        type: \"spring\",\n                        stiffness,\n                        damping,\n                        delay: index * 0.025,\n                      }\n                }\n                onClick={() => {\n                  setLastSelected(action.label);\n                  onSelect?.(action.id);\n                  action.onClick?.();\n                  setIsOpen(false);\n                }}\n                className=\"group absolute z-10 flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white text-black shadow-md transition-colors hover:border-black hover:bg-black hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[#2A2A2A] dark:bg-[#121212] dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black dark:focus-visible:ring-white\"\n              >\n                {action.icon}\n                <span className=\"pointer-events-none absolute -top-7 whitespace-nowrap rounded bg-black px-1.5 py-0.5 text-[10px] font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 dark:bg-white dark:text-black\">\n                  {action.label}\n                </span>\n              </motion.button>\n            );\n          })}\n      </AnimatePresence>\n\n      {/* Center Core Trigger Orb */}\n      <motion.button\n        type=\"button\"\n        aria-expanded={isOpen}\n        aria-label={isOpen ? \"Close radial command menu\" : \"Open radial command menu\"}\n        onClick={() => setIsOpen((prev) => !prev)}\n        whileTap={shouldReduceMotion ? undefined : { scale: 0.92 }}\n        className=\"relative z-20 flex h-14 w-14 items-center justify-center rounded-full border border-black bg-black text-white shadow-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 dark:border-white dark:bg-white dark:text-black dark:focus-visible:ring-white\"\n      >\n        <motion.span\n          animate={{ rotate: isOpen ? 135 : 0 }}\n          transition={\n            shouldReduceMotion\n              ? { duration: 0 }\n              : { type: \"spring\", stiffness: 360, damping: 22 }\n          }\n        >\n          <Plus className=\"h-5 w-5\" />\n        </motion.span>\n      </motion.button>\n\n      {/* Telemetry Status Readout */}\n      <div className=\"pointer-events-none absolute bottom-1 font-mono text-[11px] text-neutral-400 dark:text-neutral-500\">\n        {isOpen ? \"Select orbital node • Esc to close\" : `Action: ${lastSelected}`}\n      </div>\n    </div>\n  );\n}\n\nexport default RadialMenuOrb;\n"
+  },
+  {
+    "id": "ripple-burst-button",
+    "slug": "ripple-burst-button",
+    "componentName": "RippleBurstButton",
+    "filePath": "src/components/ui/RippleBurstButton.tsx",
+    "title": "Ripple Burst Button",
+    "description": "Tactile impulse button that spawns dual concentric shockwave rings from the exact pointer click coordinate with spring recoil.",
+    "tagline": "Coordinate-origin dual concentric shockwaves with spring recoil.",
+    "category": "Buttons",
+    "badges": [
+      "New",
+      "Shockwave Ripple",
+      "Spring Recoil"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "ripple burst button",
+      "shockwave button",
+      "click ripple effect react",
+      "framer motion button",
+      "kinetic pulse button"
+    ],
+    "features": [
+      "Computes exact local pointer coordinates (x, y) on click to spawn dual staggered shockwave rings.",
+      "Coupled Hooke's Law hover lift and tap compression.",
+      "Built-in live pulse counter badge."
+    ],
+    "accessibility": [
+      "Marks all expanding shockwave ring elements with aria-hidden='true'.",
+      "Supports standard Enter and Space keyboard activation (spawning ripples from button center).",
+      "Suppresses shockwave rings and scale transforms when prefers-reduced-motion is active."
+    ],
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "default": "\"Emit Shockwave Pulse\"",
+        "description": "Primary text label rendered inside the button."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "400",
+        "description": "Hooke's Law spring stiffness for hover and tap recoil."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "22",
+        "description": "Spring damping coefficient controlling recoil settling."
+      }
+    ],
+    "usageCode": "import { RippleBurstButton } from \"@/components/ui/ripple-burst-button\";\n\nexport function Example() {\n  return (\n    <RippleBurstButton label=\"Emit Shockwave Pulse\" stiffness={400} damping={22} />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/ripple-burst-button.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useRef, useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { Zap } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface RippleBurstButtonProps {\n  /** Button label text. Default: \"Emit Shockwave Pulse\" */\n  label?: string;\n  /** Spring stiffness coefficient for tactile press compression. Default: 400 */\n  stiffness?: number;\n  /** Spring damping coefficient for tactile press compression. Default: 22 */\n  damping?: number;\n  /** Click callback */\n  onClick?: () => void;\n  className?: string;\n}\n\ninterface RippleWave {\n  id: number;\n  x: number;\n  y: number;\n}\n\nexport function RippleBurstButton({\n  label = \"Emit Shockwave Pulse\",\n  stiffness = 400,\n  damping = 22,\n  onClick,\n  className,\n}: RippleBurstButtonProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const btnRef = useRef<HTMLButtonElement | null>(null);\n  const [waves, setWaves] = useState<RippleWave[]>([]);\n  const [pulseCount, setPulseCount] = useState(0);\n\n  const handleTrigger = (e: React.MouseEvent<HTMLButtonElement>) => {\n    const el = btnRef.current;\n    if (el && !shouldReduceMotion) {\n      const rect = el.getBoundingClientRect();\n      const x = e.clientX ? e.clientX - rect.left : rect.width / 2;\n      const y = e.clientY ? e.clientY - rect.top : rect.height / 2;\n      const id = Date.now() + Math.random();\n      setWaves((prev) => [...prev.slice(-3), { id, x, y }]);\n    }\n    setPulseCount((c) => c + 1);\n    onClick?.();\n  };\n\n  return (\n    <motion.button\n      ref={btnRef}\n      type=\"button\"\n      onClick={handleTrigger}\n      whileHover={shouldReduceMotion ? undefined : { scale: 1.03, y: -2 }}\n      whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}\n      transition={{ type: \"spring\", stiffness, damping }}\n      className={cn(\n        \"relative inline-flex h-12 items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-black bg-black px-6 text-xs font-semibold text-white shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 dark:border-white dark:bg-white dark:text-black dark:focus-visible:ring-white\",\n        className\n      )}\n    >\n      {/* Concentric Dual Shockwave Rings */}\n      {!shouldReduceMotion &&\n        waves.map((wave) => (\n          <React.Fragment key={wave.id}>\n            <motion.span\n              aria-hidden=\"true\"\n              initial={{ scale: 0, opacity: 0.65 }}\n              animate={{ scale: 4.5, opacity: 0 }}\n              transition={{ duration: 0.65, ease: \"easeOut\" }}\n              style={{ left: wave.x - 24, top: wave.y - 24 }}\n              className=\"pointer-events-none absolute h-12 w-12 rounded-full bg-white/35 dark:bg-black/25\"\n            />\n            <motion.span\n              aria-hidden=\"true\"\n              initial={{ scale: 0, opacity: 0.8 }}\n              animate={{ scale: 3.2, opacity: 0 }}\n              transition={{ duration: 0.55, delay: 0.06, ease: \"easeOut\" }}\n              style={{ left: wave.x - 24, top: wave.y - 24 }}\n              className=\"pointer-events-none absolute h-12 w-12 rounded-full border border-white/60 dark:border-black/50\"\n            />\n          </React.Fragment>\n        ))}\n\n      <Zap className=\"relative z-10 h-4 w-4\" />\n      <span className=\"relative z-10\">{label}</span>\n      {pulseCount > 0 && (\n        <span className=\"relative z-10 rounded-full bg-white/20 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/15\">\n          ×{pulseCount}\n        </span>\n      )}\n    </motion.button>\n  );\n}\n\nexport default RippleBurstButton;\n"
+  },
+  {
+    "id": "rotary-spring-dial",
+    "slug": "rotary-spring-dial",
+    "componentName": "RotarySpringDial",
+    "filePath": "src/components/ui/RotarySpringDial.tsx",
+    "title": "Rotary Spring Dial",
+    "description": "Synthesizer-inspired tactile rotary knob with a 270-degree spring-damped rotor, vertical drag scrubbing, and keyboard arrow control.",
+    "tagline": "270° studio rotary knob with spring-damped rotor physics.",
+    "category": "Inputs",
+    "badges": [
+      "New",
+      "Rotary Knob",
+      "WAI-ARIA"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": true,
+    "keywords": [
+      "rotary spring dial",
+      "audio knob react",
+      "synthesizer dial ui",
+      "framer motion rotary knob",
+      "tactile dial input"
+    ],
+    "features": [
+      "Maps numeric values across a -135° to +135° (270° total) rotary arc driven by Hooke's Law angular springs.",
+      "Precision vertical pointer-capture drag scrubbing standard in pro audio and 3D software.",
+      "Full keyboard arrow-key and Home/End accessibility."
+    ],
+    "accessibility": [
+      "Implements role='slider' with aria-valuemin, aria-valuemax, aria-valuenow, and aria-valuetext.",
+      "Supports ArrowUp/ArrowRight to increment, ArrowDown/ArrowLeft to decrement, and Home/End keys.",
+      "Rotates instantaneously without spring overshoot when prefers-reduced-motion is enabled."
+    ],
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "default": "\"Damping Ratio\"",
+        "description": "Parameter name displayed above the rotary dial."
+      },
+      {
+        "name": "defaultValue",
+        "type": "number",
+        "default": "65",
+        "description": "Initial numeric value between min and max."
+      },
+      {
+        "name": "min",
+        "type": "number",
+        "default": "0",
+        "description": "Minimum dial value corresponding to -135 degrees."
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "default": "100",
+        "description": "Maximum dial value corresponding to +135 degrees."
+      },
+      {
+        "name": "step",
+        "type": "number",
+        "default": "5",
+        "description": "Step increment per detent tick."
+      },
+      {
+        "name": "unit",
+        "type": "string",
+        "default": "\"%\"",
+        "description": "Unit suffix appended to the digital readout."
+      }
+    ],
+    "usageCode": "import { RotarySpringDial } from \"@/components/ui/rotary-spring-dial\";\n\nexport function Example() {\n  return (\n    <RotarySpringDial\n      label=\"Damping Ratio\"\n      defaultValue={65}\n      min={0}\n      max={100}\n      step={5}\n      unit=\"%\"\n    />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/rotary-spring-dial.json",
+    "dependencies": [
+      "framer-motion",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useRef, useState } from \"react\";\nimport { motion, useSpring, useReducedMotion } from \"framer-motion\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface RotarySpringDialProps {\n  /** Dial parameter label. Default: \"Damping Ratio\" */\n  label?: string;\n  /** Initial value between min and max. Default: 65 */\n  defaultValue?: number;\n  /** Minimum value. Default: 0 */\n  min?: number;\n  /** Maximum value. Default: 100 */\n  max?: number;\n  /** Step increment. Default: 5 */\n  step?: number;\n  /** Unit suffix. Default: \"%\" */\n  unit?: string;\n  /** Spring stiffness coefficient for rotary needle. Default: 340 */\n  stiffness?: number;\n  /** Spring damping coefficient for rotary needle. Default: 24 */\n  damping?: number;\n  /** Callback fired when value changes */\n  onChange?: (val: number) => void;\n  className?: string;\n}\n\nexport function RotarySpringDial({\n  label = \"Damping Ratio\",\n  defaultValue = 65,\n  min = 0,\n  max = 100,\n  step = 5,\n  unit = \"%\",\n  stiffness = 340,\n  damping = 24,\n  onChange,\n  className,\n}: RotarySpringDialProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [value, setValue] = useState<number>(() =>\n    Math.min(max, Math.max(min, defaultValue))\n  );\n  const [isDragging, setIsDragging] = useState(false);\n  const startYRef = useRef<number>(0);\n  const startValRef = useRef<number>(defaultValue);\n\n  const range = Math.max(1, max - min);\n  const ratio = (value - min) / range;\n  // Map 0..1 ratio to -135deg .. +135deg rotary arc\n  const targetAngle = -135 + ratio * 270;\n\n  const springAngle = useSpring(targetAngle, {\n    stiffness,\n    damping,\n    mass: 0.4,\n  });\n\n  const commitValue = (nextRaw: number) => {\n    const stepped = Math.round((nextRaw - min) / step) * step + min;\n    const clamped = Math.min(max, Math.max(min, stepped));\n    setValue(clamped);\n    const nextRatio = (clamped - min) / range;\n    springAngle.set(-135 + nextRatio * 270);\n    onChange?.(clamped);\n  };\n\n  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {\n    e.currentTarget.setPointerCapture(e.pointerId);\n    setIsDragging(true);\n    startYRef.current = e.clientY;\n    startValRef.current = value;\n  };\n\n  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {\n    if (!isDragging) return;\n    // Dragging upward increases value, downward decreases\n    const deltaY = startYRef.current - e.clientY;\n    const deltaVal = (deltaY / 120) * range;\n    commitValue(startValRef.current + deltaVal);\n  };\n\n  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {\n    if (e.currentTarget.hasPointerCapture(e.pointerId)) {\n      e.currentTarget.releasePointerCapture(e.pointerId);\n    }\n    setIsDragging(false);\n  };\n\n  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {\n    if (e.key === \"ArrowUp\" || e.key === \"ArrowRight\") {\n      e.preventDefault();\n      commitValue(value + step);\n    } else if (e.key === \"ArrowDown\" || e.key === \"ArrowLeft\") {\n      e.preventDefault();\n      commitValue(value - step);\n    } else if (e.key === \"Home\") {\n      e.preventDefault();\n      commitValue(min);\n    } else if (e.key === \"End\") {\n      e.preventDefault();\n      commitValue(max);\n    }\n  };\n\n  return (\n    <div\n      className={cn(\n        \"inline-flex flex-col items-center gap-3 rounded-3xl border border-neutral-200 bg-white px-6 py-5 shadow-sm select-none dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      <div className=\"text-[11px] font-semibold uppercase tracking-wider text-neutral-400\">\n        {label}\n      </div>\n\n      {/* Tactile Synthesizer Rotary Knob */}\n      <div\n        role=\"slider\"\n        tabIndex={0}\n        aria-label={label}\n        aria-valuemin={min}\n        aria-valuemax={max}\n        aria-valuenow={value}\n        aria-valuetext={`${value}${unit}`}\n        onPointerDown={handlePointerDown}\n        onPointerMove={handlePointerMove}\n        onPointerUp={handlePointerUp}\n        onPointerCancel={handlePointerUp}\n        onKeyDown={handleKeyDown}\n        className={cn(\n          \"relative flex h-24 w-24 cursor-ns-resize touch-none items-center justify-center rounded-full border-2 bg-neutral-50 shadow-inner transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:bg-[#121212] dark:focus-visible:ring-white\",\n          isDragging\n            ? \"border-black dark:border-white\"\n            : \"border-neutral-200 hover:border-neutral-400 dark:border-[#262626] dark:hover:border-[#3A3A3A]\"\n        )}\n      >\n        {/* Rotating Dial Rotor + Indicator Notch */}\n        <motion.div\n          aria-hidden=\"true\"\n          style={{\n            rotate: shouldReduceMotion ? targetAngle : springAngle,\n          }}\n          className=\"relative flex h-16 w-16 items-start justify-center rounded-full border border-neutral-300 bg-white pt-1.5 shadow-md dark:border-[#333333] dark:bg-[#1B1B1B]\"\n        >\n          <span className=\"h-3 w-1 rounded-full bg-black dark:bg-white\" />\n        </motion.div>\n      </div>\n\n      {/* Digital Readout + Quick Stepper */}\n      <div className=\"font-mono text-sm font-bold tabular-nums text-black dark:text-white\">\n        {value}\n        {unit}\n      </div>\n\n      <div className=\"text-[10px] text-neutral-400\">\n        Drag vertically or use ↑/↓ keys\n      </div>\n    </div>\n  );\n}\n\nexport default RotarySpringDial;\n"
   },
   {
     "id": "scrubbable-number-input",
@@ -1180,6 +2410,69 @@ export const PULSE_COMPONENTS: PulseComponentCatalogEntry[] = [
     "sourceCode": "'use client';\n\nimport React, {\n  useCallback,\n  useEffect,\n  useLayoutEffect,\n  useRef,\n  useState,\n} from 'react';\nimport { AnimatePresence, motion, useReducedMotion } from 'framer-motion';\nimport { ChevronDown } from 'lucide-react';\nimport { cn } from '../../lib/utils';\n\n// -----------------------------------------------------------------------------\n// Motion\n// -----------------------------------------------------------------------------\n\nconst springSnappy = {\n  type: 'spring' as const,\n  stiffness: 400,\n  damping: 25,\n  mass: 0.5,\n};\n\n// -----------------------------------------------------------------------------\n// Types\n// -----------------------------------------------------------------------------\n\nexport type SplitButtonSize = 'sm' | 'md' | 'lg';\n\nexport interface SplitButtonOption {\n  value: string;\n  label: string;\n  icon?: React.ReactNode;\n  disabled?: boolean;\n  onSelect?: () => void;\n}\n\nexport interface SplitButtonProps\n  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {\n  /** Label for the primary (left) action. */\n  label: string;\n\n  /** Called when the primary action is pressed. */\n  onClick?: () => void;\n\n  /** Dropdown options revealed by the chevron trigger. */\n  options: SplitButtonOption[];\n\n  size?: SplitButtonSize;\n\n  /**\n   * `primary` matches the light accent CTA.\n   * `secondary` matches the raised control style.\n   */\n  variant?: 'primary' | 'secondary' | 'danger' | 'info';\n\n  disabled?: boolean;\n  className?: string;\n}\n\n// -----------------------------------------------------------------------------\n// Styles\n// -----------------------------------------------------------------------------\n\nconst SIZE_STYLES: Record<\n  SplitButtonSize,\n  {\n    primary: string;\n    chevron: string;\n    radius: string;\n    menuText: string;\n  }\n> = {\n  sm: {\n    primary: 'gap-1.5 px-3.5 py-1.5 text-xs',\n    chevron: 'px-2 py-1.5',\n    radius: 'rounded-[8px]',\n    menuText: 'text-xs',\n  },\n\n  md: {\n    primary: 'gap-2 px-5 py-2.5 text-sm',\n    chevron: 'px-2.5 py-2.5',\n    radius: 'rounded-[8px]',\n    menuText: 'text-sm',\n  },\n\n  lg: {\n    primary: 'gap-2.5 px-7 py-3.5 text-base',\n    chevron: 'px-3 py-3.5',\n    radius: 'rounded-[10px]',\n    menuText: 'text-sm',\n  },\n};\n\nconst TRANSITION =\n  'transition-[background-color,border-color,box-shadow,transform] duration-200 ease-out ' +\n  'active:translate-y-0 active:scale-[0.98]';\n\nconst VARIANT_STYLES: Record<'primary' | 'secondary' | 'danger' | 'info', string> = {\n  primary:\n    // light: dark pill on a light canvas · dark: light pill on a dark canvas (mirrors your existing button)\n    'bg-[#151515] text-[#F5F5F5] hover:bg-black ' +\n    'dark:bg-[#F5F5F5] dark:text-[#050505] dark:hover:bg-white ' +\n    'shadow-[0_1px_2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_20px_-6px_rgba(0,0,0,0.25)] ' +\n    'dark:shadow-[0_0_20px_-3px_rgba(255,255,255,0.15)] dark:hover:shadow-[0_0_28px_-4px_rgba(255,255,255,0.28)] ' +\n    TRANSITION,\n\n  secondary:\n    'border border-neutral-200 bg-neutral-100 text-black hover:border-neutral-300 hover:bg-neutral-200 ' +\n    'dark:border-[#262626] dark:bg-[#141414] dark:text-white ' +\n    'dark:hover:border-neutral-600 dark:hover:bg-[#1F1F1F] ' +\n    'shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_6px_16px_-8px_rgba(0,0,0,0.15)] ' +\n    'dark:shadow-none dark:hover:shadow-[0_6px_16px_-8px_rgba(0,0,0,0.5)] ' +\n    TRANSITION,\n\n  danger:\n    'bg-[#DC2626] text-white hover:bg-[#E23F3F] ' +\n    'dark:bg-[#DC2626]/90 dark:hover:bg-[#EF4444] ' +\n    'shadow-[0_0_0_1px_rgba(220,38,38,0.15)] hover:shadow-[0_8px_20px_-6px_rgba(220,38,38,0.4)] ' +\n    'dark:shadow-[0_0_18px_-4px_rgba(220,38,38,0.35)] dark:hover:shadow-[0_0_26px_-6px_rgba(220,38,38,0.5)] ' +\n    TRANSITION,\n\n  info:\n    'bg-[#3B82F6] text-white hover:bg-[#529BF8] ' +\n    'dark:bg-[#3B82F6]/90 dark:hover:bg-[#60A5FA] ' +\n    'shadow-[0_0_0_1px_rgba(59,130,246,0.15)] hover:shadow-[0_8px_20px_-6px_rgba(59,130,246,0.4)] ' +\n    'dark:shadow-[0_0_18px_-4px_rgba(59,130,246,0.35)] dark:hover:shadow-[0_0_26px_-6px_rgba(59,130,246,0.5)] ' +\n    TRANSITION,\n};\n\n// -----------------------------------------------------------------------------\n// Component\n// -----------------------------------------------------------------------------\n\n/**\n * SplitButton\n *\n * A primary action fused with a secondary chevron trigger.\n *\n * Features:\n * - Primary + dropdown action split\n * - Keyboard accessible menu navigation\n * - Outside-click dismissal\n * - Escape-to-close\n * - Home / End navigation\n * - Viewport-aware dropdown placement\n * - Reduced-motion support\n * - Disabled options\n * - Framer Motion transitions\n */\nexport function SplitButton({\n  label,\n  onClick,\n  options,\n  size = 'md',\n  variant = 'primary',\n  disabled = false,\n  className,\n  ...props\n}: SplitButtonProps) {\n  const reduceMotion = useReducedMotion();\n\n  const [open, setOpen] = useState(false);\n  const [placement, setPlacement] = useState<'bottom' | 'top'>('bottom');\n  const [activeIndex, setActiveIndex] = useState(0);\n\n  const rootRef = useRef<HTMLDivElement>(null);\n  const chevronRef = useRef<HTMLButtonElement>(null);\n  const menuRef = useRef<HTMLDivElement>(null);\n\n  const sizeStyles = SIZE_STYLES[size];\n\n  // ---------------------------------------------------------------------------\n  // Derived state\n  // ---------------------------------------------------------------------------\n\n  const enabledIndices = options.reduce<number[]>((indices, option, index) => {\n    if (!option.disabled) {\n      indices.push(index);\n    }\n\n    return indices;\n  }, []);\n\n  const menuTransition = reduceMotion\n    ? { duration: 0 }\n    : springSnappy;\n\n  // ---------------------------------------------------------------------------\n  // Menu helpers\n  // ---------------------------------------------------------------------------\n\n  const closeMenu = useCallback(() => {\n    setOpen(false);\n    chevronRef.current?.focus();\n  }, []);\n\n  const selectOption = useCallback(\n    (option: SplitButtonOption) => {\n      if (option.disabled) {\n        return;\n      }\n\n      option.onSelect?.();\n      closeMenu();\n    },\n    [closeMenu],\n  );\n\n  // ---------------------------------------------------------------------------\n  // Outside click\n  // ---------------------------------------------------------------------------\n\n  useEffect(() => {\n    if (!open) {\n      return;\n    }\n\n    const handlePointerDown = (event: PointerEvent) => {\n      const target = event.target as Node;\n\n      if (!rootRef.current?.contains(target)) {\n        setOpen(false);\n      }\n    };\n\n    document.addEventListener('pointerdown', handlePointerDown);\n\n    return () => {\n      document.removeEventListener('pointerdown', handlePointerDown);\n    };\n  }, [open]);\n\n  // ---------------------------------------------------------------------------\n  // Viewport-aware placement\n  // ---------------------------------------------------------------------------\n\n  useLayoutEffect(() => {\n    if (!open || !chevronRef.current) {\n      return;\n    }\n\n    const triggerRect = chevronRef.current.getBoundingClientRect();\n\n    // Approximate menu height:\n    // option height + menu vertical padding.\n    const estimatedMenuHeight = options.length * 36 + 16;\n\n    const spaceBelow = window.innerHeight - triggerRect.bottom;\n    const spaceAbove = triggerRect.top;\n\n    const shouldFlip =\n      spaceBelow < estimatedMenuHeight &&\n      spaceAbove > estimatedMenuHeight;\n\n    setPlacement(shouldFlip ? 'top' : 'bottom');\n  }, [open, options.length]);\n\n  // ---------------------------------------------------------------------------\n  // Reset active option when opening\n  // ---------------------------------------------------------------------------\n\n  useEffect(() => {\n    if (!open) {\n      return;\n    }\n\n    setActiveIndex(enabledIndices[0] ?? 0);\n  }, [open, enabledIndices]);\n\n  // ---------------------------------------------------------------------------\n  // Focus menu when opened\n  // ---------------------------------------------------------------------------\n\n  useEffect(() => {\n    if (!open) {\n      return;\n    }\n\n    requestAnimationFrame(() => {\n      menuRef.current?.focus();\n    });\n  }, [open]);\n\n  // ---------------------------------------------------------------------------\n  // Keyboard navigation\n  // ---------------------------------------------------------------------------\n\n  const handleMenuKeyDown = useCallback(\n    (event: React.KeyboardEvent<HTMLDivElement>) => {\n      if (!enabledIndices.length) {\n        if (event.key === 'Escape' || event.key === 'Tab') {\n          event.preventDefault();\n\n          if (event.key === 'Escape') {\n            closeMenu();\n          } else {\n            setOpen(false);\n          }\n        }\n\n        return;\n      }\n\n      const currentPosition = enabledIndices.indexOf(activeIndex);\n\n      switch (event.key) {\n        case 'ArrowDown': {\n          event.preventDefault();\n\n          const nextPosition =\n            currentPosition < 0\n              ? 0\n              : (currentPosition + 1) % enabledIndices.length;\n\n          setActiveIndex(enabledIndices[nextPosition]);\n          break;\n        }\n\n        case 'ArrowUp': {\n          event.preventDefault();\n\n          const previousPosition =\n            currentPosition < 0\n              ? enabledIndices.length - 1\n              : (currentPosition - 1 + enabledIndices.length) %\n                enabledIndices.length;\n\n          setActiveIndex(enabledIndices[previousPosition]);\n          break;\n        }\n\n        case 'Home': {\n          event.preventDefault();\n          setActiveIndex(enabledIndices[0]);\n          break;\n        }\n\n        case 'End': {\n          event.preventDefault();\n          setActiveIndex(enabledIndices[enabledIndices.length - 1]);\n          break;\n        }\n\n        case 'Enter':\n        case ' ': {\n          event.preventDefault();\n\n          const activeOption = options[activeIndex];\n\n          if (activeOption) {\n            selectOption(activeOption);\n          }\n\n          break;\n        }\n\n        case 'Escape': {\n          event.preventDefault();\n          closeMenu();\n          break;\n        }\n\n        case 'Tab': {\n          setOpen(false);\n          break;\n        }\n\n        default:\n          break;\n      }\n    },\n    [\n      activeIndex,\n      closeMenu,\n      enabledIndices,\n      options,\n      selectOption,\n    ],\n  );\n\n  // ---------------------------------------------------------------------------\n  // Render\n  // ---------------------------------------------------------------------------\n\n  return (\n    <div\n      ref={rootRef}\n      className={cn('relative inline-flex', className)}\n    >\n      {/* ---------------------------------------------------------------------\n          Button group\n      --------------------------------------------------------------------- */}\n\n      <div\n        className={cn(\n          'inline-flex overflow-hidden',\n          sizeStyles.radius,\n          disabled && 'pointer-events-none opacity-30',\n        )}\n      >\n        {/* -------------------------------------------------------------------\n            Primary action\n        ------------------------------------------------------------------- */}\n\n        <button\n          type=\"button\"\n          onClick={onClick}\n          disabled={disabled}\n          className={cn(\n            'relative inline-flex items-center justify-center',\n            'select-none font-medium',\n            'cursor-pointer',\n            'focus-ring',\n            'transition-colors duration-200',\n            'disabled:cursor-not-allowed',\n            sizeStyles.primary,\n            VARIANT_STYLES[variant],\n          )}\n          {...props}\n        >\n          {label}\n        </button>\n\n        {/* -------------------------------------------------------------------\n            Divider\n        ------------------------------------------------------------------- */}\n\n        <span\n          aria-hidden=\"true\"\n          className={cn(\n            'my-1.5 w-px self-stretch',\n            variant === 'primary'\n              ? 'bg-white/20 dark:bg-black/15'\n              : 'bg-neutral-300 dark:bg-[#262626]',\n          )}\n        />\n\n        {/* -------------------------------------------------------------------\n            Dropdown trigger\n        ------------------------------------------------------------------- */}\n\n        <button\n          ref={chevronRef}\n          type=\"button\"\n          aria-haspopup=\"menu\"\n          aria-expanded={open}\n          aria-label={`More ${label} options`}\n          disabled={disabled}\n          onClick={() => setOpen((previous) => !previous)}\n          className={cn(\n            'relative inline-flex items-center justify-center',\n            'select-none',\n            'cursor-pointer',\n            'focus-ring',\n            'transition-colors duration-200',\n            'disabled:cursor-not-allowed',\n            sizeStyles.chevron,\n            VARIANT_STYLES[variant],\n          )}\n        >\n          <motion.span\n            aria-hidden=\"true\"\n            animate={{\n              rotate: open ? 180 : 0,\n            }}\n            transition={menuTransition}\n            className=\"flex items-center justify-center\"\n          >\n            <ChevronDown\n              className=\"h-4 w-4\"\n              strokeWidth={2}\n            />\n          </motion.span>\n        </button>\n      </div>\n\n      {/* -----------------------------------------------------------------------\n          Dropdown menu\n      ----------------------------------------------------------------------- */}\n\n      <AnimatePresence>\n        {open && (\n          <motion.div\n            ref={menuRef}\n            role=\"menu\"\n            aria-label={`${label} options`}\n            tabIndex={-1}\n            onKeyDown={handleMenuKeyDown}\n            initial={{\n              opacity: 0,\n              scale: 0.96,\n              y: placement === 'bottom' ? -4 : 4,\n            }}\n            animate={{\n              opacity: 1,\n              scale: 1,\n              y: 0,\n            }}\n            exit={{\n              opacity: 0,\n              scale: 0.97,\n              transition: reduceMotion\n                ? { duration: 0 }\n                : { duration: 0.12 },\n            }}\n            transition={menuTransition}\n            className={cn(\n              'absolute right-0 z-30',\n              'min-w-[11rem]',\n              'rounded-xl',\n              'border border-neutral-200 dark:border-[#262626]',\n              'bg-white dark:bg-[#0A0A0A]',\n              'p-1',\n              'shadow-xl',\n              'origin-top-right',\n              placement === 'bottom'\n                ? 'top-[calc(100%+8px)]'\n                : 'bottom-[calc(100%+8px)]',\n            )}\n          >\n            {options.map((option, index) => {\n              const isActive =\n                index === activeIndex && !option.disabled;\n\n              return (\n                <button\n                  key={option.value}\n                  type=\"button\"\n                  role=\"menuitem\"\n                  disabled={option.disabled}\n                  aria-disabled={\n                    option.disabled || undefined\n                  }\n                  onClick={() => selectOption(option)}\n                  onMouseEnter={() => {\n                    if (!option.disabled) {\n                      setActiveIndex(index);\n                    }\n                  }}\n                  className={cn(\n                    'flex w-full items-center gap-2',\n                    'rounded-lg',\n                    'px-3 py-2',\n                    'text-left',\n                    'font-medium',\n                    'select-none',\n                    'transition-colors duration-150',\n                    sizeStyles.menuText,\n\n                    option.disabled\n                      ? [\n                          'cursor-not-allowed',\n                          'text-neutral-400 dark:text-neutral-600',\n                        ]\n                      : [\n                          'cursor-pointer',\n                          'text-neutral-600 dark:text-neutral-400',\n                          'hover:bg-neutral-100 dark:hover:bg-[#141414]',\n                          'hover:text-black dark:hover:text-white',\n                        ],\n\n                    isActive && [\n                      'bg-neutral-100 dark:bg-[#141414]',\n                      'text-black dark:text-white',\n                    ],\n                  )}\n                >\n                  {option.icon && (\n                    <span\n                      aria-hidden=\"true\"\n                      className={cn(\n                        'flex shrink-0 items-center justify-center',\n                        '[&_svg]:h-3.5',\n                        '[&_svg]:w-3.5',\n                      )}\n                    >\n                      {option.icon}\n                    </span>\n                  )}\n\n                  <span className=\"min-w-0 truncate\">\n                    {option.label}\n                  </span>\n                </button>\n              );\n            })}\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n\nexport default SplitButton;"
   },
   {
+    "id": "split-flap-text",
+    "slug": "split-flap-text",
+    "componentName": "SplitFlapText",
+    "filePath": "src/components/ui/SplitFlapText.tsx",
+    "title": "Split Flap Text",
+    "description": "Mechanical departure-board split-flap display that cycles character tiles with staggered 3D rotateX spring hinges.",
+    "tagline": "Mechanical departure-board tiles with 3D rotateX spring hinges.",
+    "category": "Text",
+    "badges": [
+      "New",
+      "3D Flip Tiles",
+      "Staggered Spring"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "split flap text",
+      "solari board react",
+      "airport departure board ui",
+      "3d flip text framer motion",
+      "mechanical ticker"
+    ],
+    "features": [
+      "Individual character housing cells with a center mechanical split seam and 3D rotateX perspective flips.",
+      "Staggered per-tile wave delay creating an authentic Solari departure board cascade.",
+      "Click or press Enter/Space to cycle through an array of preset words."
+    ],
+    "accessibility": [
+      "Announces the active word via an sr-only role='status' live region while marking individual character cells aria-hidden='true'.",
+      "Board wrapper is a semantic button operable via Enter and Space keys.",
+      "Disables 3D rotateX flips when prefers-reduced-motion is active."
+    ],
+    "props": [
+      {
+        "name": "words",
+        "type": "string[]",
+        "default": "[\"KINETIC\", \"PHYSICS\", \"SPRINGS\", \"MINIMAL\"]",
+        "description": "Array of words cycled on each split-flap board trigger."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "380",
+        "description": "Hooke's Law spring stiffness for 3D tile hinge rotation."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "24",
+        "description": "Spring damping coefficient controlling tile settle bounce."
+      }
+    ],
+    "usageCode": "import { SplitFlapText } from \"@/components/ui/split-flap-text\";\n\nexport function Example() {\n  return (\n    <SplitFlapText\n      words={[\"KINETIC\", \"PHYSICS\", \"SPRINGS\", \"MINIMAL\"]}\n      stiffness={380}\n      damping={24}\n    />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/split-flap-text.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { AnimatePresence, motion, useReducedMotion } from \"framer-motion\";\nimport { RotateCw } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SplitFlapTextProps {\n  /** Array of preset words of similar length to cycle through. */\n  words?: string[];\n  /** Spring stiffness coefficient for 3D flap rotation. Default: 380 */\n  stiffness?: number;\n  /** Spring damping coefficient for 3D flap rotation. Default: 24 */\n  damping?: number;\n  className?: string;\n}\n\nconst DEFAULT_WORDS = [\"KINETIC\", \"PHYSICS\", \"SPRINGS\", \"MINIMAL\"];\n\nexport function SplitFlapText({\n  words = DEFAULT_WORDS,\n  stiffness = 380,\n  damping = 24,\n  className,\n}: SplitFlapTextProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [wordIndex, setWordIndex] = useState(0);\n\n  const activeWord = words[wordIndex % words.length] || \"KINETIC\";\n  const maxLen = Math.max(...words.map((w) => w.length), activeWord.length);\n  const paddedChars = activeWord.padEnd(maxLen, \" \").split(\"\");\n\n  const cycleNext = () => {\n    setWordIndex((prev) => (prev + 1) % words.length);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"inline-flex flex-col items-center gap-3 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      {/* Screen-reader live readout */}\n      <span className=\"sr-only\" role=\"status\" aria-live=\"polite\">\n        {activeWord}\n      </span>\n\n      <button\n        type=\"button\"\n        onClick={cycleNext}\n        aria-label={`Split-flap display showing ${activeWord}. Click to flip to next word.`}\n        style={{ perspective: \"900px\" }}\n        className=\"group flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white\"\n      >\n        {paddedChars.map((char, idx) => (\n          <div\n            key={idx}\n            aria-hidden=\"true\"\n            className=\"relative flex h-12 w-9 items-center justify-center overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950 font-mono text-lg font-bold text-white shadow-inner dark:border-neutral-200 dark:bg-white dark:text-black\"\n          >\n            {/* Mechanical Horizontal Split Hinge Line */}\n            <div className=\"pointer-events-none absolute inset-x-0 top-1/2 z-20 h-[1px] bg-black/40 dark:bg-neutral-300\" />\n\n            <AnimatePresence mode=\"popLayout\" initial={false}>\n              <motion.span\n                key={`${wordIndex}-${idx}-${char}`}\n                initial={\n                  shouldReduceMotion\n                    ? { opacity: 0 }\n                    : { rotateX: -90, opacity: 0, y: -6 }\n                }\n                animate={{ rotateX: 0, opacity: 1, y: 0 }}\n                exit={\n                  shouldReduceMotion\n                    ? { opacity: 0 }\n                    : { rotateX: 90, opacity: 0, y: 6 }\n                }\n                transition={\n                  shouldReduceMotion\n                    ? { duration: 0.01 }\n                    : {\n                        type: \"spring\",\n                        stiffness,\n                        damping,\n                        delay: idx * 0.035,\n                      }\n                }\n                className=\"relative z-10 inline-block\"\n              >\n                {char}\n              </motion.span>\n            </AnimatePresence>\n          </div>\n        ))}\n      </button>\n\n      <div className=\"flex items-center gap-1.5 text-[11px] text-neutral-400\">\n        <RotateCw className=\"h-3 w-3\" />\n        <span>Click board to cycle mechanical split-flap</span>\n      </div>\n    </div>\n  );\n}\n\nexport default SplitFlapText;\n"
+  },
+  {
     "id": "spotlight-card",
     "slug": "spotlight-card",
     "componentName": "SpotlightCard",
@@ -1246,6 +2539,75 @@ export const PULSE_COMPONENTS: PulseComponentCatalogEntry[] = [
       "tailwind-merge"
     ],
     "sourceCode": "\"use client\";\n\nimport React, { useRef, useState } from \"react\";\nimport {\n  motion,\n  useMotionTemplate,\n  useMotionValue,\n  useSpring,\n  useReducedMotion,\n  type HTMLMotionProps,\n} from \"framer-motion\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SpotlightCardProps extends HTMLMotionProps<\"div\"> {\n  children: React.ReactNode;\n  /** Primary radial spotlight color. Default: \"rgba(128, 128, 128, 0.14)\" */\n  spotlightColor?: string;\n  /** Border highlight color on pointer proximity. Default: \"rgba(128, 128, 128, 0.55)\" */\n  borderColor?: string;\n  /** Radius of the radial spotlight in pixels. Default: 320 */\n  spotlightRadius?: number;\n  /** Enable subtle 3D tilt when moving pointer across card. Default: false */\n  enableTilt?: boolean;\n}\n\nexport function SpotlightCard({\n  children,\n  className,\n  spotlightColor = \"rgba(128, 128, 128, 0.14)\",\n  borderColor = \"rgba(128, 128, 128, 0.55)\",\n  spotlightRadius = 320,\n  enableTilt = false,\n  onMouseMove,\n  onMouseEnter,\n  onMouseLeave,\n  ...props\n}: SpotlightCardProps) {\n  const cardRef = useRef<HTMLDivElement>(null);\n  const shouldReduceMotion = useReducedMotion();\n  const [isHovered, setIsHovered] = useState(false);\n\n  const mouseX = useMotionValue(-1000);\n  const mouseY = useMotionValue(-1000);\n\n  const smoothX = useSpring(mouseX, { stiffness: 320, damping: 28, mass: 0.25 });\n  const smoothY = useSpring(mouseY, { stiffness: 320, damping: 28, mass: 0.25 });\n\n  const rotateX = useSpring(useMotionValue(0), { stiffness: 200, damping: 22 });\n  const rotateY = useSpring(useMotionValue(0), { stiffness: 200, damping: 22 });\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n    if (!cardRef.current) return;\n    const rect = cardRef.current.getBoundingClientRect();\n    const x = e.clientX - rect.left;\n    const y = e.clientY - rect.top;\n\n    mouseX.set(x);\n    mouseY.set(y);\n\n    if (enableTilt && !shouldReduceMotion) {\n      const pctX = (x / rect.width - 0.5) * 2;\n      const pctY = (y / rect.height - 0.5) * 2;\n      rotateX.set(-pctY * 4);\n      rotateY.set(pctX * 4);\n    }\n\n    onMouseMove?.(e);\n  };\n\n  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {\n    setIsHovered(true);\n    onMouseEnter?.(e);\n  };\n\n  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {\n    setIsHovered(false);\n    rotateX.set(0);\n    rotateY.set(0);\n    onMouseLeave?.(e);\n  };\n\n  const activeX = shouldReduceMotion ? mouseX : smoothX;\n  const activeY = shouldReduceMotion ? mouseY : smoothY;\n\n  const surfaceBackground = useMotionTemplate`radial-gradient(${spotlightRadius}px circle at ${activeX}px ${activeY}px, ${spotlightColor}, transparent 80%)`;\n  const borderBackground = useMotionTemplate`radial-gradient(${\n    spotlightRadius * 0.75\n  }px circle at ${activeX}px ${activeY}px, ${borderColor}, transparent 100%)`;\n\n  return (\n    <motion.div\n      ref={cardRef}\n      onMouseMove={handleMouseMove}\n      onMouseEnter={handleMouseEnter}\n      onMouseLeave={handleMouseLeave}\n      style={{\n        rotateX: enableTilt && !shouldReduceMotion ? rotateX : 0,\n        rotateY: enableTilt && !shouldReduceMotion ? rotateY : 0,\n        transformPerspective: 1000,\n      }}\n      className={cn(\n        \"group relative overflow-hidden rounded-2xl border border-neutral-200 bg-white p-6 transition-colors duration-300 hover:border-neutral-400 dark:border-[#222222] dark:bg-[#0A0A0A] dark:hover:border-[#383838]\",\n        className\n      )}\n      {...props}\n    >\n      {/* Dynamic illuminated 1px border overlay */}\n      <motion.div\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute -inset-px rounded-2xl transition-opacity duration-300\"\n        style={{\n          opacity: isHovered ? 1 : 0,\n          background: borderBackground,\n          WebkitMask:\n            \"linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)\",\n          WebkitMaskComposite: \"xor\",\n          maskComposite: \"exclude\",\n          padding: \"1px\",\n        }}\n      />\n\n      {/* Ambient surface spotlight */}\n      <motion.div\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300\"\n        style={{\n          opacity: isHovered ? 1 : 0,\n          background: surfaceBackground,\n        }}\n      />\n\n      <div className=\"relative z-10\">{children}</div>\n    </motion.div>\n  );\n}\n"
+  },
+  {
+    "id": "spring-pendulum",
+    "slug": "spring-pendulum",
+    "componentName": "SpringPendulum",
+    "filePath": "src/components/ui/SpringPendulum.tsx",
+    "title": "Spring Pendulum",
+    "description": "Under-damped harmonic pendulum stage that visualizes angular velocity, restoring spring torque, and directional impulse kicks.",
+    "tagline": "Under-damped harmonic pendulum with angular velocity telemetry.",
+    "category": "Motion",
+    "badges": [
+      "New",
+      "Harmonic Physics",
+      "Angular Velocity"
+    ],
+    "createdAt": "2026-10-07",
+    "featured": false,
+    "keywords": [
+      "spring pendulum",
+      "harmonic oscillator",
+      "physics animation react",
+      "framer motion pendulum",
+      "kinetic telemetry"
+    ],
+    "features": [
+      "Under-damped Hooke's Law angular spring that oscillates across equilibrium before settling.",
+      "Real-time angular velocity tracking via useVelocity that dynamically scales the pendulum bob at peak swing speed.",
+      "Directional left and right torque impulse triggers."
+    ],
+    "accessibility": [
+      "Provides keyboard-focusable Left Kick, Right Kick, and Bob trigger buttons.",
+      "Marks decorative protractor arcs and pivot hardware with aria-hidden='true'.",
+      "Locks the pendulum arm at 0 degrees when prefers-reduced-motion is active."
+    ],
+    "props": [
+      {
+        "name": "rodLength",
+        "type": "number",
+        "default": "110",
+        "description": "Length of the pendulum suspension rod in pixels."
+      },
+      {
+        "name": "impulseAngle",
+        "type": "number",
+        "default": "42",
+        "description": "Peak angular displacement in degrees applied on impulse kick."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "140",
+        "description": "Hooke's Law spring stiffness governing angular restoring force."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "6",
+        "description": "Low damping coefficient allowing realistic multi-swing oscillation."
+      }
+    ],
+    "usageCode": "import { SpringPendulum } from \"@/components/ui/spring-pendulum\";\n\nexport function Example() {\n  return (\n    <SpringPendulum rodLength={110} impulseAngle={42} stiffness={140} damping={6} />\n  );\n}",
+    "cliCommand": "npx shadcn@latest add https://boseui.site/r/spring-pendulum.json",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "sourceCode": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport {\n  motion,\n  useMotionValue,\n  useSpring,\n  useVelocity,\n  useTransform,\n  useReducedMotion,\n} from \"framer-motion\";\nimport { Activity, Zap } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SpringPendulumProps {\n  /** Length of the pendulum rod in pixels. Default: 110 */\n  rodLength?: number;\n  /** Initial kick angle in degrees when impulse button is pressed. Default: 42 */\n  impulseAngle?: number;\n  /** Hooke's Law spring stiffness coefficient. Default: 140 */\n  stiffness?: number;\n  /** Spring damping coefficient (lower values oscillate longer). Default: 6 */\n  damping?: number;\n  className?: string;\n}\n\nexport function SpringPendulum({\n  rodLength = 110,\n  impulseAngle = 42,\n  stiffness = 140,\n  damping = 6,\n  className,\n}: SpringPendulumProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [lastPeak, setLastPeak] = useState<number>(impulseAngle);\n\n  const rawAngle = useMotionValue(0);\n  const springAngle = useSpring(rawAngle, {\n    stiffness,\n    damping,\n    mass: 0.9,\n  });\n\n  const angularVelocity = useVelocity(springAngle);\n  const bobScale = useTransform(\n    angularVelocity,\n    [-400, 0, 400],\n    [1.12, 1, 1.12]\n  );\n\n  const applyImpulse = (angle: number) => {\n    if (shouldReduceMotion) return;\n    setLastPeak(Math.abs(angle));\n    rawAngle.set(angle);\n    setTimeout(() => {\n      rawAngle.set(0);\n    }, 90);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"relative flex min-h-[250px] w-full max-w-sm select-none flex-col items-center justify-between overflow-hidden rounded-2xl border border-neutral-200 bg-white p-5 dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      {/* Top Telemetry Bar */}\n      <div className=\"flex w-full items-center justify-between text-xs\">\n        <span className=\"inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold text-black dark:text-white\">\n          <Activity className=\"h-3.5 w-3.5\" />\n          HARMONIC_PENDULUM\n        </span>\n        <span className=\"font-mono text-[10px] text-neutral-400\">\n          θ₀ = ±{lastPeak}° • ζ = {damping}\n        </span>\n      </div>\n\n      {/* Pivot Mount & Swinging Arm */}\n      <div className=\"relative my-2 flex h-[145px] w-full flex-col items-center\">\n        {/* Protractor Arc Guide */}\n        <div\n          aria-hidden=\"true\"\n          className=\"pointer-events-none absolute top-0 h-28 w-56 rounded-b-full border-b border-dashed border-neutral-200 dark:border-[#222222]\"\n        />\n\n        {/* Ceiling Pivot Pin */}\n        <div\n          aria-hidden=\"true\"\n          className=\"z-20 h-3 w-3 rounded-full border-2 border-black bg-white dark:border-white dark:bg-[#0A0A0A]\"\n        />\n\n        {/* Rotating Rod + Bob */}\n        <motion.div\n          style={{\n            rotate: shouldReduceMotion ? 0 : springAngle,\n            transformOrigin: \"top center\",\n          }}\n          className=\"relative -mt-1.5 flex flex-col items-center\"\n        >\n          {/* Tether Rod */}\n          <div\n            style={{ height: rodLength }}\n            className=\"w-[2px] bg-neutral-300 dark:bg-neutral-700\"\n          />\n\n          {/* Kinetic Bob */}\n          <motion.button\n            type=\"button\"\n            aria-label=\"Pull and release pendulum bob\"\n            onClick={() => applyImpulse(impulseAngle)}\n            style={{ scale: shouldReduceMotion ? 1 : bobScale }}\n            whileTap={shouldReduceMotion ? undefined : { scale: 0.92 }}\n            className=\" -mt-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-black bg-black font-mono text-[10px] font-bold text-white shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 dark:border-white dark:bg-white dark:text-black dark:focus-visible:ring-white\"\n          >\n            m\n          </motion.button>\n        </motion.div>\n      </div>\n\n      {/* Impulse Controls */}\n      <div className=\"flex w-full items-center justify-center gap-2\">\n        <button\n          type=\"button\"\n          onClick={() => applyImpulse(-impulseAngle)}\n          className=\"inline-flex items-center gap-1 rounded-xl border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-xs font-semibold text-black transition-colors hover:border-black dark:border-[#262626] dark:bg-[#141414] dark:text-white dark:hover:border-white\"\n        >\n          <Zap className=\"h-3 w-3\" />\n          Kick Left (-{impulseAngle}°)\n        </button>\n        <button\n          type=\"button\"\n          onClick={() => applyImpulse(impulseAngle)}\n          className=\"inline-flex items-center gap-1 rounded-xl border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-xs font-semibold text-black transition-colors hover:border-black dark:border-[#262626] dark:bg-[#141414] dark:text-white dark:hover:border-white\"\n        >\n          <Zap className=\"h-3 w-3\" />\n          Kick Right (+{impulseAngle}°)\n        </button>\n      </div>\n    </div>\n  );\n}\n\nexport default SpringPendulum;\n"
   },
   {
     "id": "spring-pin-input",

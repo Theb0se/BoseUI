@@ -6,28 +6,87 @@
 // ============================================================================
 
 import type React from "react";
-import dynamic from "next/dynamic";
 import { createComponentDemo } from "@/registry/ComponentDemoWrapper";
+import { AccordionStackCards } from "@/components/ui/AccordionStackCards";
+import { AuroraFluxSurface } from "@/components/ui/AuroraFluxSurface";
+import { CipherScrambleText } from "@/components/ui/CipherScrambleText";
+import { ConstellationMeshField } from "@/components/ui/ConstellationMeshField";
+import { CursorFollower } from "@/components/ui/CursorFollower";
+import { DynamicIslandToast } from "@/components/ui/DynamicIslandToast";
+import { ElasticDock } from "@/components/ui/ElasticDock";
+import { ElasticSnapSortable } from "@/components/ui/ElasticSnapSortable";
+import { ElasticTagInput } from "@/components/ui/ElasticTagInput";
+import { ElasticWaveText } from "@/components/ui/ElasticWaveText";
+import { ExpandableBentoCard } from "@/components/ui/ExpandableBentoCard";
+import { FloatingCompassNav } from "@/components/ui/FloatingCompassNav";
+import { GravityWellPortal } from "@/components/ui/GravityWellPortal";
+import { HoldToConfirmButton } from "@/components/ui/HoldToConfirmButton";
+import { HolographicFlipCard } from "@/components/ui/HolographicFlipCard";
+import { InteractiveGridBeam } from "@/components/ui/InteractiveGridBeam";
+import { KineticDrawerSheet } from "@/components/ui/KineticDrawerSheet";
+import { KineticRollingCounter } from "@/components/ui/KineticRollingCounter";
+import { KineticSlider } from "@/components/ui/KineticSlider";
+import { KineticStepIndicator } from "@/components/ui/KineticStepIndicator";
+import { KineticSwipeButton } from "@/components/ui/KineticSwipeButton";
+import { LiquidPillTabs } from "@/components/ui/LiquidPillTabs";
+import { MagneticBreadcrumb } from "@/components/ui/MagneticBreadcrumb";
+import { MagneticButton } from "@/components/ui/MagneticButton";
+import { MagneticPopoverMenu } from "@/components/ui/MagneticPopoverMenu";
+import { MorphingActionButton } from "@/components/ui/MorphingActionButton";
+import { MorphingDialog } from "@/components/ui/MorphingDialog";
+import { ParallaxTiltCard } from "@/components/ui/ParallaxTiltCard";
+import { PeelRevealCard } from "@/components/ui/PeelRevealCard";
+import { RadialMenuOrb } from "@/components/ui/RadialMenuOrb";
+import { RippleBurstButton } from "@/components/ui/RippleBurstButton";
+import { RotarySpringDial } from "@/components/ui/RotarySpringDial";
+import { ScrubbableNumberInput } from "@/components/ui/ScrubbableNumberInput";
+import { SplitButton } from "@/components/ui/SplitButton";
+import { SplitFlapText } from "@/components/ui/SplitFlapText";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { SpringPendulum } from "@/components/ui/SpringPendulum";
+import { SpringPinInput } from "@/components/ui/SpringPinInput";
+import { TopographicRippleSurface } from "@/components/ui/TopographicRippleSurface";
+import { VariableProximityText } from "@/components/ui/VariableProximityText";
 
 export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
-  "accordion-stack-cards": dynamic(() => import("@/components/ui/AccordionStackCards").then((mod: any) => createComponentDemo("accordion-stack-cards", mod.default || mod.AccordionStackCards)), { ssr: false }),
-  "cipher-scramble-text": dynamic(() => import("@/components/ui/CipherScrambleText").then((mod: any) => createComponentDemo("cipher-scramble-text", mod.default || mod.CipherScrambleText)), { ssr: false }),
-  "cursor-follower": dynamic(() => import("@/components/ui/CursorFollower").then((mod: any) => createComponentDemo("cursor-follower", mod.default || mod.CursorFollower)), { ssr: false }),
-  "dynamic-island-toast": dynamic(() => import("@/components/ui/DynamicIslandToast").then((mod: any) => createComponentDemo("dynamic-island-toast", mod.default || mod.DynamicIslandToast)), { ssr: false }),
-  "elastic-dock": dynamic(() => import("@/components/ui/ElasticDock").then((mod: any) => createComponentDemo("elastic-dock", mod.default || mod.ElasticDock)), { ssr: false }),
-  "gravity-well-portal": dynamic(() => import("@/components/ui/GravityWellPortal").then((mod: any) => createComponentDemo("gravity-well-portal", mod.default || mod.GravityWellPortal)), { ssr: false }),
-  "hold-to-confirm-button": dynamic(() => import("@/components/ui/HoldToConfirmButton").then((mod: any) => createComponentDemo("hold-to-confirm-button", mod.default || mod.HoldToConfirmButton)), { ssr: false }),
-  "holographic-flip-card": dynamic(() => import("@/components/ui/HolographicFlipCard").then((mod: any) => createComponentDemo("holographic-flip-card", mod.default || mod.HolographicFlipCard)), { ssr: false }),
-  "interactive-grid-beam": dynamic(() => import("@/components/ui/InteractiveGridBeam").then((mod: any) => createComponentDemo("interactive-grid-beam", mod.default || mod.InteractiveGridBeam)), { ssr: false }),
-  "kinetic-slider": dynamic(() => import("@/components/ui/KineticSlider").then((mod: any) => createComponentDemo("kinetic-slider", mod.default || mod.KineticSlider)), { ssr: false }),
-  "liquid-pill-tabs": dynamic(() => import("@/components/ui/LiquidPillTabs").then((mod: any) => createComponentDemo("liquid-pill-tabs", mod.default || mod.LiquidPillTabs)), { ssr: false }),
-  "magnetic-button": dynamic(() => import("@/components/ui/MagneticButton").then((mod: any) => createComponentDemo("magnetic-button", mod.default || mod.MagneticButton)), { ssr: false }),
-  "morphing-dialog": dynamic(() => import("@/components/ui/MorphingDialog").then((mod: any) => createComponentDemo("morphing-dialog", mod.default || mod.MorphingDialog)), { ssr: false }),
-  "radial-menu-orb": dynamic(() => import("@/components/ui/RadialMenuOrb").then((mod: any) => createComponentDemo("radial-menu-orb", mod.default || mod.RadialMenuOrb)), { ssr: false }),
-  "scrubbable-number-input": dynamic(() => import("@/components/ui/ScrubbableNumberInput").then((mod: any) => createComponentDemo("scrubbable-number-input", mod.default || mod.ScrubbableNumberInput)), { ssr: false }),
-  "split-button": dynamic(() => import("@/components/ui/SplitButton").then((mod: any) => createComponentDemo("split-button", mod.default || mod.SplitButton)), { ssr: false }),
-  "spotlight-card": dynamic(() => import("@/components/ui/SpotlightCard").then((mod: any) => createComponentDemo("spotlight-card", mod.default || mod.SpotlightCard)), { ssr: false }),
-  "spring-pin-input": dynamic(() => import("@/components/ui/SpringPinInput").then((mod: any) => createComponentDemo("spring-pin-input", mod.default || mod.SpringPinInput)), { ssr: false }),
-  "topographic-ripple-surface": dynamic(() => import("@/components/ui/TopographicRippleSurface").then((mod: any) => createComponentDemo("topographic-ripple-surface", mod.default || mod.TopographicRippleSurface)), { ssr: false }),
-  "variable-proximity-text": dynamic(() => import("@/components/ui/VariableProximityText").then((mod: any) => createComponentDemo("variable-proximity-text", mod.default || mod.VariableProximityText)), { ssr: false }),
+  "accordion-stack-cards": createComponentDemo("accordion-stack-cards", AccordionStackCards),
+  "aurora-flux-surface": createComponentDemo("aurora-flux-surface", AuroraFluxSurface),
+  "cipher-scramble-text": createComponentDemo("cipher-scramble-text", CipherScrambleText),
+  "constellation-mesh-field": createComponentDemo("constellation-mesh-field", ConstellationMeshField),
+  "cursor-follower": createComponentDemo("cursor-follower", CursorFollower),
+  "dynamic-island-toast": createComponentDemo("dynamic-island-toast", DynamicIslandToast),
+  "elastic-dock": createComponentDemo("elastic-dock", ElasticDock),
+  "elastic-snap-sortable": createComponentDemo("elastic-snap-sortable", ElasticSnapSortable),
+  "elastic-tag-input": createComponentDemo("elastic-tag-input", ElasticTagInput),
+  "elastic-wave-text": createComponentDemo("elastic-wave-text", ElasticWaveText),
+  "expandable-bento-card": createComponentDemo("expandable-bento-card", ExpandableBentoCard),
+  "floating-compass-nav": createComponentDemo("floating-compass-nav", FloatingCompassNav),
+  "gravity-well-portal": createComponentDemo("gravity-well-portal", GravityWellPortal),
+  "hold-to-confirm-button": createComponentDemo("hold-to-confirm-button", HoldToConfirmButton),
+  "holographic-flip-card": createComponentDemo("holographic-flip-card", HolographicFlipCard),
+  "interactive-grid-beam": createComponentDemo("interactive-grid-beam", InteractiveGridBeam),
+  "kinetic-drawer-sheet": createComponentDemo("kinetic-drawer-sheet", KineticDrawerSheet),
+  "kinetic-rolling-counter": createComponentDemo("kinetic-rolling-counter", KineticRollingCounter),
+  "kinetic-slider": createComponentDemo("kinetic-slider", KineticSlider),
+  "kinetic-step-indicator": createComponentDemo("kinetic-step-indicator", KineticStepIndicator),
+  "kinetic-swipe-button": createComponentDemo("kinetic-swipe-button", KineticSwipeButton),
+  "liquid-pill-tabs": createComponentDemo("liquid-pill-tabs", LiquidPillTabs),
+  "magnetic-breadcrumb": createComponentDemo("magnetic-breadcrumb", MagneticBreadcrumb),
+  "magnetic-button": createComponentDemo("magnetic-button", MagneticButton),
+  "magnetic-popover-menu": createComponentDemo("magnetic-popover-menu", MagneticPopoverMenu),
+  "morphing-action-button": createComponentDemo("morphing-action-button", MorphingActionButton),
+  "morphing-dialog": createComponentDemo("morphing-dialog", MorphingDialog),
+  "parallax-tilt-card": createComponentDemo("parallax-tilt-card", ParallaxTiltCard),
+  "peel-reveal-card": createComponentDemo("peel-reveal-card", PeelRevealCard),
+  "radial-menu-orb": createComponentDemo("radial-menu-orb", RadialMenuOrb),
+  "ripple-burst-button": createComponentDemo("ripple-burst-button", RippleBurstButton),
+  "rotary-spring-dial": createComponentDemo("rotary-spring-dial", RotarySpringDial),
+  "scrubbable-number-input": createComponentDemo("scrubbable-number-input", ScrubbableNumberInput),
+  "split-button": createComponentDemo("split-button", SplitButton),
+  "split-flap-text": createComponentDemo("split-flap-text", SplitFlapText),
+  "spotlight-card": createComponentDemo("spotlight-card", SpotlightCard),
+  "spring-pendulum": createComponentDemo("spring-pendulum", SpringPendulum),
+  "spring-pin-input": createComponentDemo("spring-pin-input", SpringPinInput),
+  "topographic-ripple-surface": createComponentDemo("topographic-ripple-surface", TopographicRippleSurface),
+  "variable-proximity-text": createComponentDemo("variable-proximity-text", VariableProximityText),
 };

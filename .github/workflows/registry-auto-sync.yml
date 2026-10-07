@@ -1,0 +1,50 @@
+name: Registry Auto-Sync
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "feat/**"
+      - "component/**"
+      - "fix/**"
+    paths:
+      - "src/components/ui/**"
+      - "scripts/**"
+
+permissions:
+  contents: write
+
+jobs:
+  auto-sync-registry:
+    name: Auto-Sync Registry & SEO Manifests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run BoseUI sync pipeline
+        run: npm run sync
+
+      - name: Commit & push updated registry artifacts if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/r public/registry.json public/sitemap.xml public/robots.txt public/llms.txt src/registry/generated-catalog.tsx src/registry/generated-demos.tsx
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(registry): auto-sync component manifests and SEO artifacts [skip ci]"
+            git push
+            echo "✔ Committed and pushed updated registry manifests."
+          else
+            echo "✔ Registry artifacts are already up to date."
+          fi

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "split-flap-text",
+  "type": "registry:ui",
+  "title": "Split Flap Text",
+  "author": "Rishabh Bose <https://theb0se.vercel.app/>",
+  "description": "Mechanical departure-board split-flap display that cycles character tiles with staggered 3D rotateX spring hinges.",
+  "dependencies": [
+    "framer-motion",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "files": [
+    {
+      "path": "components/ui/split-flap-text.tsx",
+      "content": "\"use client\";\n\nimport React, { useState } from \"react\";\nimport { AnimatePresence, motion, useReducedMotion } from \"framer-motion\";\nimport { RotateCw } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SplitFlapTextProps {\n  /** Array of preset words of similar length to cycle through. */\n  words?: string[];\n  /** Spring stiffness coefficient for 3D flap rotation. Default: 380 */\n  stiffness?: number;\n  /** Spring damping coefficient for 3D flap rotation. Default: 24 */\n  damping?: number;\n  className?: string;\n}\n\nconst DEFAULT_WORDS = [\"KINETIC\", \"PHYSICS\", \"SPRINGS\", \"MINIMAL\"];\n\nexport function SplitFlapText({\n  words = DEFAULT_WORDS,\n  stiffness = 380,\n  damping = 24,\n  className,\n}: SplitFlapTextProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const [wordIndex, setWordIndex] = useState(0);\n\n  const activeWord = words[wordIndex % words.length] || \"KINETIC\";\n  const maxLen = Math.max(...words.map((w) => w.length), activeWord.length);\n  const paddedChars = activeWord.padEnd(maxLen, \" \").split(\"\");\n\n  const cycleNext = () => {\n    setWordIndex((prev) => (prev + 1) % words.length);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"inline-flex flex-col items-center gap-3 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      {/* Screen-reader live readout */}\n      <span className=\"sr-only\" role=\"status\" aria-live=\"polite\">\n        {activeWord}\n      </span>\n\n      <button\n        type=\"button\"\n        onClick={cycleNext}\n        aria-label={`Split-flap display showing ${activeWord}. Click to flip to next word.`}\n        style={{ perspective: \"900px\" }}\n        className=\"group flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white\"\n      >\n        {paddedChars.map((char, idx) => (\n          <div\n            key={idx}\n            aria-hidden=\"true\"\n            className=\"relative flex h-12 w-9 items-center justify-center overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950 font-mono text-lg font-bold text-white shadow-inner dark:border-neutral-200 dark:bg-white dark:text-black\"\n          >\n            {/* Mechanical Horizontal Split Hinge Line */}\n            <div className=\"pointer-events-none absolute inset-x-0 top-1/2 z-20 h-[1px] bg-black/40 dark:bg-neutral-300\" />\n\n            <AnimatePresence mode=\"popLayout\" initial={false}>\n              <motion.span\n                key={`${wordIndex}-${idx}-${char}`}\n                initial={\n                  shouldReduceMotion\n                    ? { opacity: 0 }\n                    : { rotateX: -90, opacity: 0, y: -6 }\n                }\n                animate={{ rotateX: 0, opacity: 1, y: 0 }}\n                exit={\n                  shouldReduceMotion\n                    ? { opacity: 0 }\n                    : { rotateX: 90, opacity: 0, y: 6 }\n                }\n                transition={\n                  shouldReduceMotion\n                    ? { duration: 0.01 }\n                    : {\n                        type: \"spring\",\n                        stiffness,\n                        damping,\n                        delay: idx * 0.035,\n                      }\n                }\n                className=\"relative z-10 inline-block\"\n              >\n                {char}\n              </motion.span>\n            </AnimatePresence>\n          </div>\n        ))}\n      </button>\n\n      <div className=\"flex items-center gap-1.5 text-[11px] text-neutral-400\">\n        <RotateCw className=\"h-3 w-3\" />\n        <span>Click board to cycle mechanical split-flap</span>\n      </div>\n    </div>\n  );\n}\n\nexport default SplitFlapText;\n",
+      "type": "registry:ui",
+      "target": "components/ui/split-flap-text.tsx"
+    },
+    {
+      "path": "lib/utils.ts",
+      "content": "import { type ClassValue, clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib",
+      "target": "lib/utils.ts"
+    }
+  ]
+}

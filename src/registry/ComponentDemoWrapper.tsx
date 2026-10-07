@@ -174,6 +174,150 @@ export function createComponentDemo(
       case "spring-pin-input":
         return <Component length={6} defaultValue="482" />;
 
+      case "spring-pendulum":
+        return (
+          <Component
+            rodLength={110}
+            impulseAngle={42}
+            stiffness={140}
+            damping={6}
+          />
+        );
+
+      case "elastic-snap-sortable":
+        return <Component stiffness={380} damping={26} />;
+
+      case "kinetic-swipe-button":
+        return (
+          <Component
+            label="Slide to Deploy Production"
+            completedLabel="Deployment Triggered"
+            threshold={0.78}
+          />
+        );
+
+      case "ripple-burst-button":
+        return (
+          <Component
+            label="Emit Shockwave Pulse"
+            stiffness={400}
+            damping={22}
+          />
+        );
+
+      case "morphing-action-button":
+        return (
+          <Component
+            idleLabel="Publish Registry"
+            loadingLabel="Compiling..."
+            successLabel="Published v2.4"
+          />
+        );
+
+      case "parallax-tilt-card":
+        return (
+          <Component
+            title="Spatial Depth Plane"
+            maxTilt={14}
+            stiffness={240}
+            damping={22}
+          />
+        );
+
+      case "expandable-bento-card":
+        return (
+          <Component
+            badge="RUNTIME_TELEMETRY"
+            title="GPU Compositor Pipeline"
+          />
+        );
+
+      case "peel-reveal-card":
+        return (
+          <Component
+            title="Production Secret Key"
+            secretValue="bose_live_98f72a41c09e3b1d"
+          />
+        );
+
+      case "magnetic-breadcrumb":
+        return <Component stiffness={380} damping={26} />;
+
+      case "floating-compass-nav":
+        return (
+          <Component defaultQuadrant="SE" stiffness={300} damping={24} />
+        );
+
+      case "kinetic-step-indicator":
+        return <Component defaultStep={1} stiffness={320} damping={25} />;
+
+      case "kinetic-rolling-counter":
+        return (
+          <Component
+            defaultValue={1248}
+            step={17}
+            stiffness={340}
+            damping={26}
+          />
+        );
+
+      case "split-flap-text":
+        return (
+          <Component
+            words={["KINETIC", "PHYSICS", "SPRINGS", "MINIMAL"]}
+            stiffness={380}
+            damping={24}
+          />
+        );
+
+      case "elastic-wave-text":
+        return (
+          <Component text="Harmonic Transverse Wave" amplitude={-14} />
+        );
+
+      case "constellation-mesh-field":
+        return <Component connectRadius={130} />;
+
+      case "aurora-flux-surface":
+        return <Component orbRadius={260} stiffness={180} damping={24} />;
+
+      case "kinetic-drawer-sheet":
+        return (
+          <Component
+            triggerLabel="Open Gesture Drawer"
+            title="Multi-Detent Spring Sheet"
+          />
+        );
+
+      case "magnetic-popover-menu":
+        return (
+          <Component
+            triggerLabel="Quick Actions"
+            stiffness={380}
+            damping={26}
+          />
+        );
+
+      case "rotary-spring-dial":
+        return (
+          <Component
+            label="Damping Ratio"
+            defaultValue={65}
+            min={0}
+            max={100}
+            step={5}
+            unit="%"
+          />
+        );
+
+      case "elastic-tag-input":
+        return (
+          <Component
+            defaultTags={["framer-motion", "spring-physics", "shadcn-v2"]}
+            maxTags={8}
+          />
+        );
+
       default:
         return <Component />;
     }

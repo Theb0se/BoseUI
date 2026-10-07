@@ -10,7 +10,7 @@
 - **Stack**: Next.js (App Router), React, TypeScript, Tailwind CSS, Framer Motion
 - **Registry Index**: https://boseui.site/registry.json
 
-## Available Kinetic Components (20)
+## Available Kinetic Components (40)
 
 ### Accordion Stack Cards (`AccordionStackCards`)
 - **Slug**: `accordion-stack-cards`
@@ -39,6 +39,39 @@ import { AccordionStackCards } from "@/components/ui/accordion-stack-cards";
 export function Example() {
   return (
     <AccordionStackCards stiffness={300} damping={25} />
+  );
+}
+```
+
+---
+
+### Aurora Flux Surface (`AuroraFluxSurface`)
+- **Slug**: `aurora-flux-surface`
+- **Category**: Backgrounds
+- **Tagline**: Dual-mass GPU radial aurora surface with zero React re-renders.
+- **Description**: GPU-composited ambient aurora canvas where dual radial luminance fields with contrasting spring mass chase the pointer.
+- **Docs URL**: https://boseui.site/components/aurora-flux-surface
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/aurora-flux-surface.json`
+- **Registry Manifest**: https://boseui.site/r/aurora-flux-surface.json
+- **Key Features**:
+  - Pairs a low-mass leading radial orb (m=0.4) with a high-mass trailing orb (m=1.4) for organic fluidseparation.
+  - Composited directly via Framer Motion useMotionTemplate with zero React state re-renders.
+  - Monochrome architectural dot overlay preserving BoseUI's high-contrast aesthetic.
+- **Accessibility**:
+  - Marks all ambient luminance and dot texture layers with aria-hidden='true'.
+  - Freezes luminance orb coordinates when prefers-reduced-motion is active.
+  - Preserves WCAG AA contrast inside the foreground container.
+- **Props**:
+  - `orbRadius` (number, default: 260): Radius of the primary radial luminance field in pixels.
+  - `stiffness` (number, default: 180): Spring stiffness coefficient for the leading luminance orb.
+  - `damping` (number, default: 24): Spring damping coefficient controlling luminance trail decay.
+- **Usage Example**:
+```tsx
+import { AuroraFluxSurface } from "@/components/ui/aurora-flux-surface";
+
+export function Example() {
+  return (
+    <AuroraFluxSurface orbRadius={260} stiffness={180} damping={24} />
   );
 }
 ```
@@ -77,6 +110,38 @@ export function Example() {
       frameInterval={28}
       cyclesPerChar={2}
     />
+  );
+}
+```
+
+---
+
+### Constellation Mesh Field (`ConstellationMeshField`)
+- **Slug**: `constellation-mesh-field`
+- **Category**: Backgrounds
+- **Tagline**: Interactive SVG constellation graph with pointer proximity edges.
+- **Description**: Interactive SVG vertex constellation surface that dynamically tethers proximity edges to the pointer with spring-scaled nodes.
+- **Docs URL**: https://boseui.site/components/constellation-mesh-field
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/constellation-mesh-field.json`
+- **Registry Manifest**: https://boseui.site/r/constellation-mesh-field.json
+- **Key Features**:
+  - Crisp vector SVG constellation lattice that scales cleanly to any container resolution.
+  - Real-time Euclidean distance culling that draws opacity-graded edges between the pointer and nearby vertices.
+  - Spring-inflated vertex radii when captured within the pointer's connection radius.
+- **Accessibility**:
+  - Decorative SVG graph layer is marked aria-hidden='true'.
+  - Disables dynamic edge tethering when prefers-reduced-motion is enabled.
+  - Maintains high foreground text contrast inside a translucent HUD card.
+- **Props**:
+  - `connectRadius` (number, default: 130): Maximum Euclidean distance in viewBox units to connect pointer edges.
+  - `children` (React.ReactNode): Optional foreground content rendered above the constellation mesh.
+- **Usage Example**:
+```tsx
+import { ConstellationMeshField } from "@/components/ui/constellation-mesh-field";
+
+export function Example() {
+  return (
+    <ConstellationMeshField connectRadius={130} />
   );
 }
 ```
@@ -193,6 +258,181 @@ export function Example() {
     <div className="flex items-center justify-center py-8">
       <ElasticDock baseSize={46} magnifiedSize={68} distance={140} />
     </div>
+  );
+}
+```
+
+---
+
+### Elastic Snap Sortable (`ElasticSnapSortable`)
+- **Slug**: `elastic-snap-sortable`
+- **Category**: Motion
+- **Tagline**: Spring-projected reorderable list with keyboard arrow sorting.
+- **Description**: Reorderable priority queue where list items swap positions with Hooke's Law layout spring projection and full keyboard arrow-key control.
+- **Docs URL**: https://boseui.site/components/elastic-snap-sortable
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/elastic-snap-sortable.json`
+- **Registry Manifest**: https://boseui.site/r/elastic-snap-sortable.json
+- **Key Features**:
+  - Automatic FLIP layout projection via Framer Motion layout prop when rows swap positions.
+  - Full keyboard reordering using ArrowUp and ArrowDown keys directly on focused list items.
+  - Tactile up/down stepper triggers for single-click touch and pointer sorting.
+- **Accessibility**:
+  - Implements role='list' and role='listitem' with live position announcements in aria-label.
+  - Supports ArrowUp and ArrowDown keyboard reordering without requiring pointer drag dexterity.
+  - Snaps reordered rows instantaneously when prefers-reduced-motion is enabled.
+- **Props**:
+  - `items` (SortableTaskItem[]): Initial array of task items containing id, title, and priority tag.
+  - `stiffness` (number, default: 380): Spring stiffness coefficient for row swap layout projection.
+  - `damping` (number, default: 26): Spring damping coefficient controlling row settle oscillation.
+- **Usage Example**:
+```tsx
+import { ElasticSnapSortable } from "@/components/ui/elastic-snap-sortable";
+
+export function Example() {
+  return (
+    <ElasticSnapSortable stiffness={380} damping={26} />
+  );
+}
+```
+
+---
+
+### Elastic Tag Input (`ElasticTagInput`)
+- **Slug**: `elastic-tag-input`
+- **Category**: Inputs
+- **Tagline**: Tokenized pill input with layout springs and Backspace warning wiggle.
+- **Description**: Tokenized multi-tag input with Hooke's Law pill pop-in, FLIP layout reflow, and a two-step Backspace warning wiggle before deletion.
+- **Docs URL**: https://boseui.site/components/elastic-tag-input
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/elastic-tag-input.json`
+- **Registry Manifest**: https://boseui.site/r/elastic-tag-input.json
+- **Key Features**:
+  - Automatic FLIP layout reflow across remaining pills when a tag is inserted or removed.
+  - Two-press Backspace safety that highlights and wiggles the last tag before deleting it.
+  - Normalizes whitespace into clean kebab-case tokens automatically.
+- **Accessibility**:
+  - Each tag pill includes a dedicated button with aria-label='Remove tag X'.
+  - Supports Enter and comma keys to commit new tags and Backspace to remove.
+  - Disables scale pop-in and warning wiggle when prefers-reduced-motion is active.
+- **Props**:
+  - `defaultTags` (string[], default: ["framer-motion", "spring-physics", "shadcn-v2"]): Initial list of keyword tags rendered inside the field.
+  - `maxTags` (number, default: 8): Maximum number of tags allowed before locking the input.
+  - `stiffness` (number, default: 380): Hooke's Law spring stiffness for tag pop-in and layout reflow.
+  - `damping` (number, default: 24): Spring damping coefficient controlling pill settle.
+- **Usage Example**:
+```tsx
+import { ElasticTagInput } from "@/components/ui/elastic-tag-input";
+
+export function Example() {
+  return (
+    <ElasticTagInput
+      defaultTags={["framer-motion", "spring-physics", "shadcn-v2"]}
+      maxTags={8}
+    />
+  );
+}
+```
+
+---
+
+### Elastic Wave Text (`ElasticWaveText`)
+- **Slug**: `elastic-wave-text`
+- **Category**: Text
+- **Tagline**: Transverse sinusoidal wave propagation across headline glyphs.
+- **Description**: Plucked-string kinetic typography that propagates a damped transverse wave across every character on hover or click.
+- **Docs URL**: https://boseui.site/components/elastic-wave-text
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/elastic-wave-text.json`
+- **Registry Manifest**: https://boseui.site/r/elastic-wave-text.json
+- **Key Features**:
+  - Phase-delayed vertical oscillation that ripples sequentially from the first glyph to the last.
+  - Secondary harmonic rebound (-0.45x crest) before settling at baseline.
+  - Screen-reader safe sr-only canonical string paired with aria-hidden visual glyphs.
+- **Accessibility**:
+  - Exposes a single uninterrupted sr-only string for assistive technologies.
+  - Operable as a focusable button via Enter or Space keys.
+  - Suppresses transverse wave displacement when prefers-reduced-motion is active.
+- **Props**:
+  - `text` (string, default: "Harmonic Transverse Wave"): Headline string rendered along the transverse wave.
+  - `amplitude` (number, default: -14): Peak vertical wave crest displacement in pixels.
+  - `stiffness` (number, default: 420): Spring stiffness coefficient for glyph oscillation.
+  - `damping` (number, default: 14): Damping coefficient controlling wave crest decay.
+- **Usage Example**:
+```tsx
+import { ElasticWaveText } from "@/components/ui/elastic-wave-text";
+
+export function Example() {
+  return (
+    <ElasticWaveText text="Harmonic Transverse Wave" amplitude={-14} />
+  );
+}
+```
+
+---
+
+### Expandable Bento Card (`ExpandableBentoCard`)
+- **Slug**: `expandable-bento-card`
+- **Category**: Cards
+- **Tagline**: Inline-expanding bento card with spring height projection.
+- **Description**: Interactive bento surface that expands inline with Hooke's Law spring height projection to reveal secondary diagnostic modules.
+- **Docs URL**: https://boseui.site/components/expandable-bento-card
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/expandable-bento-card.json`
+- **Registry Manifest**: https://boseui.site/r/expandable-bento-card.json
+- **Key Features**:
+  - Smooth inline height and layout projection powered by Framer Motion layout and AnimatePresence.
+  - Rotational spring chevron indicator synchronized with expansion state.
+  - Zero layout shift on neighboring grid cells when paired with layout-aware containers.
+- **Accessibility**:
+  - Header trigger is a semantic button with aria-expanded state announcement.
+  - Supports Enter and Space keys to toggle expansion.
+  - Collapses transition duration when prefers-reduced-motion is enabled.
+- **Props**:
+  - `badge` (string, default: "RUNTIME_TELEMETRY"): Eyebrow badge label displayed above the card heading.
+  - `title` (string, default: "GPU Compositor Pipeline"): Primary heading text of the bento card.
+  - `defaultExpanded` (boolean, default: false): Whether the diagnostic drawer is expanded on initial mount.
+  - `stiffness` (number, default: 320): Spring stiffness coefficient for height expansion.
+  - `damping` (number, default: 26): Spring damping coefficient controlling expansion settle.
+- **Usage Example**:
+```tsx
+import { ExpandableBentoCard } from "@/components/ui/expandable-bento-card";
+
+export function Example() {
+  return (
+    <ExpandableBentoCard
+      badge="RUNTIME_TELEMETRY"
+      title="GPU Compositor Pipeline"
+    />
+  );
+}
+```
+
+---
+
+### Floating Compass Nav (`FloatingCompassNav`)
+- **Slug**: `floating-compass-nav`
+- **Category**: Navigation
+- **Tagline**: Four-quadrant corner-snapping floating navigation pod.
+- **Description**: Viewport-anchored floating navigation pod that snaps elastically across four corner quadrants (NW, NE, SW, SE) via spring layout projection.
+- **Docs URL**: https://boseui.site/components/floating-compass-nav
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/floating-compass-nav.json`
+- **Registry Manifest**: https://boseui.site/r/floating-compass-nav.json
+- **Key Features**:
+  - Four-corner magnetic quadrant snapping (NW, NE, SW, SE) powered by Framer Motion layout projection.
+  - On-pod directional quadrant buttons plus dashed corner anchor targets.
+  - Configurable Hooke's Law stiffness and damping for travel trajectory.
+- **Accessibility**:
+  - Every corner anchor target and directional button includes a descriptive aria-label.
+  - Fully operable via Tab and Enter/Space keys without requiring drag gestures.
+  - Snaps instantaneously across quadrants when prefers-reduced-motion is active.
+- **Props**:
+  - `defaultQuadrant` ("NW" | "NE" | "SW" | "SE", default: "SE"): Initial corner quadrant where the navigation pod is anchored.
+  - `stiffness` (number, default: 300): Spring stiffness coefficient for cross-viewport corner snapping.
+  - `damping` (number, default: 24): Spring damping coefficient controlling corner arrival bounce.
+- **Usage Example**:
+```tsx
+import { FloatingCompassNav } from "@/components/ui/floating-compass-nav";
+
+export function Example() {
+  return (
+    <FloatingCompassNav defaultQuadrant="SE" stiffness={300} damping={24} />
   );
 }
 ```
@@ -345,6 +585,77 @@ export function Example() {
 
 ---
 
+### Kinetic Drawer Sheet (`KineticDrawerSheet`)
+- **Slug**: `kinetic-drawer-sheet`
+- **Category**: Overlays
+- **Tagline**: Multi-detent bottom gesture sheet with rubber-band over-drag.
+- **Description**: Bottom gesture sheet featuring Peek and Full spring detents, velocity-projected flick transitions, and rubber-band over-drag.
+- **Docs URL**: https://boseui.site/components/kinetic-drawer-sheet
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/kinetic-drawer-sheet.json`
+- **Registry Manifest**: https://boseui.site/r/kinetic-drawer-sheet.json
+- **Key Features**:
+  - Two-stage detent snapping (Peek and Full) responsive to vertical pan velocity and displacement.
+  - Rubber-band drag elasticity at the top boundary.
+  - Explicit button detent switcher for non-gesture pointer and keyboard accessibility.
+- **Accessibility**:
+  - Implements role='dialog' and aria-modal='true' with Escape key dismissal.
+  - Includes a dedicated Expand/Peek button so keyboard users can switch detents without dragging.
+  - Disables vertical drag physics when prefers-reduced-motion is enabled.
+- **Props**:
+  - `triggerLabel` (string, default: "Open Gesture Drawer"): Text rendered inside the drawer trigger button.
+  - `title` (string, default: "Multi-Detent Spring Sheet"): Heading title displayed inside the drawer sheet.
+  - `stiffness` (number, default: 320): Hooke's Law spring stiffness for sheet entry and detent transitions.
+  - `damping` (number, default: 28): Spring damping coefficient controlling sheet settle.
+- **Usage Example**:
+```tsx
+import { KineticDrawerSheet } from "@/components/ui/kinetic-drawer-sheet";
+
+export function Example() {
+  return (
+    <KineticDrawerSheet
+      triggerLabel="Open Gesture Drawer"
+      title="Multi-Detent Spring Sheet"
+    />
+  );
+}
+```
+
+---
+
+### Kinetic Rolling Counter (`KineticRollingCounter`)
+- **Slug**: `kinetic-rolling-counter`
+- **Category**: Text
+- **Tagline**: Mechanical odometer ticker with vertical 0-9 spring reels.
+- **Description**: Mechanical odometer numeric ticker where each digit column spins independently along a vertical 0-9 reel using Hooke's Law springs.
+- **Docs URL**: https://boseui.site/components/kinetic-rolling-counter
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/kinetic-rolling-counter.json`
+- **Registry Manifest**: https://boseui.site/r/kinetic-rolling-counter.json
+- **Key Features**:
+  - Independent 0–9 vertical digit reels that roll proportionally to the numeric delta in each place value.
+  - Tabular monospace geometry preventing horizontal layout jitter during high-speed increments.
+  - Screen-reader live status region paired with aria-hidden visual reels.
+- **Accessibility**:
+  - Provides an sr-only role='status' live region announcing the complete number cleanly.
+  - Marks the 0–9 vertical reel strips with aria-hidden='true' to prevent screen readers from reading all 10 digits per column.
+  - Snaps digit reels immediately without vertical travel when prefers-reduced-motion is active.
+- **Props**:
+  - `defaultValue` (number, default: 1248): Initial non-negative integer displayed on the odometer.
+  - `step` (number, default: 17): Amount added or subtracted per stepper click.
+  - `stiffness` (number, default: 340): Hooke's Law spring stiffness for vertical digit reel travel.
+  - `damping` (number, default: 26): Spring damping coefficient controlling reel settle bounce.
+- **Usage Example**:
+```tsx
+import { KineticRollingCounter } from "@/components/ui/kinetic-rolling-counter";
+
+export function Example() {
+  return (
+    <KineticRollingCounter defaultValue={1248} step={17} stiffness={340} damping={26} />
+  );
+}
+```
+
+---
+
 ### Kinetic Slider (`KineticSlider`)
 - **Slug**: `kinetic-slider`
 - **Category**: Inputs
@@ -380,6 +691,79 @@ export function Example() {
       min={0}
       max={100}
       unit="%"
+    />
+  );
+}
+```
+
+---
+
+### Kinetic Step Indicator (`KineticStepIndicator`)
+- **Slug**: `kinetic-step-indicator`
+- **Category**: Navigation
+- **Tagline**: Multi-step workflow stepper with liquid spring connector tubes.
+- **Description**: Multi-step workflow progress bar with spring-filled liquid connector tubes, elastic checkmark badges, and direct step jumping.
+- **Docs URL**: https://boseui.site/components/kinetic-step-indicator
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/kinetic-step-indicator.json`
+- **Registry Manifest**: https://boseui.site/r/kinetic-step-indicator.json
+- **Key Features**:
+  - Origin-left scaleX spring connector tubes that fill and drain smoothly between step nodes.
+  - Direct click-to-jump step buttons paired with sequential Prev and Next controls.
+  - Elastic scale pulse on the currently active step node.
+- **Accessibility**:
+  - Marks the active step button with aria-current='step' and descriptive step aria-labels.
+  - Supports both direct Tab selection on step nodes and sequential Prev/Next buttons.
+  - Disables connector tube spring oscillation when prefers-reduced-motion is active.
+- **Props**:
+  - `steps` (StepSpec[]): Array of workflow steps containing id, label, and caption.
+  - `defaultStep` (number, default: 1): Initial 0-based active step index.
+  - `stiffness` (number, default: 320): Spring stiffness coefficient for connector tube fill and node scale.
+  - `damping` (number, default: 25): Spring damping coefficient controlling connector fill settle.
+- **Usage Example**:
+```tsx
+import { KineticStepIndicator } from "@/components/ui/kinetic-step-indicator";
+
+export function Example() {
+  return (
+    <KineticStepIndicator defaultStep={1} stiffness={320} damping={25} />
+  );
+}
+```
+
+---
+
+### Kinetic Swipe Button (`KineticSwipeButton`)
+- **Slug**: `kinetic-swipe-button`
+- **Category**: Buttons
+- **Tagline**: Slide-to-execute actuator track with elastic spring recoil.
+- **Description**: Slide-to-execute actuator switch with a spring-tethered thumb that locks upon crossing the completion threshold or recoils elastically.
+- **Docs URL**: https://boseui.site/components/kinetic-swipe-button
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/kinetic-swipe-button.json`
+- **Registry Manifest**: https://boseui.site/r/kinetic-swipe-button.json
+- **Key Features**:
+  - Pointer-captured horizontal actuator thumb coupled to a Hooke's Law spring.
+  - Snaps into locked confirmation when dragged past the threshold ratio or recoils smoothly to origin if released early.
+  - Includes a one-click reset state after confirmation.
+- **Accessibility**:
+  - Thumb actuator is a semantic button supporting Enter and Space keys for single-keystroke completion.
+  - Respects prefers-reduced-motion by disabling continuous spring interpolation.
+  - Maintains high-contrast focus-visible ring indicators.
+- **Props**:
+  - `label` (string, default: "Slide to Deploy Production"): Prompt label displayed along the actuator track.
+  - `completedLabel` (string, default: "Deployment Triggered"): Confirmation label displayed once the swipe completes.
+  - `threshold` (number, default: 0.78): Track fraction (0.5 to 0.95) required to lock confirmation.
+  - `stiffness` (number, default: 360): Spring stiffness coefficient for thumb travel and recoil.
+  - `damping` (number, default: 26): Spring damping coefficient controlling thumb snap-back.
+- **Usage Example**:
+```tsx
+import { KineticSwipeButton } from "@/components/ui/kinetic-swipe-button";
+
+export function Example() {
+  return (
+    <KineticSwipeButton
+      label="Slide to Deploy Production"
+      completedLabel="Deployment Triggered"
+      threshold={0.78}
     />
   );
 }
@@ -427,6 +811,39 @@ export function Example() {
 
 ---
 
+### Magnetic Breadcrumb (`MagneticBreadcrumb`)
+- **Slug**: `magnetic-breadcrumb`
+- **Category**: Navigation
+- **Tagline**: Breadcrumb navigation trail with spring-projected hover capsule.
+- **Description**: Hierarchical breadcrumb navigation trail with a spring-projected hover capsule and subtle vertical lift across path segments.
+- **Docs URL**: https://boseui.site/components/magnetic-breadcrumb
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/magnetic-breadcrumb.json`
+- **Registry Manifest**: https://boseui.site/r/magnetic-breadcrumb.json
+- **Key Features**:
+  - Shared layoutId hover pill that glides smoothly between path segments using Hooke's Law springs.
+  - Instance-scoped layout IDs via React useId for multi-instance page safety.
+  - Semantic ordered list structure with active segment switching.
+- **Accessibility**:
+  - Wraps an ordered list (<ol>) inside a <nav aria-label='Breadcrumb'> landmark.
+  - Marks the active path segment with aria-current='page' and separators with aria-hidden='true'.
+  - Disables vertical lift and pill glide animations when prefers-reduced-motion is enabled.
+- **Props**:
+  - `items` (BreadcrumbSegment[]): Ordered array of breadcrumb path segments with id and label.
+  - `stiffness` (number, default: 380): Hooke's Law spring stiffness for the sliding hover capsule.
+  - `damping` (number, default: 26): Spring damping coefficient controlling capsule oscillation.
+- **Usage Example**:
+```tsx
+import { MagneticBreadcrumb } from "@/components/ui/magnetic-breadcrumb";
+
+export function Example() {
+  return (
+    <MagneticBreadcrumb stiffness={380} damping={26} />
+  );
+}
+```
+
+---
+
 ### Magnetic Button (`MagneticButton`)
 - **Slug**: `magnetic-button`
 - **Category**: Buttons
@@ -461,6 +878,79 @@ export function Example() {
       <Sparkles className="h-4 w-4" />
       <span>Deploy Kinetic UI</span>
     </MagneticButton>
+  );
+}
+```
+
+---
+
+### Magnetic Popover Menu (`MagneticPopoverMenu`)
+- **Slug**: `magnetic-popover-menu`
+- **Category**: Overlays
+- **Tagline**: Floating command popover with shared-layout magnetic row highlight.
+- **Description**: Floating command popover menu with origin-scaled spring entry, a shared-layout magnetic row highlight, and keyboard arrow navigation.
+- **Docs URL**: https://boseui.site/components/magnetic-popover-menu
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/magnetic-popover-menu.json`
+- **Registry Manifest**: https://boseui.site/r/magnetic-popover-menu.json
+- **Key Features**:
+  - Origin-top-left Hooke's Law spring scale and elevation entry animation.
+  - Shared layoutId highlight pill that glides smoothly between menu items on pointer hover or keyboard focus.
+  - Automatic outside-click and Escape key dismissal.
+- **Accessibility**:
+  - Implements role='menu' and role='menuitem' with aria-haspopup='menu' and aria-expanded on the trigger.
+  - Supports ArrowUp and ArrowDown keyboard navigation across menu items.
+  - Disables scale and highlight glide animations when prefers-reduced-motion is active.
+- **Props**:
+  - `triggerLabel` (string, default: "Quick Actions"): Text label displayed inside the popover trigger button.
+  - `items` (PopoverCommandItem[]): Array of command items with id, label, shortcut, and icon.
+  - `stiffness` (number, default: 380): Spring stiffness coefficient for popover entry and highlight glide.
+  - `damping` (number, default: 26): Spring damping coefficient controlling popover settle.
+- **Usage Example**:
+```tsx
+import { MagneticPopoverMenu } from "@/components/ui/magnetic-popover-menu";
+
+export function Example() {
+  return (
+    <MagneticPopoverMenu triggerLabel="Quick Actions" stiffness={380} damping={26} />
+  );
+}
+```
+
+---
+
+### Morphing Action Button (`MorphingActionButton`)
+- **Slug**: `morphing-action-button`
+- **Category**: Buttons
+- **Tagline**: Stateful width-morphing pill button with spring layout projection.
+- **Description**: Multi-phase stateful pill button that morphs its bounding width across Idle, Compiling, and Published states using spring layout projection.
+- **Docs URL**: https://boseui.site/components/morphing-action-button
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/morphing-action-button.json`
+- **Registry Manifest**: https://boseui.site/r/morphing-action-button.json
+- **Key Features**:
+  - Seamless bounding-width interpolation between Idle, Loading, Success, and Error states via Framer Motion layout.
+  - Directional vertical label swap powered by AnimatePresence mode='popLayout'.
+  - Optional harmonic error shake state.
+- **Accessibility**:
+  - Uses aria-live='polite' so screen readers announce state transitions as they occur.
+  - Preserves keyboard focus across all state transitions.
+  - Disables width spring oscillation and horizontal shake when prefers-reduced-motion is enabled.
+- **Props**:
+  - `idleLabel` (string, default: "Publish Registry"): Button text rendered in the resting idle state.
+  - `loadingLabel` (string, default: "Compiling..."): Button text rendered during the async loading phase.
+  - `successLabel` (string, default: "Published v2.4"): Button text rendered when the action succeeds.
+  - `stiffness` (number, default: 380): Spring stiffness coefficient for pill width projection.
+  - `damping` (number, default: 26): Spring damping coefficient for pill width projection.
+- **Usage Example**:
+```tsx
+import { MorphingActionButton } from "@/components/ui/morphing-action-button";
+
+export function Example() {
+  return (
+    <MorphingActionButton
+      idleLabel="Publish Registry"
+      loadingLabel="Compiling..."
+      successLabel="Published v2.4"
+    />
   );
 }
 ```
@@ -506,6 +996,83 @@ export function Example() {
 
 ---
 
+### Parallax Tilt Card (`ParallaxTiltCard`)
+- **Slug**: `parallax-tilt-card`
+- **Category**: Cards
+- **Tagline**: Three-plane spatial parallax card with coupled 3D tilt.
+- **Description**: Multi-depth 3D spatial card featuring three independent Z-planes that shift at graduated parallax ratios under pointer movement.
+- **Docs URL**: https://boseui.site/components/parallax-tilt-card
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/parallax-tilt-card.json`
+- **Registry Manifest**: https://boseui.site/r/parallax-tilt-card.json
+- **Key Features**:
+  - Three graduated parallax translation planes (±6px, ±16px, ±26px) coupled with ±14° 3D perspective rotation.
+  - Driven entirely by Framer Motion useTransform and useSpring with zero React state re-renders.
+  - Automatic spring return to neutral equilibrium on pointer leave.
+- **Accessibility**:
+  - Marks decorative background dot matrix planes with aria-hidden='true'.
+  - Disables all 3D rotation and parallax plane displacement when prefers-reduced-motion is active.
+  - Preserves semantic heading and paragraph hierarchy for screen readers.
+- **Props**:
+  - `title` (string, default: "Spatial Depth Plane"): Primary heading rendered on the foreground elevation plane.
+  - `subtitle` (string, default: "Three independent Z-planes translate at graduated ratios..."): Supporting description text rendered below the title.
+  - `maxTilt` (number, default: 14): Peak 3D tilt angle in degrees along X and Y axes.
+  - `stiffness` (number, default: 240): Hooke's Law spring stiffness for tilt and plane parallax.
+  - `damping` (number, default: 22): Spring damping coefficient controlling settle oscillation.
+- **Usage Example**:
+```tsx
+import { ParallaxTiltCard } from "@/components/ui/parallax-tilt-card";
+
+export function Example() {
+  return (
+    <ParallaxTiltCard
+      title="Spatial Depth Plane"
+      maxTilt={14}
+      stiffness={240}
+      damping={22}
+    />
+  );
+}
+```
+
+---
+
+### Peel Reveal Card (`PeelRevealCard`)
+- **Slug**: `peel-reveal-card`
+- **Category**: Cards
+- **Tagline**: Spring-hinged top cover that peels back to reveal vault data.
+- **Description**: Dual-layer vault card with a spring-hinged top cover that peels upward on hover or keyboard activation to reveal sensitive credentials.
+- **Docs URL**: https://boseui.site/components/peel-reveal-card
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/peel-reveal-card.json`
+- **Registry Manifest**: https://boseui.site/r/peel-reveal-card.json
+- **Key Features**:
+  - Spring-hinged cover sheet that lifts upward with 3D rotateX perspective on hover or click.
+  - Built-in one-click clipboard copy button inside the underlying vault layer.
+  - Full keyboard toggle support via Enter and Space keys.
+- **Accessibility**:
+  - Cover layer implements role='button' with aria-expanded and descriptive aria-label.
+  - Underlying Copy Key button is directly focusable via Tab.
+  - Disables 3D tilt and spring oscillation when prefers-reduced-motion is enabled.
+- **Props**:
+  - `title` (string, default: "Production Secret Key"): Heading text displayed on the protective cover layer.
+  - `secretValue` (string, default: "bose_live_98f72a41c09e3b1d"): Hidden string revealed inside the vault layer when peeled.
+  - `stiffness` (number, default: 300): Spring stiffness coefficient for the curtain peel motion.
+  - `damping` (number, default: 24): Spring damping coefficient controlling curtain settle.
+- **Usage Example**:
+```tsx
+import { PeelRevealCard } from "@/components/ui/peel-reveal-card";
+
+export function Example() {
+  return (
+    <PeelRevealCard
+      title="Production Secret Key"
+      secretValue="bose_live_98f72a41c09e3b1d"
+    />
+  );
+}
+```
+
+---
+
 ### Radial Menu Orb (`RadialMenuOrb`)
 - **Slug**: `radial-menu-orb`
 - **Category**: Navigation
@@ -534,6 +1101,82 @@ import { RadialMenuOrb } from "@/components/ui/radial-menu-orb";
 export function Example() {
   return (
     <RadialMenuOrb radius={78} stiffness={340} damping={22} />
+  );
+}
+```
+
+---
+
+### Ripple Burst Button (`RippleBurstButton`)
+- **Slug**: `ripple-burst-button`
+- **Category**: Buttons
+- **Tagline**: Coordinate-origin dual concentric shockwaves with spring recoil.
+- **Description**: Tactile impulse button that spawns dual concentric shockwave rings from the exact pointer click coordinate with spring recoil.
+- **Docs URL**: https://boseui.site/components/ripple-burst-button
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ripple-burst-button.json`
+- **Registry Manifest**: https://boseui.site/r/ripple-burst-button.json
+- **Key Features**:
+  - Computes exact local pointer coordinates (x, y) on click to spawn dual staggered shockwave rings.
+  - Coupled Hooke's Law hover lift and tap compression.
+  - Built-in live pulse counter badge.
+- **Accessibility**:
+  - Marks all expanding shockwave ring elements with aria-hidden='true'.
+  - Supports standard Enter and Space keyboard activation (spawning ripples from button center).
+  - Suppresses shockwave rings and scale transforms when prefers-reduced-motion is active.
+- **Props**:
+  - `label` (string, default: "Emit Shockwave Pulse"): Primary text label rendered inside the button.
+  - `stiffness` (number, default: 400): Hooke's Law spring stiffness for hover and tap recoil.
+  - `damping` (number, default: 22): Spring damping coefficient controlling recoil settling.
+- **Usage Example**:
+```tsx
+import { RippleBurstButton } from "@/components/ui/ripple-burst-button";
+
+export function Example() {
+  return (
+    <RippleBurstButton label="Emit Shockwave Pulse" stiffness={400} damping={22} />
+  );
+}
+```
+
+---
+
+### Rotary Spring Dial (`RotarySpringDial`)
+- **Slug**: `rotary-spring-dial`
+- **Category**: Inputs
+- **Tagline**: 270° studio rotary knob with spring-damped rotor physics.
+- **Description**: Synthesizer-inspired tactile rotary knob with a 270-degree spring-damped rotor, vertical drag scrubbing, and keyboard arrow control.
+- **Docs URL**: https://boseui.site/components/rotary-spring-dial
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/rotary-spring-dial.json`
+- **Registry Manifest**: https://boseui.site/r/rotary-spring-dial.json
+- **Key Features**:
+  - Maps numeric values across a -135° to +135° (270° total) rotary arc driven by Hooke's Law angular springs.
+  - Precision vertical pointer-capture drag scrubbing standard in pro audio and 3D software.
+  - Full keyboard arrow-key and Home/End accessibility.
+- **Accessibility**:
+  - Implements role='slider' with aria-valuemin, aria-valuemax, aria-valuenow, and aria-valuetext.
+  - Supports ArrowUp/ArrowRight to increment, ArrowDown/ArrowLeft to decrement, and Home/End keys.
+  - Rotates instantaneously without spring overshoot when prefers-reduced-motion is enabled.
+- **Props**:
+  - `label` (string, default: "Damping Ratio"): Parameter name displayed above the rotary dial.
+  - `defaultValue` (number, default: 65): Initial numeric value between min and max.
+  - `min` (number, default: 0): Minimum dial value corresponding to -135 degrees.
+  - `max` (number, default: 100): Maximum dial value corresponding to +135 degrees.
+  - `step` (number, default: 5): Step increment per detent tick.
+  - `unit` (string, default: "%"): Unit suffix appended to the digital readout.
+- **Usage Example**:
+```tsx
+import { RotarySpringDial } from "@/components/ui/rotary-spring-dial";
+
+export function Example() {
+  return (
+    <RotarySpringDial
+      label="Damping Ratio"
+      defaultValue={65}
+      min={0}
+      max={100}
+      step={5}
+      unit="%"
+    />
   );
 }
 ```
@@ -625,6 +1268,43 @@ export function Example() {
 
 ---
 
+### Split Flap Text (`SplitFlapText`)
+- **Slug**: `split-flap-text`
+- **Category**: Text
+- **Tagline**: Mechanical departure-board tiles with 3D rotateX spring hinges.
+- **Description**: Mechanical departure-board split-flap display that cycles character tiles with staggered 3D rotateX spring hinges.
+- **Docs URL**: https://boseui.site/components/split-flap-text
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/split-flap-text.json`
+- **Registry Manifest**: https://boseui.site/r/split-flap-text.json
+- **Key Features**:
+  - Individual character housing cells with a center mechanical split seam and 3D rotateX perspective flips.
+  - Staggered per-tile wave delay creating an authentic Solari departure board cascade.
+  - Click or press Enter/Space to cycle through an array of preset words.
+- **Accessibility**:
+  - Announces the active word via an sr-only role='status' live region while marking individual character cells aria-hidden='true'.
+  - Board wrapper is a semantic button operable via Enter and Space keys.
+  - Disables 3D rotateX flips when prefers-reduced-motion is active.
+- **Props**:
+  - `words` (string[], default: ["KINETIC", "PHYSICS", "SPRINGS", "MINIMAL"]): Array of words cycled on each split-flap board trigger.
+  - `stiffness` (number, default: 380): Hooke's Law spring stiffness for 3D tile hinge rotation.
+  - `damping` (number, default: 24): Spring damping coefficient controlling tile settle bounce.
+- **Usage Example**:
+```tsx
+import { SplitFlapText } from "@/components/ui/split-flap-text";
+
+export function Example() {
+  return (
+    <SplitFlapText
+      words={["KINETIC", "PHYSICS", "SPRINGS", "MINIMAL"]}
+      stiffness={380}
+      damping={24}
+    />
+  );
+}
+```
+
+---
+
 ### Spotlight Card (`SpotlightCard`)
 - **Slug**: `spotlight-card`
 - **Category**: Cards
@@ -658,6 +1338,40 @@ export function Example() {
         Move your cursor across this surface to reveal the 1px border mask.
       </p>
     </SpotlightCard>
+  );
+}
+```
+
+---
+
+### Spring Pendulum (`SpringPendulum`)
+- **Slug**: `spring-pendulum`
+- **Category**: Motion
+- **Tagline**: Under-damped harmonic pendulum with angular velocity telemetry.
+- **Description**: Under-damped harmonic pendulum stage that visualizes angular velocity, restoring spring torque, and directional impulse kicks.
+- **Docs URL**: https://boseui.site/components/spring-pendulum
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/spring-pendulum.json`
+- **Registry Manifest**: https://boseui.site/r/spring-pendulum.json
+- **Key Features**:
+  - Under-damped Hooke's Law angular spring that oscillates across equilibrium before settling.
+  - Real-time angular velocity tracking via useVelocity that dynamically scales the pendulum bob at peak swing speed.
+  - Directional left and right torque impulse triggers.
+- **Accessibility**:
+  - Provides keyboard-focusable Left Kick, Right Kick, and Bob trigger buttons.
+  - Marks decorative protractor arcs and pivot hardware with aria-hidden='true'.
+  - Locks the pendulum arm at 0 degrees when prefers-reduced-motion is active.
+- **Props**:
+  - `rodLength` (number, default: 110): Length of the pendulum suspension rod in pixels.
+  - `impulseAngle` (number, default: 42): Peak angular displacement in degrees applied on impulse kick.
+  - `stiffness` (number, default: 140): Hooke's Law spring stiffness governing angular restoring force.
+  - `damping` (number, default: 6): Low damping coefficient allowing realistic multi-swing oscillation.
+- **Usage Example**:
+```tsx
+import { SpringPendulum } from "@/components/ui/spring-pendulum";
+
+export function Example() {
+  return (
+    <SpringPendulum rodLength={110} impulseAngle={42} stiffness={140} damping={6} />
   );
 }
 ```

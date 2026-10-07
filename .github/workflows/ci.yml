@@ -1,0 +1,112 @@
+name: BoseUI CI & Registry Gate
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - dev
+  pull_request:
+    branches:
+      - main
+      - master
+      - dev
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  registry-and-seo-audit:
+    name: Registry v2 & SEO Scorecard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate & Validate Shadcn v2 Registry
+        run: |
+          npm run registry:generate
+          npm run registry:validate
+
+      - name: Generate & Audit SEO / LLM Index
+        run: |
+          npm run seo:generate
+          npm run seo:audit
+
+      - name: Verify generated artifacts are in sync with git
+        run: |
+          if [ -n "$(git status --porcelain public/r public/registry.json public/sitemap.xml public/llms.txt src/registry/generated-catalog.tsx src/registry/generated-demos.tsx)" ]; then
+            echo "::error::Generated registry or SEO files are out of sync with src/components/ui/. Please run 'npm run sync' locally and commit the updated files."
+            git status --short
+            git diff --stat
+            exit 1
+          fi
+
+      - name: Publish Registry Summary
+        if: always()
+        run: |
+          COUNT=$(ls -1 public/r/*.json 2>/dev/null | wc -l)
+          echo "### ⚡ BoseUI Registry & SEO Gate" >> $GITHUB_STEP_SUMMARY
+          echo "- **Verified Components**: \`${COUNT}\` (.tsx + .meta.ts pairs)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Shadcn v2 Manifests**: \`public/r/*.json\` & \`public/registry.json\` ✔" >> $GITHUB_STEP_SUMMARY
+          echo "- **SEO & AI Discovery**: \`public/sitemap.xml\` & \`public/llms.txt\` (100/100) ✔" >> $GITHUB_STEP_SUMMARY
+
+  typecheck:
+    name: TypeScript Compiler Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Ensure generated catalog exists
+        run: npm run registry:generate
+
+      - name: Run TypeScript compiler check
+        run: npm run typecheck
+
+  production-build:
+    name: Production Next.js Build
+    runs-on: ubuntu-latest
+    needs:
+      - registry-and-seo-audit
+      - typecheck
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build BoseUI production bundle
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"

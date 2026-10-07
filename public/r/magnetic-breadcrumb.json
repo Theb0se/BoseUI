@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "magnetic-breadcrumb",
+  "type": "registry:ui",
+  "title": "Magnetic Breadcrumb",
+  "author": "Rishabh Bose <https://theb0se.vercel.app/>",
+  "description": "Hierarchical breadcrumb navigation trail with a spring-projected hover capsule and subtle vertical lift across path segments.",
+  "dependencies": [
+    "framer-motion",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "files": [
+    {
+      "path": "components/ui/magnetic-breadcrumb.tsx",
+      "content": "\"use client\";\n\nimport React, { useId, useState } from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { ChevronRight, Home } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface BreadcrumbSegment {\n  id: string;\n  label: string;\n  href?: string;\n}\n\nexport interface MagneticBreadcrumbProps {\n  /** Ordered array of breadcrumb path segments. */\n  items?: BreadcrumbSegment[];\n  /** Spring stiffness coefficient for sliding hover pill. Default: 380 */\n  stiffness?: number;\n  /** Spring damping coefficient for sliding hover pill. Default: 26 */\n  damping?: number;\n  /** Callback fired when a segment is clicked */\n  onSelect?: (id: string) => void;\n  className?: string;\n}\n\nconst DEFAULT_SEGMENTS: BreadcrumbSegment[] = [\n  { id: \"root\", label: \"Workspace\" },\n  { id: \"registry\", label: \"Registry v2\" },\n  { id: \"primitives\", label: \"Primitives\" },\n  { id: \"kinetic\", label: \"MagneticBreadcrumb\" },\n];\n\nexport function MagneticBreadcrumb({\n  items = DEFAULT_SEGMENTS,\n  stiffness = 380,\n  damping = 26,\n  onSelect,\n  className,\n}: MagneticBreadcrumbProps) {\n  const shouldReduceMotion = useReducedMotion() ?? false;\n  const instanceId = useId();\n  const [activeId, setActiveId] = useState<string>(\n    items[items.length - 1]?.id || \"kinetic\"\n  );\n  const [hoveredId, setHoveredId] = useState<string | null>(null);\n\n  return (\n    <nav\n      aria-label=\"Breadcrumb\"\n      onMouseLeave={() => setHoveredId(null)}\n      className={cn(\n        \"inline-flex flex-wrap items-center gap-1 rounded-2xl border border-neutral-200 bg-white px-3 py-2 shadow-sm dark:border-[#222222] dark:bg-[#0A0A0A]\",\n        className\n      )}\n    >\n      <ol className=\"flex flex-wrap items-center gap-1\">\n        {items.map((segment, index) => {\n          const isCurrent = activeId === segment.id;\n          const isHovered = hoveredId === segment.id;\n\n          return (\n            <li key={segment.id} className=\"flex items-center gap-1\">\n              <motion.button\n                type=\"button\"\n                aria-current={isCurrent ? \"page\" : undefined}\n                onClick={() => {\n                  setActiveId(segment.id);\n                  onSelect?.(segment.id);\n                }}\n                onMouseEnter={() => setHoveredId(segment.id)}\n                onFocus={() => setHoveredId(segment.id)}\n                whileHover={shouldReduceMotion ? undefined : { y: -1 }}\n                whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}\n                transition={{ type: \"spring\", stiffness, damping }}\n                className={cn(\n                  \"relative z-10 inline-flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white\",\n                  isCurrent\n                    ? \"font-semibold text-black dark:text-white\"\n                    : \"text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white\"\n                )}\n              >\n                {isHovered && (\n                  <motion.span\n                    layoutId={`${instanceId}-crumb-pill`}\n                    aria-hidden=\"true\"\n                    transition={\n                      shouldReduceMotion\n                        ? { duration: 0 }\n                        : { type: \"spring\", stiffness, damping }\n                    }\n                    className=\"pointer-events-none absolute inset-0 -z-10 rounded-xl bg-neutral-100 dark:bg-[#181818]\"\n                  />\n                )}\n\n                {index === 0 && <Home className=\"h-3.5 w-3.5\" />}\n                <span>{segment.label}</span>\n              </motion.button>\n\n              {index < items.length - 1 && (\n                <ChevronRight\n                  aria-hidden=\"true\"\n                  className=\"h-3.5 w-3.5 text-neutral-300 dark:text-neutral-600\"\n                />\n              )}\n            </li>\n          );\n        })}\n      </ol>\n    </nav>\n  );\n}\n\nexport default MagneticBreadcrumb;\n",
+      "type": "registry:ui",
+      "target": "components/ui/magnetic-breadcrumb.tsx"
+    },
+    {
+      "path": "lib/utils.ts",
+      "content": "import { type ClassValue, clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib",
+      "target": "lib/utils.ts"
+    }
+  ]
+}
