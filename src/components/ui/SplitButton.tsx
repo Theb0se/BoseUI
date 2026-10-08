@@ -39,13 +39,13 @@ export interface SplitButtonOption {
 export interface SplitButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
   /** Label for the primary (left) action. */
-  label: string;
+  label?: string;
 
   /** Called when the primary action is pressed. */
   onClick?: () => void;
 
   /** Dropdown options revealed by the chevron trigger. */
-  options: SplitButtonOption[];
+  options?: SplitButtonOption[];
 
   size?: SplitButtonSize;
 
@@ -150,10 +150,16 @@ const VARIANT_STYLES: Record<'primary' | 'secondary' | 'danger' | 'info', string
  * - Disabled options
  * - Framer Motion transitions
  */
+const DEFAULT_SPLIT_OPTIONS: SplitButtonOption[] = [
+  { value: 'preview', label: 'Deploy Preview' },
+  { value: 'staging', label: 'Promote to Staging' },
+  { value: 'rollback', label: 'Rollback Production' },
+];
+
 export function SplitButton({
-  label,
+  label = 'Deploy Release',
   onClick,
-  options,
+  options = DEFAULT_SPLIT_OPTIONS,
   size = 'md',
   variant = 'primary',
   disabled = false,
@@ -413,7 +419,7 @@ export function SplitButton({
             'relative inline-flex items-center justify-center',
             'select-none font-medium',
             'cursor-pointer',
-            'focus-ring',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white',
             'transition-colors duration-200',
             'disabled:cursor-not-allowed',
             sizeStyles.primary,
@@ -454,7 +460,7 @@ export function SplitButton({
             'relative inline-flex items-center justify-center',
             'select-none',
             'cursor-pointer',
-            'focus-ring',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white',
             'transition-colors duration-200',
             'disabled:cursor-not-allowed',
             sizeStyles.chevron,

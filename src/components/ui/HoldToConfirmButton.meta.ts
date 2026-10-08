@@ -46,6 +46,18 @@ export const HoldToConfirmButtonMeta: PulseComponentMeta = {
       description: "Hold duration in milliseconds required to confirm the action.",
     },
     {
+      name: "variant",
+      type: '"default" | "danger"',
+      default: '"default"',
+      description: "Visual style variant for standard or destructive actions.",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      default: "false",
+      description: "Disables button interaction when true.",
+    },
+    {
       name: "stiffness",
       type: "number",
       default: "280",
@@ -56,6 +68,16 @@ export const HoldToConfirmButtonMeta: PulseComponentMeta = {
       type: "number",
       default: "24",
       description: "Spring damping coefficient for progress fill and recoil.",
+    },
+    {
+      name: "onConfirm",
+      type: "() => void",
+      description: "Callback fired when the hold completes 100%.",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional Tailwind CSS classes for the button.",
     },
   ],
   usageCode: `import { HoldToConfirmButton } from "@/components/ui/hold-to-confirm-button";

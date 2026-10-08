@@ -34,6 +34,17 @@ body {
     linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
 }
 
+/* Full screen component stage expansion overrides */
+.fullscreen-stage-expand > .w-full {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.fullscreen-stage-expand [data-fullscreen-scroll] {
+  max-height: calc(100vh - 10rem) !important;
+  min-height: calc(100vh - 11rem) !important;
+}
+
 /* Minimal monochrome scrollbars */
 ::-webkit-scrollbar {
   width: 6px;

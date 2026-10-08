@@ -18,6 +18,10 @@ export interface HoldToConfirmButtonProps {
   confirmedLabel?: string;
   /** Hold duration in milliseconds required to trigger confirmation. Default: 1400 */
   holdDuration?: number;
+  /** Visual variant. Default: "default" */
+  variant?: "default" | "danger";
+  /** Disable button interactions. Default: false */
+  disabled?: boolean;
   /** Spring stiffness coefficient for fill bar snap-back. Default: 280 */
   stiffness?: number;
   /** Spring damping coefficient for fill bar snap-back. Default: 24 */
@@ -31,6 +35,8 @@ export function HoldToConfirmButton({
   label = "Hold to Purge Cache",
   confirmedLabel = "Cache Purged",
   holdDuration = 1400,
+  variant = "default",
+  disabled = false,
   stiffness = 280,
   damping = 24,
   onConfirm,
@@ -67,6 +73,7 @@ export function HoldToConfirmButton({
   };
 
   const startHolding = () => {
+    if (disabled) return;
     if (isConfirmed) {
       setIsConfirmed(false);
       progress.set(0);
@@ -103,6 +110,7 @@ export function HoldToConfirmButton({
   }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (disabled) return;
     if ((e.key === " " || e.key === "Enter") && !e.repeat && !isHolding) {
       e.preventDefault();
       startHolding();
@@ -120,6 +128,7 @@ export function HoldToConfirmButton({
     <div className="inline-flex flex-col items-center gap-2">
       <motion.button
         type="button"
+        disabled={disabled}
         aria-live="polite"
         onPointerDown={startHolding}
         onPointerUp={stopHolding}
@@ -128,14 +137,18 @@ export function HoldToConfirmButton({
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
         animate={{
-          scale: isHolding && !shouldReduceMotion ? 0.96 : 1,
+          scale: isHolding && !shouldReduceMotion && !disabled ? 0.96 : 1,
         }}
         transition={{ type: "spring", stiffness: 400, damping: 22 }}
         className={cn(
-          "group relative inline-flex h-12 min-w-[220px] select-none touch-none items-center justify-center overflow-hidden rounded-2xl border px-6 text-xs font-semibold tracking-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white",
+          "group relative inline-flex h-12 min-w-[220px] select-none touch-none items-center justify-center overflow-hidden rounded-2xl border px-6 text-xs font-semibold tracking-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white disabled:cursor-not-allowed disabled:opacity-45",
           isConfirmed
-            ? "border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
-            : "border-neutral-300 bg-white text-black hover:border-black dark:border-[#262626] dark:bg-[#0A0A0A] dark:text-white dark:hover:border-white",
+            ? variant === "danger"
+              ? "border-red-600 bg-red-600 text-white dark:border-red-500 dark:bg-red-500 dark:text-white"
+              : "border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
+            : variant === "danger"
+              ? "border-red-300 bg-red-50/60 text-red-700 hover:border-red-500 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-300 dark:hover:border-red-700"
+              : "border-neutral-300 bg-white text-black hover:border-black dark:border-[#262626] dark:bg-[#0A0A0A] dark:text-white dark:hover:border-white",
           className
         )}
       >
@@ -144,7 +157,12 @@ export function HoldToConfirmButton({
           <motion.span
             aria-hidden="true"
             style={{ width: fillWidth }}
-            className="pointer-events-none absolute inset-y-0 left-0 bg-black/10 dark:bg-white/15"
+            className={cn(
+              "pointer-events-none absolute inset-y-0 left-0",
+              variant === "danger"
+                ? "bg-red-500/20 dark:bg-red-500/25"
+                : "bg-black/10 dark:bg-white/15"
+            )}
           />
         )}
 
@@ -170,9 +188,11 @@ export function HoldToConfirmButton({
       </motion.button>
 
       <span className="text-[11px] text-neutral-400 dark:text-neutral-500">
-        {isConfirmed
-          ? "Click to reset state"
-          : `Press & hold for ${(holdDuration / 1000).toFixed(1)}s (or Spacebar)`}
+        {disabled
+          ? "Action disabled"
+          : isConfirmed
+            ? "Click to reset state"
+            : `Press & hold for ${(holdDuration / 1000).toFixed(1)}s (or Spacebar)`}
       </span>
     </div>
   );
