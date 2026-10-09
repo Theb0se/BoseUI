@@ -49,7 +49,7 @@ export function MagneticBreadcrumb({
       aria-label="Breadcrumb"
       onMouseLeave={() => setHoveredId(null)}
       className={cn(
-        "inline-flex flex-wrap items-center gap-1 rounded-2xl border border-neutral-200 bg-white px-3 py-2 shadow-sm dark:border-[#222222] dark:bg-[#0A0A0A]",
+        "inline-flex flex-wrap items-center gap-1 py-2",
         className
       )}
     >

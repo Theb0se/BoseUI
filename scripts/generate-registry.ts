@@ -59,8 +59,9 @@ export function analyzeImports(
     }
   >();
 
+  // Extract all static import statements (including multiline and inline type imports)
   const importRegex =
-    /import\s+(?:type\s+)?(?:[\s\S]*?\s+from\s+)?["']([^"']+)["']/g;
+    /^\s*import\s+(?:type\s+)?(?:[\s\S]*?\s+from\s+)?["']([^"'\r\n]+)["']/gm;
 
   let match: RegExpExecArray | null;
   while ((match = importRegex.exec(sourceCode)) !== null) {
@@ -77,8 +78,8 @@ export function analyzeImports(
         registryTarget: "lib/utils.ts",
         registryType: "registry:lib",
       });
-      if (knownDeps.has("clsx")) externalDeps.add("clsx");
-      if (knownDeps.has("tailwind-merge")) externalDeps.add("tailwind-merge");
+      externalDeps.add("clsx");
+      externalDeps.add("tailwind-merge");
       continue;
     }
 
@@ -94,6 +95,18 @@ export function analyzeImports(
     if (!IGNORED_CORE_PACKAGES.has(pkgName) && !pkgName.startsWith("node:")) {
       externalDeps.add(pkgName);
     }
+  }
+
+  // Fallback safety check: If code references cn(...) make sure lib/utils.ts is bundled
+  if (/\bcn\(/.test(sourceCode) && !localFilesMap.has("@/lib/utils")) {
+    localFilesMap.set("@/lib/utils", {
+      importSpecifier: "@/lib/utils",
+      diskPath: "src/lib/utils.ts",
+      registryTarget: "lib/utils.ts",
+      registryType: "registry:lib",
+    });
+    externalDeps.add("clsx");
+    externalDeps.add("tailwind-merge");
   }
 
   return {
@@ -156,6 +169,31 @@ import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export async function copyToClipboard(text: string): Promise<boolean> {
+  if (typeof window === "undefined") return false;
+
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    textArea.style.top = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    const succeeded = document.execCommand("copy");
+    textArea.remove();
+    return succeeded;
+  } catch {
+    return false;
+  }
 }
 `;
 

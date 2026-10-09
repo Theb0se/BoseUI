@@ -4,10 +4,13 @@ import { notFound } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
+  ArrowUpRight,
   ChevronRight,
+  Layers,
   CheckCircle2,
   ShieldCheck,
 } from "lucide-react";
+import { isBlock } from "@/lib/blocks";
 import {
   PULSE_COMPONENTS,
   getCatalogComponentBySlug,
@@ -16,6 +19,7 @@ import { ComponentPreviewStage } from "@/components/docs/ComponentPreviewStage";
 import { InstallTabs } from "@/components/docs/InstallTabs";
 import { PropsTable } from "@/components/docs/PropsTable";
 import { SITE_CONFIG } from "@/lib/utils";
+import MagneticBreadcrumb from "@/components/ui/MagneticBreadcrumb";
 
 export const dynamicParams = true;
 
@@ -173,6 +177,8 @@ export default async function ComponentDetailPage(context: {
       <div className="min-w-0 flex-1">
         {/* Top Bar: Breadcrumb + Quick Prev/Next Buttons */}
         <div className="flex items-center justify-between gap-4">
+
+
           <nav
             aria-label="Breadcrumb"
             className="flex flex-wrap items-center gap-1.5 text-xs text-neutral-500"
@@ -241,6 +247,19 @@ export default async function ComponentDetailPage(context: {
           <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-neutral-600 dark:text-neutral-400 sm:text-[15px]">
             {comp.description}
           </p>
+
+          {isBlock(comp.slug) && (
+            <div className="mt-3.5">
+              <Link
+                href={`/blocks/${comp.slug}`}
+                className="inline-flex items-center gap-2 rounded-xl border border-amber-500/20 bg-amber-500/5 px-3 py-1.5 font-mono text-xs font-medium text-amber-800 transition-colors hover:border-amber-500/40 hover:bg-amber-500/10 dark:text-amber-300"
+              >
+                <Layers className="h-3.5 w-3.5 text-amber-500" />
+                <span>This item is a full-section Block · View in Dedicated Block Showcase</span>
+                <ArrowUpRight className="h-3.5 w-3.5 opacity-70" />
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Section 1: Interactive Preview & Code Stage */}

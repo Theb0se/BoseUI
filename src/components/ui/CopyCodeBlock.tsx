@@ -32,25 +32,25 @@ const DEFAULT_TABS: CodeSnippetTab[] = [
   {
     id: "npx",
     label: "npx",
-    code: 'npx shadcn@latest add "https://boseui.vercel.app/r/drawer.json"',
+    code: 'npx shadcn@latest add "https://boseui.site/r/drawer.json"',
     language: "bash",
   },
   {
     id: "pnpm",
     label: "pnpm",
-    code: 'pnpm dlx shadcn@latest add "https://boseui.vercel.app/r/drawer.json"',
+    code: 'pnpm dlx shadcn@latest add "https://boseui.site/r/drawer.json"',
     language: "bash",
   },
   {
     id: "bun",
     label: "bun",
-    code: 'bunx --bun shadcn@latest add "https://boseui.vercel.app/r/drawer.json"',
+    code: 'bunx --bun shadcn@latest add "https://boseui.site/r/drawer.json"',
     language: "bash",
   },
   {
     id: "yarn",
     label: "yarn",
-    code: 'yarn dlx shadcn@latest add "https://boseui.vercel.app/r/drawer.json"',
+    code: 'yarn dlx shadcn@latest add "https://boseui.site/r/drawer.json"',
     language: "bash",
   },
 ];

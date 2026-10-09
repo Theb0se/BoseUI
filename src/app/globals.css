@@ -1,9 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   color-scheme: light;
+  --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-jetbrains-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   --dot-color: rgba(0, 0, 0, 0.12);
   --grid-color: rgba(0, 0, 0, 0.05);
 }
@@ -16,12 +20,22 @@ html.dark {
 
 html {
   scroll-behavior: smooth;
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+code,
+kbd,
+samp,
+pre,
+.font-mono {
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
 }
 
 /* Adaptive monochrome backgrounds */
@@ -41,8 +55,9 @@ body {
 }
 
 .fullscreen-stage-expand [data-fullscreen-scroll] {
-  max-height: calc(100vh - 10rem) !important;
-  min-height: calc(100vh - 11rem) !important;
+  min-height: calc(100vh - 9rem) !important;
+  height: auto !important;
+  max-height: none !important;
 }
 
 /* Minimal monochrome scrollbars */

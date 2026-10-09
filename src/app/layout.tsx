@@ -13,12 +13,29 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  fallback: [
+    "Inter",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "sans-serif",
+  ],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   display: "swap",
+  fallback: [
+    "JetBrains Mono",
+    "ui-monospace",
+    "SFMono-Regular",
+    "Menlo",
+    "Monaco",
+    "Consolas",
+    "monospace",
+  ],
 });
 
 export const metadata: Metadata = {
@@ -92,7 +109,9 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`dark ${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="min-h-screen bg-white font-sans text-black antialiased selection:bg-black selection:text-white dark:bg-black dark:text-white dark:selection:bg-white dark:selection:text-black">
+      <body
+        className={`${inter.className} ${inter.variable} ${jetbrainsMono.variable} min-h-screen bg-white font-sans text-black antialiased selection:bg-black selection:text-white dark:bg-black dark:text-white dark:selection:bg-white dark:selection:text-black`}
+      >
         <ThemeProvider>
           <CommandPaletteProvider>
             <div className="relative flex min-h-screen flex-col">
