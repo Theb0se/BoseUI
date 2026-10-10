@@ -195,7 +195,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     return false;
   }
 }
-`;
+`.replace(/\r\n/g, "\n");
 
   const catalogItems: Array<Record<string, unknown>> = [];
   const registryItems: Array<Record<string, unknown>> = [];
@@ -208,6 +208,10 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     const metaPath = await resolveMetaFilePath(uiDir, componentName);
 
     let sourceCode = await fs.readFile(componentPath, "utf-8");
+    
+    // Normalize CRLF to LF to ensure consistent JSON generation across OSes (fixes CI/CD diff errors)
+    sourceCode = sourceCode.replace(/\r\n/g, "\n");
+    
     if (!/^\s*["']use client["']/.test(sourceCode)) {
       sourceCode = `"use client";\n\n${sourceCode}`;
       await fs.writeFile(componentPath, sourceCode, "utf-8");
