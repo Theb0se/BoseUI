@@ -5,6 +5,7 @@ import { pathToFileURL } from "url";
 import type { PulseComponentMeta } from "../src/types/component";
 import { SITE_CONFIG } from "../src/lib/utils";
 import { resolveMetaFilePath, toKebabCase } from "./generate-registry";
+import { BLOG_POSTS } from "../src/lib/blog";
 
 export async function generateSeo() {
   const rootDir = process.cwd();
@@ -45,6 +46,7 @@ export async function generateSeo() {
     { loc: `${SITE_CONFIG.url}/`, lastmod: today, priority: "1.0" },
     { loc: `${SITE_CONFIG.url}/components`, lastmod: today, priority: "0.9" },
     { loc: `${SITE_CONFIG.url}/docs`, lastmod: today, priority: "0.8" },
+    { loc: `${SITE_CONFIG.url}/blog`, lastmod: today, priority: "0.8" },
   ];
 
   const componentUrls = discovered.map(({ slug, meta }) => ({
@@ -52,8 +54,14 @@ export async function generateSeo() {
     lastmod: meta.createdAt || today,
     priority: meta.featured ? "0.9" : "0.8",
   }));
+  
+  const blogUrls = BLOG_POSTS.map((post) => ({
+    loc: `${SITE_CONFIG.url}/blog/${post.slug}`,
+    lastmod: post.date,
+    priority: "0.7",
+  }));
 
-  const allUrls = [...staticUrls, ...componentUrls];
+  const allUrls = [...staticUrls, ...componentUrls, ...blogUrls];
 
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -64,17 +72,13 @@ ${allUrls
     <lastmod>${u.lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>${u.priority}</priority>
-  </url>`
+  </url>`,
   )
   .join("\n")}
 </urlset>
 `;
 
-  await fs.writeFile(
-    path.join(publicDir, "sitemap.xml"),
-    sitemapXml,
-    "utf-8"
-  );
+  await fs.writeFile(path.join(publicDir, "sitemap.xml"), sitemapXml, "utf-8");
 
   // 2. Generate public/robots.txt
   const robotsTxt = `# BoseUI Search Crawler Directives
@@ -95,7 +99,7 @@ Sitemap: ${SITE_CONFIG.url}/sitemap.xml
       const propsMarkdown = (meta.props || [])
         .map(
           (p) =>
-            `  - \`${p.name}\` (${p.type}${p.default ? `, default: ${p.default}` : ""}): ${p.description}`
+            `  - \`${p.name}\` (${p.type}${p.default ? `, default: ${p.default}` : ""}): ${p.description}`,
         )
         .join("\n");
 
@@ -120,6 +124,10 @@ ${meta.usageCode}
     })
     .join("\n\n---\n\n");
 
+  const blogSections = BLOG_POSTS.map(
+    (post) => `- [${post.title}](${SITE_CONFIG.url}/blog/${post.slug}) - ${post.description}`
+  ).join("\n");
+
   const llmsTxt = `# ${SITE_CONFIG.name} — LLM & AI Assistant Documentation Index
 
 > ${SITE_CONFIG.tagline}
@@ -132,6 +140,10 @@ ${meta.usageCode}
 - **Stack**: Next.js (App Router), React, TypeScript, Tailwind CSS, Framer Motion
 - **Registry Index**: ${SITE_CONFIG.url}/registry.json
 
+## Blog & Articles
+Our latest research on frontend engineering and UI/UX:
+${blogSections}
+
 ## Available Kinetic Components (${discovered.length})
 
 ${llmsSections}
@@ -141,11 +153,11 @@ ${llmsSections}
 
   console.log(`\x1b[32m✔ SEO Artifacts Generated:\x1b[0m`);
   console.log(
-    `  ├─ \x1b[36mpublic/sitemap.xml\x1b[0m (${allUrls.length} canonical URLs)`
+    `  ├─ \x1b[36mpublic/sitemap.xml\x1b[0m (${allUrls.length} canonical URLs)`,
   );
   console.log(`  ├─ \x1b[36mpublic/robots.txt\x1b[0m`);
   console.log(
-    `  └─ \x1b[36mpublic/llms.txt\x1b[0m (AI assistant context index for ${discovered.length} components)\n`
+    `  └─ \x1b[36mpublic/llms.txt\x1b[0m (AI assistant context index for ${discovered.length} components)\n`,
   );
 }
 

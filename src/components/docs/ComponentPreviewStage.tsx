@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -147,6 +147,13 @@ export function ComponentPreviewStage({
   >("full");
   const [mounted, setMounted] = useState(false);
 
+  const handleExitFullscreen = useCallback(() => {
+    setIsFullscreen(false);
+    if (typeof document !== "undefined") {
+      document.body.style.overflow = "";
+    }
+  }, []);
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -159,15 +166,24 @@ export function ComponentPreviewStage({
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setIsFullscreen(false);
+        handleExitFullscreen();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.body.style.overflow = prevOverflow;
+      document.body.style.overflow = prevOverflow || "";
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isFullscreen]);
+  }, [isFullscreen, handleExitFullscreen]);
+
+  // Safety cleanup: always restore body overflow on unmount
+  useEffect(() => {
+    return () => {
+      if (typeof document !== "undefined") {
+        document.body.style.overflow = "";
+      }
+    };
+  }, []);
 
   const handleQuickCopy = async () => {
     const targetCode =
@@ -353,19 +369,17 @@ export function ComponentPreviewStage({
 
       {/* ── Full Screen Preview Portal ── */}
       {mounted &&
+        isFullscreen &&
         createPortal(
-          <AnimatePresence>
-            {isFullscreen && (
-              <motion.div
-                role="dialog"
-                aria-modal="true"
-                aria-label="Full screen component preview"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="fixed inset-0 z-[9990] flex h-screen w-screen flex-col bg-white dark:bg-[#050505]"
-              >
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Full screen component preview"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-[9990] flex h-screen w-screen flex-col bg-white dark:bg-[#050505]"
+          >
                 {/* Full Screen Top Control Bar */}
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
@@ -446,7 +460,7 @@ export function ComponentPreviewStage({
 
                     <motion.button
                       type="button"
-                      onClick={() => setIsFullscreen(false)}
+                      onClick={handleExitFullscreen}
                       whileHover={{ scale: 1.04 }}
                       whileTap={{ scale: 0.97 }}
                       transition={{
@@ -500,11 +514,9 @@ export function ComponentPreviewStage({
                     </div>
                   </motion.div>
                 </div>
-              </motion.div>
+              </motion.div>,
+              document.body
             )}
-          </AnimatePresence>,
-          document.body
-        )}
     </>
   );
 }

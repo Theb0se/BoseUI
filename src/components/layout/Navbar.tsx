@@ -12,6 +12,7 @@ import { cn, SITE_CONFIG } from "@/lib/utils";
 const NAV_LINKS = [
   { href: "/components", label: "Components" },
   { href: "/docs", label: "Docs" },
+  { href: "/blog", label: "Blog" },
 ];
 
 const focusRing =
@@ -54,7 +55,7 @@ export function Navbar() {
           >
             <Image
               src="/boseui-logo.png"
-              alt=""
+              alt="BoseUI - Kinetic React Components"
               width={28}
               height={28}
               priority

@@ -51,10 +51,14 @@ export const metadata: Metadata = {
     "Rishabh Bose",
     "React component library",
     "Framer Motion components",
-    "Tailwind CSS",
-    "shadcn registry",
-    "kinetic UI",
+    "Tailwind CSS components",
+    "shadcn ui registry",
+    "kinetic UI components",
     "animated React components",
+    "Next.js UI library",
+    "accessible React design system",
+    "open source UI components",
+    "React animations",
   ],
   authors: [
     {

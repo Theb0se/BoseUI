@@ -10,6 +10,29 @@
 - **Stack**: Next.js (App Router), React, TypeScript, Tailwind CSS, Framer Motion
 - **Registry Index**: https://boseui.site/registry.json
 
+## Blog & Articles
+Our latest research on frontend engineering and UI/UX:
+- [The Future of Frontend Development: Kinetic UI & Micro-interactions](https://boseui.site/blog/future-of-frontend-development-kinetic-ui) - Discover how kinetic UI and fluid micro-interactions are shaping the future of frontend development, improving user engagement and conversion rates.
+- [A Deep Dive into React Server Components](https://boseui.site/blog/react-server-components-guide) - Understand the paradigm shift in React architecture. How Server Components reduce bundle size and improve data fetching.
+- [Mastering Framer Motion: Magic with layoutId](https://boseui.site/blog/mastering-framer-motion-layoutid) - Learn how to create seamless shared element transitions across completely different DOM branches using Framer Motion's layoutId.
+- [Tailwind CSS Performance Strategies for Large Apps](https://boseui.site/blog/tailwind-css-performance-optimization) - Techniques for managing utility classes, optimizing JIT compilation, and maintaining clean CSS architectures in massive codebases.
+- [Building Truly Accessible Modal Dialogs](https://boseui.site/blog/building-accessible-modal-dialogs) - Focus trapping, ARIA attributes, and keyboard navigation. The complete guide to making modals work for everyone.
+- [Typography Fundamentals for Web Developers](https://boseui.site/blog/typography-fundamentals-web-developers) - Understanding tracking, leading, and font pairings to elevate your UI designs from good to world-class.
+- [The Rise of Headless UI Components](https://boseui.site/blog/rise-of-headless-ui-components) - Why the industry is moving away from styled component libraries toward unstyled, accessible primitives.
+- [Optimizing Core Web Vitals in 2026](https://boseui.site/blog/optimizing-core-web-vitals) - A comprehensive guide to fixing LCP, INP, and CLS issues in modern single-page applications.
+- [Advanced Dark Mode Implementation Strategies](https://boseui.site/blog/dark-mode-implementation-strategies) - Preventing the flash of incorrect theme, managing CSS variables, and creating beautiful dark mode color palettes.
+- [Advanced SVG Animations with CSS and React](https://boseui.site/blog/advanced-svg-animations) - Bringing vector graphics to life using pathLength, stroke-dashoffset, and declarative React animation libraries.
+- [Building Design Systems That Actually Scale](https://boseui.site/blog/building-design-systems-that-scale) - How to structure design tokens, component APIs, and documentation to ensure adoption across large engineering teams.
+- [Responsive Design Beyond Breakpoints](https://boseui.site/blog/responsive-design-beyond-breakpoints) - Embracing CSS grid, flexbox, clamp(), and container queries for truly fluid user interfaces.
+- [The Reality of Web Component Interoperability](https://boseui.site/blog/web-component-interoperability) - Examining where standard Web Components excel and where framework-specific implementations still hold the advantage.
+- [CSS Grid vs Flexbox: The Modern Consensus](https://boseui.site/blog/css-grid-vs-flexbox-2026) - When to use which layout module, and how they complement each other in complex application architectures.
+- [Modern State Management in React](https://boseui.site/blog/state-management-in-react) - Evaluating Context, Zustand, Jotai, and Redux Toolkit in the era of Server Components.
+- [Integrating WebGL and Canvas in React Apps](https://boseui.site/blog/webgl-and-canvas-in-react) - How to use Three.js and React Three Fiber to build high-performance 3D experiences on the web.
+- [Server-Driven UI Patterns](https://boseui.site/blog/server-driven-ui-patterns) - Building dynamic interfaces where the server dictates the layout and component composition.
+- [Micro-frontends with Webpack Module Federation](https://boseui.site/blog/micro-frontends-with-module-federation) - Scaling large frontend applications across multiple independent engineering teams.
+- [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
+- [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
+
 ## Available Kinetic Components (127)
 
 ### Accordion (`Accordion`)
