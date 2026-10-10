@@ -80,6 +80,14 @@ export function Footer() {
               </li>
               <li>
                 <Link
+                  href="/docs/contributing"
+                  className="text-neutral-600 transition-colors hover:text-black dark:text-neutral-400 dark:hover:text-white"
+                >
+                  Contributing Guide
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/registry.json"
                   className="font-mono text-[11px] text-neutral-600 transition-colors hover:text-black dark:text-neutral-400 dark:hover:text-white"
                 >

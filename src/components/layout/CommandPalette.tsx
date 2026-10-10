@@ -23,6 +23,7 @@ import {
   Home,
   User,
   SunMoon,
+  HeartHandshake,
 } from "lucide-react";
 import { PULSE_COMPONENTS } from "@/registry/generated-catalog";
 import { useTheme } from "@/components/layout/ThemeProvider";
@@ -193,6 +194,19 @@ export function CommandPaletteProvider({
         keywords: "docs documentation guide install cli architecture sync",
         onSelect: () => {
           router.push("/docs");
+          closePalette();
+        },
+      },
+      {
+        id: "nav-contributing",
+        group: "Navigation",
+        title: "Contributing Guide",
+        subtitle: "How to build and contribute components to BoseUI",
+        badge: "Guide",
+        icon: <HeartHandshake className="h-4 w-4" />,
+        keywords: "contribute contributing guide architecture component new pull request github open source",
+        onSelect: () => {
+          router.push("/docs/contributing");
           closePalette();
         },
       },

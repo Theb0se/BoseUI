@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   BookOpen,
   Layers,
+  HeartHandshake,
   PanelLeftClose,
   PanelLeftOpen,
   Search,
@@ -84,6 +85,21 @@ export function Sidebar() {
                 >
                   <BookOpen className="h-3.5 w-3.5 shrink-0" />
                   <span>Introduction & CLI</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/docs/contributing"
+                  onClick={() => setMobileOpen(false)}
+                  className={cn(
+                    "flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium transition-colors",
+                    pathname === "/docs/contributing"
+                      ? "bg-neutral-900 text-white dark:bg-white dark:text-black"
+                      : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-white"
+                  )}
+                >
+                  <HeartHandshake className="h-3.5 w-3.5 shrink-0" />
+                  <span>Contributing Guide</span>
                 </Link>
               </li>
               <li>

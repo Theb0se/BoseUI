@@ -143,7 +143,14 @@ export default function DocsPage() {
             </h2>
           </div>
           <p className="text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
-            Every component consists of two files in <code className="font-mono">src/components/ui/</code>: the component (<code className="font-mono">.tsx</code>) and its metadata (<code className="font-mono">.meta.ts</code>).
+            Every component consists of two files in <code className="font-mono">src/components/ui/</code>: the component (<code className="font-mono">.tsx</code>) and its metadata (<code className="font-mono">.meta.ts</code>). Read our dedicated{" "}
+            <Link
+              href="/docs/contributing"
+              className="font-medium text-neutral-950 underline underline-offset-4 dark:text-white"
+            >
+              Contributing Guide →
+            </Link>{" "}
+            for complete guidelines, prop schemas, and preview integration.
           </p>
 
           <CodeViewer
