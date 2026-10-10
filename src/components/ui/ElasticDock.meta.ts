@@ -63,6 +63,21 @@ export const ElasticDockMeta: PulseComponentMeta = {
       default: "22",
       description: "Spring damping coefficient controlling oscillation settling.",
     },
+  
+    {
+      name: "defaultActiveId",
+      type: "string",
+      defaultValue: "undefined",
+      description: "Identifier of the initially active dock item",
+      required: false,
+    },
+    {
+      name: "onSelect",
+      type: "(item: ElasticDockItem) => void",
+      defaultValue: "undefined",
+      description: "Callback fired when a dock icon is selected",
+      required: false,
+    },
   ],
   usageCode: `import { ElasticDock } from "@/components/ui/elastic-dock";
 

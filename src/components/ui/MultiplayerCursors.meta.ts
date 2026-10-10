@@ -46,6 +46,14 @@ export const MultiplayerCursorsMeta: PulseComponentMeta = {
       type: "string",
       description: "Additional CSS classes to apply to the root container.",
     },
+  
+    {
+      name: "overlayOnly",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Render cursors as an transparent overlay without outer card container",
+      required: false,
+    },
   ],
   usageCode: `import { MultiplayerCursors } from "@/components/ui/MultiplayerCursors";
 

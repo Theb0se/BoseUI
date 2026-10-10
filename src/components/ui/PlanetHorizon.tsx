@@ -103,8 +103,6 @@ export function PlanetHorizon({
   const [activeFlareColor, setActiveFlareColor] = useState(flareColor);
   const [activeFlarePos, setActiveFlarePos] = useState(flarePosition);
   const [isAutoplay, setIsAutoplay] = useState(autoplay);
-  const [showControls, setShowControls] = useState(false);
-
   useEffect(() => {
     setActiveAtmoColor(atmosphereColor);
   }, [atmosphereColor]);
@@ -737,141 +735,9 @@ export function PlanetHorizon({
         className="pointer-events-none absolute inset-0 h-full w-full"
       />
 
-      {children ? (
+      {children && (
         <div className="relative z-10 flex min-h-[520px] w-full flex-col">
           {children}
-        </div>
-      ) : (
-        <div className="relative z-10 flex min-h-[520px] w-full flex-col justify-between p-6 sm:p-8">
-          {/* Top Orbital Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-sky-400/20 bg-sky-400/10 backdrop-blur-md">
-                <Globe className="h-4 w-4 text-sky-300" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/90">
-                    ISS Cupola Telemetry
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-full border border-sky-400/30 bg-sky-400/10 px-2 py-0.5 text-[10px] font-medium text-sky-300">
-                    <Sun className="h-2.5 w-2.5" /> Orbital Dawn
-                  </span>
-                </div>
-                <p className="text-xs text-white/50">
-                  Altitude 408 km &bull; Rayleigh Limb &amp; Night-Side Metro Grid
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              {HORIZON_PRESETS.map((preset) => (
-                <button
-                  key={preset.name}
-                  type="button"
-                  onClick={() => {
-                    setActiveAtmoColor(preset.atmosphereColor);
-                    setActiveFlareColor(preset.flareColor);
-                  }}
-                  className={cn(
-                    "rounded-lg border px-2.5 py-1 text-xs font-medium transition-all backdrop-blur-md",
-                    activeAtmoColor.toLowerCase() ===
-                      preset.atmosphereColor.toLowerCase()
-                      ? "border-white/40 bg-white/15 text-white"
-                      : "border-white/10 bg-black/40 text-white/65 hover:border-white/25 hover:text-white"
-                  )}
-                >
-                  {preset.name}
-                </button>
-              ))}
-
-              <button
-                type="button"
-                onClick={() => setIsAutoplay((v) => !v)}
-                aria-label={isAutoplay ? "Pause solar orbit" : "Play solar orbit"}
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-black/40 text-white/75 transition-colors hover:border-white/25 hover:text-white backdrop-blur-md"
-              >
-                {isAutoplay ? (
-                  <Pause className="h-3.5 w-3.5" />
-                ) : (
-                  <Play className="h-3.5 w-3.5" />
-                )}
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setShowControls((v) => !v)}
-                aria-label="Toggle horizon controls"
-                className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-lg border transition-colors backdrop-blur-md",
-                  showControls
-                    ? "border-sky-400/50 bg-sky-400/15 text-sky-300"
-                    : "border-white/10 bg-black/40 text-white/75 hover:border-white/25 hover:text-white"
-                )}
-              >
-                <Sliders className="h-3.5 w-3.5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Bottom Content & Manual Flare Scrubber */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div className="max-w-md space-y-1.5">
-              <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                Sunrise From Orbit
-              </h2>
-              <p className="text-xs leading-relaxed text-white/65 sm:text-sm">
-                Multi-band Rayleigh scattering transitions from golden
-                tropospheric refraction to deep mesospheric cobalt while city
-                light networks glow across the night side.
-              </p>
-            </div>
-
-            {showControls && (
-              <div className="w-full max-w-xs space-y-3 rounded-xl border border-white/15 bg-black/65 p-4 backdrop-blur-xl">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-white/85">
-                    Solar Crest Position
-                  </span>
-                  <span className="text-[11px] text-sky-300">
-                    {isAutoplay
-                      ? "Auto-Orbiting"
-                      : `${Math.round(activeFlarePos * 100)}%`}
-                  </span>
-                </div>
-
-                <input
-                  type="range"
-                  min={0.05}
-                  max={0.95}
-                  step={0.01}
-                  value={activeFlarePos}
-                  onChange={(e) => {
-                    setIsAutoplay(false);
-                    setActiveFlarePos(Number(e.target.value));
-                  }}
-                  className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-white/15 accent-sky-400"
-                />
-
-                <div className="flex items-center justify-between gap-2 pt-1 text-xs text-white/65">
-                  <span>Atmosphere Tint</span>
-                  <input
-                    type="color"
-                    value={activeAtmoColor}
-                    onChange={(e) => setActiveAtmoColor(e.target.value)}
-                    className="h-6 w-10 cursor-pointer rounded border border-white/20 bg-transparent"
-                  />
-                  <span>Flare Tint</span>
-                  <input
-                    type="color"
-                    value={activeFlareColor}
-                    onChange={(e) => setActiveFlareColor(e.target.value)}
-                    className="h-6 w-10 cursor-pointer rounded border border-white/20 bg-transparent"
-                  />
-                </div>
-              </div>
-            )}
-          </div>
         </div>
       )}
     </div>

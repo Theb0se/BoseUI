@@ -51,6 +51,14 @@ export const SpringPinInputMeta: PulseComponentMeta = {
       default: "22",
       description: "Spring damping coefficient controlling slot oscillation decay.",
     },
+  
+    {
+      name: "onComplete",
+      type: "(pin: string) => void",
+      defaultValue: "undefined",
+      description: "Callback executed once all PIN code digits are filled",
+      required: false,
+    },
   ],
   usageCode: `import { SpringPinInput } from "@/components/ui/spring-pin-input";
 

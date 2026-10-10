@@ -173,8 +173,6 @@ export function AsteroidField({
   const [activeSpeed, setActiveSpeed] = useState(speed);
   const [activeAngle, setActiveAngle] = useState(angle);
   const [activeMeteorFreq, setActiveMeteorFreq] = useState(meteorFrequency);
-  const [showControls, setShowControls] = useState(false);
-
   useEffect(() => {
     setActiveTheme(colorTheme);
   }, [colorTheme]);
@@ -727,141 +725,9 @@ export function AsteroidField({
         className="pointer-events-none absolute inset-0 h-full w-full"
       />
 
-      {children ? (
+      {children && (
         <div className="relative z-10 flex min-h-[520px] w-full flex-col">
           {children}
-        </div>
-      ) : (
-        <div className="relative z-10 flex min-h-[520px] w-full flex-col justify-between p-6 sm:p-8">
-          {/* Top Telemetry Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 bg-white/5 backdrop-blur-md">
-                <Sparkles className="h-4 w-4 text-sky-300" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/90">
-                    Kuiper Belt Sector
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/10 px-2 py-0.5 text-[10px] font-medium text-white/80">
-                    <Wind className="h-2.5 w-2.5" /> {activeAngle}&deg; Vector
-                  </span>
-                </div>
-                <p className="text-xs text-white/50">
-                  3D Faceted Polyhedra &bull; {THEME_PALETTES[activeTheme].label}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              {(["basalt", "ice", "iron"] as AsteroidColorTheme[]).map((theme) => (
-                <button
-                  key={theme}
-                  type="button"
-                  onClick={() => setActiveTheme(theme)}
-                  className={cn(
-                    "rounded-lg border px-2.5 py-1 text-xs font-medium capitalize transition-all backdrop-blur-md",
-                    activeTheme === theme
-                      ? "border-white/40 bg-white/15 text-white"
-                      : "border-white/10 bg-black/40 text-white/65 hover:border-white/25 hover:text-white"
-                  )}
-                >
-                  {theme}
-                </button>
-              ))}
-
-              <button
-                type="button"
-                onClick={() => {
-                  manualMeteorQueueRef.current += 3;
-                }}
-                className="inline-flex items-center gap-1 rounded-lg border border-amber-400/30 bg-amber-400/10 px-2.5 py-1 text-xs font-medium text-amber-300 transition-colors hover:bg-amber-400/20 backdrop-blur-md"
-              >
-                <Flame className="h-3 w-3" /> Bolide Burst
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setShowControls((v) => !v)}
-                aria-label="Toggle asteroid field controls"
-                className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-lg border transition-colors backdrop-blur-md",
-                  showControls
-                    ? "border-sky-400/50 bg-sky-400/15 text-sky-300"
-                    : "border-white/10 bg-black/40 text-white/75 hover:border-white/25 hover:text-white"
-                )}
-              >
-                <Sliders className="h-3.5 w-3.5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Bottom Info & Controls */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div className="max-w-md space-y-1.5">
-              <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                Parallax Asteroid Field
-              </h2>
-              <p className="text-xs leading-relaxed text-white/60 sm:text-sm">
-                3D faceted planetesimals with per-facet normal shading tumble
-                across three depth planes while vaporizing bolides shed glowing
-                embers and ablation trails.
-              </p>
-            </div>
-
-            {showControls && (
-              <div className="w-full max-w-xs space-y-3 rounded-xl border border-white/15 bg-black/65 p-4 backdrop-blur-xl">
-                <label className="block space-y-1 text-xs">
-                  <div className="flex justify-between text-white/65">
-                    <span>Drift Velocity</span>
-                    <span>{activeSpeed.toFixed(2)}x</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={0.1}
-                    max={2.5}
-                    step={0.05}
-                    value={activeSpeed}
-                    onChange={(e) => setActiveSpeed(Number(e.target.value))}
-                    className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-white/15 accent-sky-400"
-                  />
-                </label>
-
-                <label className="block space-y-1 text-xs">
-                  <div className="flex justify-between text-white/65">
-                    <span>Trajectory Angle</span>
-                    <span>{activeAngle}&deg;</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={-60}
-                    max={60}
-                    step={1}
-                    value={activeAngle}
-                    onChange={(e) => setActiveAngle(Number(e.target.value))}
-                    className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-white/15 accent-sky-400"
-                  />
-                </label>
-
-                <label className="block space-y-1 text-xs">
-                  <div className="flex justify-between text-white/65">
-                    <span>Bolide Shower Rate</span>
-                    <span>{Math.round(activeMeteorFreq * 100)}%</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={0}
-                    max={1}
-                    step={0.05}
-                    value={activeMeteorFreq}
-                    onChange={(e) => setActiveMeteorFreq(Number(e.target.value))}
-                    className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-white/15 accent-amber-400"
-                  />
-                </label>
-              </div>
-            )}
-          </div>
         </div>
       )}
     </div>

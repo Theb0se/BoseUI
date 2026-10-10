@@ -63,6 +63,28 @@ export const RotarySpringDialMeta: PulseComponentMeta = {
       default: '"%"',
       description: "Unit suffix appended to the digital readout.",
     },
+  
+    {
+      name: "stiffness",
+      type: "number",
+      defaultValue: "240",
+      description: "Spring stiffness for dial rotation snapping",
+      required: false,
+    },
+    {
+      name: "damping",
+      type: "number",
+      defaultValue: "24",
+      description: "Spring damping coefficient",
+      required: false,
+    },
+    {
+      name: "onChange",
+      type: "(val: number) => void",
+      defaultValue: "undefined",
+      description: "Callback fired when dial angle value changes",
+      required: false,
+    },
   ],
   usageCode: `import { RotarySpringDial } from "@/components/ui/rotary-spring-dial";
 

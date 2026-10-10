@@ -428,6 +428,8 @@ export function Example() {
   - `autoPlay` (boolean, default: true): Whether the carousel automatically progresses through stories.
   - `onSlideChange` ((index: number) => void): Callback invoked whenever the active slide index updates.
   - `className` (string): Additional Tailwind CSS classes for the root container.
+  - `showHeader` (boolean): Whether to render header controls and story metadata chip
+  - `showControls` (boolean): Whether to show navigation arrows and pause/play controls
 - **Usage Example**:
 ```tsx
 import { AutoplayStoryCarousel } from "@/components/ui/AutoplayStoryCarousel";
@@ -706,6 +708,7 @@ export function Example() {
   - `defaultFinishId` (string, default: "natural-titanium"): Identifier of the finish selected by default on mount.
   - `onChange` ((finish: ColorFinish) => void): Callback invoked whenever user selects a new color finish.
   - `className` (string): Additional Tailwind CSS classes applied to the root container.
+  - `showHeader` (boolean): Whether to display the header title and titanium finish spec label
 - **Usage Example**:
 ```tsx
 import { ColorFinishPicker } from "@/components/ui/ColorFinishPicker";
@@ -1065,6 +1068,7 @@ export function Example() {
   - `distance` (number, default: 140): Gaussian falloff influence radius in pixels on either side of pointer.
   - `onItemClick` ((item: DockAppItem) => void): Callback triggered when a dock icon is clicked.
   - `className` (string): Additional Tailwind CSS classes applied to root container.
+  - `embedded` (boolean): Whether the dock renders embedded inside container rather than fixed to viewport
 - **Usage Example**:
 ```tsx
 import { DockMagnification } from "@/components/ui/DockMagnification";
@@ -1198,6 +1202,8 @@ export function Example() {
   - `distance` (number, default: 140): Pointer proximity radius in pixels within which neighboring icons scale.
   - `stiffness` (number, default: 320): Hooke's Law spring stiffness coefficient for magnification interpolation.
   - `damping` (number, default: 22): Spring damping coefficient controlling oscillation settling.
+  - `defaultActiveId` (string): Identifier of the initially active dock item
+  - `onSelect` ((item: ElasticDockItem) => void): Callback fired when a dock icon is selected
 - **Usage Example**:
 ```tsx
 import { ElasticDock } from "@/components/ui/elastic-dock";
@@ -1233,6 +1239,7 @@ export function Example() {
   - `items` (SortableTaskItem[]): Initial array of task items containing id, title, and priority tag.
   - `stiffness` (number, default: 380): Spring stiffness coefficient for row swap layout projection.
   - `damping` (number, default: 26): Spring damping coefficient controlling row settle oscillation.
+  - `onReorder` ((items: ElasticSortableItem[]) => void): Callback fired when items are reordered via drag-and-drop
 - **Usage Example**:
 ```tsx
 import { ElasticSnapSortable } from "@/components/ui/elastic-snap-sortable";
@@ -1267,6 +1274,8 @@ export function Example() {
   - `maxTags` (number, default: 8): Maximum number of tags allowed before locking the input.
   - `stiffness` (number, default: 380): Hooke's Law spring stiffness for tag pop-in and layout reflow.
   - `damping` (number, default: 24): Spring damping coefficient controlling pill settle.
+  - `placeholder` (string): Placeholder text displayed in the tag input field
+  - `onChange` ((tags: string[]) => void): Callback fired whenever the list of tags updates
 - **Usage Example**:
 ```tsx
 import { ElasticTagInput } from "@/components/ui/elastic-tag-input";
@@ -1339,6 +1348,7 @@ export function Example() {
   - `defaultExpanded` (boolean, default: false): Whether the diagnostic drawer is expanded on initial mount.
   - `stiffness` (number, default: 320): Spring stiffness coefficient for height expansion.
   - `damping` (number, default: 26): Spring damping coefficient controlling expansion settle.
+  - `summary` (string): Short summary text displayed when the card is collapsed
 - **Usage Example**:
 ```tsx
 import { ExpandableBentoCard } from "@/components/ui/expandable-bento-card";
@@ -1379,6 +1389,7 @@ export function Example() {
   - `initialAdults` (number, default: 1): Default adult guest count.
   - `onSearch` ((state: SearchState) => void): Callback invoked when search is triggered with current parameters.
   - `className` (string): Additional CSS classes for the container wrapper.
+  - `embedded` (boolean): Whether pill renders embedded in container or floating with fixed coordinates
 - **Usage Example**:
 ```tsx
 import { ExpandingSearchPill } from "@/components/ui/expanding-search-pill";
@@ -1723,6 +1734,8 @@ export function Example() {
   - `autoRotateSpeed` (number, default: 0.004): Angular speed (radians per frame) for the continuous globe rotation.
   - `initialRadius` (number, default: 160): Base spherical radius benchmark used for coordinate scaling.
   - `className` (string): Optional CSS classes to apply to the root container.
+  - `showHeader` (boolean): Whether to render the telemetry title and status indicator header
+  - `showControls` (boolean): Whether to show rotation speed and arc interaction sliders
 - **Usage Example**:
 ```tsx
 import { GlobeArcs } from "@/components/ui/GlobeArcs";
@@ -1796,6 +1809,11 @@ export function Example() {
   - `defaultPreset` (string, default: 'stripe-classic'): Initial color preset id ('stripe-classic', 'neon-cyber', 'sunset-ray', 'deep-aurora').
   - `enableClipPath` (boolean, default: true): Whether to apply the diagonal polygon bottom clip-path.
   - `className` (string): Optional CSS classes to apply to the root container.
+  - `preset` ("aurora" | "sunset" | "neon" | "ocean"): Active color gradient palette preset for background blobs
+  - `headline` (string): Main headline text rendered in the hero section
+  - `description` (string): Subtitle or supporting paragraph under the headline
+  - `primaryCtaText` (string): Label for the primary call-to-action button
+  - `secondaryCtaText` (string): Label for the secondary action button
 - **Usage Example**:
 ```tsx
 import { GradientMeshHero } from "@/components/ui/GradientMeshHero";
@@ -2207,6 +2225,9 @@ export function Example() {
   - `variant` ("obsidian" | "classic" | "cyber" | "porcelain", default: "obsidian"): Aesthetic colorway and shadow finish of the keycaps.
   - `enableGlobalListener` (boolean, default: true): Whether physical keystrokes on the user's keyboard trigger key depression.
   - `className` (string): Optional custom classes applied to the root container.
+  - `keys` (string[]): Array of individual keycap symbols to render
+  - `inline` (boolean): Whether keycaps render inline with prose text
+  - `onShortcutPress` ((shortcut: ShortcutCombo) => void): Callback triggered when physical shortcut combination is activated
 - **Usage Example**:
 ```tsx
 import { KeycapChips } from "@/components/ui/KeycapChips";
@@ -2318,6 +2339,10 @@ export function Example() {
   - `max` (number, default: 100): Maximum allowed slider value.
   - `step` (number, default: 1): Numeric increment step size.
   - `unit` (string, default: "%"): Unit suffix displayed next to the numeric value.
+  - `value` (number): Controlled numeric value for the slider
+  - `stiffness` (number): Spring tension for kinetic dragging physics
+  - `damping` (number): Spring damping coefficient
+  - `onChange` ((val: number) => void): Callback fired when slider value changes
 - **Usage Example**:
 ```tsx
 import { KineticSlider } from "@/components/ui/kinetic-slider";
@@ -2393,6 +2418,7 @@ export function Example() {
   - `threshold` (number, default: 0.78): Track fraction (0.5 to 0.95) required to lock confirmation.
   - `stiffness` (number, default: 360): Spring stiffness coefficient for thumb travel and recoil.
   - `damping` (number, default: 26): Spring damping coefficient controlling thumb snap-back.
+  - `onComplete` (() => void): Callback executed when the swipe handle passes completion threshold
 - **Usage Example**:
 ```tsx
 import { KineticSwipeButton } from "@/components/ui/kinetic-swipe-button";
@@ -2563,6 +2589,8 @@ export function Example() {
   - `defaultActiveTab` (string, default: "preview"): Initial active tab ID for uncontrolled usage.
   - `stiffness` (number, default: 380): Hooke's Law spring stiffness for active pill projection.
   - `damping` (number, default: 26): Spring damping coefficient for active pill projection.
+  - `activeTab` (string): Controlled identifier for the active tab
+  - `onChange` ((tabId: string) => void): Callback fired when active tab selection changes
 - **Usage Example**:
 ```tsx
 import { LiquidPillTabs } from "@/components/ui/liquid-pill-tabs";
@@ -2639,6 +2667,7 @@ export function Example() {
   - `items` (BreadcrumbSegment[]): Ordered array of breadcrumb path segments with id and label.
   - `stiffness` (number, default: 380): Hooke's Law spring stiffness for the sliding hover capsule.
   - `damping` (number, default: 26): Spring damping coefficient controlling capsule oscillation.
+  - `onSelect` ((item: BreadcrumbItem) => void): Callback fired when a breadcrumb node is clicked
 - **Usage Example**:
 ```tsx
 import { MagneticBreadcrumb } from "@/components/ui/magnetic-breadcrumb";
@@ -2713,6 +2742,7 @@ export function Example() {
   - `items` (PopoverCommandItem[]): Array of command items with id, label, shortcut, and icon.
   - `stiffness` (number, default: 380): Spring stiffness coefficient for popover entry and highlight glide.
   - `damping` (number, default: 26): Spring damping coefficient controlling popover settle.
+  - `onSelect` ((item: MenuItem) => void): Callback fired when an action item is selected
 - **Usage Example**:
 ```tsx
 import { MagneticPopoverMenu } from "@/components/ui/magnetic-popover-menu";
@@ -2842,6 +2872,7 @@ export function Example() {
   - `cancelLabel` (string, default: "Cancel"): Text label for the cancel button.
   - `hideFooter` (boolean, default: false): Hides default Cancel/Confirm footer buttons when rendering a custom form.
   - `onConfirm` (() => void): Callback executed when the user clicks the confirm button.
+  - `trigger` (React.ReactNode): Custom trigger element used to toggle modal open state
 - **Usage Example**:
 ```tsx
 import { ModalPopup } from "@/components/ui/modal-popup";
@@ -2882,6 +2913,7 @@ export function Example() {
   - `successLabel` (string, default: "Published v2.4"): Button text rendered when the action succeeds.
   - `stiffness` (number, default: 380): Spring stiffness coefficient for pill width projection.
   - `damping` (number, default: 26): Spring damping coefficient for pill width projection.
+  - `simulateError` (boolean): Whether clicking triggers simulated error state for UI verification
 - **Usage Example**:
 ```tsx
 import { MorphingActionButton } from "@/components/ui/morphing-action-button";
@@ -2921,6 +2953,9 @@ export function Example() {
   - `dialogTitle` (string, default: "Hooke's Law Telemetry Architecture"): Heading text displayed inside the expanded modal dialog.
   - `stiffness` (number, default: 290): Hooke's Law spring stiffness for shared layout projection.
   - `damping` (number, default: 26): Spring damping coefficient for shared layout projection.
+  - `dialogDescription` (string): Expanded description text within the dialog modal
+  - `open` (boolean): Controlled open/closed state of the dialog
+  - `onOpenChange` ((open: boolean) => void): Callback fired when dialog open state toggles
 - **Usage Example**:
 ```tsx
 import { MorphingDialog } from "@/components/ui/morphing-dialog";
@@ -2960,6 +2995,7 @@ export function Example() {
   - `stiffness` (number, default: 380): Spring stiffness coefficient for the morphing container and caret translation.
   - `damping` (number, default: 30): Spring damping coefficient governing oscillation decay.
   - `className` (string): Optional CSS classes to append to the stage container.
+  - `embedded` (boolean): Whether menu renders embedded within container rather than fixed top
 - **Usage Example**:
 ```tsx
 import { MorphingMegaMenu } from "@/components/ui/MorphingMegaMenu";
@@ -3042,6 +3078,7 @@ export function Example() {
   - `initialCollaborators` (Collaborator[]): Array of collaborator objects containing id, name, color, coordinates, and messages.
   - `showGrid` (boolean, default: true): Whether to render a Figma-style radial dot grid background.
   - `className` (string): Additional CSS classes to apply to the root container.
+  - `overlayOnly` (boolean): Render cursors as an transparent overlay without outer card container
 - **Usage Example**:
 ```tsx
 import { MultiplayerCursors } from "@/components/ui/MultiplayerCursors";
@@ -3524,6 +3561,7 @@ export function Example() {
   - `defaultExploded` (boolean, default: false): Whether the hardware layers are initially exploded.
   - `callouts` (FeatureCallout[]): List of angle-synchronized feature annotations.
   - `className` (string): Additional Tailwind CSS classes for the root container.
+  - `showHeader` (boolean): Whether to render header title, hardware specs badge, and action CTA
 - **Usage Example**:
 ```tsx
 import { ProductSequenceScrubber } from "@/components/ui/ProductSequenceScrubber";
@@ -3562,6 +3600,7 @@ export function Example() {
   - `radius` (number, default: 78): Polar orbit radius in pixels from center orb to satellite buttons.
   - `stiffness` (number, default: 340): Spring stiffness coefficient for radial expansion and collapse.
   - `damping` (number, default: 22): Spring damping coefficient controlling orbital settling.
+  - `onSelect` ((actionId: string) => void): Callback fired when an action radial slice is selected
 - **Usage Example**:
 ```tsx
 import { RadialMenuOrb } from "@/components/ui/radial-menu-orb";
@@ -3639,6 +3678,7 @@ export function Example() {
   - `authorName` (string, default: "Alexander Vance"): Name of the message author.
   - `authorRole` (string, default: "Staff Design Technologist"): Role or title of the message author.
   - `className` (string): Additional CSS classes to apply to the root container.
+  - `inline` (boolean): Whether reaction bar is rendered inline with content or in popover
 - **Usage Example**:
 ```tsx
 import { ReactionPicker } from "@/components/ui/ReactionPicker";
@@ -3676,6 +3716,7 @@ export function Example() {
   - `label` (string, default: "Emit Shockwave Pulse"): Primary text label rendered inside the button.
   - `stiffness` (number, default: 400): Hooke's Law spring stiffness for hover and tap recoil.
   - `damping` (number, default: 22): Spring damping coefficient controlling recoil settling.
+  - `onClick` ((e: React.MouseEvent<HTMLButtonElement>) => void): Standard button click handler callback
 - **Usage Example**:
 ```tsx
 import { RippleBurstButton } from "@/components/ui/ripple-burst-button";
@@ -3714,6 +3755,7 @@ export function Example() {
   - `stiffness` (number, default: 260): Spring stiffness for digit drum translation.
   - `damping` (number, default: 26): Spring damping coefficient controlling digit settling oscillation.
   - `className` (string): Additional CSS classes to apply to the root container.
+  - `fontSize` (number): Numeric font size in pixels for the rolling odometer digits
 - **Usage Example**:
 ```tsx
 import { RollingNumberTicker } from "@/components/ui/RollingNumberTicker";
@@ -3754,6 +3796,9 @@ export function Example() {
   - `max` (number, default: 100): Maximum dial value corresponding to +135 degrees.
   - `step` (number, default: 5): Step increment per detent tick.
   - `unit` (string, default: "%"): Unit suffix appended to the digital readout.
+  - `stiffness` (number): Spring stiffness for dial rotation snapping
+  - `damping` (number): Spring damping coefficient
+  - `onChange` ((val: number) => void): Callback fired when dial angle value changes
 - **Usage Example**:
 ```tsx
 import { RotarySpringDial } from "@/components/ui/rotary-spring-dial";
@@ -3797,6 +3842,9 @@ export function Example() {
   - `max` (number, default: 1000): Maximum allowed numeric value.
   - `step` (number, default: 5): Numeric increment per scrub step or button press.
   - `unit` (string, default: "N/m"): Unit label rendered alongside the numeric value.
+  - `value` (number): Controlled numeric value
+  - `pixelsPerStep` (number): Mouse scrub sensitivity in pixels moved per step increment
+  - `onChange` ((val: number) => void): Callback fired when numeric value updates
 - **Usage Example**:
 ```tsx
 import { ScrubbableNumberInput } from "@/components/ui/scrubbable-number-input";
@@ -3844,6 +3892,7 @@ export function Example() {
   - `showGradient` (boolean, default: true): Whether to render the animated area fill gradient underneath the line.
   - `showGrid` (boolean, default: true): Whether to render horizontal reference grid lines.
   - `className` (string): Additional CSS classes to apply to the root container.
+  - `minimal` (boolean): Compact sparkline display mode hiding telemetry header and stats
 - **Usage Example**:
 ```tsx
 import { ScrubbableSparkline } from "@/components/ui/ScrubbableSparkline";
@@ -4303,6 +4352,7 @@ export function Example() {
   - `defaultValue` (string, default: "482"): Initial digits pre-populated in the verification slots.
   - `stiffness` (number, default: 420): Spring stiffness coefficient for keystroke slot bounce.
   - `damping` (number, default: 22): Spring damping coefficient controlling slot oscillation decay.
+  - `onComplete` ((pin: string) => void): Callback executed once all PIN code digits are filled
 - **Usage Example**:
 ```tsx
 import { SpringPinInput } from "@/components/ui/spring-pin-input";

@@ -44,6 +44,14 @@ export const ElasticSnapSortableMeta: PulseComponentMeta = {
       default: "26",
       description: "Spring damping coefficient controlling row settle oscillation.",
     },
+  
+    {
+      name: "onReorder",
+      type: "(items: ElasticSortableItem[]) => void",
+      defaultValue: "undefined",
+      description: "Callback fired when items are reordered via drag-and-drop",
+      required: false,
+    },
   ],
   usageCode: `import { ElasticSnapSortable } from "@/components/ui/elastic-snap-sortable";
 

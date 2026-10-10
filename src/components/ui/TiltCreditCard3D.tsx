@@ -333,53 +333,6 @@ export function TiltCreditCard3D({
           </div>
         </motion.div>
       </div>
-
-      {/* Interactive Controls Bar */}
-      <div className="relative z-10 w-full flex flex-wrap items-center justify-between gap-3 border-t border-neutral-800/80 pt-4 text-xs text-neutral-400">
-        <div className="flex items-center gap-2">
-          {/* Flip Toggle Button */}
-          <button
-            type="button"
-            onClick={() => setIsFlipped((prev) => !prev)}
-            className="flex items-center gap-1.5 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-1.5 font-medium text-neutral-200 hover:bg-neutral-800 transition-colors"
-          >
-            <RotateCw className="h-3.5 w-3.5" />
-            <span>{isFlipped ? "View Front" : "View Back (CVV)"}</span>
-          </button>
-
-          {/* Show/Hide sensitive numbers */}
-          <button
-            type="button"
-            onClick={() => setShowSensitive((prev) => !prev)}
-            className="flex items-center gap-1.5 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-1.5 font-medium text-neutral-300 hover:bg-neutral-800 transition-colors"
-          >
-            {showSensitive ? (
-              <>
-                <EyeOff className="h-3.5 w-3.5 text-neutral-400" />
-                <span>Mask Data</span>
-              </>
-            ) : (
-              <>
-                <Eye className="h-3.5 w-3.5 text-neutral-400" />
-                <span>Reveal Numbers</span>
-              </>
-            )}
-          </button>
-        </div>
-
-        {/* Live edit cardholder name */}
-        <div className="flex items-center gap-2">
-          <span className="text-neutral-500 font-mono">Holder:</span>
-          <input
-            type="text"
-            value={holderName}
-            onChange={(e) => setHolderName(e.target.value.toUpperCase())}
-            maxLength={22}
-            className="w-36 rounded-md border border-neutral-800 bg-neutral-900 px-2 py-1 text-xs font-mono text-neutral-200 uppercase focus:border-neutral-700 focus:outline-none"
-            placeholder="CARDHOLDER"
-          />
-        </div>
-      </div>
     </div>
   );
 }

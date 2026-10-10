@@ -310,45 +310,6 @@ export function GradientMeshHero({
                 ))}
               </div>
             </div>
-
-            {/* Controls: Speed, Blur, Clip Toggle */}
-            <div className="flex flex-wrap items-center gap-4 text-neutral-400">
-              <div className="flex items-center gap-2">
-                <span>Drift Speed ({speed}s):</span>
-                <input
-                  type="range"
-                  min="8"
-                  max="40"
-                  value={speed}
-                  onChange={(e) => setSpeed(Number(e.target.value))}
-                  className="w-20 accent-indigo-500"
-                />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <span>Blur ({blurAmount}px):</span>
-                <input
-                  type="range"
-                  min="40"
-                  max="140"
-                  value={blurAmount}
-                  onChange={(e) => setBlurAmount(Number(e.target.value))}
-                  className="w-20 accent-indigo-500"
-                />
-              </div>
-
-              <button
-                onClick={() => setUseClip(!useClip)}
-                className={cn(
-                  "px-2.5 py-1 rounded-md text-xs font-medium border transition-colors",
-                  useClip
-                    ? "bg-indigo-500/20 border-indigo-500/40 text-indigo-300"
-                    : "bg-neutral-800/60 border-neutral-700 text-neutral-400"
-                )}
-              >
-                {useClip ? "Diagonal Clip: ON" : "Diagonal Clip: OFF"}
-              </button>
-            </div>
           </div>
         </div>
       )}

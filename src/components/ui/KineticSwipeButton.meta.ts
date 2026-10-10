@@ -57,6 +57,14 @@ export const KineticSwipeButtonMeta: PulseComponentMeta = {
       default: "26",
       description: "Spring damping coefficient controlling thumb snap-back.",
     },
+  
+    {
+      name: "onComplete",
+      type: "() => void",
+      defaultValue: "undefined",
+      description: "Callback executed when the swipe handle passes completion threshold",
+      required: false,
+    },
   ],
   usageCode: `import { KineticSwipeButton } from "@/components/ui/kinetic-swipe-button";
 

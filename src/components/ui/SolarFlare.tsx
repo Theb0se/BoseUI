@@ -293,8 +293,6 @@ export function SolarFlare({
   const [activeTurb, setActiveTurb] = useState(turbulence);
   const [activeSpeed, setActiveSpeed] = useState(speed);
   const [activeEruption, setActiveEruption] = useState(eruptionIntensity);
-  const [showControls, setShowControls] = useState(false);
-
   useEffect(() => {
     setActiveCore(coreColor);
   }, [coreColor]);
@@ -437,14 +435,6 @@ export function SolarFlare({
     };
   }, []);
 
-  const handleReset = () => {
-    setActiveCore(coreColor);
-    setActiveFlare(flareColor);
-    setActiveTurb(turbulence);
-    setActiveSpeed(speed);
-    setActiveEruption(eruptionIntensity);
-  };
-
   return (
     <div
       ref={containerRef}
@@ -460,149 +450,9 @@ export function SolarFlare({
         className="pointer-events-none absolute inset-0 h-full w-full"
       />
 
-      {children ? (
+      {children && (
         <div className="relative z-10 flex min-h-[520px] w-full flex-col">
           {children}
-        </div>
-      ) : (
-        <div className="relative z-10 flex min-h-[520px] w-full flex-col justify-between p-6 sm:p-8">
-          {/* Top Solar Telemetry */}
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-orange-400/25 bg-orange-500/10 backdrop-blur-md">
-                <Flame className="h-4 w-4 text-orange-400" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/90">
-                    Heliosphere Observatory
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-full border border-orange-400/35 bg-orange-500/15 px-2 py-0.5 text-[10px] font-medium text-orange-300">
-                    <Activity className="h-2.5 w-2.5" /> Class X-{activeEruption.toFixed(1)}
-                  </span>
-                </div>
-                <p className="text-xs text-white/55">
-                  Voronoi/FBM Photosphere &bull; Sunspot Penumbra &amp; Coronal Loops
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              {SOLAR_PRESETS.map((preset) => (
-                <button
-                  key={preset.name}
-                  type="button"
-                  onClick={() => {
-                    setActiveCore(preset.coreColor);
-                    setActiveFlare(preset.flareColor);
-                    setActiveTurb(preset.turbulence);
-                    setActiveEruption(preset.eruptionIntensity);
-                  }}
-                  className={cn(
-                    "rounded-lg border px-2.5 py-1 text-xs font-medium transition-all backdrop-blur-md",
-                    activeFlare.toLowerCase() === preset.flareColor.toLowerCase()
-                      ? "border-white/40 bg-white/15 text-white"
-                      : "border-white/10 bg-black/40 text-white/65 hover:border-white/25 hover:text-white"
-                  )}
-                >
-                  {preset.name}
-                </button>
-              ))}
-
-              <button
-                type="button"
-                onClick={() => setShowControls((v) => !v)}
-                aria-label="Toggle solar flare shader parameters"
-                className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-lg border transition-colors backdrop-blur-md",
-                  showControls
-                    ? "border-orange-400/50 bg-orange-400/15 text-orange-300"
-                    : "border-white/10 bg-black/40 text-white/75 hover:border-white/25 hover:text-white"
-                )}
-              >
-                <Sliders className="h-3.5 w-3.5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Bottom Info & Controls */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div className="max-w-md space-y-1.5">
-              <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                Coronal Mass Ejection
-              </h2>
-              <p className="text-xs leading-relaxed text-white/65 sm:text-sm">
-                Voronoi solar granulation, radial sunspot penumbrae, and arched
-                magnetic flux prominences erupt across a limb-darkened
-                photosphere.
-              </p>
-            </div>
-
-            {showControls && (
-              <div className="w-full max-w-xs space-y-3 rounded-xl border border-white/15 bg-black/65 p-4 backdrop-blur-xl">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-white/85">
-                    Magnetohydrodynamics
-                  </span>
-                  <button
-                    type="button"
-                    onClick={handleReset}
-                    className="inline-flex items-center gap-1 text-[11px] text-white/50 hover:text-white"
-                  >
-                    <RotateCcw className="h-3 w-3" /> Reset
-                  </button>
-                </div>
-
-                <label className="block space-y-1 text-xs">
-                  <div className="flex justify-between text-white/65">
-                    <span>Plasma Turbulence</span>
-                    <span>{activeTurb.toFixed(2)}</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={0.4}
-                    max={2.2}
-                    step={0.05}
-                    value={activeTurb}
-                    onChange={(e) => setActiveTurb(Number(e.target.value))}
-                    className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-white/15 accent-orange-400"
-                  />
-                </label>
-
-                <label className="block space-y-1 text-xs">
-                  <div className="flex justify-between text-white/65">
-                    <span>Eruption Intensity</span>
-                    <span>{activeEruption.toFixed(2)}x</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={0.2}
-                    max={2.5}
-                    step={0.05}
-                    value={activeEruption}
-                    onChange={(e) => setActiveEruption(Number(e.target.value))}
-                    className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-white/15 accent-orange-400"
-                  />
-                </label>
-
-                <label className="block space-y-1 text-xs">
-                  <div className="flex justify-between text-white/65">
-                    <span>Convection Speed</span>
-                    <span>{activeSpeed.toFixed(2)}x</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={0.1}
-                    max={2.5}
-                    step={0.05}
-                    value={activeSpeed}
-                    onChange={(e) => setActiveSpeed(Number(e.target.value))}
-                    className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-white/15 accent-orange-400"
-                  />
-                </label>
-              </div>
-            )}
-          </div>
         </div>
       )}
     </div>

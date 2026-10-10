@@ -63,6 +63,35 @@ export const KineticSliderMeta: PulseComponentMeta = {
       default: '"%"',
       description: "Unit suffix displayed next to the numeric value.",
     },
+  
+    {
+      name: "value",
+      type: "number",
+      defaultValue: "undefined",
+      description: "Controlled numeric value for the slider",
+      required: false,
+    },
+    {
+      name: "stiffness",
+      type: "number",
+      defaultValue: "300",
+      description: "Spring tension for kinetic dragging physics",
+      required: false,
+    },
+    {
+      name: "damping",
+      type: "number",
+      defaultValue: "28",
+      description: "Spring damping coefficient",
+      required: false,
+    },
+    {
+      name: "onChange",
+      type: "(val: number) => void",
+      defaultValue: "undefined",
+      description: "Callback fired when slider value changes",
+      required: false,
+    },
   ],
   usageCode: `import { KineticSlider } from "@/components/ui/kinetic-slider";
 

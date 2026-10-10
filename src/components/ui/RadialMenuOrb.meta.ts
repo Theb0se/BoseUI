@@ -51,6 +51,14 @@ export const RadialMenuOrbMeta: PulseComponentMeta = {
       default: "22",
       description: "Spring damping coefficient controlling orbital settling.",
     },
+  
+    {
+      name: "onSelect",
+      type: "(actionId: string) => void",
+      defaultValue: "undefined",
+      description: "Callback fired when an action radial slice is selected",
+      required: false,
+    },
   ],
   usageCode: `import { RadialMenuOrb } from "@/components/ui/radial-menu-orb";
 

@@ -647,112 +647,11 @@ export function Waterfall({
         className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#020611]/55 via-transparent to-[#020611]/75"
       />
 
-      <div className="relative z-10 flex flex-1 flex-col justify-between">
-        {children ?? (
-          <>
-            {/* Top Telemetry Header */}
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/25 bg-slate-950/60 px-3.5 py-1.5 font-mono text-xs text-sky-200 backdrop-blur-md">
-                <Droplets className="h-3.5 w-3.5 text-sky-400" />
-                <span>WATERFALL · HYDRO-CASCADE &amp; BASALT GORGE</span>
-              </div>
-
-              <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-slate-950/60 p-1 backdrop-blur-md">
-                {PRESETS.map((preset) => {
-                  const active =
-                    liveColor.toLowerCase() === preset.color.toLowerCase();
-                  return (
-                    <button
-                      key={preset.name}
-                      type="button"
-                      onClick={() => {
-                        setLiveColor(preset.color);
-                        setLiveFlow(preset.flow);
-                        setLiveMist(preset.mist);
-                        setLiveCurtain(preset.curtain);
-                      }}
-                      className={cn(
-                        "rounded-full px-3 py-1 font-mono text-[11px] transition-all",
-                        active
-                          ? "bg-sky-400/20 text-sky-200 shadow-sm ring-1 ring-sky-400/40"
-                          : "text-slate-400 hover:text-white"
-                      )}
-                    >
-                      {preset.name}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Center Title & Bottom HUD Controls */}
-            <div className="mt-auto flex flex-col gap-5 pt-16 sm:flex-row sm:items-end sm:justify-between">
-              <div className="max-w-md space-y-2">
-                <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                  Cascading Plunge Hydro-Physics
-                </h2>
-                <p className="text-sm leading-relaxed text-slate-300/85">
-                  Turbulent aerated water chutes crest over wet basalt cliff strata, accelerating under gravity into a boiling whitewater plunge basin and rising mist banks.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-3 gap-3 rounded-2xl border border-white/10 bg-slate-950/70 p-3.5 backdrop-blur-md sm:min-w-[310px]">
-                <label className="flex flex-col gap-1.5">
-                  <span className="flex items-center justify-between font-mono text-[10px] uppercase text-slate-400">
-                    <span>Flow</span>
-                    <span className="text-sky-300">{liveFlow.toFixed(1)}x</span>
-                  </span>
-                  <input
-                    type="range"
-                    min={0.4}
-                    max={2.2}
-                    step={0.1}
-                    value={liveFlow}
-                    onChange={(e) => setLiveFlow(parseFloat(e.target.value))}
-                    className="h-1.5 cursor-pointer appearance-none rounded-lg bg-white/15 accent-sky-400"
-                  />
-                </label>
-
-                <label className="flex flex-col gap-1.5">
-                  <span className="flex items-center justify-between font-mono text-[10px] uppercase text-slate-400">
-                    <span className="inline-flex items-center gap-1">
-                      <Wind className="h-2.5 w-2.5" /> Mist
-                    </span>
-                    <span className="text-sky-300">{Math.round(liveMist * 100)}%</span>
-                  </span>
-                  <input
-                    type="range"
-                    min={0}
-                    max={1}
-                    step={0.05}
-                    value={liveMist}
-                    onChange={(e) => setLiveMist(parseFloat(e.target.value))}
-                    className="h-1.5 cursor-pointer appearance-none rounded-lg bg-white/15 accent-sky-400"
-                  />
-                </label>
-
-                <label className="flex flex-col gap-1.5">
-                  <span className="flex items-center justify-between font-mono text-[10px] uppercase text-slate-400">
-                    <span className="inline-flex items-center gap-1">
-                      <Sparkles className="h-2.5 w-2.5" /> Span
-                    </span>
-                    <span className="text-sky-300">{Math.round(liveCurtain * 100)}%</span>
-                  </span>
-                  <input
-                    type="range"
-                    min={0.35}
-                    max={1}
-                    step={0.05}
-                    value={liveCurtain}
-                    onChange={(e) => setLiveCurtain(parseFloat(e.target.value))}
-                    className="h-1.5 cursor-pointer appearance-none rounded-lg bg-white/15 accent-sky-400"
-                  />
-                </label>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+      {children && (
+        <div className="relative z-10 flex min-h-[520px] w-full flex-col">
+          {children}
+        </div>
+      )}
     </div>
   );
 }

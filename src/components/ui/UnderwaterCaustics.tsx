@@ -490,112 +490,11 @@ export function UnderwaterCaustics({
         className="pointer-events-none absolute inset-0 h-full w-full"
       />
 
-      <div className="relative z-10 flex flex-1 flex-col justify-between">
-        {children ?? (
-          <>
-            {/* Top Telemetry Header */}
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-slate-950/55 px-3.5 py-1.5 font-mono text-xs text-cyan-100 backdrop-blur-md">
-                <Sun className="h-3.5 w-3.5 text-cyan-300" />
-                <span>UNDERWATER CAUSTICS · GLSL REFRACTION</span>
-              </div>
-
-              <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-slate-950/55 p-1 backdrop-blur-md">
-                {CAUSTIC_PRESETS.map((preset) => {
-                  const active =
-                    liveColor.toLowerCase() === preset.color.toLowerCase();
-                  return (
-                    <button
-                      key={preset.name}
-                      type="button"
-                      onClick={() => {
-                        setLiveColor(preset.color);
-                        setLiveIntensity(preset.intensity);
-                        setLiveSunbeams(preset.beams);
-                      }}
-                      className={cn(
-                        "rounded-full px-3 py-1 font-mono text-[11px] transition-all",
-                        active
-                          ? "bg-cyan-400/25 text-cyan-100 ring-1 ring-cyan-300/40"
-                          : "text-slate-300 hover:text-white"
-                      )}
-                    >
-                      {preset.name}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Bottom Title & Shader Controls */}
-            <div className="mt-auto flex flex-col gap-5 pt-16 sm:flex-row sm:items-end sm:justify-between">
-              <div className="max-w-md space-y-2">
-                <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                  Sub-Surface Caustic Light Network
-                </h2>
-                <p className="text-sm leading-relaxed text-cyan-50/85">
-                  Dual-scale GLSL wave-interference caustics with chromatic dispersion, volumetric God-ray sunbeams, drifting marine snow, and 3D Fresnel bubbles.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-3 gap-3 rounded-2xl border border-white/15 bg-slate-950/65 p-3.5 backdrop-blur-md sm:min-w-[330px]">
-                <label className="flex flex-col gap-1.5">
-                  <span className="flex items-center justify-between font-mono text-[10px] uppercase text-slate-300">
-                    <span>Caustics</span>
-                    <span className="text-cyan-300">{liveIntensity.toFixed(1)}x</span>
-                  </span>
-                  <input
-                    type="range"
-                    min={0.3}
-                    max={1.8}
-                    step={0.1}
-                    value={liveIntensity}
-                    onChange={(e) => setLiveIntensity(parseFloat(e.target.value))}
-                    className="h-1.5 cursor-pointer appearance-none rounded-lg bg-white/20 accent-cyan-300"
-                  />
-                </label>
-
-                <label className="flex flex-col gap-1.5">
-                  <span className="flex items-center justify-between font-mono text-[10px] uppercase text-slate-300">
-                    <span className="inline-flex items-center gap-1">
-                      <CircleDot className="h-2.5 w-2.5" /> Bubbles
-                    </span>
-                    <span className="text-cyan-300">{liveBubbles}</span>
-                  </span>
-                  <input
-                    type="range"
-                    min={0}
-                    max={80}
-                    step={5}
-                    value={liveBubbles}
-                    onChange={(e) => setLiveBubbles(parseInt(e.target.value, 10))}
-                    className="h-1.5 cursor-pointer appearance-none rounded-lg bg-white/20 accent-cyan-300"
-                  />
-                </label>
-
-                <div className="flex flex-col justify-between gap-1.5">
-                  <span className="font-mono text-[10px] uppercase text-slate-300">
-                    God Rays
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setLiveSunbeams((v) => !v)}
-                    className={cn(
-                      "inline-flex items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1 font-mono text-[11px] transition-colors",
-                      liveSunbeams
-                        ? "border-cyan-300/40 bg-cyan-400/20 text-cyan-100"
-                        : "border-white/10 bg-white/5 text-slate-400"
-                    )}
-                  >
-                    <Sparkles className="h-3 w-3" />
-                    {liveSunbeams ? "Beams On" : "Muted"}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+      {children && (
+        <div className="relative z-10 flex min-h-[520px] w-full flex-col">
+          {children}
+        </div>
+      )}
     </div>
   );
 }

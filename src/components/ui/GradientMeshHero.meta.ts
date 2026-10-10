@@ -46,6 +46,42 @@ export const GradientMeshHeroMeta: PulseComponentMeta = {
       type: "string",
       description: "Optional CSS classes to apply to the root container.",
     },
+  
+    {
+      name: "preset",
+      type: '"aurora" | "sunset" | "neon" | "ocean"',
+      defaultValue: '"aurora"',
+      description: "Active color gradient palette preset for background blobs",
+      required: false,
+    },
+    {
+      name: "headline",
+      type: "string",
+      defaultValue: "undefined",
+      description: "Main headline text rendered in the hero section",
+      required: false,
+    },
+    {
+      name: "description",
+      type: "string",
+      defaultValue: "undefined",
+      description: "Subtitle or supporting paragraph under the headline",
+      required: false,
+    },
+    {
+      name: "primaryCtaText",
+      type: "string",
+      defaultValue: "Get Started",
+      description: "Label for the primary call-to-action button",
+      required: false,
+    },
+    {
+      name: "secondaryCtaText",
+      type: "string",
+      defaultValue: "Documentation",
+      description: "Label for the secondary action button",
+      required: false,
+    },
   ],
   usageCode: `import { GradientMeshHero } from "@/components/ui/GradientMeshHero";
 

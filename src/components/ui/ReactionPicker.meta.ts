@@ -57,6 +57,14 @@ export const ReactionPickerMeta: PulseComponentMeta = {
       type: "string",
       description: "Additional CSS classes to apply to the root container.",
     },
+  
+    {
+      name: "inline",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Whether reaction bar is rendered inline with content or in popover",
+      required: false,
+    },
   ],
   usageCode: `import { ReactionPicker } from "@/components/ui/ReactionPicker";
 

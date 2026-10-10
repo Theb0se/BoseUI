@@ -52,6 +52,14 @@ export const ColorFinishPickerMeta: PulseComponentMeta = {
       type: "string",
       description: "Additional Tailwind CSS classes applied to the root container.",
     },
+  
+    {
+      name: "showHeader",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Whether to display the header title and titanium finish spec label",
+      required: false,
+    },
   ],
   usageCode: `import { ColorFinishPicker } from "@/components/ui/ColorFinishPicker";
 

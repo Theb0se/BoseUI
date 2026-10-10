@@ -50,6 +50,14 @@ export const MagneticPopoverMenuMeta: PulseComponentMeta = {
       default: "26",
       description: "Spring damping coefficient controlling popover settle.",
     },
+  
+    {
+      name: "onSelect",
+      type: "(item: MenuItem) => void",
+      defaultValue: "undefined",
+      description: "Callback fired when an action item is selected",
+      required: false,
+    },
   ],
   usageCode: `import { MagneticPopoverMenu } from "@/components/ui/magnetic-popover-menu";
 

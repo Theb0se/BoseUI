@@ -48,6 +48,21 @@ export const GlobeArcsMeta: PulseComponentMeta = {
       type: "string",
       description: "Optional CSS classes to apply to the root container.",
     },
+  
+    {
+      name: "showHeader",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Whether to render the telemetry title and status indicator header",
+      required: false,
+    },
+    {
+      name: "showControls",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Whether to show rotation speed and arc interaction sliders",
+      required: false,
+    },
   ],
   usageCode: `import { GlobeArcs } from "@/components/ui/GlobeArcs";
 

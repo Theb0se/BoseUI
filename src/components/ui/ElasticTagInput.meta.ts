@@ -51,6 +51,21 @@ export const ElasticTagInputMeta: PulseComponentMeta = {
       default: "24",
       description: "Spring damping coefficient controlling pill settle.",
     },
+  
+    {
+      name: "placeholder",
+      type: "string",
+      defaultValue: "Add tag...",
+      description: "Placeholder text displayed in the tag input field",
+      required: false,
+    },
+    {
+      name: "onChange",
+      type: "(tags: string[]) => void",
+      defaultValue: "undefined",
+      description: "Callback fired whenever the list of tags updates",
+      required: false,
+    },
   ],
   usageCode: `import { ElasticTagInput } from "@/components/ui/elastic-tag-input";
 

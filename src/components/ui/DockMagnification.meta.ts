@@ -64,6 +64,14 @@ export const DockMagnificationMeta: PulseComponentMeta = {
       type: "string",
       description: "Additional Tailwind CSS classes applied to root container.",
     },
+  
+    {
+      name: "embedded",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Whether the dock renders embedded inside container rather than fixed to viewport",
+      required: false,
+    },
   ],
   usageCode: `import { DockMagnification } from "@/components/ui/DockMagnification";
 

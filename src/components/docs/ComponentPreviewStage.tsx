@@ -17,7 +17,7 @@ import {
   Smartphone,
   Expand,
 } from "lucide-react";
-import { COMPONENT_DEMOS } from "@/registry/generated-demos";
+import { ComponentPreview } from "@/components/docs/preview";
 import { CodeViewer } from "@/components/docs/CodeViewer";
 import { cn, copyToClipboard } from "@/lib/utils";
 
@@ -169,10 +169,6 @@ export function ComponentPreviewStage({
     };
   }, [isFullscreen]);
 
-  const Demo = COMPONENT_DEMOS[slug] as
-    | React.ComponentType<{ className?: string }>
-    | undefined;
-
   const handleQuickCopy = async () => {
     const targetCode =
       activeTab === "usage" && usageCode ? usageCode : sourceCode;
@@ -306,13 +302,11 @@ export function ComponentPreviewStage({
                 key={replayKey}
                 className="relative z-10 flex w-full items-center justify-center"
               >
-                {!isFullscreen && Demo ? (
-                  <Demo />
+                {!isFullscreen ? (
+                  <ComponentPreview slug={slug} />
                 ) : (
                   <p className="font-mono text-xs text-neutral-500">
-                    {isFullscreen
-                      ? "Viewing in Full Screen mode..."
-                      : "Preview unavailable."}
+                    Viewing in Full Screen mode...
                   </p>
                 )}
               </div>
@@ -497,17 +491,12 @@ export function ComponentPreviewStage({
                           "fullscreen-stage-expand max-w-[390px] rounded-3xl border border-dashed border-neutral-300 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-neutral-800 dark:bg-black/80"
                       )}
                     >
-                      {Demo ? (
-                        <Demo
-                          className={
-                            viewportSize === "full" ? "max-w-none" : undefined
-                          }
-                        />
-                      ) : (
-                        <p className="font-mono text-xs text-neutral-500">
-                          Preview unavailable.
-                        </p>
-                      )}
+                      <ComponentPreview
+                        slug={slug}
+                        className={
+                          viewportSize === "full" ? "max-w-none" : undefined
+                        }
+                      />
                     </div>
                   </motion.div>
                 </div>

@@ -76,6 +76,14 @@ export const ScrubbableSparklineMeta: PulseComponentMeta = {
       type: "string",
       description: "Additional CSS classes to apply to the root container.",
     },
+  
+    {
+      name: "minimal",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Compact sparkline display mode hiding telemetry header and stats",
+      required: false,
+    },
   ],
   usageCode: `import { ScrubbableSparkline } from "@/components/ui/ScrubbableSparkline";
 

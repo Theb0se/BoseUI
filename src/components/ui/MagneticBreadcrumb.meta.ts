@@ -44,6 +44,14 @@ export const MagneticBreadcrumbMeta: PulseComponentMeta = {
       default: "26",
       description: "Spring damping coefficient controlling capsule oscillation.",
     },
+  
+    {
+      name: "onSelect",
+      type: "(item: BreadcrumbItem) => void",
+      defaultValue: "undefined",
+      description: "Callback fired when a breadcrumb node is clicked",
+      required: false,
+    },
   ],
   usageCode: `import { MagneticBreadcrumb } from "@/components/ui/magnetic-breadcrumb";
 

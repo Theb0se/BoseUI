@@ -445,114 +445,11 @@ export function LavaLamp({
         className="pointer-events-none absolute inset-0 h-full w-full"
       />
 
-      <div className="relative z-10 flex flex-1 flex-col justify-between">
-        {children ?? (
-          <>
-            {/* Top Telemetry Header */}
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-black/55 px-3.5 py-1.5 font-mono text-xs text-amber-200 backdrop-blur-md">
-                <Flame className="h-3.5 w-3.5 text-amber-400" />
-                <span>LAVA LAMP · THERMAL SDF METABALLS</span>
-              </div>
-
-              <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-black/55 p-1 backdrop-blur-md">
-                {LAVA_PRESETS.map((preset) => {
-                  const active =
-                    livePrimary.toLowerCase() === preset.primary.toLowerCase();
-                  return (
-                    <button
-                      key={preset.name}
-                      type="button"
-                      onClick={() => {
-                        setLivePrimary(preset.primary);
-                        setLiveSecondary(preset.secondary);
-                        setLiveBg(preset.bg);
-                        setLiveViscosity(preset.viscosity);
-                      }}
-                      className={cn(
-                        "rounded-full px-3 py-1 font-mono text-[11px] transition-all",
-                        active
-                          ? "bg-amber-500/25 text-amber-200 ring-1 ring-amber-400/40"
-                          : "text-slate-300 hover:text-white"
-                      )}
-                    >
-                      {preset.name}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Bottom Title & SDF Controls */}
-            <div className="mt-auto flex flex-col gap-5 pt-16 sm:flex-row sm:items-end sm:justify-between">
-              <div className="max-w-md space-y-2">
-                <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                  Thermal Wax Subsurface SDF
-                </h2>
-                <p className="text-sm leading-relaxed text-white/80">
-                  Polynomial smooth-minimum (`smin`) metaball shader with thermal tear-drop stretching, incandescent core subsurface scattering, and cylindrical glass vessel reflections.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-3 gap-3 rounded-2xl border border-white/15 bg-black/65 p-3.5 backdrop-blur-md sm:min-w-[330px]">
-                <label className="flex flex-col gap-1.5">
-                  <span className="flex items-center justify-between font-mono text-[10px] uppercase text-slate-300">
-                    <span className="inline-flex items-center gap-1">
-                      <Droplet className="h-2.5 w-2.5" /> Tension
-                    </span>
-                    <span className="text-amber-300">
-                      {Math.round(liveViscosity * 100)}%
-                    </span>
-                  </span>
-                  <input
-                    type="range"
-                    min={0.15}
-                    max={0.85}
-                    step={0.05}
-                    value={liveViscosity}
-                    onChange={(e) => setLiveViscosity(parseFloat(e.target.value))}
-                    className="h-1.5 cursor-pointer appearance-none rounded-lg bg-white/20 accent-amber-400"
-                  />
-                </label>
-
-                <label className="flex flex-col gap-1.5">
-                  <span className="flex items-center justify-between font-mono text-[10px] uppercase text-slate-300">
-                    <span className="inline-flex items-center gap-1">
-                      <Sparkles className="h-2.5 w-2.5" /> Blobs
-                    </span>
-                    <span className="text-amber-300">{liveCount}</span>
-                  </span>
-                  <input
-                    type="range"
-                    min={3}
-                    max={12}
-                    step={1}
-                    value={liveCount}
-                    onChange={(e) => setLiveCount(parseInt(e.target.value, 10))}
-                    className="h-1.5 cursor-pointer appearance-none rounded-lg bg-white/20 accent-amber-400"
-                  />
-                </label>
-
-                <label className="flex flex-col gap-1.5">
-                  <span className="flex items-center justify-between font-mono text-[10px] uppercase text-slate-300">
-                    <span>Heat</span>
-                    <span className="text-amber-300">{liveSpeed.toFixed(1)}x</span>
-                  </span>
-                  <input
-                    type="range"
-                    min={0.3}
-                    max={2.2}
-                    step={0.1}
-                    value={liveSpeed}
-                    onChange={(e) => setLiveSpeed(parseFloat(e.target.value))}
-                    className="h-1.5 cursor-pointer appearance-none rounded-lg bg-white/20 accent-amber-400"
-                  />
-                </label>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+      {children && (
+        <div className="relative z-10 flex min-h-[520px] w-full flex-col">
+          {children}
+        </div>
+      )}
     </div>
   );
 }

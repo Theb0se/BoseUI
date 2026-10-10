@@ -45,6 +45,14 @@ export const RippleBurstButtonMeta: PulseComponentMeta = {
       default: "22",
       description: "Spring damping coefficient controlling recoil settling.",
     },
+  
+    {
+      name: "onClick",
+      type: "(e: React.MouseEvent<HTMLButtonElement>) => void",
+      defaultValue: "undefined",
+      description: "Standard button click handler callback",
+      required: false,
+    },
   ],
   usageCode: `import { RippleBurstButton } from "@/components/ui/ripple-burst-button";
 

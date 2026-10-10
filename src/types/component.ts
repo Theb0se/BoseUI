@@ -25,6 +25,7 @@ export interface ComponentPropMeta {
   name: string;
   type: string;
   default?: string;
+  defaultValue?: string;
   required?: boolean;
   description: string;
 }

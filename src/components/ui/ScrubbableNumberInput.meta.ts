@@ -63,6 +63,28 @@ export const ScrubbableNumberInputMeta: PulseComponentMeta = {
       default: '"N/m"',
       description: "Unit label rendered alongside the numeric value.",
     },
+  
+    {
+      name: "value",
+      type: "number",
+      defaultValue: "undefined",
+      description: "Controlled numeric value",
+      required: false,
+    },
+    {
+      name: "pixelsPerStep",
+      type: "number",
+      defaultValue: "8",
+      description: "Mouse scrub sensitivity in pixels moved per step increment",
+      required: false,
+    },
+    {
+      name: "onChange",
+      type: "(val: number) => void",
+      defaultValue: "undefined",
+      description: "Callback fired when numeric value updates",
+      required: false,
+    },
   ],
   usageCode: `import { ScrubbableNumberInput } from "@/components/ui/scrubbable-number-input";
 

@@ -59,6 +59,28 @@ export const KeycapChipsMeta: PulseComponentMeta = {
       type: "string",
       description: "Optional custom classes applied to the root container.",
     },
+  
+    {
+      name: "keys",
+      type: "string[]",
+      defaultValue: "[]",
+      description: "Array of individual keycap symbols to render",
+      required: false,
+    },
+    {
+      name: "inline",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Whether keycaps render inline with prose text",
+      required: false,
+    },
+    {
+      name: "onShortcutPress",
+      type: "(shortcut: ShortcutCombo) => void",
+      defaultValue: "undefined",
+      description: "Callback triggered when physical shortcut combination is activated",
+      required: false,
+    },
   ],
   usageCode: `import { KeycapChips } from "@/components/ui/KeycapChips";
 

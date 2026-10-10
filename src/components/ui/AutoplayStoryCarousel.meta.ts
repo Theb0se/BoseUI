@@ -64,6 +64,21 @@ export const AutoplayStoryCarouselMeta: PulseComponentMeta = {
       type: "string",
       description: "Additional Tailwind CSS classes for the root container.",
     },
+  
+    {
+      name: "showHeader",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Whether to render header controls and story metadata chip",
+      required: false,
+    },
+    {
+      name: "showControls",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Whether to show navigation arrows and pause/play controls",
+      required: false,
+    },
   ],
   usageCode: `import { AutoplayStoryCarousel } from "@/components/ui/AutoplayStoryCarousel";
 

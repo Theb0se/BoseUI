@@ -96,6 +96,14 @@ export const ModalPopupMeta: PulseComponentMeta = {
       type: "() => void",
       description: "Callback executed when the user clicks the confirm button.",
     },
+  
+    {
+      name: "trigger",
+      type: "React.ReactNode",
+      defaultValue: "undefined",
+      description: "Custom trigger element used to toggle modal open state",
+      required: false,
+    },
   ],
   usageCode: `import { ModalPopup } from "@/components/ui/modal-popup";
 

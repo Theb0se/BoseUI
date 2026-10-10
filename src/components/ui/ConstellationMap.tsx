@@ -884,74 +884,9 @@ export function ConstellationMap({
         </g>
       </svg>
 
-      {children ? (
-        <div className="relative z-10 h-full w-full">{children}</div>
-      ) : (
-        <div className="pointer-events-none relative z-10 flex min-h-[520px] flex-col justify-between p-6 sm:p-8">
-          {/* Top Astrometry Telemetry Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="pointer-events-auto flex items-center gap-2.5 rounded-full border border-white/10 bg-slate-950/75 px-3.5 py-1.5 backdrop-blur-md">
-              <Compass className="h-3.5 w-3.5 text-sky-400" />
-              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-300">
-                EPOCH J2000.0 // DEEP-SKY ASTROMETRY
-              </span>
-            </div>
-
-            <div className="pointer-events-auto flex items-center gap-3 rounded-full border border-white/10 bg-slate-950/75 px-3.5 py-1.5 font-mono text-[11px] text-slate-300 backdrop-blur-md">
-              <Sparkles className="h-3 w-3 text-sky-400" />
-              {hoveredStar ? (
-                <span>
-                  <strong className="text-white">{hoveredStar.name}</strong> ·{" "}
-                  {hoveredStar.designation} · CLASS {hoveredStar.spectralType} ·
-                  MAG {hoveredStar.mag}
-                </span>
-              ) : (
-                <span>240+ FIELD STARS · HOVER ANY STAR NODE</span>
-              )}
-            </div>
-          </div>
-
-          {/* Bottom Interactive HUD Controls */}
-          <div className="pointer-events-auto flex flex-wrap items-center justify-between gap-4 rounded-xl border border-white/10 bg-slate-950/80 p-3.5 backdrop-blur-md">
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setShowGrid((g) => !g)}
-                className={cn(
-                  "flex items-center gap-1.5 rounded-lg px-2.5 py-1 font-mono text-xs uppercase transition",
-                  showGrid
-                    ? "bg-sky-500/25 text-sky-300 ring-1 ring-sky-400/50"
-                    : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
-                )}
-              >
-                <Grid className="h-3 w-3" />
-                RA/Dec Grid
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setShowLabels((l) => !l)}
-                className={cn(
-                  "flex items-center gap-1.5 rounded-lg px-2.5 py-1 font-mono text-xs uppercase transition",
-                  showLabels
-                    ? "bg-sky-500/25 text-sky-300 ring-1 ring-sky-400/50"
-                    : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
-                )}
-              >
-                <Eye className="h-3 w-3" />
-                Designations
-              </button>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setReplayKey((k) => k + 1)}
-              className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-slate-200 transition hover:bg-white/10"
-            >
-              <RotateCcw className="h-3 w-3 text-sky-400" />
-              Replay Trace
-            </button>
-          </div>
+      {children && (
+        <div className="relative z-10 flex min-h-[520px] w-full flex-col">
+          {children}
         </div>
       )}
     </div>

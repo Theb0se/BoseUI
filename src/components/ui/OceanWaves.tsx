@@ -421,113 +421,11 @@ export function OceanWaves({
         className="pointer-events-none absolute inset-0 h-full w-full"
       />
 
-      <div className="relative z-10 flex flex-1 flex-col justify-between">
-        {children ?? (
-          <>
-            {/* Top Telemetry Header */}
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/25 bg-slate-950/60 px-3.5 py-1.5 font-mono text-xs text-sky-200 backdrop-blur-md">
-                <Waves className="h-3.5 w-3.5 text-sky-400" />
-                <span>OCEAN WAVES · {liveCount} GERSTNER SWELLS</span>
-              </div>
-
-              <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-slate-950/60 p-1 backdrop-blur-md">
-                {OCEAN_PRESETS.map((preset) => {
-                  const active =
-                    liveColor.toLowerCase() === preset.color.toLowerCase();
-                  return (
-                    <button
-                      key={preset.name}
-                      type="button"
-                      onClick={() => {
-                        setLiveColor(preset.color);
-                        setLiveAmp(preset.amp);
-                        setLiveSpeed(preset.speed);
-                        setLiveCount(preset.count);
-                      }}
-                      className={cn(
-                        "rounded-full px-3 py-1 font-mono text-[11px] transition-all",
-                        active
-                          ? "bg-sky-400/20 text-sky-200 ring-1 ring-sky-400/40"
-                          : "text-slate-400 hover:text-white"
-                      )}
-                    >
-                      {preset.name}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Bottom Info & Live Wave Synthesizer Controls */}
-            <div className="mt-auto flex flex-col gap-5 pt-16 sm:flex-row sm:items-end sm:justify-between">
-              <div className="max-w-md space-y-2">
-                <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                  Gerstner Swells &amp; Subsurface Glow
-                </h2>
-                <p className="text-sm leading-relaxed text-slate-200/85">
-                  Trochoidal deep-ocean swells with translucent aquamarine subsurface scattering, laced whitecap foam filaments, and wind-blown sea spray.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-3 gap-3 rounded-2xl border border-white/10 bg-slate-950/70 p-3.5 backdrop-blur-md sm:min-w-[330px]">
-                <label className="flex flex-col gap-1.5">
-                  <span className="flex items-center justify-between font-mono text-[10px] uppercase text-slate-400">
-                    <span>Swell</span>
-                    <span className="text-sky-300">{liveAmp}px</span>
-                  </span>
-                  <input
-                    type="range"
-                    min={12}
-                    max={56}
-                    step={2}
-                    value={liveAmp}
-                    onChange={(e) => setLiveAmp(parseFloat(e.target.value))}
-                    className="h-1.5 cursor-pointer appearance-none rounded-lg bg-white/15 accent-sky-400"
-                  />
-                </label>
-
-                <label className="flex flex-col gap-1.5">
-                  <span className="flex items-center justify-between font-mono text-[10px] uppercase text-slate-400">
-                    <span className="inline-flex items-center gap-1">
-                      <Sliders className="h-2.5 w-2.5" /> Layers
-                    </span>
-                    <span className="text-sky-300">{liveCount}</span>
-                  </span>
-                  <input
-                    type="range"
-                    min={3}
-                    max={8}
-                    step={1}
-                    value={liveCount}
-                    onChange={(e) => setLiveCount(parseInt(e.target.value, 10))}
-                    className="h-1.5 cursor-pointer appearance-none rounded-lg bg-white/15 accent-sky-400"
-                  />
-                </label>
-
-                <div className="flex flex-col justify-between gap-1.5">
-                  <span className="font-mono text-[10px] uppercase text-slate-400">
-                    Crest Foam
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setLiveFoam((v) => !v)}
-                    className={cn(
-                      "inline-flex items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1 font-mono text-[11px] transition-colors",
-                      liveFoam
-                        ? "border-sky-400/40 bg-sky-400/20 text-sky-200"
-                        : "border-white/10 bg-white/5 text-slate-400"
-                    )}
-                  >
-                    <Sparkles className="h-3 w-3" />
-                    {liveFoam ? "Active" : "Muted"}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+      {children && (
+        <div className="relative z-10 flex min-h-[520px] w-full flex-col">
+          {children}
+        </div>
+      )}
     </div>
   );
 }

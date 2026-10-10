@@ -51,6 +51,21 @@ export const LiquidPillTabsMeta: PulseComponentMeta = {
       default: "26",
       description: "Spring damping coefficient for active pill projection.",
     },
+  
+    {
+      name: "activeTab",
+      type: "string",
+      defaultValue: "undefined",
+      description: "Controlled identifier for the active tab",
+      required: false,
+    },
+    {
+      name: "onChange",
+      type: "(tabId: string) => void",
+      defaultValue: "undefined",
+      description: "Callback fired when active tab selection changes",
+      required: false,
+    },
   ],
   usageCode: `import { LiquidPillTabs } from "@/components/ui/liquid-pill-tabs";
 

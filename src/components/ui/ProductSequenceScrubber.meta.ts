@@ -65,6 +65,14 @@ export const ProductSequenceScrubberMeta: PulseComponentMeta = {
       type: "string",
       description: "Additional Tailwind CSS classes for the root container.",
     },
+  
+    {
+      name: "showHeader",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Whether to render header title, hardware specs badge, and action CTA",
+      required: false,
+    },
   ],
   usageCode: `import { ProductSequenceScrubber } from "@/components/ui/ProductSequenceScrubber";
 

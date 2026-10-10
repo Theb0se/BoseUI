@@ -57,6 +57,14 @@ export const MorphingActionButtonMeta: PulseComponentMeta = {
       default: "26",
       description: "Spring damping coefficient for pill width projection.",
     },
+  
+    {
+      name: "simulateError",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Whether clicking triggers simulated error state for UI verification",
+      required: false,
+    },
   ],
   usageCode: `import { MorphingActionButton } from "@/components/ui/morphing-action-button";
 

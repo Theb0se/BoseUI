@@ -305,8 +305,6 @@ export function BlackHole({
   const [activeSpin, setActiveSpin] = useState(spinSpeed);
   const [activePull, setActivePull] = useState(pull);
   const [activeLensing, setActiveLensing] = useState(lensing);
-  const [showControls, setShowControls] = useState(false);
-
   const pointerRef = useRef<{ x: number; y: number; tx: number; ty: number }>({
     x: 0,
     y: 0,
@@ -480,14 +478,6 @@ export function BlackHole({
     pointerRef.current.ty = 0;
   };
 
-  const handleReset = () => {
-    setActiveSize(size);
-    setActiveColor(diskColor);
-    setActiveSpin(spinSpeed);
-    setActivePull(pull);
-    setActiveLensing(lensing);
-  };
-
   return (
     <div
       ref={containerRef}
@@ -511,165 +501,9 @@ export function BlackHole({
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_48%,rgba(2,3,8,0.72)_100%)]"
       />
 
-      {children ? (
+      {children && (
         <div className="relative z-10 flex min-h-[520px] w-full flex-col">
           {children}
-        </div>
-      ) : (
-        <div className="relative z-10 flex min-h-[520px] w-full flex-col justify-between p-6 sm:p-8">
-          {/* Top Telemetry Header */}
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 bg-white/5 backdrop-blur-md">
-                <Orbit className="h-4 w-4 text-amber-400" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/90">
-                    Singularity Telemetry
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-full border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 text-[10px] font-medium text-amber-300">
-                    <Sparkles className="h-2.5 w-2.5" /> WebGL Geodesic Raymarcher
-                  </span>
-                </div>
-                <p className="text-xs text-white/50">
-                  Relativistic Doppler Beaming &bull; R<sub>s</sub> = {activeSize}px
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              {PRESETS.map((preset) => (
-                <button
-                  key={preset.name}
-                  type="button"
-                  onClick={() => {
-                    setActiveColor(preset.diskColor);
-                    setActiveSize(preset.size);
-                    setActiveSpin(preset.spinSpeed);
-                    setActivePull(preset.pull);
-                    setActiveLensing(preset.lensing);
-                  }}
-                  className={cn(
-                    "rounded-lg border px-2.5 py-1 text-xs font-medium transition-all backdrop-blur-md",
-                    activeColor.toLowerCase() === preset.diskColor.toLowerCase()
-                      ? "border-white/40 bg-white/15 text-white shadow-sm"
-                      : "border-white/10 bg-black/40 text-white/65 hover:border-white/25 hover:text-white"
-                  )}
-                >
-                  {preset.name}
-                </button>
-              ))}
-              <button
-                type="button"
-                onClick={() => setShowControls((prev) => !prev)}
-                aria-label="Toggle gravitational parameters"
-                className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-lg border transition-colors backdrop-blur-md",
-                  showControls
-                    ? "border-amber-400/50 bg-amber-400/15 text-amber-300"
-                    : "border-white/10 bg-black/40 text-white/70 hover:border-white/25 hover:text-white"
-                )}
-              >
-                <Sliders className="h-3.5 w-3.5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Bottom Interactive HUD */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div className="max-w-md space-y-1.5">
-              <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                Event Horizon Lensing
-              </h2>
-              <p className="text-xs leading-relaxed text-white/60 sm:text-sm">
-                Real-time geodesic light bending traces photons around a spinning
-                Kerr singularity, warping the far accretion disk over the shadow
-                with relativistic Doppler beaming.
-              </p>
-            </div>
-
-            {showControls && (
-              <div className="w-full max-w-xs space-y-3 rounded-xl border border-white/15 bg-black/65 p-4 backdrop-blur-xl">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-white/80">
-                    Accretion Parameters
-                  </span>
-                  <button
-                    type="button"
-                    onClick={handleReset}
-                    className="inline-flex items-center gap-1 text-[11px] text-white/50 hover:text-white"
-                  >
-                    <RotateCcw className="h-3 w-3" /> Reset
-                  </button>
-                </div>
-
-                <label className="block space-y-1 text-xs">
-                  <div className="flex justify-between text-white/65">
-                    <span>Horizon Radius</span>
-                    <span>{activeSize}px</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={55}
-                    max={140}
-                    step={1}
-                    value={activeSize}
-                    onChange={(e) => setActiveSize(Number(e.target.value))}
-                    className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-white/15 accent-amber-400"
-                  />
-                </label>
-
-                <label className="block space-y-1 text-xs">
-                  <div className="flex justify-between text-white/65">
-                    <span>Relativistic Spin</span>
-                    <span>{activeSpin.toFixed(2)}x</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={0.3}
-                    max={2.5}
-                    step={0.05}
-                    value={activeSpin}
-                    onChange={(e) => setActiveSpin(Number(e.target.value))}
-                    className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-white/15 accent-amber-400"
-                  />
-                </label>
-
-                <label className="block space-y-1 text-xs">
-                  <div className="flex justify-between text-white/65">
-                    <span>Gravitational Pull</span>
-                    <span>{activePull.toFixed(2)}</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={0.1}
-                    max={1.0}
-                    step={0.05}
-                    value={activePull}
-                    onChange={(e) => setActivePull(Number(e.target.value))}
-                    className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-white/15 accent-amber-400"
-                  />
-                </label>
-
-                <div className="flex items-center justify-between pt-1">
-                  <span className="text-xs text-white/65">Gravitational Lensing</span>
-                  <button
-                    type="button"
-                    onClick={() => setActiveLensing((v) => !v)}
-                    className={cn(
-                      "rounded-md px-2.5 py-1 text-xs font-medium transition-colors",
-                      activeLensing
-                        ? "bg-amber-400/20 text-amber-300 border border-amber-400/40"
-                        : "bg-white/10 text-white/50 border border-white/10"
-                    )}
-                  >
-                    {activeLensing ? "Enabled" : "Disabled"}
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
         </div>
       )}
     </div>

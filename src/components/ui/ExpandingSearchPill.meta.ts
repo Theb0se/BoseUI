@@ -59,6 +59,14 @@ export const ExpandingSearchPillMeta: PulseComponentMeta = {
       type: "string",
       description: "Additional CSS classes for the container wrapper.",
     },
+  
+    {
+      name: "embedded",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Whether pill renders embedded in container or floating with fixed coordinates",
+      required: false,
+    },
   ],
   usageCode: `import { ExpandingSearchPill } from "@/components/ui/expanding-search-pill";
 

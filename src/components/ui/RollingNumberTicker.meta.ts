@@ -66,6 +66,14 @@ export const RollingNumberTickerMeta: PulseComponentMeta = {
       type: "string",
       description: "Additional CSS classes to apply to the root container.",
     },
+  
+    {
+      name: "fontSize",
+      type: "number",
+      defaultValue: "48",
+      description: "Numeric font size in pixels for the rolling odometer digits",
+      required: false,
+    },
   ],
   usageCode: `import { RollingNumberTicker } from "@/components/ui/RollingNumberTicker";
 

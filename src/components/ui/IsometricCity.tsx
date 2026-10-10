@@ -599,88 +599,9 @@ export function IsometricCity({
         className="pointer-events-none absolute inset-0 h-full w-full"
       />
 
-      {children ? (
-        <div className="relative z-10 h-full w-full">{children}</div>
-      ) : (
-        <div className="relative z-10 flex min-h-[520px] flex-col justify-between p-6 sm:p-8">
-          {/* Top Architectural Telemetry Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-slate-950/75 px-3.5 py-1.5 backdrop-blur-md">
-              <Building2 className="h-3.5 w-3.5 text-sky-400" />
-              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-300">
-                ISOMETRIC METROPOLIS // {palette.toUpperCase()}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-3 rounded-full border border-white/10 bg-slate-950/75 px-3.5 py-1.5 font-mono text-[11px] text-slate-300 backdrop-blur-md">
-              <span>{buildingCount} TOWERS</span>
-              <span className="text-white/20">|</span>
-              <span className="flex items-center gap-1 text-sky-400">
-                <Car className="h-3 w-3" />
-                TRAFFIC {trafficSpeed.toFixed(1)}x
-              </span>
-            </div>
-          </div>
-
-          {/* Bottom Interactive HUD Controls */}
-          <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-white/10 bg-slate-950/80 p-3.5 backdrop-blur-md">
-            {/* Palette Selector */}
-            <div className="flex items-center gap-1.5">
-              {(["midnight", "cyberpunk", "amber"] as const).map((mode) => (
-                <button
-                  key={mode}
-                  type="button"
-                  onClick={() => setPalette(mode)}
-                  className={cn(
-                    "rounded-lg px-2.5 py-1 font-mono text-xs uppercase transition",
-                    palette === mode
-                      ? "bg-sky-500/25 text-sky-300 ring-1 ring-sky-400/50"
-                      : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
-                  )}
-                >
-                  {mode}
-                </button>
-              ))}
-            </div>
-
-            {/* Interactive Toggles */}
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setWindowFlicker((w) => !w)}
-                className={cn(
-                  "flex items-center gap-1.5 rounded-lg border border-white/10 px-2.5 py-1 font-mono text-xs transition",
-                  windowFlicker
-                    ? "bg-white/10 text-white"
-                    : "bg-transparent text-slate-400"
-                )}
-              >
-                <Sparkles className="h-3 w-3 text-sky-400" />
-                Windows {windowFlicker ? "LIVE" : "STATIC"}
-              </button>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setTrafficSpeed((s) =>
-                    s >= 2.0 ? 0.5 : Number((s + 0.5).toFixed(1))
-                  )
-                }
-                className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-xs text-slate-200 transition hover:bg-white/10"
-              >
-                Traffic {trafficSpeed.toFixed(1)}x
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setSeed((s) => s + 1)}
-                className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-xs text-slate-200 transition hover:bg-white/10"
-              >
-                <RefreshCw className="h-3 w-3 text-sky-400" />
-                Regenerate
-              </button>
-            </div>
-          </div>
+      {children && (
+        <div className="relative z-10 flex min-h-[520px] w-full flex-col">
+          {children}
         </div>
       )}
     </div>

@@ -114,14 +114,12 @@ export function ScrubbableSparkline({
   ticker = "BTC/USD",
   currency = "$",
   height = 240,
-  showGradient: initialShowGradient = true,
-  showGrid: initialShowGrid = true,
+  showGradient = true,
+  showGrid = true,
   minimal = false,
   className,
 }: ScrubbableSparklineProps) {
   const [selectedPresetKey, setSelectedPresetKey] = useState<string>("BTC");
-  const [showGradient, setShowGradient] = useState(initialShowGradient);
-  const [showGrid, setShowGrid] = useState(initialShowGrid);
   const [isLiveStreaming, setIsLiveStreaming] = useState(false);
 
   // Active dataset
@@ -574,45 +572,6 @@ export function ScrubbableSparkline({
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-
-      {/* Interactive Feature Controls Deck */}
-      <div className="relative z-10 mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-neutral-800/80 pt-4 text-xs text-neutral-400">
-        <div className="flex items-center gap-3">
-          <label className="flex items-center gap-1.5 cursor-pointer hover:text-neutral-200 transition-colors">
-            <input
-              type="checkbox"
-              checked={showGradient}
-              onChange={(e) => setShowGradient(e.target.checked)}
-              className="rounded border-neutral-700 bg-neutral-800 text-emerald-500 focus:ring-0"
-            />
-            <span>Area Glow</span>
-          </label>
-          <label className="flex items-center gap-1.5 cursor-pointer hover:text-neutral-200 transition-colors">
-            <input
-              type="checkbox"
-              checked={showGrid}
-              onChange={(e) => setShowGrid(e.target.checked)}
-              className="rounded border-neutral-700 bg-neutral-800 text-emerald-500 focus:ring-0"
-            />
-            <span>Gridlines</span>
-          </label>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setActiveIndex(null)}
-            className="flex items-center gap-1 rounded-lg border border-neutral-800 bg-neutral-900 px-2.5 py-1 font-medium text-neutral-300 hover:bg-neutral-800 transition-colors"
-          >
-            <RefreshCw className="h-3 w-3" />
-            <span>Reset Cursor</span>
-          </button>
-          <div className="flex items-center gap-1.5 rounded-lg border border-neutral-800 bg-neutral-900/60 px-3 py-1 font-mono text-neutral-400">
-            <Activity className="h-3.5 w-3.5 text-neutral-500" />
-            <span>Drag or hover to scrub</span>
-          </div>
-        </div>
       </div>
     </div>
   );

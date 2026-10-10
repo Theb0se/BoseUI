@@ -390,40 +390,6 @@ export function LiveCardForm({
           </form>
         </div>
       </div>
-
-      {/* Interactive Stage Controls / Quick Fills */}
-      <div className="relative z-20 mt-6 pt-4 border-t border-neutral-800/80 flex flex-wrap items-center justify-between gap-4 text-xs">
-        <div className="flex items-center gap-2">
-          <span className="text-neutral-400 font-medium">Quick Fill Cards:</span>
-          <button
-            onClick={() => handleFillDemo("visa")}
-            className="px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white transition-colors font-mono"
-          >
-            Visa (4242)
-          </button>
-          <button
-            onClick={() => handleFillDemo("mastercard")}
-            className="px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white transition-colors font-mono"
-          >
-            Mastercard (5555)
-          </button>
-          <button
-            onClick={() => handleFillDemo("amex")}
-            className="px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white transition-colors font-mono"
-          >
-            Amex (3782)
-          </button>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setIsFlipped(!isFlipped)}
-            className="px-3 py-1 rounded-md border border-neutral-700 bg-neutral-800/60 text-neutral-300 hover:text-white transition-colors"
-          >
-            Flip Card: {isFlipped ? "Showing Back" : "Showing Front"}
-          </button>
-        </div>
-      </div>
     </div>
   );
 }

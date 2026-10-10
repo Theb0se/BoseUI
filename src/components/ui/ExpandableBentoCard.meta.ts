@@ -57,6 +57,14 @@ export const ExpandableBentoCardMeta: PulseComponentMeta = {
       default: "26",
       description: "Spring damping coefficient controlling expansion settle.",
     },
+  
+    {
+      name: "summary",
+      type: "string",
+      defaultValue: "undefined",
+      description: "Short summary text displayed when the card is collapsed",
+      required: false,
+    },
   ],
   usageCode: `import { ExpandableBentoCard } from "@/components/ui/expandable-bento-card";
 

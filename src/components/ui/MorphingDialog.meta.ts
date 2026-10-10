@@ -57,6 +57,28 @@ export const MorphingDialogMeta: PulseComponentMeta = {
       default: "26",
       description: "Spring damping coefficient for shared layout projection.",
     },
+  
+    {
+      name: "dialogDescription",
+      type: "string",
+      defaultValue: "undefined",
+      description: "Expanded description text within the dialog modal",
+      required: false,
+    },
+    {
+      name: "open",
+      type: "boolean",
+      defaultValue: "undefined",
+      description: "Controlled open/closed state of the dialog",
+      required: false,
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      defaultValue: "undefined",
+      description: "Callback fired when dialog open state toggles",
+      required: false,
+    },
   ],
   usageCode: `import { MorphingDialog } from "@/components/ui/morphing-dialog";
 

@@ -47,6 +47,14 @@ export const MorphingMegaMenuMeta: PulseComponentMeta = {
       type: "string",
       description: "Optional CSS classes to append to the stage container.",
     },
+  
+    {
+      name: "embedded",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Whether menu renders embedded within container rather than fixed top",
+      required: false,
+    },
   ],
   usageCode: `import { MorphingMegaMenu } from "@/components/ui/MorphingMegaMenu";
 
