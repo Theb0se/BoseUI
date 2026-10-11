@@ -21,10 +21,9 @@
 
 | [Magnetic Button](https://boseui.site/components/magnetic-button) | [Spotlight Card](https://boseui.site/components/spotlight-card) | [Ocean Waves](https://boseui.site/components/ocean-waves) |
 |:---:|:---:|:---:|
-| <a href="https://boseui.site/components/magnetic-button"><img src="https://raw.githubusercontent.com/Theb0se/bose-ui/main/public/showcase/magnetic-button.gif" width="280" alt="Magnetic Button Demo" /></a> | <a href="https://boseui.site/components/spotlight-card"><img src="https://raw.githubusercontent.com/Theb0se/bose-ui/main/public/showcase/spotlight-card.gif" width="280" alt="Spotlight Card Demo" /></a> | <a href="https://boseui.site/components/ocean-waves"><img src="https://raw.githubusercontent.com/Theb0se/bose-ui/main/public/showcase/ocean-waves.gif" width="280" alt="Ocean Waves WebGL Demo" /></a> |
+| <a href="https://boseui.site/components/magnetic-button"><img src="/showcase/button.gif" width="280" alt="Magnetic Button Demo" /></a> | <a href="https://boseui.site/components/spotlight-card"><img src="/showcase/card.gif" width="280" alt="Spotlight Card Demo" /></a> | <a href="https://boseui.site/components/ocean-waves"><img src="/showcase/waves.gif" width="280" alt="Ocean Waves WebGL Demo" /></a> |
 | *Smooth hover physics that pull toward the cursor* | *Interactive 3D tilt with cursor-following spotlight* | *60fps WebGL fluid simulation* |
 
-*(Note: Add the above `.gif` files to `public/showcase/` in this repository for them to render)*
 
 </div>
 
