@@ -30,19 +30,6 @@ import { cn, copyToClipboard } from "@/lib/utils";
 
 type SortOption = "featured" | "name-asc" | "newest" | "props-desc";
 
-// Filter out background and heavy graphic/canvas simulations from the UI components catalog
-function isGraphicOrBackground(comp: PulseComponentCatalogEntry): boolean {
-  if (comp.category === "Backgrounds") return true;
-  if (
-    comp.badges &&
-    comp.badges.some((b) =>
-      ["WebGL", "Shader", "Raymarching", "Physics Simulation"].includes(b)
-    )
-  ) {
-    return true;
-  }
-  return false;
-}
 
 function LazyDemoStage({
   Demo,
@@ -127,19 +114,15 @@ export default function ComponentsDirectoryPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Filter out blocks (which belong on /blocks) and graphic-intensive background components
+  // Filter out composite blocks (which belong on /blocks) while keeping all kinetic primitives and atmospheric backgrounds
   const uiComponents = useMemo(() => {
-    return PULSE_COMPONENTS.filter(
-      (comp) => !isBlock(comp.slug) && !isGraphicOrBackground(comp)
-    );
+    return PULSE_COMPONENTS.filter((comp) => !isBlock(comp.slug));
   }, []);
 
-  // Visible categories for atomic UI components (excluding Backgrounds)
+  // Visible categories for UI components (including Backgrounds)
   const availableCategories = useMemo(() => {
-    return COMPONENT_CATEGORIES.filter(
-      (cat) =>
-        cat !== "Backgrounds" &&
-        uiComponents.some((comp) => comp.category === cat)
+    return COMPONENT_CATEGORIES.filter((cat) =>
+      uiComponents.some((comp) => comp.category === cat)
     );
   }, [uiComponents]);
 

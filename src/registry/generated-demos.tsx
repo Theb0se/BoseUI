@@ -20,8 +20,10 @@ import { Autocomplete } from "@/components/ui/Autocomplete";
 import { AutoplayStoryCarousel } from "@/components/ui/AutoplayStoryCarousel";
 import { AvatarStackPresence } from "@/components/ui/AvatarStackPresence";
 import { BlackHole } from "@/components/ui/BlackHole";
+import { BlurFadeInText } from "@/components/ui/BlurFadeInText";
 import { CarouselWithDots } from "@/components/ui/CarouselWithDots";
 import { CategoryFilterScroller } from "@/components/ui/CategoryFilterScroller";
+import { ChromaticAberrationGlitchText } from "@/components/ui/ChromaticAberrationGlitchText";
 import { CipherScrambleText } from "@/components/ui/CipherScrambleText";
 import { CloudsDrift } from "@/components/ui/CloudsDrift";
 import { ColorFinishPicker } from "@/components/ui/ColorFinishPicker";
@@ -38,6 +40,7 @@ import { Drawer } from "@/components/ui/Drawer";
 import { DynamicIslandToast } from "@/components/ui/DynamicIslandToast";
 import { ElasticDock } from "@/components/ui/ElasticDock";
 import { ElasticSnapSortable } from "@/components/ui/ElasticSnapSortable";
+import { ElasticSwipeSlider } from "@/components/ui/ElasticSwipeSlider";
 import { ElasticTagInput } from "@/components/ui/ElasticTagInput";
 import { ElasticWaveText } from "@/components/ui/ElasticWaveText";
 import { ExpandableBentoCard } from "@/components/ui/ExpandableBentoCard";
@@ -56,6 +59,7 @@ import { GravityWellPortal } from "@/components/ui/GravityWellPortal";
 import { GridHorizon } from "@/components/ui/GridHorizon";
 import { HeartBurstButton } from "@/components/ui/HeartBurstButton";
 import { HoldToConfirmButton } from "@/components/ui/HoldToConfirmButton";
+import { HoldToEngageFAB } from "@/components/ui/HoldToEngageFAB";
 import { HolographicFlipCard } from "@/components/ui/HolographicFlipCard";
 import { HorizonLight } from "@/components/ui/HorizonLight";
 import { HoverRevealFeatureGrid } from "@/components/ui/HoverRevealFeatureGrid";
@@ -72,15 +76,20 @@ import { LiquidGlassCard } from "@/components/ui/LiquidGlassCard";
 import { LiquidGradientBlob } from "@/components/ui/LiquidGradientBlob";
 import { LiquidPillTabs } from "@/components/ui/LiquidPillTabs";
 import { LiveCardForm } from "@/components/ui/LiveCardForm";
+import { MagneticAvatarStack } from "@/components/ui/MagneticAvatarStack";
 import { MagneticBreadcrumb } from "@/components/ui/MagneticBreadcrumb";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { MagneticPopoverMenu } from "@/components/ui/MagneticPopoverMenu";
+import { MagneticScatterText } from "@/components/ui/MagneticScatterText";
+import { MaskRevealSlideText } from "@/components/ui/MaskRevealSlideText";
 import { MatrixRain } from "@/components/ui/MatrixRain";
 import { MeshGradient } from "@/components/ui/MeshGradient";
 import { ModalPopup } from "@/components/ui/ModalPopup";
 import { MorphingActionButton } from "@/components/ui/MorphingActionButton";
 import { MorphingDialog } from "@/components/ui/MorphingDialog";
+import { MorphingFlipText } from "@/components/ui/MorphingFlipText";
 import { MorphingMegaMenu } from "@/components/ui/MorphingMegaMenu";
+import { MovingGridLines } from "@/components/ui/MovingGridLines";
 import { MultiSelectTagInput } from "@/components/ui/MultiSelectTagInput";
 import { MultiplayerCursors } from "@/components/ui/MultiplayerCursors";
 import { NowPlayingWaveform } from "@/components/ui/NowPlayingWaveform";
@@ -88,13 +97,13 @@ import { OceanWaves } from "@/components/ui/OceanWaves";
 import { ParallaxTiltCard } from "@/components/ui/ParallaxTiltCard";
 import { ParticleNetwork } from "@/components/ui/ParticleNetwork";
 import { PeelRevealCard } from "@/components/ui/PeelRevealCard";
+import { PerspectiveTiltText } from "@/components/ui/PerspectiveTiltText";
 import { PickerWheel } from "@/components/ui/PickerWheel";
 import { PlanetHorizon } from "@/components/ui/PlanetHorizon";
 import { PlusGridBorder } from "@/components/ui/PlusGridBorder";
 import { PopoverCard } from "@/components/ui/PopoverCard";
 import { PricingCalculator } from "@/components/ui/PricingCalculator";
 import { ProductCompareTable } from "@/components/ui/ProductCompareTable";
-import { ProductSequenceScrubber } from "@/components/ui/ProductSequenceScrubber";
 import { RadialMenuOrb } from "@/components/ui/RadialMenuOrb";
 import { RainOnGlass } from "@/components/ui/RainOnGlass";
 import { ReactionPicker } from "@/components/ui/ReactionPicker";
@@ -113,6 +122,9 @@ import { SolarFlare } from "@/components/ui/SolarFlare";
 import { SplitButton } from "@/components/ui/SplitButton";
 import { SplitFlapText } from "@/components/ui/SplitFlapText";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { SpotlightGlowRevealText } from "@/components/ui/SpotlightGlowRevealText";
+import { SpringBadgePill } from "@/components/ui/SpringBadgePill";
+import { SpringDropdownChevron } from "@/components/ui/SpringDropdownChevron";
 import { SpringPinInput } from "@/components/ui/SpringPinInput";
 import { StarryNight } from "@/components/ui/StarryNight";
 import { Stepper } from "@/components/ui/Stepper";
@@ -125,12 +137,15 @@ import { SwipeCards } from "@/components/ui/SwipeCards";
 import { TabbedCodeBlock } from "@/components/ui/TabbedCodeBlock";
 import { Thunderstorm } from "@/components/ui/Thunderstorm";
 import { TiltCreditCard3D } from "@/components/ui/TiltCreditCard3D";
+import { TiltPinInput } from "@/components/ui/TiltPinInput";
 import { ToastStack } from "@/components/ui/ToastStack";
 import { TopographicRippleSurface } from "@/components/ui/TopographicRippleSurface";
+import { TypewriterCursorEffect } from "@/components/ui/TypewriterCursorEffect";
 import { UnderwaterCaustics } from "@/components/ui/UnderwaterCaustics";
 import { VariableProximityText } from "@/components/ui/VariableProximityText";
 import { VolcanoEmbers } from "@/components/ui/VolcanoEmbers";
 import { WarpSpeed } from "@/components/ui/WarpSpeed";
+import { WarpText } from "@/components/ui/WarpText";
 import { WaterRipples } from "@/components/ui/WaterRipples";
 import { Waterfall } from "@/components/ui/Waterfall";
 import { WormholeTunnel } from "@/components/ui/WormholeTunnel";
@@ -149,8 +164,10 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "autoplay-story-carousel": createComponentDemo("autoplay-story-carousel", AutoplayStoryCarousel),
   "avatar-stack-presence": createComponentDemo("avatar-stack-presence", AvatarStackPresence),
   "black-hole": createComponentDemo("black-hole", BlackHole),
+  "blur-fade-in-text": createComponentDemo("blur-fade-in-text", BlurFadeInText),
   "carousel-with-dots": createComponentDemo("carousel-with-dots", CarouselWithDots),
   "category-filter-scroller": createComponentDemo("category-filter-scroller", CategoryFilterScroller),
+  "chromatic-aberration-glitch-text": createComponentDemo("chromatic-aberration-glitch-text", ChromaticAberrationGlitchText),
   "cipher-scramble-text": createComponentDemo("cipher-scramble-text", CipherScrambleText),
   "clouds-drift": createComponentDemo("clouds-drift", CloudsDrift),
   "color-finish-picker": createComponentDemo("color-finish-picker", ColorFinishPicker),
@@ -167,6 +184,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "dynamic-island-toast": createComponentDemo("dynamic-island-toast", DynamicIslandToast),
   "elastic-dock": createComponentDemo("elastic-dock", ElasticDock),
   "elastic-snap-sortable": createComponentDemo("elastic-snap-sortable", ElasticSnapSortable),
+  "elastic-swipe-slider": createComponentDemo("elastic-swipe-slider", ElasticSwipeSlider),
   "elastic-tag-input": createComponentDemo("elastic-tag-input", ElasticTagInput),
   "elastic-wave-text": createComponentDemo("elastic-wave-text", ElasticWaveText),
   "expandable-bento-card": createComponentDemo("expandable-bento-card", ExpandableBentoCard),
@@ -185,6 +203,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "grid-horizon": createComponentDemo("grid-horizon", GridHorizon),
   "heart-burst-button": createComponentDemo("heart-burst-button", HeartBurstButton),
   "hold-to-confirm-button": createComponentDemo("hold-to-confirm-button", HoldToConfirmButton),
+  "hold-to-engage-fab": createComponentDemo("hold-to-engage-fab", HoldToEngageFAB),
   "holographic-flip-card": createComponentDemo("holographic-flip-card", HolographicFlipCard),
   "horizon-light": createComponentDemo("horizon-light", HorizonLight),
   "hover-reveal-feature-grid": createComponentDemo("hover-reveal-feature-grid", HoverRevealFeatureGrid),
@@ -201,15 +220,20 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "liquid-gradient-blob": createComponentDemo("liquid-gradient-blob", LiquidGradientBlob),
   "liquid-pill-tabs": createComponentDemo("liquid-pill-tabs", LiquidPillTabs),
   "live-card-form": createComponentDemo("live-card-form", LiveCardForm),
+  "magnetic-avatar-stack": createComponentDemo("magnetic-avatar-stack", MagneticAvatarStack),
   "magnetic-breadcrumb": createComponentDemo("magnetic-breadcrumb", MagneticBreadcrumb),
   "magnetic-button": createComponentDemo("magnetic-button", MagneticButton),
   "magnetic-popover-menu": createComponentDemo("magnetic-popover-menu", MagneticPopoverMenu),
+  "magnetic-scatter-text": createComponentDemo("magnetic-scatter-text", MagneticScatterText),
+  "mask-reveal-slide-text": createComponentDemo("mask-reveal-slide-text", MaskRevealSlideText),
   "matrix-rain": createComponentDemo("matrix-rain", MatrixRain),
   "mesh-gradient": createComponentDemo("mesh-gradient", MeshGradient),
   "modal-popup": createComponentDemo("modal-popup", ModalPopup),
   "morphing-action-button": createComponentDemo("morphing-action-button", MorphingActionButton),
   "morphing-dialog": createComponentDemo("morphing-dialog", MorphingDialog),
+  "morphing-flip-text": createComponentDemo("morphing-flip-text", MorphingFlipText),
   "morphing-mega-menu": createComponentDemo("morphing-mega-menu", MorphingMegaMenu),
+  "moving-grid-lines": createComponentDemo("moving-grid-lines", MovingGridLines),
   "multi-select-tag-input": createComponentDemo("multi-select-tag-input", MultiSelectTagInput),
   "multiplayer-cursors": createComponentDemo("multiplayer-cursors", MultiplayerCursors),
   "now-playing-waveform": createComponentDemo("now-playing-waveform", NowPlayingWaveform),
@@ -217,13 +241,13 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "parallax-tilt-card": createComponentDemo("parallax-tilt-card", ParallaxTiltCard),
   "particle-network": createComponentDemo("particle-network", ParticleNetwork),
   "peel-reveal-card": createComponentDemo("peel-reveal-card", PeelRevealCard),
+  "perspective-tilt-text": createComponentDemo("perspective-tilt-text", PerspectiveTiltText),
   "picker-wheel": createComponentDemo("picker-wheel", PickerWheel),
   "planet-horizon": createComponentDemo("planet-horizon", PlanetHorizon),
   "plus-grid-border": createComponentDemo("plus-grid-border", PlusGridBorder),
   "popover-card": createComponentDemo("popover-card", PopoverCard),
   "pricing-calculator": createComponentDemo("pricing-calculator", PricingCalculator),
   "product-compare-table": createComponentDemo("product-compare-table", ProductCompareTable),
-  "product-sequence-scrubber": createComponentDemo("product-sequence-scrubber", ProductSequenceScrubber),
   "radial-menu-orb": createComponentDemo("radial-menu-orb", RadialMenuOrb),
   "rain-on-glass": createComponentDemo("rain-on-glass", RainOnGlass),
   "reaction-picker": createComponentDemo("reaction-picker", ReactionPicker),
@@ -242,6 +266,9 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "split-button": createComponentDemo("split-button", SplitButton),
   "split-flap-text": createComponentDemo("split-flap-text", SplitFlapText),
   "spotlight-card": createComponentDemo("spotlight-card", SpotlightCard),
+  "spotlight-glow-reveal-text": createComponentDemo("spotlight-glow-reveal-text", SpotlightGlowRevealText),
+  "spring-badge-pill": createComponentDemo("spring-badge-pill", SpringBadgePill),
+  "spring-dropdown-chevron": createComponentDemo("spring-dropdown-chevron", SpringDropdownChevron),
   "spring-pin-input": createComponentDemo("spring-pin-input", SpringPinInput),
   "starry-night": createComponentDemo("starry-night", StarryNight),
   "stepper": createComponentDemo("stepper", Stepper),
@@ -254,12 +281,15 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "tabbed-code-block": createComponentDemo("tabbed-code-block", TabbedCodeBlock),
   "thunderstorm": createComponentDemo("thunderstorm", Thunderstorm),
   "tilt-credit-card3-d": createComponentDemo("tilt-credit-card3-d", TiltCreditCard3D),
+  "tilt-pin-input": createComponentDemo("tilt-pin-input", TiltPinInput),
   "toast-stack": createComponentDemo("toast-stack", ToastStack),
   "topographic-ripple-surface": createComponentDemo("topographic-ripple-surface", TopographicRippleSurface),
+  "typewriter-cursor-effect": createComponentDemo("typewriter-cursor-effect", TypewriterCursorEffect),
   "underwater-caustics": createComponentDemo("underwater-caustics", UnderwaterCaustics),
   "variable-proximity-text": createComponentDemo("variable-proximity-text", VariableProximityText),
   "volcano-embers": createComponentDemo("volcano-embers", VolcanoEmbers),
   "warp-speed": createComponentDemo("warp-speed", WarpSpeed),
+  "warp-text": createComponentDemo("warp-text", WarpText),
   "water-ripples": createComponentDemo("water-ripples", WaterRipples),
   "waterfall": createComponentDemo("waterfall", Waterfall),
   "wormhole-tunnel": createComponentDemo("wormhole-tunnel", WormholeTunnel),

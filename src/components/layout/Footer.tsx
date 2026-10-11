@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Github, Linkedin, Globe } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/utils";
-import { PULSE_COMPONENTS } from "@/registry/generated-catalog";
+import { CATALOG_INDEX } from "@/registry/catalog-index";
 
 export function Footer() {
   return (
@@ -42,7 +42,7 @@ export function Footer() {
               Components
             </h3>
             <ul className="mt-3 space-y-2 text-xs">
-              {PULSE_COMPONENTS.slice(0, 5).map((comp) => (
+              {CATALOG_INDEX.slice(0, 5).map((comp) => (
                 <li key={comp.slug}>
                   <Link
                     href={`/components/${comp.slug}`}

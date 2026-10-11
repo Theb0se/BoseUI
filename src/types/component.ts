@@ -66,3 +66,17 @@ export interface PulseComponentCatalogEntry
   /** Raw .tsx source code embedded at sync time */
   sourceCode: string;
 }
+
+export interface CatalogIndexEntry {
+  id: string;
+  slug: string;
+  componentName: string;
+  title: string;
+  description: string;
+  tagline: string;
+  category: ComponentCategory;
+  badges: string[];
+  createdAt: string;
+  featured: boolean;
+  keywords: string[];
+}

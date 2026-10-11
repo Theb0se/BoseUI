@@ -48,13 +48,13 @@ export const ShimmerTextMeta: PulseComponentMeta = {
       description: "Sweep cycle duration in seconds.",
     },
     {
-      name: "angle",
+      name: "intensity",
       type: "number",
       default: "115",
-      description: "Angle of the light beam incidence in degrees.",
+      description: "Intensity of the shimmer effect.",
     },
     {
-      name: "shimmerOnHoverOnly",
+      name: "hoverOnly",
       type: "boolean",
       default: "false",
       description: "When true, shimmer beam sweeps only when hovered or focused.",

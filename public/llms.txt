@@ -33,7 +33,7 @@ Our latest research on frontend engineering and UI/UX:
 - [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
 - [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
 
-## Available Kinetic Components (127)
+## Available Kinetic Components (142)
 
 ### Accordion (`Accordion`)
 - **Slug**: `accordion`
@@ -555,6 +555,45 @@ export function BlackHoleDemo() {
 
 ---
 
+### Blur Fade In Text (`BlurFadeInText`)
+- **Slug**: `blur-fade-in-text`
+- **Category**: Text
+- **Tagline**: Editorial typographic entrance with optical blur-to-focus reveal.
+- **Description**: Editorial typographic entrance animation that transitions words or characters from an optical Gaussian blur into razor-sharp focus.
+- **Docs URL**: https://boseui.site/components/blur-fade-in-text
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/blur-fade-in-text.json`
+- **Registry Manifest**: https://boseui.site/r/blur-fade-in-text.json
+- **Key Features**:
+  - Staggered word or character tokenization with customizable delay intervals.
+  - Hardware-accelerated CSS filter blur-to-sharp interpolation.
+  - Viewport scroll-triggering with once-only execution threshold.
+  - Full support for prefers-reduced-motion fallback.
+- **Accessibility**:
+  - Retains natural text structure in DOM for screen reader compatibility.
+  - Bypasses blur filters when reduced motion is preferred.
+- **Props**:
+  - `text` (string): Text sentence or headline to animate.
+  - `delay` (number, default: 0): Initial delay before sequence begins (seconds).
+  - `stagger` (number, default: 0.05): Stagger delay between subsequent tokens (seconds).
+  - `by` ("word" | "character", default: "word"): Tokenization mode: word-by-word or character-by-character.
+  - `blurRadius` (number, default: 10): Initial blur intensity in pixels.
+  - `yOffset` (number, default: 12): Vertical entrance drift distance in pixels.
+- **Usage Example**:
+```tsx
+import { BlurFadeInText } from "@/components/ui/blur-fade-in-text";
+
+export function Example() {
+  return (
+    <BlurFadeInText
+      text="Crafting tactile interfaces engineered to feel alive."
+      className="text-3xl font-bold tracking-tight"
+    />
+  );
+}
+```
+
+---
+
 ### Carousel with Dots (`CarouselWithDots`)
 - **Slug**: `carousel-with-dots`
 - **Category**: Cards
@@ -624,6 +663,42 @@ export function Example() {
     <CategoryFilterScroller
       defaultCategory="beachfront"
       onSelectCategory={(cat) => console.log("Category selected:", cat.label)}
+    />
+  );
+}
+```
+
+---
+
+### Chromatic Aberration Glitch Text (`ChromaticAberrationGlitchText`)
+- **Slug**: `chromatic-aberration-glitch-text`
+- **Category**: Text
+- **Tagline**: Sub-pixel RGB channel glitch typography with high-frequency micro-jitter.
+- **Description**: Sub-pixel RGB channel splitting and high-frequency twitch jitter triggered on hover or continuous loop.
+- **Docs URL**: https://boseui.site/components/chromatic-aberration-glitch-text
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/chromatic-aberration-glitch-text.json`
+- **Registry Manifest**: https://boseui.site/r/chromatic-aberration-glitch-text.json
+- **Key Features**:
+  - Opposing cyan and magenta sub-pixel coordinate displacement.
+  - Hardware-accelerated CSS screen mix-blend channel combination.
+  - Hover-triggered or continuous ambient glitch modes.
+  - Zero residual layout shift when settled.
+- **Accessibility**:
+  - Hides duplicate offset channel layers from screen readers with aria-hidden='true'.
+  - Stops glitch motion if user has prefers-reduced-motion configured.
+- **Props**:
+  - `text` (string): Text string to render with glitch mechanics.
+  - `trigger` ("hover" | "continuous", default: "hover"): Trigger condition for RGB displacement.
+  - `intensity` (number, default: 3): Offset magnitude in pixels for chromatic channels.
+- **Usage Example**:
+```tsx
+import { ChromaticAberrationGlitchText } from "@/components/ui/chromatic-aberration-glitch-text";
+
+export function Example() {
+  return (
+    <ChromaticAberrationGlitchText
+      text="QUANTUM CRYPTO ENGINE"
+      className="text-4xl font-mono uppercase"
     />
   );
 }
@@ -1270,6 +1345,46 @@ import { ElasticSnapSortable } from "@/components/ui/elastic-snap-sortable";
 export function Example() {
   return (
     <ElasticSnapSortable stiffness={380} damping={26} />
+  );
+}
+```
+
+---
+
+### Elastic Swipe Slider (`ElasticSwipeSlider`)
+- **Slug**: `elastic-swipe-slider`
+- **Category**: Buttons
+- **Tagline**: Swipe-to-confirm slider with rubber-band gesture physics.
+- **Description**: Swipe-to-confirm slider control with gesture resistance, rubber-band recoil physics, and a morphing confirmation checkpoint.
+- **Docs URL**: https://boseui.site/components/elastic-swipe-slider
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/elastic-swipe-slider.json`
+- **Registry Manifest**: https://boseui.site/r/elastic-swipe-slider.json
+- **Key Features**:
+  - Horizontal drag gesture with elastic boundary resistance and spring recoil on abort.
+  - Progressive opacity decay on the track label as the thumb approaches trigger threshold.
+  - Animated transformation into an emerald confirmed badge with reset capability.
+  - Customizable width, labels, and confirmation callbacks.
+- **Accessibility**:
+  - Full mouse and touch drag gesture compatibility.
+  - Keyboard accessible via reset button.
+  - Reduced motion safeguards on confirmation scale transitions.
+- **Props**:
+  - `label` (string, default: "Slide to Confirm"): Resting instruction label.
+  - `confirmedLabel` (string, default: "Confirmed"): Label shown upon reaching 85%+ swipe threshold.
+  - `onConfirm` (() => void): Callback fired when the slider is triggered.
+  - `width` (number, default: 280): Track width in pixels.
+  - `disabled` (boolean, default: false): Disables drag interaction when true.
+- **Usage Example**:
+```tsx
+import { ElasticSwipeSlider } from "@/components/ui/elastic-swipe-slider";
+
+export function Example() {
+  return (
+    <ElasticSwipeSlider
+      label="Slide to Deploy"
+      confirmedLabel="Deployed"
+      onConfirm={() => console.log("Deployment initiated")}
+    />
   );
 }
 ```
@@ -2014,6 +2129,46 @@ export function Example() {
 
 ---
 
+### Hold To Engage FAB (`HoldToEngageFAB`)
+- **Slug**: `hold-to-engage-fab`
+- **Category**: Buttons
+- **Tagline**: Floating action hub with spring rotational morph and satellite pills.
+- **Description**: Floating action trigger with 45° spring rotational morphing and staggered satellite action pill expansion.
+- **Docs URL**: https://boseui.site/components/hold-to-engage-fab
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/hold-to-engage-fab.json`
+- **Registry Manifest**: https://boseui.site/r/hold-to-engage-fab.json
+- **Key Features**:
+  - Spring-damped 45° rotation on primary plus icon transitioning into an exit cross.
+  - Staggered satellite action pills orbiting into place with spring trajectories.
+  - Action confirmation checkmark transition before menu dismissal.
+  - Completely customizable icon payloads and callbacks.
+- **Accessibility**:
+  - Semantically bound with aria-expanded status.
+  - Focusable action pills navigable via keyboard.
+  - Reduced-motion friendly delays and scales.
+- **Props**:
+  - `icon` (React.ComponentType): Custom trigger icon component.
+  - `actions` (FABAction[]): Array of satellite action pill definitions.
+- **Usage Example**:
+```tsx
+import { HoldToEngageFAB } from "@/components/ui/hold-to-engage-fab";
+import { Share2, Bookmark, Sparkles } from "lucide-react";
+
+export function Example() {
+  return (
+    <HoldToEngageFAB
+      actions={[
+        { id: "share", label: "Share", icon: Share2 },
+        { id: "bookmark", label: "Bookmark", icon: Bookmark },
+        { id: "star", label: "Favorite", icon: Sparkles },
+      ]}
+    />
+  );
+}
+```
+
+---
+
 ### Holographic Flip Card (`HolographicFlipCard`)
 - **Slug**: `holographic-flip-card`
 - **Category**: Cards
@@ -2670,6 +2825,45 @@ export function Example() {
 
 ---
 
+### Magnetic Avatar Stack (`MagneticAvatarStack`)
+- **Slug**: `magnetic-avatar-stack`
+- **Category**: Cards
+- **Tagline**: Overlapping avatar stack with proximity fan-out and spring lift.
+- **Description**: Overlapping user avatar stack with dynamic proximity spreading, spring lift on hover, and an animated floating tooltip.
+- **Docs URL**: https://boseui.site/components/magnetic-avatar-stack
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/magnetic-avatar-stack.json`
+- **Registry Manifest**: https://boseui.site/r/magnetic-avatar-stack.json
+- **Key Features**:
+  - Dynamic proximity spreading that gracefully fans out avatars when the stack is hovered.
+  - Spring-driven vertical elevation and scale boost on the hovered avatar.
+  - Automatic z-index adjustment preventing overlap clipping.
+  - Built-in floating tooltip with user name and role metadata.
+  - Overflow counter badge for large teams.
+- **Accessibility**:
+  - Keyboard focusable buttons with descriptive aria-label attributes.
+  - Focus mirrors hover state to reveal tooltips for keyboard navigators.
+  - Prefe-reduced-motion compatibility.
+- **Props**:
+  - `avatars` (AvatarItem[]): Array of user avatar objects with name, src/fallback, and role.
+  - `max` (number, default: 5): Maximum avatars displayed before showing overflow badge.
+  - `size` ("sm" | "md" | "lg", default: "md"): Avatar circle size preset.
+  - `onSelect` ((avatar: AvatarItem) => void): Callback fired when an avatar is clicked.
+- **Usage Example**:
+```tsx
+import { MagneticAvatarStack } from "@/components/ui/magnetic-avatar-stack";
+
+export function Example() {
+  return (
+    <MagneticAvatarStack
+      size="md"
+      onSelect={(user) => console.log("Selected user", user)}
+    />
+  );
+}
+```
+
+---
+
 ### Magnetic Breadcrumb (`MagneticBreadcrumb`)
 - **Slug**: `magnetic-breadcrumb`
 - **Category**: Navigation
@@ -2773,6 +2967,82 @@ import { MagneticPopoverMenu } from "@/components/ui/magnetic-popover-menu";
 export function Example() {
   return (
     <MagneticPopoverMenu triggerLabel="Quick Actions" stiffness={380} damping={26} />
+  );
+}
+```
+
+---
+
+### Magnetic Scatter Text (`MagneticScatterText`)
+- **Slug**: `magnetic-scatter-text`
+- **Category**: Text
+- **Tagline**: Cursor repulsion scatter typography with spring recoil mechanics.
+- **Description**: Anti-gravity typography where characters scatter elastically away from cursor proximity, then snap back with Hooke's Law spring harmonics.
+- **Docs URL**: https://boseui.site/components/magnetic-scatter-text
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/magnetic-scatter-text.json`
+- **Registry Manifest**: https://boseui.site/r/magnetic-scatter-text.json
+- **Key Features**:
+  - Vector angle repulsion calculating exact cursor Euclidean distance per letter.
+  - Hooke's Law recoil springs returning glyphs to their structural baseline.
+  - Customizable dispersion radius and kinetic repulsion strength.
+  - Prefe-reduced-motion compatibility.
+- **Accessibility**:
+  - Underlying string remains continuous in DOM.
+  - Disabled physics displacement when reduced motion is preferred.
+- **Props**:
+  - `text` (string): Text phrase to animate with repulsion physics.
+  - `radius` (number, default: 100): Repulsion influence radius in pixels around pointer.
+  - `strength` (number, default: 40): Force multiplier pushing letters away.
+- **Usage Example**:
+```tsx
+import { MagneticScatterText } from "@/components/ui/magnetic-scatter-text";
+
+export function Example() {
+  return (
+    <MagneticScatterText
+      text="Hover over these letters to scatter them"
+      className="text-3xl font-bold"
+    />
+  );
+}
+```
+
+---
+
+### Mask Reveal Slide Text (`MaskRevealSlideText`)
+- **Slug**: `mask-reveal-slide-text`
+- **Category**: Text
+- **Tagline**: Editorial masked curtain text reveal with cubic-bezier easing.
+- **Description**: Editorial masked typography where lines of text slide upwards out of an invisible horizontal boundary with high-precision cubic-bezier easing.
+- **Docs URL**: https://boseui.site/components/mask-reveal-slide-text
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/mask-reveal-slide-text.json`
+- **Registry Manifest**: https://boseui.site/r/mask-reveal-slide-text.json
+- **Key Features**:
+  - Horizontal boundary clipping using overflow-hidden container masks.
+  - Bespoke cubic-bezier deceleration curve [0.16, 1, 0.3, 1].
+  - Staggered cascade across multi-line headline statements.
+  - Viewport scroll intersection triggering.
+- **Accessibility**:
+  - Accessible HTML layout preserve line semantics.
+  - Bypasses sliding translations when reduced motion is preferred.
+- **Props**:
+  - `lines` (string[]): Array of lines or sentences to reveal in cascade.
+  - `stagger` (number, default: 0.12): Interval between lines in seconds.
+  - `delay` (number, default: 0): Initial delay before sequence begins (seconds).
+- **Usage Example**:
+```tsx
+import { MaskRevealSlideText } from "@/components/ui/mask-reveal-slide-text";
+
+export function Example() {
+  return (
+    <MaskRevealSlideText
+      lines={[
+        "Design with intention.",
+        "Engineered with kinetic physics.",
+        "Shipped for modern developers.",
+      ]}
+      className="text-4xl font-bold tracking-tight"
+    />
   );
 }
 ```
@@ -2996,6 +3266,45 @@ export function Example() {
 
 ---
 
+### Morphing Flip Text (`MorphingFlipText`)
+- **Slug**: `morphing-flip-text`
+- **Category**: Text
+- **Tagline**: 3D perspective tumbling word cycler with spring inertia.
+- **Description**: 3D perspective tumbling word cycler that rotates between headline phrases with spring inertia along the X or Y axis.
+- **Docs URL**: https://boseui.site/components/morphing-flip-text
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/morphing-flip-text.json`
+- **Registry Manifest**: https://boseui.site/r/morphing-flip-text.json
+- **Key Features**:
+  - 3D perspective rotation with spring-tuned entry and exit kinematics.
+  - Dual directional modes: vertical (rotateX roll) and horizontal (rotateY turn).
+  - Clean layout preservation with AnimatePresence mode='wait'.
+  - Automatic timer disposal and memory leak protection.
+- **Accessibility**:
+  - Readable typographic flow in the document outline.
+  - Bypasses 3D rotations when prefers-reduced-motion is active.
+- **Props**:
+  - `words` (string[]): Array of words/phrases to cycle through.
+  - `interval` (number, default: 2400): Interval in milliseconds between word flips.
+  - `direction` ("vertical" | "horizontal", default: "vertical"): Axis of 3D tumbling rotation.
+- **Usage Example**:
+```tsx
+import { MorphingFlipText } from "@/components/ui/morphing-flip-text";
+
+export function Example() {
+  return (
+    <h2 className="text-3xl font-semibold">
+      Make your product{" "}
+      <MorphingFlipText
+        words={["delightful", "blazing fast", "unforgettable"]}
+        className="text-neutral-900 dark:text-white"
+      />
+    </h2>
+  );
+}
+```
+
+---
+
 ### Morphing Mega Menu (`MorphingMegaMenu`)
 - **Slug**: `morphing-mega-menu`
 - **Category**: Navigation
@@ -3028,6 +3337,50 @@ export function Example() {
     <div className="w-full">
       <MorphingMegaMenu stiffness={380} damping={30} />
     </div>
+  );
+}
+```
+
+---
+
+### Moving Grid Lines (`MovingGridLines`)
+- **Slug**: `moving-grid-lines`
+- **Category**: Backgrounds
+- **Tagline**: Kinetic architectural grid surface with traveling light beams.
+- **Description**: Architectural grid matrix surface featuring randomized kinetic light beams gliding along orthogonal horizontal and vertical tracks.
+- **Docs URL**: https://boseui.site/components/moving-grid-lines
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/moving-grid-lines.json`
+- **Registry Manifest**: https://boseui.site/r/moving-grid-lines.json
+- **Key Features**:
+  - GPU-composited canvas grid matrix with zero DOM overhead and continuous 60fps frame rate.
+  - Orthogonal beam physics: light pulses travel along precise grid tracks with glowing gradient tails and head sparks.
+  - Adaptive color rendering responding dynamically to light and dark mode changes.
+  - Respects prefers-reduced-motion by pausing moving beams while retaining the architectural grid.
+- **Accessibility**:
+  - Underlying canvas is marked aria-hidden='true' to prevent interference with screen readers.
+  - Motion automatically disables when prefers-reduced-motion is active.
+  - Designed with high contrast compatibility for text and foreground elements.
+- **Props**:
+  - `gridSize` (number, default: 64): Size of each square grid cell in pixels.
+  - `beamCount` (number, default: 8): Number of concurrent moving light beams.
+  - `beamLength` (number, default: 160): Length of the glowing beam trail in pixels.
+  - `speed` (number, default: 1.5): Speed multiplier for traveling beams.
+  - `radialMask` (boolean, default: true): Whether to apply a radial vignette mask fading edges to transparency.
+  - `gridColor` (string, default: undefined): Explicit grid line color. Defaults to adaptive theme color.
+  - `beamColor` (string, default: undefined): Explicit beam glow color. Defaults to adaptive theme color.
+- **Usage Example**:
+```tsx
+import { MovingGridLines } from "@/components/ui/MovingGridLines";
+
+export function HeroBackground() {
+  return (
+    <MovingGridLines
+      gridSize={64}
+      beamCount={10}
+      speed={1.5}
+      radialMask={true}
+      className="absolute inset-0"
+    />
   );
 }
 ```
@@ -3328,6 +3681,42 @@ export function Example() {
 
 ---
 
+### Perspective Tilt Text (`PerspectiveTiltText`)
+- **Slug**: `perspective-tilt-text`
+- **Category**: Text
+- **Tagline**: 3D cursor-tracking display typography with parallax extrusion depth.
+- **Description**: Large display typography that tilts in 3D perspective with realistic depth layer separation and parallax extrusion shadow.
+- **Docs URL**: https://boseui.site/components/perspective-tilt-text
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/perspective-tilt-text.json`
+- **Registry Manifest**: https://boseui.site/r/perspective-tilt-text.json
+- **Key Features**:
+  - Real-time cursor coordinate normalization calculating 3D rotateX and rotateY angles.
+  - Dual-layer transform-style: preserve-3d structure simulating physical material thickness.
+  - Smooth Hooke's Law spring interpolation preventing harsh pointer jitter.
+  - Prefe-reduced-motion fallback disabling 3D transformations.
+- **Accessibility**:
+  - Extrusion underlayer masked with aria-hidden='true' to avoid double-reading.
+  - Accessible font rendering preserved.
+- **Props**:
+  - `text` (string): Display text phrase or large metric to render.
+  - `maxTilt` (number, default: 18): Maximum angular tilt limit in degrees.
+  - `depth` (number, default: 8): Parallax extrusion shadow displacement in pixels.
+- **Usage Example**:
+```tsx
+import { PerspectiveTiltText } from "@/components/ui/perspective-tilt-text";
+
+export function Example() {
+  return (
+    <PerspectiveTiltText
+      text="99.9% UPTIME"
+      className="text-6xl uppercase"
+    />
+  );
+}
+```
+
+---
+
 ### Picker Wheel (`PickerWheel`)
 - **Slug**: `picker-wheel`
 - **Category**: Inputs
@@ -3554,49 +3943,6 @@ import { ProductCompareTable } from "@/components/ui/product-compare-table";
 
 export function Example() {
   return <ProductCompareTable allowDiffFilter />;
-}
-```
-
----
-
-### Product Sequence Scrubber (`ProductSequenceScrubber`)
-- **Slug**: `product-sequence-scrubber`
-- **Category**: Motion
-- **Tagline**: Apple-style 360° device inspection with timeline scrubbing and layer explosion.
-- **Description**: Apple-inspired interactive 360° hardware sequence scrubber with vector frame rotation, multi-layer explosion disassembly view, and angle-synchronized feature callouts.
-- **Docs URL**: https://boseui.site/components/product-sequence-scrubber
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/product-sequence-scrubber.json`
-- **Registry Manifest**: https://boseui.site/r/product-sequence-scrubber.json
-- **Key Features**:
-  - Smooth 36-frame continuous vector rotation with realistic lighting and reflections.
-  - Interactive timeline scrubber bar with preset key angles (0°, 90°, 180°, 270°).
-  - Exploded multi-layer hardware disassembly view separating screen, chassis, A18 Pro logic board, and battery.
-  - Angle-synchronized feature callouts highlighting titanium frame, action button, and silicon.
-  - Play/pause auto-spin mode with responsive framer-motion micro-interactions.
-- **Accessibility**:
-  - Full keyboard navigation support with accessible range slider controls.
-  - Includes ARIA labels for play/pause, explosion toggles, and preset rotation angles.
-  - Reduced motion respected for transitions and rotation intervals.
-- **Props**:
-  - `totalFrames` (number, default: 36): Total number of rotational steps around the 360° circle.
-  - `defaultFrame` (number, default: 6): Initial frame index to display on render.
-  - `defaultAutoPlay` (boolean, default: false): Whether the product sequence auto-spins on mount.
-  - `defaultExploded` (boolean, default: false): Whether the hardware layers are initially exploded.
-  - `callouts` (FeatureCallout[]): List of angle-synchronized feature annotations.
-  - `className` (string): Additional Tailwind CSS classes for the root container.
-  - `showHeader` (boolean): Whether to render header title, hardware specs badge, and action CTA
-- **Usage Example**:
-```tsx
-import { ProductSequenceScrubber } from "@/components/ui/ProductSequenceScrubber";
-
-export function Example() {
-  return (
-    <ProductSequenceScrubber
-      totalFrames={36}
-      defaultFrame={0}
-      defaultAutoPlay={false}
-    />
-  );
 }
 ```
 
@@ -4004,8 +4350,8 @@ export function Example() {
   - `text` (string, default: "Issue tracking engineered for high-velocity software teams."): Headline copy to render with metallic shimmer finish.
   - `palette` ("silver" | "gold" | "violet" | "emerald", default: "silver"): Metallic color tone preset for the gradient foundation and reflection beam.
   - `duration` (number, default: 3): Sweep cycle duration in seconds.
-  - `angle` (number, default: 115): Angle of the light beam incidence in degrees.
-  - `shimmerOnHoverOnly` (boolean, default: false): When true, shimmer beam sweeps only when hovered or focused.
+  - `intensity` (number, default: 115): Intensity of the shimmer effect.
+  - `hoverOnly` (boolean, default: false): When true, shimmer beam sweeps only when hovered or focused.
   - `className` (string): Optional custom classes applied to the root container.
 - **Usage Example**:
 ```tsx
@@ -4348,6 +4694,124 @@ export function Example() {
         Move your cursor across this surface to reveal the 1px border mask.
       </p>
     </SpotlightCard>
+  );
+}
+```
+
+---
+
+### Spotlight Glow Reveal Text (`SpotlightGlowRevealText`)
+- **Slug**: `spotlight-glow-reveal-text`
+- **Category**: Text
+- **Tagline**: Cinematic cursor torchlight typography with radial mask illumination.
+- **Description**: Cinematic stealth typography that stays subtly dimmed until illuminated by the user's cursor torchlight spotlight mask.
+- **Docs URL**: https://boseui.site/components/spotlight-glow-reveal-text
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/spotlight-glow-reveal-text.json`
+- **Registry Manifest**: https://boseui.site/r/spotlight-glow-reveal-text.json
+- **Key Features**:
+  - Real-time hardware-accelerated CSS radial-gradient mask tracking cursor position.
+  - Dual-layer composition: Dimmed ambient background layer with full specular specular overlay.
+  - Soft drop-shadow bloom glow centered on illuminated letterforms.
+  - Smooth entry and exit opacity transitions when mouse enters or leaves.
+- **Accessibility**:
+  - Masked overlay hidden from screen readers via aria-hidden='true'.
+  - Base text retains standard contrast and DOM accessibility.
+- **Props**:
+  - `text` (string): Text phrase to illuminate with spotlight.
+  - `radius` (number, default: 120): Spotlight beam diameter in pixels.
+  - `glowColor` (string, default: "rgba(255,255,255,0.95)"): Specular accent illumination tint.
+  - `dimmedOpacity` (number, default: 0.18): Resting opacity of unlit ambient text.
+- **Usage Example**:
+```tsx
+import { SpotlightGlowRevealText } from "@/components/ui/spotlight-glow-reveal-text";
+
+export function Example() {
+  return (
+    <SpotlightGlowRevealText
+      text="SHINE A LIGHT ON SECRETS"
+      className="text-4xl uppercase"
+    />
+  );
+}
+```
+
+---
+
+### Spring Badge Pill (`SpringBadgePill`)
+- **Slug**: `spring-badge-pill`
+- **Category**: Buttons
+- **Tagline**: Kinetic status badge with spring hops and animated radar beacon.
+- **Description**: Kinetic notification and status pill featuring spring count increment hops, breathing radar beacon dots, and fluid exit transitions.
+- **Docs URL**: https://boseui.site/components/spring-badge-pill
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/spring-badge-pill.json`
+- **Registry Manifest**: https://boseui.site/r/spring-badge-pill.json
+- **Key Features**:
+  - Spring-driven count bump animations whenever numeric values change.
+  - Integrated live radar beacon dot with pulsating radio waves.
+  - Optional interactive dismissal with spring exit scale collapse.
+  - Multiple status presets: default, success, warning, danger, and monochrome outline.
+- **Accessibility**:
+  - Announces count changes using semantic HTML markup.
+  - Focusable dismissal button with proper aria-label.
+  - Respects prefers-reduced-motion by bypassing positional hops.
+- **Props**:
+  - `count` (number): Optional metric number that animates on change.
+  - `label` (string, default: "Updates"): Descriptive label inside the pill.
+  - `variant` ("default" | "success" | "warning" | "danger" | "outline", default: "default"): Color theme and visual intent of the badge.
+  - `pulseBeacon` (boolean, default: true): Shows radiating pulse indicator dot.
+  - `dismissible` (boolean, default: false): Shows close button with spring dismiss physics.
+  - `onDismiss` (() => void): Callback fired when the badge is dismissed.
+- **Usage Example**:
+```tsx
+import { SpringBadgePill } from "@/components/ui/spring-badge-pill";
+
+export function Example() {
+  return (
+    <SpringBadgePill
+      count={4}
+      label="Builds Passing"
+      variant="success"
+      pulseBeacon={true}
+    />
+  );
+}
+```
+
+---
+
+### Spring Dropdown Chevron (`SpringDropdownChevron`)
+- **Slug**: `spring-dropdown-chevron`
+- **Category**: Navigation
+- **Tagline**: Disclosure chevron trigger with hover tension and rotational inertia.
+- **Description**: Disclosure chevron trigger with hover tension anticipation, smooth rotational inertia, and spring overshoot.
+- **Docs URL**: https://boseui.site/components/spring-dropdown-chevron
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/spring-dropdown-chevron.json`
+- **Registry Manifest**: https://boseui.site/r/spring-dropdown-chevron.json
+- **Key Features**:
+  - 15° hover tension tilt that anticipates user interaction before clicking.
+  - Full 180° spring rotational trajectory with natural overshoot.
+  - Dual controlled and uncontrolled states.
+  - Full keyboard navigation and aria-expanded semantics.
+- **Accessibility**:
+  - Semantically bound to aria-expanded.
+  - Keyboard triggered via Enter or Space.
+  - Prefe-reduced-motion switches to simple linear orientation.
+- **Props**:
+  - `isOpen` (boolean): Controlled open state.
+  - `defaultOpen` (boolean, default: false): Initial state in uncontrolled mode.
+  - `onToggle` ((isOpen: boolean) => void): Callback fired when disclosure changes.
+  - `label` (string): Optional label placed before the chevron.
+  - `size` ("sm" | "md" | "lg", default: "md"): Size preset.
+- **Usage Example**:
+```tsx
+import { SpringDropdownChevron } from "@/components/ui/spring-dropdown-chevron";
+
+export function Example() {
+  return (
+    <SpringDropdownChevron
+      label="View Advanced Settings"
+      onToggle={(open) => console.log("State:", open)}
+    />
   );
 }
 ```
@@ -4844,6 +5308,45 @@ export function Example() {
 
 ---
 
+### Tilt Pin Input (`TiltPinInput`)
+- **Slug**: `tilt-pin-input`
+- **Category**: Inputs
+- **Tagline**: Tactile OTP pin input with keystroke spring lifts and error shake.
+- **Description**: Tactile OTP digit pin input with spring keystroke lifts, auto-advance focus, paste parsing, and harmonic error shake mechanics.
+- **Docs URL**: https://boseui.site/components/tilt-pin-input
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/tilt-pin-input.json`
+- **Registry Manifest**: https://boseui.site/r/tilt-pin-input.json
+- **Key Features**:
+  - Harmonic shake animation across digit boxes upon invalid code submission.
+  - Spring-pressured vertical lift and scaling on active focused digits.
+  - Smart clipboard paste parsing that distributes code across boxes seamlessly.
+  - Full backspace backwards navigation and keyboard controls.
+- **Accessibility**:
+  - Individual digit boxes labeled with aria-label='Digit X of Y'.
+  - Numeric inputMode='numeric' optimized for mobile virtual keypads.
+  - Respects prefers-reduced-motion for shake effects.
+- **Props**:
+  - `length` (number, default: 4): Total number of code digits.
+  - `onComplete` ((pin: string) => void): Callback fired when all digits are entered.
+  - `onChange` ((pin: string) => void): Callback fired on every digit entry.
+  - `hasError` (boolean, default: false): Triggers harmonic error shake when true.
+  - `masked` (boolean, default: false): Masks numbers with dots for sensitive pins.
+- **Usage Example**:
+```tsx
+import { TiltPinInput } from "@/components/ui/tilt-pin-input";
+
+export function Example() {
+  return (
+    <TiltPinInput
+      length={6}
+      onComplete={(pin) => console.log("PIN Verified:", pin)}
+    />
+  );
+}
+```
+
+---
+
 ### Toast Stack (`ToastStack`)
 - **Slug**: `toast-stack`
 - **Category**: Overlays
@@ -4913,6 +5416,47 @@ import { TopographicRippleSurface } from "@/components/ui/topographic-ripple-sur
 export function Example() {
   return (
     <TopographicRippleSurface ringCount={6} stiffness={220} damping={20} />
+  );
+}
+```
+
+---
+
+### Typewriter Cursor Effect (`TypewriterCursorEffect`)
+- **Slug**: `typewriter-cursor-effect`
+- **Category**: Text
+- **Tagline**: Rotating multi-phrase typewriter with blinking beam cursor.
+- **Description**: Rotating multi-phrase typewriter effect with humanized typing rhythms, backspace cadence, and an animated blinking beam cursor.
+- **Docs URL**: https://boseui.site/components/typewriter-cursor-effect
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/typewriter-cursor-effect.json`
+- **Registry Manifest**: https://boseui.site/r/typewriter-cursor-effect.json
+- **Key Features**:
+  - Humanized typing and accelerated backspacing intervals.
+  - Blinking cursor beam animation with custom glyph support.
+  - Infinite rotation through array of headline phrases.
+  - Graceful reduced-motion fallback that displays the initial phrase statically.
+- **Accessibility**:
+  - Continuous readable inline text structure.
+  - Respects prefers-reduced-motion to avoid distracting motion.
+- **Props**:
+  - `words` (string[]): Array of phrases to cycle through.
+  - `typeSpeed` (number, default: 80): Typing delay per character in milliseconds.
+  - `deleteSpeed` (number, default: 40): Backspacing delay per character in milliseconds.
+  - `delayBetween` (number, default: 1800): Pause duration before backspacing a completed phrase.
+  - `cursorChar` (string, default: "|"): Cursor character glyph.
+- **Usage Example**:
+```tsx
+import { TypewriterCursorEffect } from "@/components/ui/typewriter-cursor-effect";
+
+export function Example() {
+  return (
+    <h1 className="text-3xl font-bold">
+      Build for{" "}
+      <TypewriterCursorEffect
+        words={["Next.js", "React 19", "Tailwind CSS", "Production"]}
+        className="text-emerald-500"
+      />
+    </h1>
   );
 }
 ```
@@ -5091,6 +5635,58 @@ export function Example() {
       starCount={320}
       streakLength={1.4}
       followCursor
+    />
+  );
+}
+```
+
+---
+
+### Warp Text (`WarpText`)
+- **Slug**: `warp-text`
+- **Category**: Text
+- **Tagline**: Cinematic spaceship hyperspace warp drive typography animation.
+- **Description**: Cinematic sci-fi typography animation inspired by spaceship hyperspace jumps with directional motion blur, velocity scale stretch, and photonic light trail echoes.
+- **Docs URL**: https://boseui.site/components/warp-text
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/warp-text.json`
+- **Registry Manifest**: https://boseui.site/r/warp-text.json
+- **Key Features**:
+  - Cinematic directional acceleration supporting forward, left, right, up, and down warp trajectories.
+  - Integrated motion blur, photonic glow bloom, and trailing ghost echoes.
+  - Granular splitting control by character, word, or line with preserved whitespace boundaries.
+  - Continuous velocity loop mode and interactive trigger options (mount, viewport, hover).
+  - Screen-reader accessible: single accessible text label with aria-hidden animated tokens.
+- **Accessibility**:
+  - Includes sr-only complete text phrase so screen readers read the sentence smoothly rather than spelling out characters.
+  - Fully respects prefers-reduced-motion by replacing high-speed blur/scaling with a gentle opacity fade.
+  - Non-layout shifting transforms ensure zero Cumulative Layout Shift (CLS).
+- **Props**:
+  - `text` (string, default: "WARP SPEED"): Text content to animate through hyperspace warp.
+  - `direction` ("forward" | "left" | "right" | "up" | "down", default: "forward"): Directional trajectory of the warp acceleration.
+  - `speed` (number, default: 1): Speed multiplier for the warp acceleration.
+  - `duration` (number, default: 1.1): Base animation duration in seconds.
+  - `delay` (number, default: 0): Delay before the animation starts in seconds.
+  - `blur` (boolean, default: true): Whether to apply directional motion blur during travel.
+  - `glow` (boolean, default: true): Whether to render photonic bloom and glow highlights.
+  - `trail` (boolean, default: true): Whether to render velocity motion trail echoes.
+  - `loop` (boolean, default: false): Whether to cycle the warp animation continuously.
+  - `trigger` ("mount" | "viewport" | "hover" | "manual", default: "mount"): Condition that triggers the warp jump animation.
+  - `split` ("character" | "word" | "line", default: "character"): How text is partitioned for sequential stagger.
+  - `glowColor` (string, default: "rgba(56, 189, 248, 0.75)"): Custom glow accent color.
+- **Usage Example**:
+```tsx
+import { WarpText } from "@/components/ui/WarpText";
+
+export function HeroHeadline() {
+  return (
+    <WarpText
+      text="HYPERSPACE ACTIVE"
+      direction="forward"
+      speed={1.4}
+      blur={true}
+      glow={true}
+      trail={true}
+      className="text-5xl font-black text-white"
     />
   );
 }

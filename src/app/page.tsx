@@ -1,5 +1,7 @@
 import React from "react";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { TechTrustStrip } from "@/components/sections/TechTrustStrip";
+import { CategoryExplorerSection } from "@/components/sections/CategoryExplorerSection";
 import { InteractiveBentoShowcase } from "@/components/sections/InteractiveBentoShowcase";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { FAQSection } from "@/components/sections/FAQSection";
@@ -32,7 +34,7 @@ const jsonLd = [
         "name": "What is BoseUI?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "BoseUI is an open-source, animation-first component library for modern React applications. It provides over 127 production-grade UI primitives built with Framer Motion and Tailwind CSS, designed to make interfaces feel alive with fluid spring mechanics."
+          "text": "BoseUI is an open-source, animation-first component library for modern React applications. It provides over 142 production-grade UI primitives built with Framer Motion and Tailwind CSS, designed to make interfaces feel alive with fluid spring mechanics."
         }
       },
       {
@@ -72,6 +74,8 @@ export default function HomePage() {
       />
       <div className="bg-white dark:bg-black">
         <HeroSection />
+        <TechTrustStrip />
+        <CategoryExplorerSection />
         <InteractiveBentoShowcase />
         <HowItWorks />
         <FAQSection />

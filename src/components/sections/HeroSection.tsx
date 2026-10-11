@@ -12,15 +12,23 @@ import {
   Terminal,
 } from "lucide-react";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { MovingGridLines } from "@/components/ui/MovingGridLines";
+import { WarpText } from "@/components/ui/WarpText";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { SplitButton } from "@/components/ui/SplitButton";
+import { ElasticDock } from "@/components/ui/ElasticDock";
+import { DynamicIslandToast } from "@/components/ui/DynamicIslandToast";
 import { useCommandPalette } from "@/components/layout/CommandPalette";
 import { copyToClipboard, SITE_CONFIG } from "@/lib/utils";
-import { PULSE_COMPONENTS } from "@/registry/generated-catalog";
+import { CATALOG_INDEX } from "@/registry/catalog-index";
 
 const QUICK_SLUGS = [
+  { slug: "warp-text", label: "warp-text" },
+  { slug: "elastic-dock", label: "elastic-dock" },
   { slug: "magnetic-button", label: "magnetic-button" },
   { slug: "spotlight-card", label: "spotlight-card" },
+  { slug: "dynamic-island-toast", label: "dynamic-island" },
   { slug: "split-button", label: "split-button" },
-  { slug: "cursor-follower", label: "cursor-follower" },
 ];
 
 const SPECS = [
@@ -96,9 +104,16 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden border-b border-neutral-200 bg-white dark:border-[#1A1A1A] dark:bg-black">
-      {/* Subtle architectural grid & top radial light */}
+      {/* Dynamic kinetic grid with random traveling light beams & top radial light */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-grid-pattern [background-size:64px_64px] [mask-image:radial-gradient(ellipse_65%_55%_at_50%_20%,black_25%,transparent_100%)]" />
+        <MovingGridLines
+          gridSize={64}
+          beamCount={6}
+          beamLength={180}
+          speed={0.6}
+          radialMask={true}
+          className="absolute inset-0 h-full w-full"
+        />
         <div className="absolute left-1/2 top-0 h-[380px] w-[760px] -translate-x-1/2 rounded-full bg-neutral-200/50 blur-[130px] dark:bg-white/[0.055]" />
       </div>
 
@@ -117,7 +132,7 @@ export function HeroSection() {
               /
             </span>
             <span className="hidden sm:inline">
-              {PULSE_COMPONENTS.length} COMPONENTS AVAILABLE
+              {CATALOG_INDEX.length} COMPONENTS AVAILABLE
             </span>
           </div>
           <div className="flex items-center gap-4">
@@ -219,12 +234,12 @@ export function HeroSection() {
             </button>
           </motion.div>
 
-          {/* Interactive CLI Bar */}
-          <motion.div variants={item} className="mt-12 w-full max-w-2xl">
-            <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50/80 shadow-[0_1px_2px_rgba(0,0,0,0.04)] backdrop-blur dark:border-[#222222] dark:bg-[#080808]">
-              {/* Component selector tabs */}
-              <div className="flex items-center justify-between border-b border-neutral-200/80 px-3 py-2 dark:border-[#1A1A1A]">
-                <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
+          {/* Hero Live Interactive Stage */}
+          <motion.div variants={item} className="mt-12 w-full max-w-3xl">
+            <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50/80 shadow-[0_20px_50px_rgba(0,0,0,0.06)] backdrop-blur dark:border-[#222222] dark:bg-[#080808] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+              {/* Stage Top Bar */}
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-neutral-200/80 px-4 py-2.5 dark:border-[#1A1A1A]">
+                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
                   {QUICK_SLUGS.map((itemSlug) => {
                     const active = selectedSlug === itemSlug.slug;
                     return (
@@ -232,24 +247,100 @@ export function HeroSection() {
                         key={itemSlug.slug}
                         type="button"
                         onClick={() => setSelectedSlug(itemSlug.slug)}
-                        className={`cursor-pointer rounded-lg px-2.5 py-1 font-mono text-[11px] transition-colors ${
-                          active
-                            ? "bg-black text-white dark:bg-white dark:text-black"
-                            : "text-neutral-500 hover:text-black dark:text-neutral-500 dark:hover:text-white"
-                        }`}
+                        className={`cursor-pointer rounded-lg px-2.5 py-1 font-mono text-[11px] font-medium transition-all ${active
+                            ? "bg-black text-white shadow-sm dark:bg-white dark:text-black"
+                            : "text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white"
+                          }`}
                       >
                         {itemSlug.label}
                       </button>
                     );
                   })}
                 </div>
-                <span className="hidden font-mono text-[10px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 sm:inline">
-                  Quick Install
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-medium text-emerald-600 dark:text-emerald-400">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    Interactive Sandbox
+                  </span>
+                </div>
               </div>
 
-              {/* Command & Copy Button */}
-              <div className="flex items-center justify-between gap-3 px-4 py-3.5">
+              {/* Dynamic Interactive Stage Playground */}
+              <div className="relative flex min-h-[220px] items-center justify-center p-8 bg-dot-matrix [background-size:20px_20px] dark:bg-[#050505]">
+                {selectedSlug === "warp-text" && (
+                  <div className="flex flex-col items-center justify-center gap-3 text-center">
+                    <WarpText
+                      text="HYPERSPACE DRIVE"
+                      direction="forward"
+                      speed={1.4}
+                      blur={true}
+                      glow={true}
+                      trail={true}
+                      className="text-2xl font-black text-black dark:text-white sm:text-4xl"
+                    />
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                      Hover or click slug above to trigger warp acceleration
+                    </span>
+                  </div>
+                )}
+
+                {selectedSlug === "elastic-dock" && (
+                  <div className="flex w-full items-center justify-center overflow-x-auto py-2">
+                    <ElasticDock />
+                  </div>
+                )}
+
+                {selectedSlug === "magnetic-button" && (
+                  <div className="flex flex-wrap items-center justify-center gap-4">
+                    <MagneticButton variant="primary" strength={0.4}>
+                      <span>Magnetic Primary</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </MagneticButton>
+                    <MagneticButton variant="secondary" strength={0.3}>
+                      <span>Secondary</span>
+                    </MagneticButton>
+                    <MagneticButton variant="outline" strength={0.25}>
+                      <span>Outline</span>
+                    </MagneticButton>
+                  </div>
+                )}
+
+                {selectedSlug === "spotlight-card" && (
+                  <SpotlightCard className="w-full max-w-sm">
+                    <div className="flex items-center justify-between text-xs text-neutral-400 font-mono">
+                      <span>SPOTLIGHT</span>
+                      <span className="rounded bg-neutral-100 px-1.5 py-0.5 text-black dark:bg-[#1a1a1a] dark:text-white">LIVE</span>
+                    </div>
+                    <div className="mt-3 text-base font-semibold text-neutral-900 dark:text-white">
+                      Radial Cursor Glow
+                    </div>
+                    <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                      Hover across this card to watch smooth specular illumination respond to your cursor.
+                    </p>
+                  </SpotlightCard>
+                )}
+
+                {selectedSlug === "dynamic-island-toast" && (
+                  <DynamicIslandToast
+                    title="Registry Sync Complete"
+                    subtitle="142 kinetic manifests verified in 28ms"
+                  />
+                )}
+
+                {selectedSlug === "split-button" && (
+                  <SplitButton
+                    label="Deploy Release"
+                    options={[
+                      { value: "preview", label: "Deploy Preview" },
+                      { value: "staging", label: "Deploy to Staging" },
+                      { value: "rollback", label: "Rollback Production" },
+                    ]}
+                  />
+                )}
+              </div>
+
+              {/* Command & Copy Bar */}
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-neutral-200/80 bg-white/50 px-4 py-3 dark:border-[#1A1A1A] dark:bg-[#070707]">
                 <div className="flex min-w-0 items-center gap-2.5 font-mono text-xs">
                   <Terminal className="h-3.5 w-3.5 shrink-0 text-neutral-400 dark:text-neutral-500" />
                   <span className="select-all truncate text-neutral-900 dark:text-neutral-200">
@@ -257,24 +348,34 @@ export function HeroSection() {
                   </span>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={handleCopyCli}
-                  aria-label="Copy CLI install command"
-                  className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-1.5 font-mono text-[11px] font-medium text-black transition-colors hover:border-black hover:bg-black hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[#262626] dark:bg-[#121212] dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black dark:focus-visible:ring-white"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="h-3.5 w-3.5" />
-                      <span>Copied</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="h-3.5 w-3.5" />
-                      <span>Copy</span>
-                    </>
-                  )}
-                </button>
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`/components/${selectedSlug}`}
+                    className="inline-flex shrink-0 items-center gap-1 rounded-lg px-2.5 py-1.5 font-mono text-[11px] font-medium text-neutral-600 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors"
+                  >
+                    <span>View Docs</span>
+                    <ArrowUpRight className="h-3 w-3" />
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={handleCopyCli}
+                    aria-label="Copy CLI install command"
+                    className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-1.5 font-mono text-[11px] font-medium text-black transition-colors hover:border-black hover:bg-black hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[#262626] dark:bg-[#121212] dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black dark:focus-visible:ring-white shadow-sm"
+                  >
+                    {copied ? (
+                      <>
+                        <Check className="h-3.5 w-3.5" />
+                        <span>Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="h-3.5 w-3.5" />
+                        <span>Copy CLI</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
             <span className="sr-only" aria-live="polite">
@@ -291,11 +392,10 @@ export function HeroSection() {
           {SPECS.map((spec, idx) => (
             <div
               key={spec.index}
-              className={`group relative flex flex-col justify-between p-6 transition-colors hover:bg-neutral-100/60 dark:hover:bg-[#0B0B0B] sm:p-8 ${
-                idx !== SPECS.length - 1
+              className={`group relative flex flex-col justify-between p-6 transition-colors hover:bg-neutral-100/60 dark:hover:bg-[#0B0B0B] sm:p-8 ${idx !== SPECS.length - 1
                   ? "border-b border-neutral-200 dark:border-[#1A1A1A] lg:border-b-0 lg:border-r"
                   : ""
-              } ${idx % 2 === 0 ? "sm:border-r" : ""}`}
+                } ${idx % 2 === 0 ? "sm:border-r" : ""}`}
             >
               <div>
                 <div className="flex items-center justify-between font-mono text-[11px]">

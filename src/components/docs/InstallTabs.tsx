@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Check, Copy, Terminal, Wrench, Package } from "lucide-react";
+import { track } from "@vercel/analytics";
 import { CodeViewer } from "@/components/docs/CodeViewer";
 import { cn, copyToClipboard, SITE_CONFIG } from "@/lib/utils";
 
@@ -31,6 +32,23 @@ export function InstallTabs({
   const [pm, setPm] = useState<PackageManager>("npx");
   const [copiedCli, setCopiedCli] = useState(false);
 
+  // Load saved package manager preference
+  useEffect(() => {
+    try {
+      const savedPm = localStorage.getItem("boseui-pm") as PackageManager | null;
+      if (savedPm && ["npx", "pnpm", "bun", "yarn"].includes(savedPm)) {
+        setPm(savedPm);
+      }
+    } catch {}
+  }, []);
+
+  const handleSelectPm = (selectedPm: PackageManager) => {
+    setPm(selectedPm);
+    try {
+      localStorage.setItem("boseui-pm", selectedPm);
+    } catch {}
+  };
+
   const registryUrl = `${SITE_CONFIG.url}/r/${slug}.json`;
 
   const cliCommands: Record<PackageManager, string> = {
@@ -52,6 +70,7 @@ export function InstallTabs({
     const ok = await copyToClipboard(cliCommands[pm]);
     if (ok) {
       setCopiedCli(true);
+      track("Copy CLI Command", { command: cliCommands[pm], slug: slug, source: "InstallTabs" });
       setTimeout(() => setCopiedCli(false), 1800);
     }
   };
@@ -126,7 +145,7 @@ export function InstallTabs({
                   <button
                     key={manager}
                     type="button"
-                    onClick={() => setPm(manager)}
+                    onClick={() => handleSelectPm(manager)}
                     className={cn(
                       "rounded-lg px-2.5 py-1 font-mono text-xs font-medium transition-colors",
                       pm === manager

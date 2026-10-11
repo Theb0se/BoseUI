@@ -25,7 +25,7 @@ import {
   SunMoon,
   HeartHandshake,
 } from "lucide-react";
-import { PULSE_COMPONENTS } from "@/registry/generated-catalog";
+import { CATALOG_INDEX } from "@/registry/catalog-index";
 import { useTheme } from "@/components/layout/ThemeProvider";
 import { copyToClipboard, SITE_CONFIG } from "@/lib/utils";
 
@@ -115,7 +115,7 @@ export function CommandPaletteProvider({
   }, [isOpen]);
 
   const actions: CommandActionItem[] = useMemo(() => {
-    const componentItems: CommandActionItem[] = PULSE_COMPONENTS.map((comp) => ({
+    const componentItems: CommandActionItem[] = CATALOG_INDEX.map((comp) => ({
       id: `comp-${comp.slug}`,
       group: "Components",
       title: comp.title,
@@ -129,23 +129,26 @@ export function CommandPaletteProvider({
       },
     }));
 
-    const cliItems: CommandActionItem[] = PULSE_COMPONENTS.map((comp) => ({
-      id: `cli-${comp.slug}`,
-      group: "CLI Registry",
-      title: `Copy CLI: ${comp.slug}`,
-      subtitle: comp.cliCommand,
-      badge: "Copy CLI",
-      icon: <Terminal className="h-4 w-4" />,
-      keywords: `cli install npx shadcn ${comp.slug} ${comp.title}`,
-      onSelect: async () => {
-        await copyToClipboard(comp.cliCommand);
-        setCopiedId(`cli-${comp.slug}`);
-        setTimeout(() => {
-          setCopiedId(null);
-          closePalette();
-        }, 650);
-      },
-    }));
+    const cliItems: CommandActionItem[] = CATALOG_INDEX.map((comp) => {
+      const cliCommand = `npx shadcn@latest add ${SITE_CONFIG.url}/r/${comp.slug}.json`;
+      return {
+        id: `cli-${comp.slug}`,
+        group: "CLI Registry",
+        title: `Copy CLI: ${comp.slug}`,
+        subtitle: cliCommand,
+        badge: "Copy CLI",
+        icon: <Terminal className="h-4 w-4" />,
+        keywords: `cli install npx shadcn ${comp.slug} ${comp.title}`,
+        onSelect: async () => {
+          await copyToClipboard(cliCommand);
+          setCopiedId(`cli-${comp.slug}`);
+          setTimeout(() => {
+            setCopiedId(null);
+            closePalette();
+          }, 650);
+        },
+      };
+    });
 
     const navItems: CommandActionItem[] = [
       {

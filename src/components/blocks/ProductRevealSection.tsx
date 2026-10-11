@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { StickySubNav } from "@/components/ui/StickySubNav";
-import { ProductSequenceScrubber } from "@/components/ui/ProductSequenceScrubber";
 import { ColorFinishPicker, ColorFinish } from "@/components/ui/ColorFinishPicker";
 import { LiquidGlassCard } from "@/components/ui/LiquidGlassCard";
 
@@ -137,14 +136,15 @@ export function ProductRevealSection({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left & Center: 360 Product Sequence Scrubber */}
             <div className="lg:col-span-7 flex flex-col items-center">
-              <div className="w-full rounded-2xl border border-neutral-800/80 bg-neutral-950/60 backdrop-blur-md p-4 shadow-xl">
-                <ProductSequenceScrubber
-                  totalFrames={36}
-                  defaultFrame={6}
-                  defaultAutoPlay={false}
-                  showHeader={false}
-                  className="border-none shadow-none bg-transparent"
-                />
+              <div className="w-full rounded-2xl border border-neutral-800/80 bg-neutral-950/60 backdrop-blur-md p-8 shadow-xl flex flex-col items-center justify-center min-h-[360px]">
+                <div className="relative w-64 h-80 rounded-3xl border border-neutral-700 bg-gradient-to-b from-neutral-800 to-neutral-950 shadow-2xl flex flex-col items-center justify-between p-6">
+                  <div className="w-16 h-3 rounded-full bg-neutral-900 border border-neutral-800" />
+                  <div className="text-center font-mono text-xs text-neutral-400">
+                    <Sparkles className="w-6 h-6 mx-auto mb-2 text-neutral-300 animate-pulse" />
+                    <span>Aerospace Titanium</span>
+                  </div>
+                  <div className="text-[11px] font-mono text-neutral-500">360° PRECISION PROFILE</div>
+                </div>
               </div>
             </div>
 

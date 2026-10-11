@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { COMPONENT_DEMOS } from "@/registry/generated-demos";
+import { BLOCK_COMPONENTS } from "@/components/blocks/registry";
 
 // Backgrounds & simulations
 import { BlackHole } from "@/components/ui/BlackHole";
@@ -47,7 +48,6 @@ import { TabbedCodeBlock } from "@/components/ui/TabbedCodeBlock";
 import { GlobeArcs } from "@/components/ui/GlobeArcs";
 import { GlowBorderCard } from "@/components/ui/GlowBorderCard";
 import { MorphingMegaMenu } from "@/components/ui/MorphingMegaMenu";
-import { ProductSequenceScrubber } from "@/components/ui/ProductSequenceScrubber";
 import { ColorFinishPicker } from "@/components/ui/ColorFinishPicker";
 import { DockMagnification } from "@/components/ui/DockMagnification";
 import { SiriGlowEdge } from "@/components/ui/SiriGlowEdge";
@@ -826,8 +826,7 @@ export function ComponentPreview({
       );
 
     // ── Apple Inspired ──
-    case "product-sequence-scrubber":
-      return <ProductSequenceScrubber className={className} />;
+
 
     case "color-finish-picker":
       return <ColorFinishPicker className={className} />;
@@ -1083,6 +1082,10 @@ export function ComponentPreview({
 
     // ── Default Fallback ──
     default: {
+      const BlockDemo = BLOCK_COMPONENTS[slug];
+      if (BlockDemo) {
+        return <BlockDemo className={className} />;
+      }
       const FallbackDemo = COMPONENT_DEMOS[slug] as
         | React.ComponentType<{ className?: string }>
         | undefined;

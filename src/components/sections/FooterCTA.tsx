@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Command } from "lucide-react";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { MovingGridLines } from "@/components/ui/MovingGridLines";
 import { useCommandPalette } from "@/components/layout/CommandPalette";
 
 export function FooterCTA() {
@@ -13,11 +14,20 @@ export function FooterCTA() {
     <section className="bg-white dark:bg-black">
       <div className="relative mx-auto max-w-[1280px] border-x border-neutral-200 px-5 py-20 dark:border-[#1A1A1A] sm:px-8 sm:py-24">
         <div className="relative overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50/70 p-8 dark:border-[#222222] dark:bg-[#060606] sm:p-14">
-          {/* Subtle dot matrix backdrop */}
+          {/* Subtle kinetic grid background */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-dot-matrix opacity-60 [background-size:18px_18px] [mask-image:radial-gradient(ellipse_70%_70%_at_80%_50%,black_20%,transparent_100%)]"
-          />
+            className="pointer-events-none absolute inset-0 opacity-40 dark:opacity-60"
+          >
+            <MovingGridLines
+              gridSize={48}
+              beamCount={4}
+              beamLength={140}
+              speed={0.4}
+              radialMask={true}
+              className="absolute inset-0 h-full w-full"
+            />
+          </div>
 
           <div className="relative flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
             <div className="max-w-xl">

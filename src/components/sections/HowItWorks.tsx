@@ -12,35 +12,13 @@ import {
 } from "lucide-react";
 import { copyToClipboard } from "@/lib/utils";
 
-const WORKFLOW_STEPS = [
-  {
-    step: "01",
-    tag: "STEP 1",
-    title: "Install in One Command",
-    icon: Terminal,
-    description:
-      "Add any component directly into your React or Next.js project using the shadcn CLI, or simply copy and paste the code.",
-    code: "npx shadcn@latest add https://boseui.site/r/magnetic-button.json",
-  },
-  {
-    step: "02",
-    tag: "STEP 2",
-    title: "You Own the Code",
-    icon: Feather,
-    description:
-      "Components are saved right inside your project folder. Tweak the Tailwind classes, TypeScript props, or Framer Motion animations anytime.",
-    code: "src/components/ui/magnetic-button.tsx",
-  },
-  {
-    step: "03",
-    tag: "STEP 3",
-    title: "Add New Components Easily",
-    icon: FileCode2,
-    description:
-      "Building a new component? Create <Name>.tsx + <Name>.meta.ts and run npm run sync to update the docs and CLI registry automatically.",
-    code: "npm run component:new TiltCard && npm run sync",
-  },
-];
+type PkgManager = "npm" | "pnpm" | "bun";
+
+const CLI_COMMANDS: Record<PkgManager, string> = {
+  npm: "npx shadcn@latest add https://boseui.site/r/magnetic-button.json",
+  pnpm: "pnpm dlx shadcn@latest add https://boseui.site/r/magnetic-button.json",
+  bun: "bunx --bun shadcn@latest add https://boseui.site/r/magnetic-button.json",
+};
 
 const REGISTRY_ARTIFACTS = [
   { label: "Registry JSON", path: "/registry.json" },
@@ -49,6 +27,7 @@ const REGISTRY_ARTIFACTS = [
 ];
 
 export function HowItWorks() {
+  const [pkg, setPkg] = useState<PkgManager>("npm");
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const handleCopy = async (code: string, idx: number) => {
@@ -58,6 +37,39 @@ export function HowItWorks() {
       setTimeout(() => setCopiedIndex(null), 1800);
     }
   };
+
+  const steps = [
+    {
+      step: "01",
+      tag: "STEP 1",
+      title: "Install in One Command",
+      icon: Terminal,
+      description:
+        "Add any component directly into your React or Next.js project using your preferred package manager with zero runtime lock-in.",
+      code: CLI_COMMANDS[pkg],
+      isCli: true,
+    },
+    {
+      step: "02",
+      tag: "STEP 2",
+      title: "You Own the Code",
+      icon: Feather,
+      description:
+        "The source code drops right into your codebase. Tweak Tailwind styles, Framer Motion spring curves, or TypeScript props however you like.",
+      code: "src/components/ui/magnetic-button.tsx",
+      isCli: false,
+    },
+    {
+      step: "03",
+      tag: "STEP 3",
+      title: "Deterministic Sync Pipeline",
+      icon: FileCode2,
+      description:
+        "Build custom components with companion .meta.ts manifests, then run our CLI sync generator to publish docs, SEO, and JSON manifests automatically.",
+      code: "npm run component:new TiltCard && npm run sync",
+      isCli: false,
+    },
+  ];
 
   return (
     <section className="border-b border-neutral-200 bg-white dark:border-[#1A1A1A] dark:bg-black">
@@ -93,14 +105,14 @@ export function HowItWorks() {
 
         {/* 3-Column Process Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3">
-          {WORKFLOW_STEPS.map((card, idx) => {
+          {steps.map((card, idx) => {
             const Icon = card.icon;
             const isCopied = copiedIndex === idx;
             return (
               <div
                 key={card.step}
                 className={`flex flex-col justify-between gap-8 p-6 sm:p-8 ${
-                  idx !== WORKFLOW_STEPS.length - 1
+                  idx !== steps.length - 1
                     ? "border-b border-neutral-200 dark:border-[#1A1A1A] md:border-b-0 md:border-r"
                     : ""
                 }`}
@@ -128,20 +140,41 @@ export function HowItWorks() {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between gap-2 rounded-xl border border-neutral-200 bg-neutral-50 px-3.5 py-2.5 font-mono text-[11px] text-neutral-800 dark:border-[#222222] dark:bg-[#080808] dark:text-neutral-300">
-                  <span className="truncate">{card.code}</span>
-                  <button
-                    type="button"
-                    onClick={() => handleCopy(card.code, idx)}
-                    aria-label={`Copy ${card.title} snippet`}
-                    className="shrink-0 cursor-pointer rounded-md p-1 text-neutral-400 transition-colors hover:bg-neutral-200/70 hover:text-black dark:hover:bg-[#1A1A1A] dark:hover:text-white"
-                  >
-                    {isCopied ? (
-                      <Check className="h-3.5 w-3.5 text-black dark:text-white" />
-                    ) : (
-                      <Copy className="h-3.5 w-3.5" />
-                    )}
-                  </button>
+                <div>
+                  {card.isCli && (
+                    <div className="mb-2 flex items-center gap-1">
+                      {(["npm", "pnpm", "bun"] as PkgManager[]).map((p) => (
+                        <button
+                          key={p}
+                          type="button"
+                          onClick={() => setPkg(p)}
+                          className={`rounded px-2 py-0.5 font-mono text-[10px] font-medium transition-colors ${
+                            pkg === p
+                              ? "bg-black text-white dark:bg-white dark:text-black"
+                              : "text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white"
+                          }`}
+                        >
+                          {p}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-between gap-2 rounded-xl border border-neutral-200 bg-neutral-50 px-3.5 py-2.5 font-mono text-[11px] text-neutral-800 dark:border-[#222222] dark:bg-[#080808] dark:text-neutral-300">
+                    <span className="truncate">{card.code}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(card.code, idx)}
+                      aria-label={`Copy ${card.title} snippet`}
+                      className="shrink-0 cursor-pointer rounded-md p-1 text-neutral-400 transition-colors hover:bg-neutral-200/70 hover:text-black dark:hover:bg-[#1A1A1A] dark:hover:text-white"
+                    >
+                      {isCopied ? (
+                        <Check className="h-3.5 w-3.5 text-black dark:text-white" />
+                      ) : (
+                        <Copy className="h-3.5 w-3.5" />
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             );

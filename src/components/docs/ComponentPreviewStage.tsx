@@ -16,6 +16,7 @@ import {
   Tablet,
   Smartphone,
   Expand,
+  Sparkles,
 } from "lucide-react";
 import { ComponentPreview } from "@/components/docs/preview";
 import { CodeViewer } from "@/components/docs/CodeViewer";
@@ -185,6 +186,8 @@ export function ComponentPreviewStage({
     };
   }, []);
 
+  const [copiedAiPrompt, setCopiedAiPrompt] = useState(false);
+
   const handleQuickCopy = async () => {
     const targetCode =
       activeTab === "usage" && usageCode ? usageCode : sourceCode;
@@ -192,6 +195,15 @@ export function ComponentPreviewStage({
     if (ok) {
       setCopiedSource(true);
       setTimeout(() => setCopiedSource(false), 1800);
+    }
+  };
+
+  const handleCopyAiPrompt = async () => {
+    const promptText = `I want to integrate the BoseUI "${slug}" component into my React project with Tailwind CSS and Framer Motion.\n\nHere is the component source code:\n\`\`\`tsx\n// ${filePath}\n${sourceCode}\n\`\`\`\n\n${usageCode ? `Here is the usage example:\n\`\`\`tsx\n${usageCode}\n\`\`\`\n\n` : ""}Please help me customize and wire this component with proper TypeScript types, accessible attributes, and responsive layout.`;
+    const ok = await copyToClipboard(promptText);
+    if (ok) {
+      setCopiedAiPrompt(true);
+      setTimeout(() => setCopiedAiPrompt(false), 1800);
     }
   };
 
@@ -266,6 +278,34 @@ export function ComponentPreviewStage({
                   </motion.span>
                 )}
               </AnimatePresence>
+            </motion.button>
+
+            {/* Copy Prompt for AI (Cursor, Claude, v0) */}
+            <motion.button
+              type="button"
+              onClick={handleCopyAiPrompt}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              title="Copy prompt formatted for Cursor, v0, and Claude"
+              className={cn(
+                "hidden sm:inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 font-mono text-xs font-medium transition-all duration-200",
+                copiedAiPrompt
+                  ? "border-emerald-500 bg-emerald-500 text-white dark:border-emerald-400 dark:bg-emerald-400 dark:text-black"
+                  : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-400 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-300 dark:hover:border-neutral-600 dark:hover:text-white"
+              )}
+            >
+              {copiedAiPrompt ? (
+                <>
+                  <Check className="h-3.5 w-3.5" />
+                  <span>Prompt Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+                  <span>Copy Prompt</span>
+                </>
+              )}
             </motion.button>
 
             {activeTab === "preview" && (

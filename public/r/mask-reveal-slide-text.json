@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mask-reveal-slide-text",
+  "type": "registry:ui",
+  "title": "Mask Reveal Slide Text",
+  "author": "Rishabh Bose <https://theb0se.vercel.app/>",
+  "description": "Editorial masked typography where lines of text slide upwards out of an invisible horizontal boundary with high-precision cubic-bezier easing.",
+  "dependencies": [
+    "framer-motion",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "files": [
+    {
+      "path": "components/ui/mask-reveal-slide-text.tsx",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { motion, useReducedMotion } from \"framer-motion\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface MaskRevealSlideTextProps {\n  /** Array of lines or paragraphs to reveal */\n  lines?: string[];\n  /** Stagger delay between lines in seconds. Default: 0.12 */\n  stagger?: number;\n  /** Initial delay before animation starts in seconds. Default: 0 */\n  delay?: number;\n  /** Optional custom class name */\n  className?: string;\n}\n\nexport function MaskRevealSlideText({\n  lines = [\n    \"Design with intention.\",\n    \"Engineered with kinetic physics.\",\n    \"Shipped for modern developers.\",\n  ],\n  stagger = 0.12,\n  delay = 0,\n  className,\n}: MaskRevealSlideTextProps) {\n  const reduceMotion = useReducedMotion();\n\n  const containerVariants = {\n    hidden: {},\n    visible: {\n      transition: {\n        staggerChildren: reduceMotion ? 0 : stagger,\n        delayChildren: delay,\n      },\n    },\n  };\n\n  const lineVariants = {\n    hidden: {\n      y: reduceMotion ? 0 : \"110%\",\n      opacity: reduceMotion ? 0 : 1,\n    },\n    visible: {\n      y: \"0%\",\n      opacity: 1,\n      transition: {\n        duration: 0.8,\n        ease: [0.16, 1, 0.3, 1], // Apple/editorial deceleration\n      },\n    },\n  };\n\n  return (\n    <motion.div\n      variants={containerVariants}\n      initial=\"hidden\"\n      whileInView=\"visible\"\n      viewport={{ once: true, margin: \"-40px\" }}\n      className={cn(\"flex flex-col gap-1.5\", className)}\n    >\n      {lines.map((line, idx) => (\n        <div key={idx} className=\"overflow-hidden\">\n          <motion.div\n            variants={lineVariants}\n            className=\"will-change-transform\"\n          >\n            {line}\n          </motion.div>\n        </div>\n      ))}\n    </motion.div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/mask-reveal-slide-text.tsx"
+    },
+    {
+      "path": "lib/utils.ts",
+      "content": "import { type ClassValue, clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport async function copyToClipboard(text: string): Promise<boolean> {\n  if (typeof window === \"undefined\") return false;\n\n  try {\n    if (navigator.clipboard && window.isSecureContext) {\n      await navigator.clipboard.writeText(text);\n      return true;\n    }\n\n    const textArea = document.createElement(\"textarea\");\n    textArea.value = text;\n    textArea.style.position = \"fixed\";\n    textArea.style.left = \"-999999px\";\n    textArea.style.top = \"-999999px\";\n    document.body.appendChild(textArea);\n    textArea.focus();\n    textArea.select();\n    const succeeded = document.execCommand(\"copy\");\n    textArea.remove();\n    return succeeded;\n  } catch {\n    return false;\n  }\n}\n",
+      "type": "registry:lib",
+      "target": "lib/utils.ts"
+    }
+  ]
+}

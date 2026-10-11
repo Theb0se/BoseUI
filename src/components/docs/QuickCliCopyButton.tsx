@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Check, Copy, Terminal } from "lucide-react";
+import { track } from "@vercel/analytics";
 import { copyToClipboard } from "@/lib/utils";
 
 export function QuickCliCopyButton({ cliCommand }: { cliCommand: string }) {
@@ -11,6 +12,7 @@ export function QuickCliCopyButton({ cliCommand }: { cliCommand: string }) {
     const ok = await copyToClipboard(cliCommand);
     if (ok) {
       setCopied(true);
+      track("Copy CLI Command", { command: cliCommand, source: "QuickCliCopyButton" });
       setTimeout(() => setCopied(false), 1800);
     }
   };
