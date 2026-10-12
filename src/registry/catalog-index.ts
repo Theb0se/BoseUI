@@ -1554,6 +1554,57 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "i-pad-pro-mockup",
+    "slug": "i-pad-pro-mockup",
+    "componentName": "IPadProMockup",
+    "title": "iPad Pro Mockup",
+    "description": "Apple iPad Pro hardware frame with symmetrical ultra-thin bezels, landscape/portrait spring orientation transitions, Apple Pencil magnetic strip, and 3D parallax tilt.",
+    "tagline": "Apple iPad Pro tablet frame with landscape/portrait mode and 3D parallax tilt.",
+    "category": "Mockups",
+    "badges": [
+      "New",
+      "Apple",
+      "Device",
+      "Tablet"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": false,
+    "keywords": [
+      "ipad mockup",
+      "tablet mockup",
+      "apple ipad pro",
+      "device frame",
+      "3d tilt",
+      "tablet frame"
+    ]
+  },
+  {
+    "id": "i-phone16-pro-mockup",
+    "slug": "i-phone16-pro-mockup",
+    "componentName": "IPhone16ProMockup",
+    "title": "iPhone 16 Pro Mockup",
+    "description": "Architectural Apple iPhone 16 Pro hardware frame with an interactive spring-expanding Dynamic Island, 3D cursor parallax tilt, specular glass reflection, and titanium chassis finishes.",
+    "tagline": "Apple iPhone 16 Pro mockup with interactive Dynamic Island and 3D parallax tilt.",
+    "category": "Mockups",
+    "badges": [
+      "New",
+      "Apple",
+      "Device",
+      "Interactive"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "iphone mockup",
+      "apple mockup",
+      "iphone 16 pro",
+      "dynamic island",
+      "device frame",
+      "3d tilt",
+      "mobile mockup"
+    ]
+  },
+  {
     "id": "interactive-grid-beam",
     "slug": "interactive-grid-beam",
     "componentName": "InteractiveGridBeam",
@@ -1862,6 +1913,57 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "luhn algorithm",
       "card brand detection",
       "payment ui"
+    ]
+  },
+  {
+    "id": "mac-book-pro-mockup",
+    "slug": "mac-book-pro-mockup",
+    "componentName": "MacBookProMockup",
+    "title": "MacBook Pro Mockup",
+    "description": "Precision Apple MacBook Pro laptop hardware frame with a camera notch, aluminum chassis base deck, Liquid Retina XDR screen viewport, and 3D cursor parallax tilt.",
+    "tagline": "Apple MacBook Pro laptop frame with camera notch and 3D parallax tilt.",
+    "category": "Mockups",
+    "badges": [
+      "New",
+      "Apple",
+      "Device",
+      "Laptop"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "macbook mockup",
+      "laptop mockup",
+      "apple laptop",
+      "macbook pro",
+      "device frame",
+      "3d tilt",
+      "screen showcase"
+    ]
+  },
+  {
+    "id": "mac-os-window-mockup",
+    "slug": "mac-os-window-mockup",
+    "componentName": "MacOSWindowMockup",
+    "title": "macOS Window Mockup",
+    "description": "Authentic macOS Sequoia frosted glass window frame with interactive traffic light controls (close, minimize, expand with hover symbols), centered window title, and active/inactive window states.",
+    "tagline": "Authentic macOS frosted window frame with interactive traffic lights.",
+    "category": "Mockups",
+    "badges": [
+      "New",
+      "macOS",
+      "Window",
+      "Software"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": false,
+    "keywords": [
+      "macos window",
+      "window mockup",
+      "traffic lights",
+      "apple window",
+      "frosted glass",
+      "desktop frame"
     ]
   },
   {
@@ -2668,6 +2770,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "safari-browser-mockup",
+    "slug": "safari-browser-mockup",
+    "componentName": "SafariBrowserMockup",
+    "title": "Safari Browser Mockup",
+    "description": "macOS Safari browser chrome with traffic light controls, a central frosted unified address bar with SSL padlock, tab strip, and live viewport slot.",
+    "tagline": "Apple Safari browser chrome mockup with interactive address bar and tabs.",
+    "category": "Mockups",
+    "badges": [
+      "New",
+      "Apple",
+      "Browser",
+      "Software"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": false,
+    "keywords": [
+      "safari mockup",
+      "browser mockup",
+      "apple safari",
+      "browser window",
+      "chrome mockup",
+      "address bar"
+    ]
+  },
+  {
     "id": "scrubbable-number-input",
     "slug": "scrubbable-number-input",
     "componentName": "ScrubbableNumberInput",
@@ -3259,6 +3386,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "syntax highlight",
       "terminal output",
       "code snippet"
+    ]
+  },
+  {
+    "id": "terminal-window-mockup",
+    "slug": "terminal-window-mockup",
+    "componentName": "TerminalWindowMockup",
+    "title": "Terminal Window Mockup",
+    "description": "macOS dark terminal window frame featuring traffic light buttons, prompt symbols (❯), a blinking cursor, command output lines, and a one-click copy command button.",
+    "tagline": "macOS developer terminal mockup with traffic lights and copy command button.",
+    "category": "Mockups",
+    "badges": [
+      "New",
+      "Terminal",
+      "Developer",
+      "Software"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": false,
+    "keywords": [
+      "terminal mockup",
+      "cli window",
+      "macos terminal",
+      "code block",
+      "developer mockup",
+      "bash window"
     ]
   },
   {

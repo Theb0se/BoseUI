@@ -8,7 +8,8 @@ export type ComponentCategory =
   | "Text"
   | "Backgrounds"
   | "Overlays"
-  | "Inputs";
+  | "Inputs"
+  | "Mockups";
 
 export const COMPONENT_CATEGORIES: ComponentCategory[] = [
   "Motion",
@@ -19,6 +20,7 @@ export const COMPONENT_CATEGORIES: ComponentCategory[] = [
   "Backgrounds",
   "Overlays",
   "Inputs",
+  "Mockups",
 ];
 
 export interface ComponentPropMeta {

@@ -13,6 +13,7 @@ import {
   Type,
   SunMedium,
   Layers,
+  Laptop,
 } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { CATALOG_INDEX } from "@/registry/catalog-index";
@@ -72,6 +73,12 @@ const CATEGORIES_DATA: CategoryMeta[] = [
     icon: Sparkles,
     tagline: "Dynamic island toasts, kinetic sheet drawers, and morphing spring dialogs.",
     featuredPills: ["dynamic-island-toast", "kinetic-drawer-sheet", "morphing-dialog"],
+  },
+  {
+    name: "Mockups",
+    icon: Laptop,
+    tagline: "Apple device frames, Dynamic Island physics, macOS frosted windows, and terminal chrome.",
+    featuredPills: ["iphone-16-pro-mockup", "macbook-pro-mockup", "macos-window-mockup"],
   },
 ];
 

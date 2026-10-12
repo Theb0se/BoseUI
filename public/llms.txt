@@ -33,7 +33,7 @@ Our latest research on frontend engineering and UI/UX:
 - [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
 - [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
 
-## Available Kinetic Components (150)
+## Available Kinetic Components (156)
 
 ### AI Chat Bubble (`AIChatBubble`)
 - **Slug**: `ai-chat-bubble`
@@ -2636,6 +2636,84 @@ export function Example() {
 
 ---
 
+### iPad Pro Mockup (`IPadProMockup`)
+- **Slug**: `i-pad-pro-mockup`
+- **Category**: Mockups
+- **Tagline**: Apple iPad Pro tablet frame with landscape/portrait mode and 3D parallax tilt.
+- **Description**: Apple iPad Pro hardware frame with symmetrical ultra-thin bezels, landscape/portrait spring orientation transitions, Apple Pencil magnetic strip, and 3D parallax tilt.
+- **Docs URL**: https://boseui.site/components/i-pad-pro-mockup
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/i-pad-pro-mockup.json`
+- **Registry Manifest**: https://boseui.site/r/i-pad-pro-mockup.json
+- **Key Features**:
+  - Supports both landscape and portrait orientations with smooth layout spring transitions.
+  - Hardware-accurate Apple Pencil magnetic charging dock indicator.
+  - Realistic specular light glare overlay that follows mouse movements.
+  - Space Black and Silver aluminum finishes.
+  - Renders any React children inside the Tandem OLED screen container.
+- **Accessibility**:
+  - Disables 3D parallax tilt when prefers-reduced-motion is enabled.
+  - Content inside the screen remains fully accessible.
+- **Props**:
+  - `orientation` ("landscape" | "portrait", default: "landscape"): Screen orientation.
+  - `color` ("space-black" | "silver", default: "space-black"): Chassis finish color.
+  - `enableTilt` (boolean, default: true): Enable 3D cursor tilt physics.
+  - `children` (React.ReactNode): Custom screen content or app UI.
+- **Usage Example**:
+```tsx
+import { IPadProMockup } from "@/components/ui/IPadProMockup";
+
+export function Example() {
+  return (
+    <IPadProMockup orientation="landscape" color="space-black">
+      <div className="flex h-full items-center justify-center bg-neutral-900 text-white p-6">
+        <h3 className="text-xl font-bold">Your Tablet Experience</h3>
+      </div>
+    </IPadProMockup>
+  );
+}
+```
+
+---
+
+### iPhone 16 Pro Mockup (`IPhone16ProMockup`)
+- **Slug**: `i-phone16-pro-mockup`
+- **Category**: Mockups
+- **Tagline**: Apple iPhone 16 Pro mockup with interactive Dynamic Island and 3D parallax tilt.
+- **Description**: Architectural Apple iPhone 16 Pro hardware frame with an interactive spring-expanding Dynamic Island, 3D cursor parallax tilt, specular glass reflection, and titanium chassis finishes.
+- **Docs URL**: https://boseui.site/components/i-phone16-pro-mockup
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/i-phone16-pro-mockup.json`
+- **Registry Manifest**: https://boseui.site/r/i-phone16-pro-mockup.json
+- **Key Features**:
+  - Interactive Dynamic Island that fluidly morphs with spring physics on click.
+  - Hardware-accurate titanium bezels, action button, and volume rocker.
+  - Realistic specular light glare overlay that tracks cursor coordinates.
+  - 4 titanium finishes: Natural, Desert, Black, and White Titanium.
+  - Accepts any React children (images, video, or interactive app UI).
+- **Accessibility**:
+  - Gracefully respects prefers-reduced-motion by disabling 3D rotation and glare movement.
+  - Internal screen supports accessible screen reader markup.
+- **Props**:
+  - `color` ("natural" | "desert" | "black" | "white", default: "natural"): Titanium chassis finish.
+  - `enableTilt` (boolean, default: true): Enable 3D cursor tilt physics.
+  - `interactiveIsland` (boolean, default: true): Allow clicking the Dynamic Island to expand into a Live Activity.
+  - `children` (React.ReactNode): Custom screen content or screenshot.
+- **Usage Example**:
+```tsx
+import { IPhone16ProMockup } from "@/components/ui/IPhone16ProMockup";
+
+export function Example() {
+  return (
+    <IPhone16ProMockup color="natural" enableTilt>
+      <div className="flex h-full items-center justify-center bg-neutral-900 text-white p-6">
+        <h1 className="text-xl font-bold">Your Mobile App</h1>
+      </div>
+    </IPhone16ProMockup>
+  );
+}
+```
+
+---
+
 ### Interactive Grid Beam (`InteractiveGridBeam`)
 - **Slug**: `interactive-grid-beam`
 - **Category**: Backgrounds
@@ -3156,6 +3234,84 @@ export function Example() {
     <div className="w-full">
       <LiveCardForm defaultAmount="$89.00" />
     </div>
+  );
+}
+```
+
+---
+
+### MacBook Pro Mockup (`MacBookProMockup`)
+- **Slug**: `mac-book-pro-mockup`
+- **Category**: Mockups
+- **Tagline**: Apple MacBook Pro laptop frame with camera notch and 3D parallax tilt.
+- **Description**: Precision Apple MacBook Pro laptop hardware frame with a camera notch, aluminum chassis base deck, Liquid Retina XDR screen viewport, and 3D cursor parallax tilt.
+- **Docs URL**: https://boseui.site/components/mac-book-pro-mockup
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/mac-book-pro-mockup.json`
+- **Registry Manifest**: https://boseui.site/r/mac-book-pro-mockup.json
+- **Key Features**:
+  - Hardware-accurate aluminum top lid with display notch and slim bezels.
+  - Integrated bottom keyboard deck lip and display opening indentation.
+  - Realistic specular light glare overlay that reacts to cursor position.
+  - Space Black and Silver aluminum finishes.
+  - Responsive aspect ratio (16:10) that scales cleanly on all viewport widths.
+- **Accessibility**:
+  - Respects prefers-reduced-motion by disabling 3D rotation and specular glare shifts.
+  - Interactive children remain fully accessible and focusable.
+- **Props**:
+  - `color` ("space-black" | "silver", default: "space-black"): Aluminum chassis finish.
+  - `enableTilt` (boolean, default: true): Enable 3D cursor parallax tilt.
+  - `children` (React.ReactNode): Custom app UI, video, or screenshot.
+- **Usage Example**:
+```tsx
+import { MacBookProMockup } from "@/components/ui/MacBookProMockup";
+
+export function Example() {
+  return (
+    <MacBookProMockup color="space-black" enableTilt>
+      <div className="flex h-full items-center justify-center bg-neutral-950 text-white p-8">
+        <h2 className="text-2xl font-bold">Your SaaS Dashboard</h2>
+      </div>
+    </MacBookProMockup>
+  );
+}
+```
+
+---
+
+### macOS Window Mockup (`MacOSWindowMockup`)
+- **Slug**: `mac-os-window-mockup`
+- **Category**: Mockups
+- **Tagline**: Authentic macOS frosted window frame with interactive traffic lights.
+- **Description**: Authentic macOS Sequoia frosted glass window frame with interactive traffic light controls (close, minimize, expand with hover symbols), centered window title, and active/inactive window states.
+- **Docs URL**: https://boseui.site/components/mac-os-window-mockup
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/mac-os-window-mockup.json`
+- **Registry Manifest**: https://boseui.site/r/mac-os-window-mockup.json
+- **Key Features**:
+  - Interactive traffic lights with hover action symbols (✕, −, ⤢).
+  - Spring minimize collapse and expand animation.
+  - Frosted glass backdrop-blur titlebar with centered title label.
+  - Active and inactive window focus styles.
+  - Fully customizable children slot for dashboards, code, or documentation.
+- **Accessibility**:
+  - Traffic light buttons include accessible aria-label attributes.
+  - Content inside window retains natural DOM focus order.
+- **Props**:
+  - `title` (string, default: "Untitled Window"): Window title in center of header.
+  - `subtitle` (string): Optional breadcrumb or subtitle text.
+  - `frosted` (boolean, default: true): Enable backdrop-blur frosted glass vibrancy.
+  - `active` (boolean, default: true): Active window focus state.
+  - `children` (React.ReactNode): Window body content.
+- **Usage Example**:
+```tsx
+import { MacOSWindowMockup } from "@/components/ui/MacOSWindowMockup";
+
+export function Example() {
+  return (
+    <MacOSWindowMockup title="Analytics Overview" subtitle="Production">
+      <div className="p-6">
+        <p>Your app content goes here.</p>
+      </div>
+    </MacOSWindowMockup>
   );
 }
 ```
@@ -4525,6 +4681,44 @@ export function Example() {
 
 ---
 
+### Safari Browser Mockup (`SafariBrowserMockup`)
+- **Slug**: `safari-browser-mockup`
+- **Category**: Mockups
+- **Tagline**: Apple Safari browser chrome mockup with interactive address bar and tabs.
+- **Description**: macOS Safari browser chrome with traffic light controls, a central frosted unified address bar with SSL padlock, tab strip, and live viewport slot.
+- **Docs URL**: https://boseui.site/components/safari-browser-mockup
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/safari-browser-mockup.json`
+- **Registry Manifest**: https://boseui.site/r/safari-browser-mockup.json
+- **Key Features**:
+  - macOS Safari unified toolbar with SSL padlock and traffic lights.
+  - Interactive address bar with reload button and URL editing.
+  - Optional tab strip bar with page title and icon.
+  - Responsive container that renders any landing page or screenshot.
+- **Accessibility**:
+  - Input element has accessible aria-label.
+  - Buttons include standard accessible labels.
+- **Props**:
+  - `url` (string, default: "https://boseui.site"): URL shown in the address bar.
+  - `title` (string, default: "BoseUI — Architectural UI Components"): Active page title.
+  - `showTabs` (boolean, default: true): Show Safari tab bar strip.
+  - `children` (React.ReactNode): Viewport content.
+- **Usage Example**:
+```tsx
+import { SafariBrowserMockup } from "@/components/ui/SafariBrowserMockup";
+
+export function Example() {
+  return (
+    <SafariBrowserMockup url="https://yourproduct.com" title="Your Product">
+      <div className="p-8">
+        <h1>Your Landing Page Content</h1>
+      </div>
+    </SafariBrowserMockup>
+  );
+}
+```
+
+---
+
 ### Scrubbable Number Input (`ScrubbableNumberInput`)
 - **Slug**: `scrubbable-number-input`
 - **Category**: Inputs
@@ -5543,6 +5737,45 @@ export function Example() {
     <div className="w-full">
       <TabbedCodeBlock defaultLang="node" showLineNumbers={true} />
     </div>
+  );
+}
+```
+
+---
+
+### Terminal Window Mockup (`TerminalWindowMockup`)
+- **Slug**: `terminal-window-mockup`
+- **Category**: Mockups
+- **Tagline**: macOS developer terminal mockup with traffic lights and copy command button.
+- **Description**: macOS dark terminal window frame featuring traffic light buttons, prompt symbols (❯), a blinking cursor, command output lines, and a one-click copy command button.
+- **Docs URL**: https://boseui.site/components/terminal-window-mockup
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/terminal-window-mockup.json`
+- **Registry Manifest**: https://boseui.site/r/terminal-window-mockup.json
+- **Key Features**:
+  - macOS titlebar with traffic light buttons and terminal title.
+  - Blinking cursor indicator on the active command line.
+  - Integrated one-click copy button for commands.
+  - Configurable multi-line command output.
+  - Support for custom child elements or interactive terminal shells.
+- **Accessibility**:
+  - Accessible copy button with aria-label and confirmation state.
+  - Pre-formatted monospace text retains natural screen-reader output.
+- **Props**:
+  - `title` (string, default: "zsh — 80×24"): Terminal title in header.
+  - `command` (string, default: "npx boseui add magnetic-button"): Terminal input command.
+  - `output` (string | string[]): Console output lines.
+  - `copyable` (boolean, default: true): Enable copy command button.
+  - `children` (React.ReactNode): Custom inner content.
+- **Usage Example**:
+```tsx
+import { TerminalWindowMockup } from "@/components/ui/TerminalWindowMockup";
+
+export function Example() {
+  return (
+    <TerminalWindowMockup
+      command="npm run build"
+      output={["Compiled successfully in 1.4s", "Ready for deployment."]}
+    />
   );
 }
 ```

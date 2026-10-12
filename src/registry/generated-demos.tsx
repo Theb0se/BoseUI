@@ -71,6 +71,8 @@ import { HolographicFlipCard } from "@/components/ui/HolographicFlipCard";
 import { HorizonLight } from "@/components/ui/HorizonLight";
 import { HoverCursorShimmerText } from "@/components/ui/HoverCursorShimmerText";
 import { HoverRevealFeatureGrid } from "@/components/ui/HoverRevealFeatureGrid";
+import { IPadProMockup } from "@/components/ui/IPadProMockup";
+import { IPhone16ProMockup } from "@/components/ui/IPhone16ProMockup";
 import { InteractiveGridBeam } from "@/components/ui/InteractiveGridBeam";
 import { IsometricCity } from "@/components/ui/IsometricCity";
 import { KeycapChips } from "@/components/ui/KeycapChips";
@@ -84,6 +86,8 @@ import { LiquidGlassCard } from "@/components/ui/LiquidGlassCard";
 import { LiquidGradientBlob } from "@/components/ui/LiquidGradientBlob";
 import { LiquidPillTabs } from "@/components/ui/LiquidPillTabs";
 import { LiveCardForm } from "@/components/ui/LiveCardForm";
+import { MacBookProMockup } from "@/components/ui/MacBookProMockup";
+import { MacOSWindowMockup } from "@/components/ui/MacOSWindowMockup";
 import { MagneticAvatarStack } from "@/components/ui/MagneticAvatarStack";
 import { MagneticBreadcrumb } from "@/components/ui/MagneticBreadcrumb";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -118,6 +122,7 @@ import { ReactionPicker } from "@/components/ui/ReactionPicker";
 import { RippleBurstButton } from "@/components/ui/RippleBurstButton";
 import { RollingNumberTicker } from "@/components/ui/RollingNumberTicker";
 import { RotarySpringDial } from "@/components/ui/RotarySpringDial";
+import { SafariBrowserMockup } from "@/components/ui/SafariBrowserMockup";
 import { ScrubbableNumberInput } from "@/components/ui/ScrubbableNumberInput";
 import { ScrubbableSparkline } from "@/components/ui/ScrubbableSparkline";
 import { SegmentedRangePicker } from "@/components/ui/SegmentedRangePicker";
@@ -143,6 +148,7 @@ import { StreakCounter } from "@/components/ui/StreakCounter";
 import { SunriseHorizon } from "@/components/ui/SunriseHorizon";
 import { SwipeCards } from "@/components/ui/SwipeCards";
 import { TabbedCodeBlock } from "@/components/ui/TabbedCodeBlock";
+import { TerminalWindowMockup } from "@/components/ui/TerminalWindowMockup";
 import { Thunderstorm } from "@/components/ui/Thunderstorm";
 import { TiltCreditCard3D } from "@/components/ui/TiltCreditCard3D";
 import { TiltPinInput } from "@/components/ui/TiltPinInput";
@@ -223,6 +229,8 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "horizon-light": createComponentDemo("horizon-light", HorizonLight),
   "hover-cursor-shimmer-text": createComponentDemo("hover-cursor-shimmer-text", HoverCursorShimmerText),
   "hover-reveal-feature-grid": createComponentDemo("hover-reveal-feature-grid", HoverRevealFeatureGrid),
+  "i-pad-pro-mockup": createComponentDemo("i-pad-pro-mockup", IPadProMockup),
+  "i-phone16-pro-mockup": createComponentDemo("i-phone16-pro-mockup", IPhone16ProMockup),
   "interactive-grid-beam": createComponentDemo("interactive-grid-beam", InteractiveGridBeam),
   "isometric-city": createComponentDemo("isometric-city", IsometricCity),
   "keycap-chips": createComponentDemo("keycap-chips", KeycapChips),
@@ -236,6 +244,8 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "liquid-gradient-blob": createComponentDemo("liquid-gradient-blob", LiquidGradientBlob),
   "liquid-pill-tabs": createComponentDemo("liquid-pill-tabs", LiquidPillTabs),
   "live-card-form": createComponentDemo("live-card-form", LiveCardForm),
+  "mac-book-pro-mockup": createComponentDemo("mac-book-pro-mockup", MacBookProMockup),
+  "mac-os-window-mockup": createComponentDemo("mac-os-window-mockup", MacOSWindowMockup),
   "magnetic-avatar-stack": createComponentDemo("magnetic-avatar-stack", MagneticAvatarStack),
   "magnetic-breadcrumb": createComponentDemo("magnetic-breadcrumb", MagneticBreadcrumb),
   "magnetic-button": createComponentDemo("magnetic-button", MagneticButton),
@@ -270,6 +280,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "ripple-burst-button": createComponentDemo("ripple-burst-button", RippleBurstButton),
   "rolling-number-ticker": createComponentDemo("rolling-number-ticker", RollingNumberTicker),
   "rotary-spring-dial": createComponentDemo("rotary-spring-dial", RotarySpringDial),
+  "safari-browser-mockup": createComponentDemo("safari-browser-mockup", SafariBrowserMockup),
   "scrubbable-number-input": createComponentDemo("scrubbable-number-input", ScrubbableNumberInput),
   "scrubbable-sparkline": createComponentDemo("scrubbable-sparkline", ScrubbableSparkline),
   "segmented-range-picker": createComponentDemo("segmented-range-picker", SegmentedRangePicker),
@@ -295,6 +306,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "sunrise-horizon": createComponentDemo("sunrise-horizon", SunriseHorizon),
   "swipe-cards": createComponentDemo("swipe-cards", SwipeCards),
   "tabbed-code-block": createComponentDemo("tabbed-code-block", TabbedCodeBlock),
+  "terminal-window-mockup": createComponentDemo("terminal-window-mockup", TerminalWindowMockup),
   "thunderstorm": createComponentDemo("thunderstorm", Thunderstorm),
   "tilt-credit-card3-d": createComponentDemo("tilt-credit-card3-d", TiltCreditCard3D),
   "tilt-pin-input": createComponentDemo("tilt-pin-input", TiltPinInput),

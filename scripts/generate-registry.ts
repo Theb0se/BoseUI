@@ -32,6 +32,7 @@ function inferCategory(meta: PulseComponentMeta): ComponentCategory {
   if (hay.includes("text") || hay.includes("typography")) return "Text";
   if (hay.includes("background") || hay.includes("canvas")) return "Backgrounds";
   if (hay.includes("overlay") || hay.includes("avatar")) return "Overlays";
+  if (hay.includes("mockup") || hay.includes("device") || hay.includes("window") || hay.includes("screen")) return "Mockups";
   return "Motion";
 }
 

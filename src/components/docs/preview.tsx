@@ -162,6 +162,14 @@ import { AIPromptInput } from "@/components/ui/AIPromptInput";
 import { AIGenerationProgress } from "@/components/ui/AIGenerationProgress";
 import { AICommandBar } from "@/components/ui/AICommandBar";
 
+// Mockup Components
+import { IPhone16ProMockup } from "@/components/ui/IPhone16ProMockup";
+import { MacBookProMockup } from "@/components/ui/MacBookProMockup";
+import { IPadProMockup } from "@/components/ui/IPadProMockup";
+import { MacOSWindowMockup } from "@/components/ui/MacOSWindowMockup";
+import { SafariBrowserMockup } from "@/components/ui/SafariBrowserMockup";
+import { TerminalWindowMockup } from "@/components/ui/TerminalWindowMockup";
+
 /**
  * Interactive preview wrapper for Black Hole
  */
@@ -765,6 +773,312 @@ function AICommandBarPreviewStage({ className }: { className?: string }) {
           Type <code className="font-mono bg-muted px-1.5 py-0.5 rounded border border-border">/</code> to trigger command dropdown, or type any prompt and press Enter
         </p>
       )}
+    </div>
+  );
+}
+
+function IPhone16ProMockupPreviewStage({ className }: { className?: string }) {
+  const [color, setColor] = useState<"natural" | "desert" | "black" | "white">("natural");
+  const [enableTilt, setEnableTilt] = useState(true);
+  const [showLockScreen, setShowLockScreen] = useState(true);
+  const wallpapers = [
+    { label: "Titanium", url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop" },
+    { label: "Neon Fluid", url: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1000&auto=format&fit=crop" },
+    { label: "Cyber Minimal", url: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop" },
+  ];
+  const [selectedWallpaper, setSelectedWallpaper] = useState(0);
+
+  return (
+    <div className={cn("w-full flex flex-col items-center gap-6 p-4", className)}>
+      <div className="flex flex-wrap items-center justify-center gap-3 border-b border-border pb-4 w-full max-w-lg">
+        {/* Colors */}
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border">
+          {(["natural", "desert", "black", "white"] as const).map((c) => (
+            <button
+              key={c}
+              onClick={() => setColor(c)}
+              className={cn(
+                "px-2.5 py-1 text-xs font-medium rounded-lg capitalize transition-all",
+                color === c ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+
+        {/* Wallpaper Presets */}
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border">
+          {wallpapers.map((w, idx) => (
+            <button
+              key={idx}
+              onClick={() => setSelectedWallpaper(idx)}
+              className={cn(
+                "px-2.5 py-1 text-xs font-medium rounded-lg transition-all",
+                selectedWallpaper === idx ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {w.label}
+            </button>
+          ))}
+        </div>
+
+        <button
+          onClick={() => setShowLockScreen(!showLockScreen)}
+          className={cn(
+            "px-3 py-1 text-xs font-medium rounded-lg border transition-all",
+            showLockScreen ? "border-foreground bg-foreground text-background shadow-sm" : "border-border bg-card text-muted-foreground hover:text-foreground"
+          )}
+        >
+          {showLockScreen ? "Lockscreen UI" : "Clean Screen"}
+        </button>
+
+        <button
+          onClick={() => setEnableTilt(!enableTilt)}
+          className={cn(
+            "px-3 py-1 text-xs font-medium rounded-lg border transition-all",
+            enableTilt ? "border-foreground bg-foreground text-background" : "border-border bg-card hover:text-foreground"
+          )}
+        >
+          {enableTilt ? "Tilt On" : "Tilt Off"}
+        </button>
+      </div>
+
+      <IPhone16ProMockup
+        color={color}
+        enableTilt={enableTilt}
+        showLockScreen={showLockScreen}
+        imageSrc={wallpapers[selectedWallpaper].url}
+      />
+    </div>
+  );
+}
+
+function MacBookProMockupPreviewStage({ className }: { className?: string }) {
+  const [color, setColor] = useState<"space-black" | "silver">("space-black");
+  const [enableTilt, setEnableTilt] = useState(true);
+  const [showDock, setShowDock] = useState(true);
+  const screens = [
+    { label: "macOS Sequoia", url: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1600&auto=format&fit=crop" },
+    { label: "Analytics SaaS", url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop" },
+    { label: "Code Studio", url: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1600&auto=format&fit=crop" },
+  ];
+  const [selectedScreen, setSelectedScreen] = useState(0);
+
+  return (
+    <div className={cn("w-full flex flex-col items-center gap-6 p-4", className)}>
+      <div className="flex flex-wrap items-center justify-center gap-3 border-b border-border pb-4 w-full max-w-lg">
+        {/* Colors */}
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border">
+          {(["space-black", "silver"] as const).map((c) => (
+            <button
+              key={c}
+              onClick={() => setColor(c)}
+              className={cn(
+                "px-3 py-1 text-xs font-medium rounded-lg capitalize transition-all",
+                color === c ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {c.replace("-", " ")}
+            </button>
+          ))}
+        </div>
+
+        {/* Screen Presets */}
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border">
+          {screens.map((s, idx) => (
+            <button
+              key={idx}
+              onClick={() => setSelectedScreen(idx)}
+              className={cn(
+                "px-2.5 py-1 text-xs font-medium rounded-lg transition-all",
+                selectedScreen === idx ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+
+        <button
+          onClick={() => setShowDock(!showDock)}
+          className={cn(
+            "px-3 py-1 text-xs font-medium rounded-lg border transition-all",
+            showDock ? "border-foreground bg-foreground text-background shadow-sm" : "border-border bg-card text-muted-foreground hover:text-foreground"
+          )}
+        >
+          {showDock ? "Dock On" : "Dock Off"}
+        </button>
+
+        <button
+          onClick={() => setEnableTilt(!enableTilt)}
+          className={cn(
+            "px-3 py-1 text-xs font-medium rounded-lg border transition-all",
+            enableTilt ? "border-foreground bg-foreground text-background" : "border-border bg-card hover:bg-accent"
+          )}
+        >
+          {enableTilt ? "Tilt On" : "Tilt Off"}
+        </button>
+      </div>
+
+      <MacBookProMockup
+        color={color}
+        enableTilt={enableTilt}
+        showDock={showDock}
+        imageSrc={screens[selectedScreen].url}
+      />
+    </div>
+  );
+}
+
+function IPadProMockupPreviewStage({ className }: { className?: string }) {
+  const [orientation, setOrientation] = useState<"landscape" | "portrait">("landscape");
+  const [color, setColor] = useState<"space-black" | "silver">("space-black");
+  const screens = [
+    { label: "Procreate Fluid", url: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1400&auto=format&fit=crop" },
+    { label: "Minimal Mesh", url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1400&auto=format&fit=crop" },
+  ];
+  const [selectedScreen, setSelectedScreen] = useState(0);
+
+  return (
+    <div className={cn("w-full flex flex-col items-center gap-6 p-4", className)}>
+      <div className="flex flex-wrap items-center justify-center gap-3 border-b border-border pb-4 w-full max-w-lg">
+        {/* Orientation */}
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border">
+          {(["landscape", "portrait"] as const).map((o) => (
+            <button
+              key={o}
+              onClick={() => setOrientation(o)}
+              className={cn(
+                "px-3 py-1 text-xs font-medium rounded-lg capitalize transition-all",
+                orientation === o ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {o}
+            </button>
+          ))}
+        </div>
+
+        {/* Colors */}
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border">
+          {(["space-black", "silver"] as const).map((c) => (
+            <button
+              key={c}
+              onClick={() => setColor(c)}
+              className={cn(
+                "px-3 py-1 text-xs font-medium rounded-lg capitalize transition-all",
+                color === c ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {c.replace("-", " ")}
+            </button>
+          ))}
+        </div>
+
+        {/* Screens */}
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border">
+          {screens.map((s, idx) => (
+            <button
+              key={idx}
+              onClick={() => setSelectedScreen(idx)}
+              className={cn(
+                "px-2.5 py-1 text-xs font-medium rounded-lg transition-all",
+                selectedScreen === idx ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <IPadProMockup
+        orientation={orientation}
+        color={color}
+        imageSrc={screens[selectedScreen].url}
+      />
+    </div>
+  );
+}
+
+function MacOSWindowMockupPreviewStage({ className }: { className?: string }) {
+  const screens = [
+    { label: "Code Studio", url: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1400&auto=format&fit=crop" },
+    { label: "Design Canvas", url: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1400&auto=format&fit=crop" },
+  ];
+  const [selectedScreen, setSelectedScreen] = useState(0);
+
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-5", className)}>
+      <div className="flex items-center gap-2 border-b border-border pb-3">
+        {screens.map((s, idx) => (
+          <button
+            key={idx}
+            onClick={() => setSelectedScreen(idx)}
+            className={cn(
+              "px-3 py-1 text-xs font-medium rounded-lg border transition-all",
+              selectedScreen === idx ? "border-foreground bg-foreground text-background shadow-sm" : "border-border bg-card text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {s.label}
+          </button>
+        ))}
+      </div>
+
+      <MacOSWindowMockup
+        title="App Workspace"
+        subtitle="Sequoia"
+        imageSrc={screens[selectedScreen].url}
+      />
+    </div>
+  );
+}
+
+function SafariBrowserMockupPreviewStage({ className }: { className?: string }) {
+  const screens = [
+    { label: "Analytics Dashboard", url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1400&auto=format&fit=crop", path: "https://analytics.boseui.site" },
+    { label: "Fintech Platform", url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1400&auto=format&fit=crop", path: "https://stripe.com/overview" },
+  ];
+  const [selectedScreen, setSelectedScreen] = useState(0);
+
+  return (
+    <div className={cn("w-full max-w-3xl mx-auto p-4 flex flex-col items-center gap-5", className)}>
+      <div className="flex items-center gap-2 border-b border-border pb-3">
+        {screens.map((s, idx) => (
+          <button
+            key={idx}
+            onClick={() => setSelectedScreen(idx)}
+            className={cn(
+              "px-3 py-1 text-xs font-medium rounded-lg border transition-all",
+              selectedScreen === idx ? "border-foreground bg-foreground text-background shadow-sm" : "border-border bg-card text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {s.label}
+          </button>
+        ))}
+      </div>
+
+      <SafariBrowserMockup
+        url={screens[selectedScreen].path}
+        title={`${screens[selectedScreen].label} — Live Demo`}
+        imageSrc={screens[selectedScreen].url}
+      />
+    </div>
+  );
+}
+
+function TerminalWindowMockupPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-xl mx-auto p-4 flex items-center justify-center", className)}>
+      <TerminalWindowMockup
+        title="zsh — boseui cli"
+        command="npx boseui add iphone-16-pro-mockup"
+        output={[
+          "✔ Fetching component manifest...",
+          "✔ Installing Framer Motion spring physics...",
+          "✔ Component ready at src/components/ui/IPhone16ProMockup.tsx",
+        ]}
+      />
     </div>
   );
 }
@@ -1409,6 +1723,29 @@ export function ComponentPreview({
     case "ai-command-bar":
     case "aicommand-bar":
       return <AICommandBarPreviewStage className={className} />;
+
+    // ── Mockup Components ──
+    case "iphone-16-pro-mockup":
+    case "i-phone16-pro-mockup":
+      return <IPhone16ProMockupPreviewStage className={className} />;
+
+    case "macbook-pro-mockup":
+    case "mac-book-pro-mockup":
+      return <MacBookProMockupPreviewStage className={className} />;
+
+    case "ipad-pro-mockup":
+    case "i-pad-pro-mockup":
+      return <IPadProMockupPreviewStage className={className} />;
+
+    case "macos-window-mockup":
+    case "mac-os-window-mockup":
+      return <MacOSWindowMockupPreviewStage className={className} />;
+
+    case "safari-browser-mockup":
+      return <SafariBrowserMockupPreviewStage className={className} />;
+
+    case "terminal-window-mockup":
+      return <TerminalWindowMockupPreviewStage className={className} />;
 
     // ── Default Fallback ──
     default: {
