@@ -8,6 +8,174 @@ import type { CatalogIndexEntry } from "@/types/component";
 
 export const CATALOG_INDEX: CatalogIndexEntry[] = [
   {
+    "id": "ai-chat-bubble",
+    "slug": "ai-chat-bubble",
+    "componentName": "AIChatBubble",
+    "title": "AI Chat Bubble",
+    "description": "Spring-entrance chat message bubble for AI interfaces. Supports user (right, filled) and assistant (left, outlined) roles, animated typing dots state, optional avatar initials, and timestamp.",
+    "tagline": "Physics spring-entrance chat bubble for AI conversation UIs.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "AI",
+      "Chat"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "chat bubble",
+      "ai chat",
+      "message bubble",
+      "chat ui",
+      "ai conversation",
+      "typing indicator"
+    ]
+  },
+  {
+    "id": "ai-command-bar",
+    "slug": "ai-command-bar",
+    "componentName": "AICommandBar",
+    "title": "AI Command Bar",
+    "description": "Slash-command aware AI input bar inspired by Linear and Raycast. Type / to reveal a spring-animated suggestions panel with keyboard navigation, staggered item entrance, and a shimmer idle border.",
+    "tagline": "Slash-command AI bar with spring suggestions panel and keyboard nav.",
+    "category": "Navigation",
+    "badges": [
+      "New",
+      "AI",
+      "Command"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "ai command bar",
+      "slash command",
+      "command input",
+      "ai search",
+      "linear command",
+      "raycast input"
+    ]
+  },
+  {
+    "id": "ai-generation-progress",
+    "slug": "ai-generation-progress",
+    "componentName": "AIGenerationProgress",
+    "title": "AI Generation Progress",
+    "description": "Spring-animated SVG ring progress indicator for AI token generation. Shows determinate progress with a rolling token counter, or an indeterminate spin when total is unknown.",
+    "tagline": "Spring-physics ring progress for AI generation with token counter.",
+    "category": "Motion",
+    "badges": [
+      "New",
+      "AI",
+      "Progress"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": false,
+    "keywords": [
+      "ai progress",
+      "generation progress",
+      "token counter",
+      "progress ring",
+      "circular progress",
+      "ai spinner"
+    ]
+  },
+  {
+    "id": "ai-prompt-input",
+    "slug": "ai-prompt-input",
+    "componentName": "AIPromptInput",
+    "title": "AI Prompt Input",
+    "description": "Auto-expanding AI textarea with a morphing submit button that transitions between arrow, spinner, and check states using spring physics. Includes character counter with color warnings and ⌘↵ keyboard shortcut.",
+    "tagline": "Auto-expanding AI prompt field with spring-morphing submit button.",
+    "category": "Inputs",
+    "badges": [
+      "New",
+      "AI",
+      "Input"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "ai input",
+      "prompt input",
+      "ai textarea",
+      "chat input",
+      "expandable input",
+      "submit button morph"
+    ]
+  },
+  {
+    "id": "ai-status-badge",
+    "slug": "ai-status-badge",
+    "componentName": "AIStatusBadge",
+    "title": "AI Status Badge",
+    "description": "Live AI presence pill that communicates real-time processing state — Idle, Thinking, Generating, Done, or Error. Each state transitions with spring animation and a pulsing beacon dot.",
+    "tagline": "Animated AI state pill with spring transitions and beacon pulse.",
+    "category": "Motion",
+    "badges": [
+      "New",
+      "AI",
+      "Badge"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": false,
+    "keywords": [
+      "ai status",
+      "ai badge",
+      "status indicator",
+      "live badge",
+      "ai state",
+      "presence badge"
+    ]
+  },
+  {
+    "id": "ai-streaming-text",
+    "slug": "ai-streaming-text",
+    "componentName": "AIStreamingText",
+    "title": "AI Streaming Text",
+    "description": "Character-by-character text renderer that simulates real-time AI token streaming, complete with a physics-spring blinking cursor that vanishes when generation completes.",
+    "tagline": "Render AI responses character-by-character with a live cursor.",
+    "category": "Text",
+    "badges": [
+      "New",
+      "AI",
+      "Streaming"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "ai text",
+      "streaming text",
+      "typewriter ai",
+      "chatgpt animation",
+      "token streaming",
+      "llm output"
+    ]
+  },
+  {
+    "id": "ai-thinking-loader",
+    "slug": "ai-thinking-loader",
+    "componentName": "AIThinkingLoader",
+    "title": "AI Thinking Loader",
+    "description": "Physics-grade animated loading indicator that communicates AI processing states. Three spring-animated orbs in dots, wave, or ring variants — far richer than plain CSS keyframe spinners.",
+    "tagline": "Spring-physics AI thinking indicator with dots, wave, and ring variants.",
+    "category": "Motion",
+    "badges": [
+      "New",
+      "AI",
+      "Loader"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": false,
+    "keywords": [
+      "ai loader",
+      "thinking indicator",
+      "dots loader",
+      "wave loader",
+      "ai spinner",
+      "loading animation"
+    ]
+  },
+  {
     "id": "accordion",
     "slug": "accordion",
     "componentName": "Accordion",
@@ -1335,6 +1503,29 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "god rays",
       "atmosphere",
       "hero background"
+    ]
+  },
+  {
+    "id": "hover-cursor-shimmer-text",
+    "slug": "hover-cursor-shimmer-text",
+    "componentName": "HoverCursorShimmerText",
+    "title": "Hover Cursor Shimmer Text",
+    "description": "Text typography that shimmers strictly at the cursor's hover position using a hardware-accelerated dynamic radial mask beam.",
+    "tagline": "Localized text shimmer effect following pointer coordinates.",
+    "category": "Text",
+    "badges": [
+      "New",
+      "Micro-interaction",
+      "Typography"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "hover shimmer text",
+      "cursor shimmer text",
+      "text hover effect",
+      "radial mask text",
+      "localized shimmer"
     ]
   },
   {

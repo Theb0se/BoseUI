@@ -7,6 +7,13 @@
 
 import type React from "react";
 import { createComponentDemo } from "@/registry/ComponentDemoWrapper";
+import { AIChatBubble } from "@/components/ui/AIChatBubble";
+import { AICommandBar } from "@/components/ui/AICommandBar";
+import { AIGenerationProgress } from "@/components/ui/AIGenerationProgress";
+import { AIPromptInput } from "@/components/ui/AIPromptInput";
+import { AIStatusBadge } from "@/components/ui/AIStatusBadge";
+import { AIStreamingText } from "@/components/ui/AIStreamingText";
+import { AIThinkingLoader } from "@/components/ui/AIThinkingLoader";
 import { Accordion } from "@/components/ui/Accordion";
 import { AccordionStackCards } from "@/components/ui/AccordionStackCards";
 import { AnimatedTabs } from "@/components/ui/AnimatedTabs";
@@ -62,6 +69,7 @@ import { HoldToConfirmButton } from "@/components/ui/HoldToConfirmButton";
 import { HoldToEngageFAB } from "@/components/ui/HoldToEngageFAB";
 import { HolographicFlipCard } from "@/components/ui/HolographicFlipCard";
 import { HorizonLight } from "@/components/ui/HorizonLight";
+import { HoverCursorShimmerText } from "@/components/ui/HoverCursorShimmerText";
 import { HoverRevealFeatureGrid } from "@/components/ui/HoverRevealFeatureGrid";
 import { InteractiveGridBeam } from "@/components/ui/InteractiveGridBeam";
 import { IsometricCity } from "@/components/ui/IsometricCity";
@@ -151,6 +159,13 @@ import { Waterfall } from "@/components/ui/Waterfall";
 import { WormholeTunnel } from "@/components/ui/WormholeTunnel";
 
 export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
+  "ai-chat-bubble": createComponentDemo("ai-chat-bubble", AIChatBubble),
+  "ai-command-bar": createComponentDemo("ai-command-bar", AICommandBar),
+  "ai-generation-progress": createComponentDemo("ai-generation-progress", AIGenerationProgress),
+  "ai-prompt-input": createComponentDemo("ai-prompt-input", AIPromptInput),
+  "ai-status-badge": createComponentDemo("ai-status-badge", AIStatusBadge),
+  "ai-streaming-text": createComponentDemo("ai-streaming-text", AIStreamingText),
+  "ai-thinking-loader": createComponentDemo("ai-thinking-loader", AIThinkingLoader),
   "accordion": createComponentDemo("accordion", Accordion),
   "accordion-stack-cards": createComponentDemo("accordion-stack-cards", AccordionStackCards),
   "animated-tabs": createComponentDemo("animated-tabs", AnimatedTabs),
@@ -206,6 +221,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "hold-to-engage-fab": createComponentDemo("hold-to-engage-fab", HoldToEngageFAB),
   "holographic-flip-card": createComponentDemo("holographic-flip-card", HolographicFlipCard),
   "horizon-light": createComponentDemo("horizon-light", HorizonLight),
+  "hover-cursor-shimmer-text": createComponentDemo("hover-cursor-shimmer-text", HoverCursorShimmerText),
   "hover-reveal-feature-grid": createComponentDemo("hover-reveal-feature-grid", HoverRevealFeatureGrid),
   "interactive-grid-beam": createComponentDemo("interactive-grid-beam", InteractiveGridBeam),
   "isometric-city": createComponentDemo("isometric-city", IsometricCity),

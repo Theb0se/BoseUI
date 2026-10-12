@@ -5,15 +5,26 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Github, Sun, Moon, Sparkles } from "lucide-react";
+import {
+  Search,
+  Github,
+  Sun,
+  Moon,
+  Menu,
+  X,
+  ArrowRight,
+  BookOpen,
+  Layers,
+  FileText,
+} from "lucide-react";
 import { useCommandPalette } from "@/components/layout/CommandPalette";
 import { useTheme } from "@/components/layout/ThemeProvider";
 import { cn, SITE_CONFIG } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { href: "/components", label: "Components" },
-  { href: "/docs", label: "Docs" },
-  { href: "/blog", label: "Blog" },
+  { href: "/components", label: "Components", icon: Layers },
+  { href: "/docs", label: "Docs", icon: BookOpen },
+  { href: "/blog", label: "Blog", icon: FileText },
 ];
 
 const focusRing =
@@ -26,6 +37,24 @@ export function Navbar() {
   const [shortcut, setShortcut] = useState("⌘K");
   const [scrolled, setScrolled] = useState(false);
   const [hoveredNav, setHoveredNav] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
 
   // Detect platform keyboard shortcut
   useEffect(() => {
@@ -52,18 +81,18 @@ export function Navbar() {
         "sticky top-0 z-50 w-full transition-all duration-300",
         "border-b backdrop-blur-xl supports-[backdrop-filter]:backdrop-blur-xl",
         scrolled
-          ? "border-neutral-200/90 bg-white/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:border-neutral-800/90 dark:bg-black/80 dark:shadow-[0_4px_24px_-4px_rgba(0,0,0,0.4)]"
-          : "border-neutral-200/60 bg-white/60 dark:border-neutral-800/60 dark:bg-black/60"
+          ? "border-neutral-200/90 bg-white/85 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:border-neutral-800/90 dark:bg-black/85 dark:shadow-[0_4px_24px_-4px_rgba(0,0,0,0.4)]"
+          : "border-neutral-200/60 bg-white/65 dark:border-neutral-800/60 dark:bg-black/65"
       )}
     >
-      <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-2.5 px-3 sm:h-16 sm:gap-4 sm:px-6 lg:px-8">
-        {/* Left: Brand logo + Kinetic Navigation */}
-        <div className="flex min-w-0 items-center gap-2 sm:gap-5 md:gap-7">
+      <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-2 px-3 sm:h-16 sm:gap-4 sm:px-6 lg:px-8">
+        {/* Left: Brand logo + Desktop Nav */}
+        <div className="flex min-w-0 items-center gap-2 sm:gap-4 md:gap-6">
           <Link
             href="/"
             aria-label="BoseUI Home"
             className={cn(
-              "group flex shrink-0 items-center gap-2.5 rounded-lg py-1 transition-transform active:scale-95",
+              "group flex shrink-0 items-center gap-2 rounded-lg py-1 transition-transform active:scale-95",
               focusRing
             )}
           >
@@ -88,13 +117,13 @@ export function Navbar() {
             </div>
           </Link>
 
-          {/* Hairline divider */}
-          <div className="hidden h-4 w-px bg-neutral-200 dark:bg-neutral-800 sm:block" aria-hidden="true" />
+          {/* Desktop Hairline divider */}
+          <div className="hidden h-4 w-px bg-neutral-200 dark:bg-neutral-800 md:block" aria-hidden="true" />
 
-          {/* Kinetic Nav Links with Framer Motion sliding pill */}
+          {/* Desktop Nav Links */}
           <nav
             aria-label="Main navigation"
-            className="flex items-center gap-0.5 rounded-xl p-0.5"
+            className="hidden items-center gap-0.5 rounded-xl p-0.5 md:flex"
             onMouseLeave={() => setHoveredNav(null)}
           >
             {NAV_LINKS.map((link) => {
@@ -109,7 +138,7 @@ export function Navbar() {
                   aria-current={isActive ? "page" : undefined}
                   onMouseEnter={() => setHoveredNav(link.href)}
                   className={cn(
-                    "relative rounded-lg px-2.5 py-1.5 text-[13px] font-medium transition-colors sm:px-3 sm:text-sm",
+                    "relative rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
                     focusRing,
                     isActive
                       ? "text-neutral-950 font-semibold dark:text-white"
@@ -129,7 +158,7 @@ export function Navbar() {
                     />
                   )}
 
-                  {/* Hover background for inactive items */}
+                  {/* Hover background */}
                   {!isActive && isHovered && (
                     <motion.div
                       layoutId="navbar-hover-indicator"
@@ -149,7 +178,7 @@ export function Navbar() {
           </nav>
         </div>
 
-        {/* Right: Omnibar Search + Actions */}
+        {/* Right: Omnibar Search + Actions + Mobile Menu Toggle */}
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           {/* Omnibar Search Trigger Button */}
           <motion.button
@@ -158,7 +187,7 @@ export function Navbar() {
             onClick={openPalette}
             aria-label="Search components and docs"
             className={cn(
-              "group relative flex h-9 items-center justify-between gap-3 rounded-lg px-2.5 text-sm transition-all sm:w-56 lg:w-64",
+              "group relative flex h-9 items-center justify-between gap-2 rounded-lg px-2 text-sm transition-all sm:w-52 sm:px-2.5 md:w-60 lg:w-64",
               "border border-neutral-200/90 bg-neutral-50/80 text-neutral-500 shadow-sm hover:border-neutral-300 hover:bg-neutral-100/80 hover:text-neutral-900",
               "dark:border-neutral-800/90 dark:bg-neutral-950/70 dark:text-neutral-400 dark:hover:border-neutral-700 dark:hover:bg-neutral-900/80 dark:hover:text-white",
               focusRing
@@ -169,17 +198,15 @@ export function Navbar() {
               <span className="hidden text-xs sm:inline-block">Search components...</span>
             </div>
 
-            <div className="flex items-center gap-1">
-              <kbd className="hidden rounded-md border border-neutral-200 bg-white px-1.5 py-0.5 font-mono text-[10px] font-medium text-neutral-500 shadow-[0_1px_1px_rgba(0,0,0,0.05)] transition-colors group-hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 dark:group-hover:border-neutral-700 sm:inline-block">
-                {shortcut}
-              </kbd>
-            </div>
+            <kbd className="hidden rounded-md border border-neutral-200 bg-white px-1.5 py-0.5 font-mono text-[10px] font-medium text-neutral-500 shadow-[0_1px_1px_rgba(0,0,0,0.05)] transition-colors group-hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 dark:group-hover:border-neutral-700 sm:inline-block">
+              {shortcut}
+            </kbd>
           </motion.button>
 
-          {/* Hairline Divider */}
-          <div className="h-4 w-px bg-neutral-200 dark:bg-neutral-800" aria-hidden="true" />
+          {/* Hairline Divider (Desktop) */}
+          <div className="hidden h-4 w-px bg-neutral-200 dark:bg-neutral-800 sm:block" aria-hidden="true" />
 
-          {/* Kinetic Theme Toggle Button with Rotational Motion */}
+          {/* Theme Toggle Button */}
           <motion.button
             whileTap={{ scale: 0.92 }}
             whileHover={{ scale: 1.05 }}
@@ -212,7 +239,7 @@ export function Navbar() {
             </AnimatePresence>
           </motion.button>
 
-          {/* GitHub Repo Button with tactile bounce */}
+          {/* GitHub Repo Button (Desktop) */}
           <motion.a
             whileTap={{ scale: 0.92 }}
             whileHover={{ scale: 1.05 }}
@@ -222,7 +249,7 @@ export function Navbar() {
             aria-label="GitHub repository"
             title="View BoseUI on GitHub"
             className={cn(
-              "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors",
+              "hidden h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors sm:flex",
               "border border-neutral-200/90 bg-neutral-50/80 text-neutral-600 hover:border-neutral-300 hover:bg-neutral-100 hover:text-neutral-950",
               "dark:border-neutral-800/90 dark:bg-neutral-950/70 dark:text-neutral-400 dark:hover:border-neutral-700 dark:hover:bg-neutral-900 dark:hover:text-white",
               focusRing
@@ -230,8 +257,122 @@ export function Navbar() {
           >
             <Github className="h-4 w-4" />
           </motion.a>
+
+          {/* Mobile Menu Toggle Button */}
+          <motion.button
+            whileTap={{ scale: 0.92 }}
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            className={cn(
+              "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors md:hidden",
+              "border border-neutral-200/90 bg-neutral-50/80 text-neutral-700 hover:bg-neutral-100",
+              "dark:border-neutral-800/90 dark:bg-neutral-950/70 dark:text-neutral-300 dark:hover:bg-neutral-900",
+              focusRing
+            )}
+          >
+            {mobileMenuOpen ? (
+              <X className="h-4 w-4" />
+            ) : (
+              <Menu className="h-4 w-4" />
+            )}
+          </motion.button>
         </div>
       </div>
+
+      {/* Mobile Drawer Navigation Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden border-b border-neutral-200 bg-white/95 px-4 pb-6 pt-3 shadow-xl backdrop-blur-2xl dark:border-neutral-800 dark:bg-black/95 md:hidden"
+          >
+            <nav className="flex flex-col gap-1">
+              {NAV_LINKS.map((link) => {
+                const isActive =
+                  pathname === link.href || pathname.startsWith(`${link.href}/`);
+                const Icon = link.icon;
+
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      "flex items-center justify-between rounded-xl px-3.5 py-3 text-sm font-medium transition-colors",
+                      isActive
+                        ? "bg-black text-white font-semibold dark:bg-white dark:text-black shadow-sm"
+                        : "text-neutral-700 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-neutral-900"
+                    )}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Icon className="h-4 w-4" />
+                      <span>{link.label}</span>
+                    </div>
+                    <ArrowRight className="h-3.5 w-3.5 opacity-60" />
+                  </Link>
+                );
+              })}
+
+              <div className="my-2 h-px bg-neutral-200 dark:bg-neutral-800" />
+
+              {/* Mobile GitHub & Search Actions & Theme Switcher */}
+              <div className="flex flex-col gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    openPalette();
+                  }}
+                  className="flex w-full items-center justify-between rounded-xl border border-neutral-200 bg-neutral-50 px-3.5 py-2.5 text-xs font-medium text-neutral-600 transition-colors hover:border-neutral-300 hover:text-neutral-900 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-400 dark:hover:border-neutral-700 dark:hover:text-white"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Search className="h-3.5 w-3.5" />
+                    <span>Search all 135+ components...</span>
+                  </div>
+                  <kbd className="rounded border border-neutral-200 bg-white px-1.5 py-0.5 font-mono text-[10px] text-neutral-500 shadow-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400">
+                    {shortcut}
+                  </kbd>
+                </button>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={toggleTheme}
+                    className="flex items-center justify-center gap-2 rounded-xl border border-neutral-200 bg-neutral-50 py-2.5 text-xs font-medium text-neutral-800 transition-colors hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-200 dark:hover:border-neutral-700"
+                  >
+                    {theme === "dark" ? (
+                      <>
+                        <Sun className="h-4 w-4 text-amber-500" />
+                        <span>Light Mode</span>
+                      </>
+                    ) : (
+                      <>
+                        <Moon className="h-4 w-4 text-neutral-700" />
+                        <span>Dark Mode</span>
+                      </>
+                    )}
+                  </button>
+
+                  <a
+                    href={SITE_CONFIG.author.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 rounded-xl border border-neutral-200 bg-neutral-50 py-2.5 text-xs font-medium text-neutral-800 transition-colors hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-200 dark:hover:border-neutral-700"
+                  >
+                    <Github className="h-4 w-4" />
+                    <span>GitHub</span>
+                  </a>
+                </div>
+              </div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { COMPONENT_DEMOS } from "@/registry/generated-demos";
 import { BLOCK_COMPONENTS } from "@/components/blocks/registry";
@@ -149,7 +149,18 @@ import {
   EyeOff,
   Coins,
   ArrowRight,
+  X,
 } from "lucide-react";
+import { HoverCursorShimmerText } from "../ui/HoverCursorShimmerText";
+
+// AI Components
+import { AIStreamingText } from "@/components/ui/AIStreamingText";
+import { AIThinkingLoader } from "@/components/ui/AIThinkingLoader";
+import { AIStatusBadge } from "@/components/ui/AIStatusBadge";
+import { AIChatBubble } from "@/components/ui/AIChatBubble";
+import { AIPromptInput } from "@/components/ui/AIPromptInput";
+import { AIGenerationProgress } from "@/components/ui/AIGenerationProgress";
+import { AICommandBar } from "@/components/ui/AICommandBar";
 
 /**
  * Interactive preview wrapper for Black Hole
@@ -472,6 +483,292 @@ function RollingNumberTickerPreviewStage({ className }: { className?: string }) 
   );
 }
 
+function AIStreamingTextPreviewStage({ className }: { className?: string }) {
+  const [speed, setSpeed] = useState(20);
+  const [key, setKey] = useState(0);
+  const [selectedPrompt, setSelectedPrompt] = useState(0);
+  const prompts = [
+    "I've analyzed your component hierarchy. The layout projection springs in Framer Motion 11 can be optimized by elevating `layoutId` to shared boundary contexts.",
+    "Quantum superposition allows particles to exist in a linear combination of states until an observation collapses the wavefunction into a definite eigenstate.",
+    "BoseUI is engineered for architectural tactile precision — combining fluid spring physics, zero-runtime overhead, and monochrome minimalism.",
+  ];
+
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto flex flex-col gap-5 p-6", className)}>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
+        <div className="flex items-center gap-1.5">
+          {prompts.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => { setSelectedPrompt(i); setKey((k) => k + 1); }}
+              className={cn(
+                "px-2.5 py-1 text-xs font-mono rounded-lg transition-all",
+                selectedPrompt === i ? "bg-foreground text-background font-medium shadow-sm" : "bg-muted text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Prompt {i + 1}
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setKey((k) => k + 1)}
+            className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-lg border border-border bg-card hover:bg-accent transition-colors"
+          >
+            <RotateCcw className="h-3 w-3" />
+            <span>Replay</span>
+          </button>
+        </div>
+      </div>
+      <div className="min-h-[110px] rounded-2xl border border-border bg-card/60 p-5 shadow-sm">
+        <AIStreamingText
+          key={key}
+          text={prompts[selectedPrompt]}
+          speed={speed}
+          className="text-base font-normal leading-relaxed text-foreground"
+        />
+      </div>
+    </div>
+  );
+}
+
+function AIThinkingLoaderPreviewStage({ className }: { className?: string }) {
+  const [variant, setVariant] = useState<"dots" | "wave" | "ring" | "pulse">("dots");
+  const [showText, setShowText] = useState(true);
+
+  return (
+    <div className={cn("w-full max-w-md mx-auto flex flex-col items-center gap-6 p-6", className)}>
+      <div className="flex flex-wrap items-center justify-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border">
+        {(["dots", "wave", "ring", "pulse"] as const).map((v) => (
+          <button
+            key={v}
+            onClick={() => setVariant(v)}
+            className={cn(
+              "px-3 py-1 text-xs font-medium rounded-lg capitalize transition-all",
+              variant === v ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {v}
+          </button>
+        ))}
+      </div>
+      <div className="flex min-h-[140px] w-full items-center justify-center rounded-2xl border border-border bg-card/60 p-8 shadow-sm">
+        <AIThinkingLoader
+          variant={variant}
+          size={10}
+          text={showText ? "Processing reasoning tokens…" : undefined}
+        />
+      </div>
+    </div>
+  );
+}
+
+function AIStatusBadgePreviewStage({ className }: { className?: string }) {
+  const statuses = ["idle", "thinking", "generating", "done", "error"] as const;
+  const [statusIndex, setStatusIndex] = useState(1);
+  const currentStatus = statuses[statusIndex];
+
+  return (
+    <div className={cn("w-full max-w-md mx-auto flex flex-col items-center gap-6 p-6", className)}>
+      <div className="flex flex-col items-center gap-2">
+        <AIStatusBadge
+          status={currentStatus}
+          onClick={() => setStatusIndex((i) => (i + 1) % statuses.length)}
+          className="text-sm px-4 py-1.5 cursor-pointer"
+        />
+        <span className="text-[11px] text-muted-foreground/60 select-none">
+          Click badge to cycle status
+        </span>
+      </div>
+      <div className="flex flex-wrap items-center justify-center gap-1.5 pt-2 border-t border-border w-full">
+        {statuses.map((s, i) => (
+          <button
+            key={s}
+            onClick={() => setStatusIndex(i)}
+            className={cn(
+              "px-2.5 py-1 text-xs rounded-lg capitalize transition-all",
+              statusIndex === i ? "bg-foreground text-background font-medium shadow-sm" : "bg-muted text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {s}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AIChatBubblePreviewStage({ className }: { className?: string }) {
+  const [messages, setMessages] = useState([
+    { role: "user" as const, content: "Can you create an accessible spring modal for Next.js?", time: "10:24 AM" },
+    { role: "assistant" as const, content: "Here's an accessible modal with Framer Motion spring physics, focus trap, and keyboard Escape handling built for BoseUI.", time: "10:24 AM" },
+  ]);
+  const [isSimulating, setIsSimulating] = useState(false);
+
+  const simulateReply = () => {
+    if (isSimulating) return;
+    setIsSimulating(true);
+    setMessages((m) => [...m, { role: "user" as const, content: "How do I animate list stagger?", time: "10:25 AM" }]);
+    setTimeout(() => {
+      setMessages((m) => [
+        ...m,
+        {
+          role: "assistant" as const,
+          content: "Use `variants` with `transition: { staggerChildren: 0.08 }` on the parent `<motion.ul>` container.",
+          time: "10:25 AM",
+        },
+      ]);
+      setIsSimulating(false);
+    }, 1500);
+  };
+
+  return (
+    <div className={cn("w-full max-w-lg mx-auto flex flex-col gap-4 p-4", className)}>
+      <div className="flex items-center justify-between border-b border-border pb-3">
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-emerald-500" />
+          <span className="text-xs font-mono font-medium text-foreground">AI Conversation Stage</span>
+        </div>
+        <button
+          onClick={simulateReply}
+          disabled={isSimulating}
+          className="text-xs px-2.5 py-1 rounded-lg border border-border bg-card hover:bg-accent transition-colors disabled:opacity-50"
+        >
+          {isSimulating ? "Thinking…" : "+ Simulate Turn"}
+        </button>
+      </div>
+      <div className="flex flex-col gap-3 min-h-[180px]">
+        {messages.map((msg, i) => (
+          <AIChatBubble
+            key={i}
+            role={msg.role}
+            content={msg.content}
+            avatar={msg.role === "user" ? "U" : "AI"}
+            timestamp={msg.time}
+          />
+        ))}
+        {isSimulating && (
+          <AIChatBubble role="assistant" typing avatar="AI" />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function AIPromptInputPreviewStage({ className }: { className?: string }) {
+  const [submitted, setSubmitted] = useState<string[]>([]);
+  const suggestions = [
+    "Explain React 19 Actions",
+    "Generate kinetic button styles",
+    "Refactor to custom hook",
+  ];
+
+  return (
+    <div className={cn("w-full max-w-xl mx-auto flex flex-col gap-4 p-4", className)}>
+      <AIPromptInput
+        placeholder="Ask anything or test prompt input…"
+        suggestions={suggestions}
+        onSubmit={(val) => setSubmitted((prev) => [val, ...prev])}
+      />
+      {submitted.length > 0 && (
+        <div className="mt-2 flex flex-col gap-2 border-t border-border pt-3">
+          <span className="text-[11px] font-mono text-muted-foreground uppercase">Recently Submitted:</span>
+          {submitted.slice(0, 3).map((item, i) => (
+            <div key={i} className="text-xs text-foreground bg-muted/40 p-2.5 rounded-lg border border-border">
+              {item}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AIGenerationProgressPreviewStage({ className }: { className?: string }) {
+  const [progress, setProgress] = useState(65);
+  const [running, setRunning] = useState(false);
+  const [indeterminate, setIndeterminate] = useState(false);
+
+  useEffect(() => {
+    if (!running || indeterminate) return;
+    const interval = setInterval(() => {
+      setProgress((p) => {
+        if (p >= 100) {
+          setRunning(false);
+          return 100;
+        }
+        return p + 1;
+      });
+    }, 40);
+    return () => clearInterval(interval);
+  }, [running, indeterminate]);
+
+  return (
+    <div className={cn("w-full max-w-md mx-auto flex flex-col items-center gap-6 p-6", className)}>
+      <AIGenerationProgress
+        progress={progress}
+        total={500}
+        current={Math.round((progress / 100) * 500)}
+        indeterminate={indeterminate}
+        size={110}
+        statusText={indeterminate ? "Reasoning tokens…" : running ? "Streaming response…" : progress >= 100 ? "Generation Complete" : "Paused"}
+      />
+      <div className="flex items-center gap-2 border-t border-border pt-4 w-full justify-center">
+        <button
+          onClick={() => {
+            if (progress >= 100) setProgress(0);
+            setRunning(!running);
+          }}
+          disabled={indeterminate}
+          className="px-3 py-1.5 text-xs font-medium rounded-lg border border-border bg-card hover:bg-accent transition-colors disabled:opacity-40"
+        >
+          {running ? "Pause" : progress >= 100 ? "Restart" : "Start Progress"}
+        </button>
+        <button
+          onClick={() => { setProgress(0); setRunning(false); }}
+          className="px-3 py-1.5 text-xs font-medium rounded-lg border border-border bg-card hover:bg-accent transition-colors"
+        >
+          Reset
+        </button>
+        <button
+          onClick={() => setIndeterminate(!indeterminate)}
+          className={cn(
+            "px-3 py-1.5 text-xs font-medium rounded-lg border transition-all",
+            indeterminate ? "border-foreground bg-foreground text-background" : "border-border bg-card hover:bg-accent"
+          )}
+        >
+          {indeterminate ? "Determinate" : "Indeterminate"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function AICommandBarPreviewStage({ className }: { className?: string }) {
+  const [lastAction, setLastAction] = useState<string | null>(null);
+
+  return (
+    <div className={cn("w-full max-w-xl mx-auto flex flex-col gap-4 p-4", className)}>
+      <AICommandBar
+        onSelect={(cmd) => setLastAction(`Selected: /${cmd.trigger} (${cmd.label})`)}
+        onSubmit={(cmd, query) => setLastAction(`Executed: ${cmd ? `/${cmd.trigger} ` : ""}"${query}"`)}
+      />
+      {lastAction ? (
+        <div className="flex items-center justify-between rounded-xl border border-border bg-muted/40 p-3 text-xs text-foreground font-mono">
+          <span>{lastAction}</span>
+          <button onClick={() => setLastAction(null)} className="text-muted-foreground hover:text-foreground">
+            <X className="h-3 w-3" />
+          </button>
+        </div>
+      ) : (
+        <p className="text-center text-xs text-muted-foreground">
+          Type <code className="font-mono bg-muted px-1.5 py-0.5 rounded border border-border">/</code> to trigger command dropdown, or type any prompt and press Enter
+        </p>
+      )}
+    </div>
+  );
+}
+
 /**
  * Central Component Preview Factory
  *
@@ -644,9 +941,6 @@ export function ComponentPreview({
         <Thunderstorm rainIntensity={180} lightningFrequency={0.35} windAngle={14} className={className}>
           <div className="relative z-10 flex min-h-[460px] flex-col justify-between p-8">
             <div>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/30 bg-sky-400/10 px-2.5 py-0.5 text-xs font-medium text-sky-300">
-                <Sparkles className="h-3 w-3" /> Procedural Branching Bolts
-              </span>
               <h2 className="mt-2 text-2xl font-bold text-white sm:text-3xl">
                 Thunderstorm
               </h2>
@@ -1079,6 +1373,42 @@ export function ComponentPreview({
           <CopyCodeBlock code="npx boseui add magnetic-button" className={className} />
         </div>
       );
+
+    case "hover-cursor-shimmer-text":
+      return (
+        <div className="w-full max-w-2xl mx-auto p-4 flex items-center justify-center h-24">
+          <HoverCursorShimmerText text="npx boseui add magnetic-button" className={className} as="h1" />
+        </div>
+      );
+
+    // ── AI Components ──
+    case "ai-streaming-text":
+    case "aistreaming-text":
+      return <AIStreamingTextPreviewStage className={className} />;
+
+    case "ai-thinking-loader":
+    case "aithinking-loader":
+      return <AIThinkingLoaderPreviewStage className={className} />;
+
+    case "ai-status-badge":
+    case "aistatus-badge":
+      return <AIStatusBadgePreviewStage className={className} />;
+
+    case "ai-chat-bubble":
+    case "aichat-bubble":
+      return <AIChatBubblePreviewStage className={className} />;
+
+    case "ai-prompt-input":
+    case "aiprompt-input":
+      return <AIPromptInputPreviewStage className={className} />;
+
+    case "ai-generation-progress":
+    case "aigeneration-progress":
+      return <AIGenerationProgressPreviewStage className={className} />;
+
+    case "ai-command-bar":
+    case "aicommand-bar":
+      return <AICommandBarPreviewStage className={className} />;
 
     // ── Default Fallback ──
     default: {

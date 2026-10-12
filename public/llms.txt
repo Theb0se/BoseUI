@@ -1,6 +1,6 @@
 # BoseUI — LLM & AI Assistant Documentation Index
 
-> Modern React components built with Framer Motion, Tailwind CSS, and TypeScript.
+> Kinetic React Components Engineered to Make Interfaces Feel Alive
 > Crafted by Rishabh Bose (https://theb0se.vercel.app/)
 
 ## Overview
@@ -33,7 +33,304 @@ Our latest research on frontend engineering and UI/UX:
 - [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
 - [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
 
-## Available Kinetic Components (142)
+## Available Kinetic Components (150)
+
+### AI Chat Bubble (`AIChatBubble`)
+- **Slug**: `ai-chat-bubble`
+- **Category**: Cards
+- **Tagline**: Physics spring-entrance chat bubble for AI conversation UIs.
+- **Description**: Spring-entrance chat message bubble for AI interfaces. Supports user (right, filled) and assistant (left, outlined) roles, animated typing dots state, optional avatar initials, and timestamp.
+- **Docs URL**: https://boseui.site/components/ai-chat-bubble
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-chat-bubble.json`
+- **Registry Manifest**: https://boseui.site/r/ai-chat-bubble.json
+- **Key Features**:
+  - Spring entrance animation: y:16→0 + opacity fade.
+  - Role-aware layout: user right-aligned filled, assistant left outlined.
+  - Typing dots variant with staggered bounce animation.
+  - Optional avatar initials and timestamp.
+  - prefers-reduced-motion: static render without animation.
+- **Accessibility**:
+  - Text content fully accessible to screen readers.
+  - No motion when prefers-reduced-motion is set.
+- **Props**:
+  - `role` ("user" | "assistant"): Controls bubble alignment and color scheme.
+  - `content` (string): Message text content.
+  - `typing` (boolean, default: false): Show animated typing dots instead of content.
+  - `avatar` (string): Optional avatar initials or emoji.
+  - `timestamp` (string): Optional timestamp string shown below content.
+- **Usage Example**:
+```tsx
+import { AIChatBubble } from "@/components/ui/ai-chat-bubble";
+
+export function Example() {
+  return (
+    <div className="flex flex-col gap-3 p-4 max-w-md">
+      <AIChatBubble role="user" content="How do I center a div?" avatar="U" />
+      <AIChatBubble role="assistant" typing />
+      <AIChatBubble
+        role="assistant"
+        content="Use flexbox: display: flex; align-items: center; justify-content: center;"
+        avatar="AI"
+        timestamp="Just now"
+      />
+    </div>
+  );
+}
+```
+
+---
+
+### AI Command Bar (`AICommandBar`)
+- **Slug**: `ai-command-bar`
+- **Category**: Navigation
+- **Tagline**: Slash-command AI bar with spring suggestions panel and keyboard nav.
+- **Description**: Slash-command aware AI input bar inspired by Linear and Raycast. Type / to reveal a spring-animated suggestions panel with keyboard navigation, staggered item entrance, and a shimmer idle border.
+- **Docs URL**: https://boseui.site/components/ai-command-bar
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-command-bar.json`
+- **Registry Manifest**: https://boseui.site/r/ai-command-bar.json
+- **Key Features**:
+  - Type / to trigger animated suggestions panel with spring AnimatePresence.
+  - Staggered item entrance animation per suggestion row.
+  - Full keyboard navigation: Arrow keys to move, Enter to select, Escape to dismiss.
+  - layoutId spring highlight slides smoothly between hovered items.
+  - Rotating conic-gradient shimmer on border in idle state.
+  - Fully configurable commands array.
+- **Accessibility**:
+  - role='combobox' on input with aria-expanded and aria-autocomplete.
+  - role='listbox' + role='option' on suggestions panel.
+  - Keyboard-only navigation support.
+- **Props**:
+  - `commands` (AICommand[]): Array of slash commands with trigger, label, description.
+  - `onSelect` ((command: AICommand) => void): Called when a command is selected.
+  - `placeholder` (string, default: "Type / for AI commands…"): Input placeholder text.
+- **Usage Example**:
+```tsx
+import { AICommandBar } from "@/components/ui/ai-command-bar";
+
+const commands = [
+  { id: "summarize", trigger: "summarize", label: "Summarize", description: "Summarize selected text" },
+  { id: "explain", trigger: "explain", label: "Explain", description: "Explain this concept" },
+];
+
+export function Example() {
+  return (
+    <div className="w-full max-w-xl mx-auto">
+      <AICommandBar
+        commands={commands}
+        onSelect={(cmd) => console.log("Selected:", cmd.label)}
+      />
+    </div>
+  );
+}
+```
+
+---
+
+### AI Generation Progress (`AIGenerationProgress`)
+- **Slug**: `ai-generation-progress`
+- **Category**: Motion
+- **Tagline**: Spring-physics ring progress for AI generation with token counter.
+- **Description**: Spring-animated SVG ring progress indicator for AI token generation. Shows determinate progress with a rolling token counter, or an indeterminate spin when total is unknown.
+- **Docs URL**: https://boseui.site/components/ai-generation-progress
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-generation-progress.json`
+- **Registry Manifest**: https://boseui.site/r/ai-generation-progress.json
+- **Key Features**:
+  - Spring-animated stroke-dashoffset for smooth arc fill on progress changes.
+  - Indeterminate spinning arc when total token count is unknown.
+  - Center displays current/total tokens or percentage.
+  - Configurable size and stroke width.
+  - Accessible with role=progressbar and aria attributes.
+- **Accessibility**:
+  - role='progressbar' with aria-valuenow, aria-valuemin, aria-valuemax.
+  - aria-label for screen reader identification.
+- **Props**:
+  - `progress` (number, default: 0): Progress 0–100. Ignored in indeterminate mode.
+  - `current` (number): Current token count shown in ring center.
+  - `total` (number): Total token count shown in ring center.
+  - `indeterminate` (boolean, default: false): Spin indeterminately when total is unknown.
+  - `size` (number, default: 96): Ring diameter in pixels.
+  - `strokeWidth` (number, default: 5): Ring stroke width in pixels.
+- **Usage Example**:
+```tsx
+import { AIGenerationProgress } from "@/components/ui/ai-generation-progress";
+
+export function Example() {
+  return (
+    <div className="flex items-center gap-6">
+      <AIGenerationProgress progress={65} current={325} total={500} />
+      <AIGenerationProgress indeterminate />
+    </div>
+  );
+}
+```
+
+---
+
+### AI Prompt Input (`AIPromptInput`)
+- **Slug**: `ai-prompt-input`
+- **Category**: Inputs
+- **Tagline**: Auto-expanding AI prompt field with spring-morphing submit button.
+- **Description**: Auto-expanding AI textarea with a morphing submit button that transitions between arrow, spinner, and check states using spring physics. Includes character counter with color warnings and ⌘↵ keyboard shortcut.
+- **Docs URL**: https://boseui.site/components/ai-prompt-input
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-prompt-input.json`
+- **Registry Manifest**: https://boseui.site/r/ai-prompt-input.json
+- **Key Features**:
+  - Auto-resizes vertically as content grows (max 180px).
+  - Submit button morphs: arrow → spinner → check with spring AnimatePresence.
+  - Character counter appears on first keystroke with color warnings near limit.
+  - ⌘↵ keyboard shortcut to submit.
+  - External loading state prop for async submit flows.
+  - prefers-reduced-motion: no button morph animation.
+- **Accessibility**:
+  - aria-label on textarea and submit button.
+  - aria-multiline='true' on textarea.
+  - Disabled state on submit button when empty or loading.
+- **Props**:
+  - `placeholder` (string, default: "Ask anything…"): Textarea placeholder text.
+  - `maxLength` (number, default: 500): Maximum character count.
+  - `onSubmit` ((value: string) => void): Called with trimmed text when submitted.
+  - `loading` (boolean, default: false): External loading state — shows spinner and blocks submit.
+- **Usage Example**:
+```tsx
+import { AIPromptInput } from "@/components/ui/ai-prompt-input";
+
+export function Example() {
+  async function handleSubmit(text: string) {
+    console.log("Submitting:", text);
+  }
+
+  return (
+    <div className="w-full max-w-xl mx-auto">
+      <AIPromptInput
+        placeholder="Ask me anything…"
+        maxLength={400}
+        onSubmit={handleSubmit}
+      />
+    </div>
+  );
+}
+```
+
+---
+
+### AI Status Badge (`AIStatusBadge`)
+- **Slug**: `ai-status-badge`
+- **Category**: Motion
+- **Tagline**: Animated AI state pill with spring transitions and beacon pulse.
+- **Description**: Live AI presence pill that communicates real-time processing state — Idle, Thinking, Generating, Done, or Error. Each state transitions with spring animation and a pulsing beacon dot.
+- **Docs URL**: https://boseui.site/components/ai-status-badge
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-status-badge.json`
+- **Registry Manifest**: https://boseui.site/r/ai-status-badge.json
+- **Key Features**:
+  - 5 states: idle, thinking, generating, done, error — each with distinct color.
+  - AnimatePresence spring morph between label text on state change.
+  - Pulsing beacon dot for active states (thinking, generating).
+  - CSS variable colors — works in dark and light mode automatically.
+  - prefers-reduced-motion: static badge without pulse or transitions.
+- **Accessibility**:
+  - role='status' + aria-label announces state to screen readers.
+  - Color is never the sole differentiator — label text always present.
+- **Props**:
+  - `status` ("idle" | "thinking" | "generating" | "done" | "error"): Current AI processing state.
+- **Usage Example**:
+```tsx
+import { AIStatusBadge } from "@/components/ui/ai-status-badge";
+
+export function Example() {
+  return (
+    <div className="flex gap-2 flex-wrap">
+      <AIStatusBadge status="idle" />
+      <AIStatusBadge status="thinking" />
+      <AIStatusBadge status="generating" />
+      <AIStatusBadge status="done" />
+      <AIStatusBadge status="error" />
+    </div>
+  );
+}
+```
+
+---
+
+### AI Streaming Text (`AIStreamingText`)
+- **Slug**: `ai-streaming-text`
+- **Category**: Text
+- **Tagline**: Render AI responses character-by-character with a live cursor.
+- **Description**: Character-by-character text renderer that simulates real-time AI token streaming, complete with a physics-spring blinking cursor that vanishes when generation completes.
+- **Docs URL**: https://boseui.site/components/ai-streaming-text
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-streaming-text.json`
+- **Registry Manifest**: https://boseui.site/r/ai-streaming-text.json
+- **Key Features**:
+  - Configurable streaming speed per character in milliseconds.
+  - Blinking pipe cursor with AnimatePresence fade-out on completion.
+  - prefers-reduced-motion: instantly reveals full text.
+  - onComplete callback for chaining responses or UI transitions.
+  - Auto-restarts animation when text prop changes.
+- **Accessibility**:
+  - Uses inline span — preserves semantics for screen readers.
+  - Full text visible immediately for reduced-motion users.
+- **Props**:
+  - `text` (string): The full text to stream.
+  - `speed` (number, default: 28): Milliseconds per character.
+  - `showCursor` (boolean, default: true): Show blinking cursor while streaming.
+  - `cursorChar` (string, default: "|"): Character to use as cursor.
+  - `onComplete` (() => void): Called when streaming finishes.
+  - `autoRestart` (boolean, default: true): Restart animation when text prop changes.
+- **Usage Example**:
+```tsx
+import { AIStreamingText } from "@/components/ui/ai-streaming-text";
+
+export function Example() {
+  return (
+    <p className="text-lg font-medium">
+      <AIStreamingText
+        text="Here's how I can help you build beautiful interfaces."
+        speed={30}
+        onComplete={() => console.log("Done!")}
+      />
+    </p>
+  );
+}
+```
+
+---
+
+### AI Thinking Loader (`AIThinkingLoader`)
+- **Slug**: `ai-thinking-loader`
+- **Category**: Motion
+- **Tagline**: Spring-physics AI thinking indicator with dots, wave, and ring variants.
+- **Description**: Physics-grade animated loading indicator that communicates AI processing states. Three spring-animated orbs in dots, wave, or ring variants — far richer than plain CSS keyframe spinners.
+- **Docs URL**: https://boseui.site/components/ai-thinking-loader
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-thinking-loader.json`
+- **Registry Manifest**: https://boseui.site/r/ai-thinking-loader.json
+- **Key Features**:
+  - Three variants: dots (scale pulse), wave (vertical oscillation), ring (arc spinner).
+  - Staggered spring physics per dot for natural organic feel.
+  - prefers-reduced-motion: static rendering.
+  - Fully accessible with role=status and aria-label.
+  - Configurable dot size and custom aria label.
+- **Accessibility**:
+  - role='status' + aria-label for screen reader announcement.
+  - Static rendering when reduced motion is preferred.
+- **Props**:
+  - `variant` ("dots" | "wave" | "ring", default: "dots"): Animation style variant.
+  - `size` (number, default: 8): Orb diameter in pixels.
+  - `label` (string, default: "AI is thinking…"): Accessible status label.
+- **Usage Example**:
+```tsx
+import { AIThinkingLoader } from "@/components/ui/ai-thinking-loader";
+
+export function Example() {
+  return (
+    <div className="flex items-center gap-3">
+      <AIThinkingLoader variant="dots" />
+      <AIThinkingLoader variant="wave" size={10} />
+      <AIThinkingLoader variant="ring" size={6} />
+    </div>
+  );
+}
+```
+
+---
 
 ### Accordion (`Accordion`)
 - **Slug**: `accordion`
@@ -2255,6 +2552,46 @@ export default function HeroSection() {
         </p>
       </div>
     </HorizonLight>
+  );
+}
+```
+
+---
+
+### Hover Cursor Shimmer Text (`HoverCursorShimmerText`)
+- **Slug**: `hover-cursor-shimmer-text`
+- **Category**: Text
+- **Tagline**: Localized text shimmer effect following pointer coordinates.
+- **Description**: Text typography that shimmers strictly at the cursor's hover position using a hardware-accelerated dynamic radial mask beam.
+- **Docs URL**: https://boseui.site/components/hover-cursor-shimmer-text
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/hover-cursor-shimmer-text.json`
+- **Registry Manifest**: https://boseui.site/r/hover-cursor-shimmer-text.json
+- **Key Features**:
+  - Illuminates only the specific portion of the sentence or headline being hovered.
+  - Hardware-accelerated CSS radial gradient mask tracking relative pointer coordinates.
+  - High-specular text shadow glow that follows mouse movements in real time.
+  - Dual-layer structure preserving base typography contrast and screen-reader accessibility.
+- **Accessibility**:
+  - Base text retains standard readable contrast in light and dark mode.
+  - The shimmer overlay is hidden from screen readers via aria-hidden='true' to avoid duplicate pronunciation.
+- **Props**:
+  - `text` (string): Text content to render with cursor-guided shimmer.
+  - `radius` (number, default: 100): Diameter radius in pixels of the active shimmer beam.
+  - `shimmerColor` (string, default: "#ffffff"): Illuminated highlight color.
+  - `glowColor` (string, default: "rgba(255, 255, 255, 0.45)"): Ambient specular glow color around the cursor.
+  - `as` ("span" | "h1" | "h2" | "h3" | "h4" | "p" | "div", default: "span"): Semantic HTML element type.
+- **Usage Example**:
+```tsx
+import { HoverCursorShimmerText } from "@/components/ui/hover-cursor-shimmer-text";
+
+export function Example() {
+  return (
+    <h2 className="text-4xl font-bold">
+      <HoverCursorShimmerText
+        text="Move your cursor across this text to reveal the localized shimmer."
+        radius={120}
+      />
+    </h2>
   );
 }
 ```

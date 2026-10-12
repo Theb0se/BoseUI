@@ -28,6 +28,7 @@ export function useTheme() {
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("dark");
+  const [mounted, setMounted] = useState(false);
 
   const applyTheme = useCallback((nextTheme: Theme) => {
     const root = document.documentElement;
@@ -41,12 +42,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    setMounted(true);
     const stored = window.localStorage.getItem("boseui-theme") as Theme | null;
     if (stored === "light" || stored === "dark") {
       setThemeState(stored);
       applyTheme(stored);
+    } else if (document.documentElement.classList.contains("dark")) {
+      setThemeState("dark");
     } else {
-      applyTheme("dark");
+      setThemeState("light");
     }
   }, [applyTheme]);
 
