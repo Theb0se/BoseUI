@@ -32,6 +32,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "ai-code-execution-sandbox",
+    "slug": "ai-code-execution-sandbox",
+    "componentName": "AICodeExecutionSandbox",
+    "title": "AI Code Execution Sandbox",
+    "description": "Interactive code execution terminal for AI-generated code with Code and Console Output tabs, real-time stdout streaming, execution time telemetry, and run/copy controls.",
+    "tagline": "Interactive terminal execution sandbox for running AI-generated code.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "AI",
+      "Terminal",
+      "Code"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "ai code runner",
+      "code execution sandbox",
+      "ai terminal",
+      "stdout stream",
+      "code output",
+      "developer ai"
+    ]
+  },
+  {
     "id": "ai-command-bar",
     "slug": "ai-command-bar",
     "componentName": "AICommandBar",
@@ -80,6 +105,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "ai-prompt-diff-viewer",
+    "slug": "ai-prompt-diff-viewer",
+    "componentName": "AIPromptDiffViewer",
+    "title": "AI Prompt Diff Viewer",
+    "description": "Cursor and Copilot inspired inline code and text suggestion comparator with inline additions, deletions, split vs inline views, and keyboard-accessible Accept/Reject actions.",
+    "tagline": "Cursor-style inline code suggestion diff comparator with split/inline modes.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "AI",
+      "Diff",
+      "Code"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "ai diff viewer",
+      "cursor diff",
+      "inline suggestion diff",
+      "code comparator",
+      "accept reject diff",
+      "copilot diff"
+    ]
+  },
+  {
     "id": "ai-prompt-input",
     "slug": "ai-prompt-input",
     "componentName": "AIPromptInput",
@@ -101,6 +151,32 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "chat input",
       "expandable input",
       "submit button morph"
+    ]
+  },
+  {
+    "id": "ai-reasoning-accordion",
+    "slug": "ai-reasoning-accordion",
+    "componentName": "AIReasoningAccordion",
+    "title": "AI Reasoning Accordion",
+    "description": "Collapsible DeepSeek-R1 and OpenAI o1 inspired thinking step drawer with animated timeline dots, thought duration timer, spring chevron physics, and one-click step copying.",
+    "tagline": "Collapsible DeepSeek-R1 and o1 style AI reasoning drawer with spring physics.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "AI",
+      "Thinking",
+      "Interactive"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "ai reasoning",
+      "deepseek thinking",
+      "o1 thought drawer",
+      "ai accordion",
+      "chain of thought",
+      "thinking steps",
+      "ai ui"
     ]
   },
   {
@@ -173,6 +249,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "wave loader",
       "ai spinner",
       "loading animation"
+    ]
+  },
+  {
+    "id": "ai-voice-orb",
+    "slug": "ai-voice-orb",
+    "componentName": "AIVoiceOrb",
+    "title": "AI Voice Orb",
+    "description": "Siri and GPT-4o style dynamic chromatic voice visualizer orb built with Canvas 2D. Smoothly transitions across idle, listening, thinking, and speaking states with organic fluid harmonic blobs.",
+    "tagline": "Dynamic Siri and GPT-4o style chromatic voice mesh orb in Canvas 2D.",
+    "category": "Motion",
+    "badges": [
+      "New",
+      "AI",
+      "Voice",
+      "Canvas"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "ai voice orb",
+      "siri visualizer",
+      "gpt-4o voice orb",
+      "voice assistant ui",
+      "audio mesh",
+      "canvas 2d orb"
     ]
   },
   {
@@ -288,6 +389,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "sliding cancel search",
       "animated search input",
       "framer motion search"
+    ]
+  },
+  {
+    "id": "architecture-flowchart-node",
+    "slug": "architecture-flowchart-node",
+    "componentName": "ArchitectureFlowchartNode",
+    "title": "Architecture Flowchart Node",
+    "description": "ReactFlow and AWS Architecture diagrams inspired cloud infrastructure component card featuring interactive system nodes (Edge CDN, Serverless compute, Vector DB, Cache), downstream connection highlights, and real-time throughput metrics.",
+    "tagline": "Interactive cloud system architecture flowchart nodes with live telemetry metrics.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Architecture",
+      "Cloud"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "architecture diagram",
+      "system flowchart",
+      "reactflow node",
+      "cloud infrastructure card",
+      "microservices topology",
+      "aws diagram card"
     ]
   },
   {
@@ -732,6 +858,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "context-token-gauge",
+    "slug": "context-token-gauge",
+    "componentName": "ContextTokenGauge",
+    "title": "Context Token Gauge",
+    "description": "LLM context window capacity meter with radial and segmented linear bar variants, token breakdown metrics (System, Prompt, Completion), and adaptive threshold alerts.",
+    "tagline": "LLM context window capacity gauge with radial and linear breakdown views.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "AI",
+      "Metrics",
+      "LLM"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "context token gauge",
+      "token limit",
+      "llm context window",
+      "token meter",
+      "radial gauge",
+      "ai capacity"
+    ]
+  },
+  {
     "id": "copy-code-block",
     "slug": "copy-code-block",
     "componentName": "CopyCodeBlock",
@@ -755,6 +906,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "cron-schedule-builder",
+    "slug": "cron-schedule-builder",
+    "componentName": "CronScheduleBuilder",
+    "title": "Cron Schedule Builder",
+    "description": "Visual 5-segment Quartz/cron schedule builder with natural English translation, quick presets (hourly, daily, weekdays), input validation hints, and upcoming execution timeline preview.",
+    "tagline": "Visual 5-segment cron schedule builder with natural English translation.",
+    "category": "Inputs",
+    "badges": [
+      "New",
+      "DevTools",
+      "Cron",
+      "Utility"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "cron builder",
+      "quartz cron",
+      "schedule selector",
+      "job scheduler",
+      "cron expression",
+      "github actions cron"
+    ]
+  },
+  {
     "id": "cursor-follower",
     "slug": "cursor-follower",
     "componentName": "CursorFollower",
@@ -775,6 +951,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "framer motion cursor",
       "magnetic pointer",
       "interactive hud cursor"
+    ]
+  },
+  {
+    "id": "database-connection-health-badge",
+    "slug": "database-connection-health-badge",
+    "componentName": "DatabaseConnectionHealthBadge",
+    "title": "Database Connection Health Badge",
+    "description": "Prisma Accelerate and PlanetScale inspired database cluster health monitor with pooled connections gauge, regional ping latency, TLS 1.3 certificate status, and sanitized URI copying.",
+    "tagline": "Database connection pool monitor with latency ping and TLS health indicators.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Database",
+      "Monitoring"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "database health",
+      "connection pool badge",
+      "prisma accelerate",
+      "planetscale status",
+      "latency ping",
+      "tls badge"
     ]
   },
   {
@@ -1040,6 +1241,56 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "env-secret-vault",
+    "slug": "env-secret-vault",
+    "componentName": "EnvSecretVault",
+    "title": "Environment Secret Vault",
+    "description": "Vercel and Doppler inspired encrypted environment variable manager with environment scope tags (Production, Preview, Development), masked values, individual and global reveal toggles, and .env export.",
+    "tagline": "Encrypted environment secret manager with masked values and .env export.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Security",
+      "Secrets"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "env vault",
+      "secret manager",
+      "vercel env",
+      "masked secrets",
+      "dotenv export",
+      "environment variables"
+    ]
+  },
+  {
+    "id": "error-stack-trace-inspector",
+    "slug": "error-stack-trace-inspector",
+    "componentName": "ErrorStackTraceInspector",
+    "title": "Error Stack Trace Inspector",
+    "description": "Sentry and Bugsnag inspired error breakdown card with project vs vendor code frame filtering, inline source code context with error squiggles, and copy markdown issue formatting.",
+    "tagline": "Collapsible error stack trace inspector with source code context.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Observability",
+      "Debugging"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "error stack trace",
+      "sentry inspector",
+      "exception frame",
+      "bugsnag card",
+      "error context",
+      "debugging tool"
+    ]
+  },
+  {
     "id": "expandable-bento-card",
     "slug": "expandable-bento-card",
     "componentName": "ExpandableBentoCard",
@@ -1136,6 +1387,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "bento card",
       "media card",
       "hover lift card"
+    ]
+  },
+  {
+    "id": "feature-flag-toggle-stack",
+    "slug": "feature-flag-toggle-stack",
+    "componentName": "FeatureFlagToggleStack",
+    "title": "Feature Flag Toggle Stack",
+    "description": "LaunchDarkly and PostHog inspired feature flag management card with master kill-switch toggles, gradual traffic allocation sliders (0% to 100%), targeting rule badges, and environment scopes.",
+    "tagline": "Feature flag rollout controller with gradual traffic allocation sliders.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Flags",
+      "Rollouts"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "feature flag",
+      "launchdarkly card",
+      "traffic rollout",
+      "kill switch",
+      "posthog feature flags",
+      "gradual rollout"
     ]
   },
   {
@@ -1382,6 +1658,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "health-check-status-matrix",
+    "slug": "health-check-status-matrix",
+    "componentName": "HealthCheckStatusMatrix",
+    "title": "Health Check Status Matrix",
+    "description": "BetterStack and Statuspage inspired service availability tracker with segmented rolling uptime day bars, multi-service breakdowns, hover incident popovers, and overall SLA metrics.",
+    "tagline": "Rolling 45-day uptime status matrix with interactive incident telemetry.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Observability",
+      "Status"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "status matrix",
+      "uptime tracker",
+      "health check",
+      "betterstack status",
+      "incident monitor",
+      "sla metric"
+    ]
+  },
+  {
     "id": "heart-burst-button",
     "slug": "heart-burst-button",
     "componentName": "HeartBurstButton",
@@ -1605,6 +1906,81 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "interactive-api-endpoint-bar",
+    "slug": "interactive-api-endpoint-bar",
+    "componentName": "InteractiveApiEndpointBar",
+    "title": "Interactive API Endpoint Bar",
+    "description": "Postman and Scalar inspired monospace live HTTP request runner with method pills (GET, POST, PUT, DELETE), endpoint path editing, status latency indicators, and expandable JSON response viewer.",
+    "tagline": "Live HTTP request runner with expandable JSON response payload.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "API",
+      "Network"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "api runner",
+      "http endpoint bar",
+      "rest client",
+      "json response viewer",
+      "curl copy",
+      "postman style"
+    ]
+  },
+  {
+    "id": "interactive-code-diff",
+    "slug": "interactive-code-diff",
+    "componentName": "InteractiveCodeDiff",
+    "title": "Interactive Code Diff",
+    "description": "Monospace developer diff card with line gutters, hunk headers, collapsible code blocks, unified versus split 2-column layouts, and copy hunk controls.",
+    "tagline": "Split and Unified developer syntax code diff comparator.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Code",
+      "Git"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "code diff",
+      "git diff",
+      "syntax comparator",
+      "split diff",
+      "unified diff",
+      "developer tools"
+    ]
+  },
+  {
+    "id": "interactive-git-graph",
+    "slug": "interactive-git-graph",
+    "componentName": "InteractiveGitGraph",
+    "title": "Interactive Git Graph",
+    "description": "Visual SVG Git commit tree illustrating multi-branch workflows with animated bezier curves, branch lane filtering, interactive commit nodes, and SHA copying.",
+    "tagline": "Visual SVG Git commit tree with multi-branch lanes and commit inspection.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Git",
+      "Interactive"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "git graph",
+      "git tree",
+      "commit graph",
+      "branch visualizer",
+      "developer tools",
+      "svg git tree"
+    ]
+  },
+  {
     "id": "interactive-grid-beam",
     "slug": "interactive-grid-beam",
     "componentName": "InteractiveGridBeam",
@@ -1628,6 +2004,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "interactive-pricing-tier-dial",
+    "slug": "interactive-pricing-tier-dial",
+    "componentName": "InteractivePricingTierDial",
+    "title": "Interactive Pricing Tier Dial",
+    "description": "Logarithmic scrubbable SaaS pricing calculator with dynamic tier switching (Starter, Pro, Growth, Scale), annual discount percentage toggles, and live feature checklists.",
+    "tagline": "Logarithmic scrubbable pricing slider with dynamic tier switching.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "Fintech",
+      "Pricing",
+      "Interactive"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "pricing slider",
+      "saas pricing calculator",
+      "tier dial",
+      "stripe pricing",
+      "usage billing",
+      "interactive pricing"
+    ]
+  },
+  {
     "id": "isometric-city",
     "slug": "isometric-city",
     "componentName": "IsometricCity",
@@ -1648,6 +2049,56 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "procedural buildings canvas",
       "night city background",
       "isometric grid"
+    ]
+  },
+  {
+    "id": "json-schema-form-validator",
+    "slug": "json-schema-form-validator",
+    "componentName": "JsonSchemaFormValidator",
+    "title": "JSON Schema Form Validator",
+    "description": "VSCode Problems tab and Monaco inspired split editor with real-time JSON syntax parsing, schema constraint validation diagnostics, one-click formatting/prettify, and clipboard payload copying.",
+    "tagline": "Split-view JSON schema editor with real-time constraint diagnostics.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "JSON",
+      "Validation"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "json schema",
+      "json validator",
+      "vscode problems",
+      "monaco diagnostics",
+      "schema checker",
+      "syntax validator"
+    ]
+  },
+  {
+    "id": "keyboard-shortcut-stack",
+    "slug": "keyboard-shortcut-stack",
+    "componentName": "KeyboardShortcutStack",
+    "title": "Keyboard Shortcut Stack",
+    "description": "Raycast and Linear inspired tactile 3D keyboard keycap badges with real window keyboard event listeners that physically depress and glow when pressed on physical keyboards.",
+    "tagline": "Tactile 3D keyboard keycap badges with real-time physical keyboard listeners.",
+    "category": "Buttons",
+    "badges": [
+      "New",
+      "DevTools",
+      "Interactive",
+      "3D"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "keyboard shortcut",
+      "physical keycap",
+      "raycast hotkey",
+      "linear keycap",
+      "3d keycap",
+      "shortcut badges"
     ]
   },
   {
@@ -1913,6 +2364,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "luhn algorithm",
       "card brand detection",
       "payment ui"
+    ]
+  },
+  {
+    "id": "live-log-streamer",
+    "slug": "live-log-streamer",
+    "componentName": "LiveLogStreamer",
+    "title": "Live Log Streamer",
+    "description": "Datadog and Cloudflare Workers inspired streaming terminal log viewer with log level filters (INFO, WARN, ERROR, DEBUG), auto-scroll lock, live pause/resume stream, search filtering, and copy logs.",
+    "tagline": "Real-time streaming console log viewer with level filtering and search.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Logging",
+      "Observability"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "log streamer",
+      "terminal logs",
+      "datadog console",
+      "live tailing",
+      "cloud log viewer",
+      "observability"
     ]
   },
   {
@@ -2391,6 +2867,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "package-dependency-tree",
+    "slug": "package-dependency-tree",
+    "componentName": "PackageDependencyTree",
+    "title": "Package Dependency Tree",
+    "description": "Bundlephobia and Socket.dev inspired package dependency inspector with direct and transitive node nesting, license badges, vulnerability advisories, bundle size calculations, and install script copying.",
+    "tagline": "Interactive package dependency tree with bundle size and license inspection.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Packages",
+      "NPM"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "package dependency tree",
+      "bundlephobia card",
+      "npm dependency viewer",
+      "bundle size inspector",
+      "transitive dependencies",
+      "license badge"
+    ]
+  },
+  {
     "id": "parallax-tilt-card",
     "slug": "parallax-tilt-card",
     "componentName": "ParallaxTiltCard",
@@ -2503,6 +3004,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "time picker wheel",
       "drum roll picker",
       "scroll wheel selector"
+    ]
+  },
+  {
+    "id": "pipeline-dag-viewer",
+    "slug": "pipeline-dag-viewer",
+    "componentName": "PipelineDAGViewer",
+    "title": "Pipeline DAG Viewer",
+    "description": "GitHub Actions and GitLab CI inspired Directed Acyclic Graph (DAG) build pipeline visualizer with sequential and parallel stage columns, live status animations, and embedded console output inspector.",
+    "tagline": "Directed Acyclic Graph CI/CD build pipeline with step logs viewer.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "CI/CD",
+      "Workflows"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "pipeline dag",
+      "ci cd visualizer",
+      "github actions graph",
+      "workflow visualizer",
+      "build pipeline",
+      "dag viewer"
     ]
   },
   {
@@ -2674,6 +3200,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "rate-limit-meter",
+    "slug": "rate-limit-meter",
+    "componentName": "RateLimitMeter",
+    "title": "Rate Limit Meter",
+    "description": "Token bucket and sliding-window rate limit visualizer with burst request simulation, spring-physics capacity transitions, real-time quota reset countdowns, and 429 Too Many Requests retry-after badges.",
+    "tagline": "Token bucket rate limit and quota capacity visualizer with burst simulation.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "API",
+      "Network"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "rate limit meter",
+      "token bucket",
+      "sliding window",
+      "429 too many requests",
+      "api quota",
+      "cloudflare rate limiting"
+    ]
+  },
+  {
     "id": "reaction-picker",
     "slug": "reaction-picker",
     "componentName": "ReactionPicker",
@@ -2695,6 +3246,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "framer motion bump",
       "chat reactions",
       "interactive feedback"
+    ]
+  },
+  {
+    "id": "regex-playground",
+    "slug": "regex-playground",
+    "componentName": "RegexPlayground",
+    "title": "Regex Playground",
+    "description": "Raycast and Regex101 inspired regular expression matching sandbox with flag toggles (g, i, m), presets (Email, Semver, UUID, Hex), real-time match extraction, and error syntax diagnostics.",
+    "tagline": "Live regular expression tester with preset patterns and flag controls.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Utility",
+      "Regex"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "regex playground",
+      "regex tester",
+      "regular expression",
+      "regex101 clone",
+      "pattern matching",
+      "developer utilities"
     ]
   },
   {
@@ -2864,6 +3440,56 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "chart range selector",
       "crypto time range",
       "framer motion segmented control"
+    ]
+  },
+  {
+    "id": "semver-release-draft-card",
+    "slug": "semver-release-draft-card",
+    "componentName": "SemverReleaseDraftCard",
+    "title": "Semver Release Draft Card",
+    "description": "GitHub Releases and Changesets inspired release notes generator with Semver bump selector (patch, minor, major), conventional commit categorization, Markdown changelog export, and release publishing.",
+    "tagline": "Conventional commit release drafter with automated Semver bump calculations.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Git",
+      "Releases"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "semver release",
+      "github release drafter",
+      "conventional commits",
+      "changelog generator",
+      "version bump",
+      "changesets"
+    ]
+  },
+  {
+    "id": "server-metrics-sparkboard",
+    "slug": "server-metrics-sparkboard",
+    "componentName": "ServerMetricsSparkboard",
+    "title": "Server Metrics Sparkboard",
+    "description": "Grafana and Railway inspired multi-sparkline telemetry dashboard monitoring CPU, Memory, Disk I/O, and Network Egress with synchronized crosshair cursor inspection across all graphs simultaneously.",
+    "tagline": "Synchronized multi-sparkline server telemetry dashboard with crosshair scrubber.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Observability",
+      "Metrics"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "server metrics",
+      "sparkboard",
+      "cpu monitor",
+      "grafana telemetry",
+      "synchronized sparkline",
+      "observability"
     ]
   },
   {
@@ -3167,6 +3793,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "verification code input",
       "animated pin input",
       "framer motion otp"
+    ]
+  },
+  {
+    "id": "sql-data-grid",
+    "slug": "sql-data-grid",
+    "componentName": "SqlDataGrid",
+    "title": "SQL Data Grid",
+    "description": "Supabase and Neon inspired keyboard-navigable micro data table with SQL column type badges (UUID, VARCHAR, BOOLEAN, TIMESTAMPTZ, JSONB), double-click inline cell editing, and SQL INSERT export.",
+    "tagline": "Keyboard-navigable database table with SQL types and inline cell editing.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "Database",
+      "SQL"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "sql data grid",
+      "supabase table",
+      "database viewer",
+      "inline cell editor",
+      "sql export",
+      "data table"
     ]
   },
   {
@@ -3536,6 +4187,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "transaction-receipt",
+    "slug": "transaction-receipt",
+    "componentName": "TransactionReceipt",
+    "title": "Transaction Receipt",
+    "description": "Perforated fintech digital receipt card inspired by Monzo and Stripe with an authentic zigzag bottom tear edge, itemized breakdown, barcode, and animated spring rubber stamps (PAID, SETTLED, REFUNDED).",
+    "tagline": "Perforated digital fintech receipt with spring-physics rubber stamp animation.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "Fintech",
+      "Card",
+      "Interactive"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "fintech receipt",
+      "transaction card",
+      "perforated receipt",
+      "rubber stamp animation",
+      "monzo receipt",
+      "stripe invoice"
+    ]
+  },
+  {
     "id": "typewriter-cursor-effect",
     "slug": "typewriter-cursor-effect",
     "componentName": "TypewriterCursorEffect",
@@ -3724,6 +4400,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "mist particles",
       "fluid simulation",
       "plunge pool animation"
+    ]
+  },
+  {
+    "id": "webhook-payload-simulator",
+    "slug": "webhook-payload-simulator",
+    "componentName": "WebhookPayloadSimulator",
+    "title": "Webhook Payload Simulator",
+    "description": "Stripe and GitHub inspired webhook inspection card with HMAC-SHA256 signature auto-signing, event topic selectors, formatted JSON payload viewer, and live test delivery dispatcher.",
+    "tagline": "Signed test webhook event dispatcher with HMAC signature verification.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "DevTools",
+      "API",
+      "Webhooks"
+    ],
+    "createdAt": "2026-10-12",
+    "featured": true,
+    "keywords": [
+      "webhook simulator",
+      "stripe webhook",
+      "hmac signature",
+      "event payload",
+      "api test tool",
+      "delivery status"
     ]
   },
   {

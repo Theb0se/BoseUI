@@ -161,6 +161,11 @@ import { AIChatBubble } from "@/components/ui/AIChatBubble";
 import { AIPromptInput } from "@/components/ui/AIPromptInput";
 import { AIGenerationProgress } from "@/components/ui/AIGenerationProgress";
 import { AICommandBar } from "@/components/ui/AICommandBar";
+import { AIReasoningAccordion } from "@/components/ui/AIReasoningAccordion";
+import { AIVoiceOrb, type AIVoiceOrbState, type AIVoiceOrbTheme } from "@/components/ui/AIVoiceOrb";
+import { ContextTokenGauge } from "@/components/ui/ContextTokenGauge";
+import { AIPromptDiffViewer } from "@/components/ui/AIPromptDiffViewer";
+import { AICodeExecutionSandbox } from "@/components/ui/AICodeExecutionSandbox";
 
 // Mockup Components
 import { IPhone16ProMockup } from "@/components/ui/IPhone16ProMockup";
@@ -169,6 +174,33 @@ import { IPadProMockup } from "@/components/ui/IPadProMockup";
 import { MacOSWindowMockup } from "@/components/ui/MacOSWindowMockup";
 import { SafariBrowserMockup } from "@/components/ui/SafariBrowserMockup";
 import { TerminalWindowMockup } from "@/components/ui/TerminalWindowMockup";
+
+// DevTools & Fintech Components
+import { KeyboardShortcutStack, PhysicalKeycap } from "@/components/ui/KeyboardShortcutStack";
+import { InteractiveCodeDiff } from "@/components/ui/InteractiveCodeDiff";
+import { TransactionReceipt } from "@/components/ui/TransactionReceipt";
+import { InteractiveGitGraph } from "@/components/ui/InteractiveGitGraph";
+import { InteractivePricingTierDial } from "@/components/ui/InteractivePricingTierDial";
+
+// Developer Tools Suite (18 Components)
+import { InteractiveApiEndpointBar } from "@/components/ui/InteractiveApiEndpointBar";
+import { CronScheduleBuilder } from "@/components/ui/CronScheduleBuilder";
+import { RateLimitMeter } from "@/components/ui/RateLimitMeter";
+import { WebhookPayloadSimulator } from "@/components/ui/WebhookPayloadSimulator";
+import { SqlDataGrid } from "@/components/ui/SqlDataGrid";
+import { EnvSecretVault } from "@/components/ui/EnvSecretVault";
+import { DatabaseConnectionHealthBadge } from "@/components/ui/DatabaseConnectionHealthBadge";
+import { LiveLogStreamer } from "@/components/ui/LiveLogStreamer";
+import { ServerMetricsSparkboard } from "@/components/ui/ServerMetricsSparkboard";
+import { ErrorStackTraceInspector } from "@/components/ui/ErrorStackTraceInspector";
+import { HealthCheckStatusMatrix } from "@/components/ui/HealthCheckStatusMatrix";
+import { PipelineDAGViewer } from "@/components/ui/PipelineDAGViewer";
+import { SemverReleaseDraftCard } from "@/components/ui/SemverReleaseDraftCard";
+import { PackageDependencyTree } from "@/components/ui/PackageDependencyTree";
+import { RegexPlayground } from "@/components/ui/RegexPlayground";
+import { FeatureFlagToggleStack } from "@/components/ui/FeatureFlagToggleStack";
+import { JsonSchemaFormValidator } from "@/components/ui/JsonSchemaFormValidator";
+import { ArchitectureFlowchartNode } from "@/components/ui/ArchitectureFlowchartNode";
 
 /**
  * Interactive preview wrapper for Black Hole
@@ -777,6 +809,174 @@ function AICommandBarPreviewStage({ className }: { className?: string }) {
   );
 }
 
+function AIReasoningAccordionPreviewStage({ className }: { className?: string }) {
+  const [status, setStatus] = useState<"thinking" | "completed">("completed");
+  const [seconds, setSeconds] = useState(3.4);
+
+  return (
+    <div className={cn("w-full max-w-xl mx-auto flex flex-col items-center gap-4 p-4", className)}>
+      <div className="flex items-center gap-2 border-b border-border pb-3 w-full justify-between">
+        <span className="text-xs font-mono text-muted-foreground">Reasoning Engine</span>
+        <button
+          onClick={() => {
+            setStatus("thinking");
+            setTimeout(() => {
+              setStatus("completed");
+              setSeconds((s) => Number((s + 0.3).toFixed(1)));
+            }, 1800);
+          }}
+          className="text-xs px-2.5 py-1 rounded-lg border border-border bg-card hover:bg-accent transition-colors"
+        >
+          {status === "thinking" ? "Thinking…" : "Simulate Thought"}
+        </button>
+      </div>
+      <AIReasoningAccordion thinkingTime={seconds} status={status}>
+        <p>The reasoning model concluded that client-side spring dampening provides superior 60fps fluidity compared to standard CSS easing cubic-beziers.</p>
+      </AIReasoningAccordion>
+    </div>
+  );
+}
+
+function AIVoiceOrbPreviewStage({ className }: { className?: string }) {
+  const [state, setState] = useState<AIVoiceOrbState>("idle");
+  const [theme, setTheme] = useState<AIVoiceOrbTheme>("chromatic");
+  const [audioLevel, setAudioLevel] = useState(0.2);
+
+  return (
+    <div className={cn("w-full flex flex-col items-center gap-6 p-4", className)}>
+      <div className="flex flex-wrap items-center justify-center gap-3 border-b border-border pb-4 w-full max-w-lg">
+        {/* States */}
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border">
+          {(["idle", "listening", "thinking", "speaking"] as const).map((s) => (
+            <button
+              key={s}
+              onClick={() => {
+                setState(s);
+                if (s === "listening") setAudioLevel(0.65);
+                else setAudioLevel(0.2);
+              }}
+              className={cn(
+                "px-2.5 py-1 text-xs font-medium rounded-lg capitalize transition-all",
+                state === s ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+
+        {/* Themes */}
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border">
+          {(["chromatic", "aurora", "monochrome"] as const).map((th) => (
+            <button
+              key={th}
+              onClick={() => setTheme(th)}
+              className={cn(
+                "px-2.5 py-1 text-xs font-medium rounded-lg capitalize transition-all",
+                theme === th ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {th}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center min-h-[260px]">
+        <AIVoiceOrb
+          state={state}
+          theme={theme}
+          audioLevel={audioLevel}
+          size={240}
+        />
+      </div>
+      <span className="text-xs text-muted-foreground/60 select-none">
+        Click orb or switch states to preview fluid reactive modes
+      </span>
+    </div>
+  );
+}
+
+function ContextTokenGaugePreviewStage({ className }: { className?: string }) {
+  const [variant, setVariant] = useState<"radial" | "bar">("radial");
+  const [used, setUsed] = useState(48200);
+
+  return (
+    <div className={cn("w-full max-w-lg mx-auto flex flex-col items-center gap-5 p-4", className)}>
+      <div className="flex items-center justify-between border-b border-border pb-3 w-full">
+        {/* Variant toggle */}
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border">
+          {(["radial", "bar"] as const).map((v) => (
+            <button
+              key={v}
+              onClick={() => setVariant(v)}
+              className={cn(
+                "px-3 py-1 text-xs font-medium rounded-lg capitalize transition-all",
+                variant === v ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {v}
+            </button>
+          ))}
+        </div>
+
+        {/* Quick loads */}
+        <div className="flex items-center gap-1.5">
+          <button
+            onClick={() => setUsed(34000)}
+            className="text-xs px-2 py-1 rounded-lg border border-border bg-card hover:bg-accent transition-colors"
+          >
+            Optimal (34k)
+          </button>
+          <button
+            onClick={() => setUsed(102000)}
+            className="text-xs px-2 py-1 rounded-lg border border-border bg-card hover:bg-accent transition-colors"
+          >
+            High (102k)
+          </button>
+          <button
+            onClick={() => setUsed(121000)}
+            className="text-xs px-2 py-1 rounded-lg border border-border bg-card hover:bg-accent transition-colors"
+          >
+            Critical (121k)
+          </button>
+        </div>
+      </div>
+
+      <ContextTokenGauge
+        usedTokens={used}
+        maxTokens={128000}
+        systemTokens={4200}
+        promptTokens={Math.round(used * 0.65)}
+        completionTokens={Math.round(used * 0.35)}
+        variant={variant}
+      />
+    </div>
+  );
+}
+
+function AIPromptDiffViewerPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <AIPromptDiffViewer
+        filename="components/MagneticButton.tsx"
+        language="typescript"
+      />
+    </div>
+  );
+}
+
+function AICodeExecutionSandboxPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <AICodeExecutionSandbox
+        language="typescript"
+        executionTimeMs={138}
+      />
+    </div>
+  );
+}
+
 function IPhone16ProMockupPreviewStage({ className }: { className?: string }) {
   const [color, setColor] = useState<"natural" | "desert" | "black" | "white">("natural");
   const [enableTilt, setEnableTilt] = useState(true);
@@ -1079,6 +1279,263 @@ function TerminalWindowMockupPreviewStage({ className }: { className?: string })
           "✔ Component ready at src/components/ui/IPhone16ProMockup.tsx",
         ]}
       />
+    </div>
+  );
+}
+
+function KeyboardShortcutStackPreviewStage({ className }: { className?: string }) {
+  const [lastPressed, setLastPressed] = useState<string | null>(null);
+
+  return (
+    <div className={cn("w-full max-w-xl mx-auto flex flex-col gap-6 p-4", className)}>
+      <div className="flex flex-col items-center text-center gap-1.5">
+        <span className="text-xs font-medium text-foreground">Tactile 3D Physical Keycaps</span>
+        <p className="text-xs text-muted-foreground">
+          Press on your real keyboard (<kbd className="font-mono bg-muted px-1.5 py-0.5 rounded border border-border">⌘</kbd>, <kbd className="font-mono bg-muted px-1.5 py-0.5 rounded border border-border">Shift</kbd>, <kbd className="font-mono bg-muted px-1.5 py-0.5 rounded border border-border">K</kbd>, <kbd className="font-mono bg-muted px-1.5 py-0.5 rounded border border-border">Enter</kbd>, <kbd className="font-mono bg-muted px-1.5 py-0.5 rounded border border-border">Esc</kbd>) or click any keycap:
+        </p>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-center gap-3 py-2">
+        <PhysicalKeycap keyLabel="⌘" size="lg" onPress={() => setLastPressed("Command (⌘)")} />
+        <PhysicalKeycap keyLabel="Shift" size="lg" onPress={() => setLastPressed("Shift (⇧)")} />
+        <PhysicalKeycap keyLabel="K" size="lg" onPress={() => setLastPressed("Letter K")} />
+        <PhysicalKeycap keyLabel="Enter" size="lg" onPress={() => setLastPressed("Return ↵")} />
+        <PhysicalKeycap keyLabel="Esc" size="lg" onPress={() => setLastPressed("Escape")} />
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <KeyboardShortcutStack
+          keys={["⌘", "K"]}
+          title="Command Palette"
+          description="Global spotlight search & quick actions"
+          onTrigger={() => setLastPressed("Shortcut: ⌘ + K")}
+        />
+        <KeyboardShortcutStack
+          keys={["⇧", "⌘", "P"]}
+          title="Command Runner"
+          description="Execute developer tooling actions"
+          onTrigger={() => setLastPressed("Shortcut: ⇧ + ⌘ + P")}
+        />
+      </div>
+
+      {lastPressed && (
+        <div className="text-center text-xs font-mono text-muted-foreground animate-fade-in">
+          Last triggered: <span className="text-foreground font-semibold">{lastPressed}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function InteractiveCodeDiffPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-3xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <InteractiveCodeDiff
+        filename="src/server/auth.ts"
+        compareRange="main...feature/audit-logs"
+      />
+    </div>
+  );
+}
+
+function TransactionReceiptPreviewStage({ className }: { className?: string }) {
+  const [stamp, setStamp] = useState<"PAID" | "SETTLED" | "REFUNDED" | null>("PAID");
+
+  return (
+    <div className={cn("w-full max-w-xl mx-auto p-4 flex flex-col items-center gap-6", className)}>
+      <div className="flex items-center gap-2 border-b border-border pb-3">
+        {(["PAID", "SETTLED", "REFUNDED"] as const).map((s) => (
+          <button
+            key={s}
+            onClick={() => setStamp(s)}
+            className={cn(
+              "px-3 py-1 text-xs font-medium rounded-lg border transition-all",
+              stamp === s
+                ? "border-foreground bg-foreground text-background shadow-sm"
+                : "border-border bg-card text-muted-foreground hover:text-foreground"
+            )}
+          >
+            Stamp: {s}
+          </button>
+        ))}
+        <button
+          onClick={() => setStamp(null)}
+          className={cn(
+            "px-3 py-1 text-xs font-medium rounded-lg border transition-all",
+            stamp === null
+              ? "border-foreground bg-foreground text-background shadow-sm"
+              : "border-border bg-card text-muted-foreground hover:text-foreground"
+          )}
+        >
+          No Stamp
+        </button>
+      </div>
+
+      <TransactionReceipt
+        merchantName="BoseUI Cloud Infrastructure"
+        transactionId="TXN-84920481"
+        stampText={stamp}
+      />
+    </div>
+  );
+}
+
+function InteractiveGitGraphPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-3xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <InteractiveGitGraph />
+    </div>
+  );
+}
+
+function InteractivePricingTierDialPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <InteractivePricingTierDial />
+    </div>
+  );
+}
+
+function InteractiveApiEndpointBarPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <InteractiveApiEndpointBar />
+    </div>
+  );
+}
+
+function CronScheduleBuilderPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <CronScheduleBuilder />
+    </div>
+  );
+}
+
+function RateLimitMeterPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <RateLimitMeter />
+    </div>
+  );
+}
+
+function WebhookPayloadSimulatorPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <WebhookPayloadSimulator />
+    </div>
+  );
+}
+
+function SqlDataGridPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-3xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <SqlDataGrid />
+    </div>
+  );
+}
+
+function EnvSecretVaultPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <EnvSecretVault />
+    </div>
+  );
+}
+
+function DatabaseConnectionHealthBadgePreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <DatabaseConnectionHealthBadge />
+    </div>
+  );
+}
+
+function LiveLogStreamerPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-3xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <LiveLogStreamer />
+    </div>
+  );
+}
+
+function ServerMetricsSparkboardPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-4xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <ServerMetricsSparkboard />
+    </div>
+  );
+}
+
+function ErrorStackTraceInspectorPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <ErrorStackTraceInspector />
+    </div>
+  );
+}
+
+function HealthCheckStatusMatrixPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <HealthCheckStatusMatrix />
+    </div>
+  );
+}
+
+function PipelineDAGViewerPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-3xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <PipelineDAGViewer />
+    </div>
+  );
+}
+
+function SemverReleaseDraftCardPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <SemverReleaseDraftCard />
+    </div>
+  );
+}
+
+function PackageDependencyTreePreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <PackageDependencyTree />
+    </div>
+  );
+}
+
+function RegexPlaygroundPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <RegexPlayground />
+    </div>
+  );
+}
+
+function FeatureFlagToggleStackPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-2xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <FeatureFlagToggleStack />
+    </div>
+  );
+}
+
+function JsonSchemaFormValidatorPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-3xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <JsonSchemaFormValidator />
+    </div>
+  );
+}
+
+function ArchitectureFlowchartNodePreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full max-w-3xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
+      <ArchitectureFlowchartNode />
     </div>
   );
 }
@@ -1724,6 +2181,25 @@ export function ComponentPreview({
     case "aicommand-bar":
       return <AICommandBarPreviewStage className={className} />;
 
+    case "ai-reasoning-accordion":
+    case "aireasoning-accordion":
+      return <AIReasoningAccordionPreviewStage className={className} />;
+
+    case "ai-voice-orb":
+    case "aivoice-orb":
+      return <AIVoiceOrbPreviewStage className={className} />;
+
+    case "context-token-gauge":
+      return <ContextTokenGaugePreviewStage className={className} />;
+
+    case "ai-prompt-diff-viewer":
+    case "aiprompt-diff-viewer":
+      return <AIPromptDiffViewerPreviewStage className={className} />;
+
+    case "ai-code-execution-sandbox":
+    case "aicode-execution-sandbox":
+      return <AICodeExecutionSandboxPreviewStage className={className} />;
+
     // ── Mockup Components ──
     case "iphone-16-pro-mockup":
     case "i-phone16-pro-mockup":
@@ -1746,6 +2222,77 @@ export function ComponentPreview({
 
     case "terminal-window-mockup":
       return <TerminalWindowMockupPreviewStage className={className} />;
+
+    // ── DevTools & Fintech Components ──
+    case "keyboard-shortcut-stack":
+      return <KeyboardShortcutStackPreviewStage className={className} />;
+
+    case "interactive-code-diff":
+      return <InteractiveCodeDiffPreviewStage className={className} />;
+
+    case "transaction-receipt":
+      return <TransactionReceiptPreviewStage className={className} />;
+
+    case "interactive-git-graph":
+      return <InteractiveGitGraphPreviewStage className={className} />;
+
+    case "interactive-pricing-tier-dial":
+      return <InteractivePricingTierDialPreviewStage className={className} />;
+
+    // ── Developer Tools Suite (18 Components) ──
+    case "interactive-api-endpoint-bar":
+      return <InteractiveApiEndpointBarPreviewStage className={className} />;
+
+    case "cron-schedule-builder":
+      return <CronScheduleBuilderPreviewStage className={className} />;
+
+    case "rate-limit-meter":
+      return <RateLimitMeterPreviewStage className={className} />;
+
+    case "webhook-payload-simulator":
+      return <WebhookPayloadSimulatorPreviewStage className={className} />;
+
+    case "sql-data-grid":
+      return <SqlDataGridPreviewStage className={className} />;
+
+    case "env-secret-vault":
+      return <EnvSecretVaultPreviewStage className={className} />;
+
+    case "database-connection-health-badge":
+      return <DatabaseConnectionHealthBadgePreviewStage className={className} />;
+
+    case "live-log-streamer":
+      return <LiveLogStreamerPreviewStage className={className} />;
+
+    case "server-metrics-sparkboard":
+      return <ServerMetricsSparkboardPreviewStage className={className} />;
+
+    case "error-stack-trace-inspector":
+      return <ErrorStackTraceInspectorPreviewStage className={className} />;
+
+    case "health-check-status-matrix":
+      return <HealthCheckStatusMatrixPreviewStage className={className} />;
+
+    case "pipeline-dag-viewer":
+      return <PipelineDAGViewerPreviewStage className={className} />;
+
+    case "semver-release-draft-card":
+      return <SemverReleaseDraftCardPreviewStage className={className} />;
+
+    case "package-dependency-tree":
+      return <PackageDependencyTreePreviewStage className={className} />;
+
+    case "regex-playground":
+      return <RegexPlaygroundPreviewStage className={className} />;
+
+    case "feature-flag-toggle-stack":
+      return <FeatureFlagToggleStackPreviewStage className={className} />;
+
+    case "json-schema-form-validator":
+      return <JsonSchemaFormValidatorPreviewStage className={className} />;
+
+    case "architecture-flowchart-node":
+      return <ArchitectureFlowchartNodePreviewStage className={className} />;
 
     // ── Default Fallback ──
     default: {

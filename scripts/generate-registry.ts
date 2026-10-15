@@ -161,7 +161,11 @@ export async function generateRegistry() {
   const existingRFiles = await fs.readdir(publicRDir);
   for (const oldFile of existingRFiles) {
     if (oldFile.endsWith(".json")) {
-      await fs.unlink(path.join(publicRDir, oldFile));
+      try {
+        await fs.unlink(path.join(publicRDir, oldFile));
+      } catch (err: any) {
+        if (err.code !== "EBUSY" && err.code !== "EPERM") throw err;
+      }
     }
   }
   await fs.mkdir(path.dirname(catalogOutputPath), { recursive: true });

@@ -10,6 +10,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        card: "var(--card)",
+      },
       fontFamily: {
         sans: [
           "var(--font-inter)",

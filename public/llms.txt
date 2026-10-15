@@ -33,7 +33,7 @@ Our latest research on frontend engineering and UI/UX:
 - [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
 - [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
 
-## Available Kinetic Components (156)
+## Available Kinetic Components (184)
 
 ### AI Chat Bubble (`AIChatBubble`)
 - **Slug**: `ai-chat-bubble`
@@ -74,6 +74,46 @@ export function Example() {
         timestamp="Just now"
       />
     </div>
+  );
+}
+```
+
+---
+
+### AI Code Execution Sandbox (`AICodeExecutionSandbox`)
+- **Slug**: `ai-code-execution-sandbox`
+- **Category**: Cards
+- **Tagline**: Interactive terminal execution sandbox for running AI-generated code.
+- **Description**: Interactive code execution terminal for AI-generated code with Code and Console Output tabs, real-time stdout streaming, execution time telemetry, and run/copy controls.
+- **Docs URL**: https://boseui.site/components/ai-code-execution-sandbox
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-code-execution-sandbox.json`
+- **Registry Manifest**: https://boseui.site/r/ai-code-execution-sandbox.json
+- **Key Features**:
+  - Dual-tab interface: Code editor view with line numbers and Console Output.
+  - Animated line-by-line typewriter output streaming on execution.
+  - Real-time execution telemetry badge (e.g. 'Exit 0 (142ms)').
+  - One-click source code copy to clipboard.
+  - Architectural dark monochrome aesthetics with zero heavy dependencies.
+- **Accessibility**:
+  - Tabs accessible with keyboard navigation.
+  - Monospace font sizing with WCAG compliant text contrast.
+- **Props**:
+  - `code` (string): Source code to display in the Code tab.
+  - `language` (string, default: "typescript"): Programming language identifier.
+  - `output` (string[]): Array of output terminal stream lines.
+  - `executionTimeMs` (number, default: 142): Reported execution duration in milliseconds.
+  - `onRun` (() => void): Callback invoked when user presses Run Code.
+- **Usage Example**:
+```tsx
+import { AICodeExecutionSandbox } from "@/components/ui/AICodeExecutionSandbox";
+
+export function Example() {
+  return (
+    <AICodeExecutionSandbox
+      language="typescript"
+      executionTimeMs={120}
+      onRun={() => console.log("Executing...")}
+    />
   );
 }
 ```
@@ -166,6 +206,48 @@ export function Example() {
 
 ---
 
+### AI Prompt Diff Viewer (`AIPromptDiffViewer`)
+- **Slug**: `ai-prompt-diff-viewer`
+- **Category**: Cards
+- **Tagline**: Cursor-style inline code suggestion diff comparator with split/inline modes.
+- **Description**: Cursor and Copilot inspired inline code and text suggestion comparator with inline additions, deletions, split vs inline views, and keyboard-accessible Accept/Reject actions.
+- **Docs URL**: https://boseui.site/components/ai-prompt-diff-viewer
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-prompt-diff-viewer.json`
+- **Registry Manifest**: https://boseui.site/r/ai-prompt-diff-viewer.json
+- **Key Features**:
+  - Inline and 2-column Split view modes.
+  - Syntax-inspired addition (+ green) and deletion (- red) gutter styling.
+  - Native keyboard hotkeys: ⌘Y (Ctrl+Y) to Accept, ⌘N (Ctrl+N) to Reject.
+  - Persistent addition and deletion stats counters.
+  - Accessible buttons with spring feedback and state reset support.
+- **Accessibility**:
+  - Keyboard accessible with hotkeys and standard focus rings.
+  - High contrast color-safe additions and deletions indicators.
+- **Props**:
+  - `filename` (string, default: "hooks/useCounter.ts"): Header file title displayed in titlebar.
+  - `language` (string, default: "typescript"): Language badge identifier.
+  - `lines` (DiffLine[]): Array of line objects with type ('unchanged' | 'added' | 'removed') and content.
+  - `defaultViewMode` ("inline" | "split", default: "inline"): Initial layout between inline unified diff or split 2-column view.
+  - `onAccept` (() => void): Callback invoked when user accepts the diff suggestions.
+  - `onReject` (() => void): Callback invoked when user rejects the diff suggestions.
+- **Usage Example**:
+```tsx
+import { AIPromptDiffViewer } from "@/components/ui/AIPromptDiffViewer";
+
+export function Example() {
+  return (
+    <AIPromptDiffViewer
+      filename="utils/math.ts"
+      language="typescript"
+      onAccept={() => console.log("Accepted!")}
+      onReject={() => console.log("Rejected!")}
+    />
+  );
+}
+```
+
+---
+
 ### AI Prompt Input (`AIPromptInput`)
 - **Slug**: `ai-prompt-input`
 - **Category**: Inputs
@@ -207,6 +289,45 @@ export function Example() {
         onSubmit={handleSubmit}
       />
     </div>
+  );
+}
+```
+
+---
+
+### AI Reasoning Accordion (`AIReasoningAccordion`)
+- **Slug**: `ai-reasoning-accordion`
+- **Category**: Cards
+- **Tagline**: Collapsible DeepSeek-R1 and o1 style AI reasoning drawer with spring physics.
+- **Description**: Collapsible DeepSeek-R1 and OpenAI o1 inspired thinking step drawer with animated timeline dots, thought duration timer, spring chevron physics, and one-click step copying.
+- **Docs URL**: https://boseui.site/components/ai-reasoning-accordion
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-reasoning-accordion.json`
+- **Registry Manifest**: https://boseui.site/r/ai-reasoning-accordion.json
+- **Key Features**:
+  - Collapsible with Framer Motion spring accordion height physics.
+  - Live thought duration badge (e.g. 'Thought for 3.4s' or 'Thinking…').
+  - Sequential step timeline with pending, running spinner, and done checkmarks.
+  - One-click copy thought steps to clipboard.
+  - Full dark/light mode contrast and prefers-reduced-motion support.
+- **Accessibility**:
+  - Supports aria-expanded on toggle trigger button.
+  - Keyboard accessible with standard Enter / Space toggle handling.
+- **Props**:
+  - `thinkingTime` (number, default: 3.4): Thought duration in seconds displayed in header badge.
+  - `status` ("thinking" | "completed", default: "completed"): Current lifecycle state of the model's reasoning process.
+  - `steps` (ReasoningStep[]): Array of reasoning steps with label, details, and status.
+  - `defaultOpen` (boolean, default: true): Initial expanded state of the reasoning accordion.
+  - `children` (React.ReactNode): Final thought synthesis or reasoning summary content.
+  - `title` (string, default: "Thought Process"): Header label displayed next to the brain icon.
+- **Usage Example**:
+```tsx
+import { AIReasoningAccordion } from "@/components/ui/AIReasoningAccordion";
+
+export function Example() {
+  return (
+    <AIReasoningAccordion thinkingTime={2.8} status="completed">
+      <p>The solution utilizes React 19 optimistic updates combined with Framer Motion spring physics.</p>
+    </AIReasoningAccordion>
   );
 }
 ```
@@ -326,6 +447,46 @@ export function Example() {
       <AIThinkingLoader variant="wave" size={10} />
       <AIThinkingLoader variant="ring" size={6} />
     </div>
+  );
+}
+```
+
+---
+
+### AI Voice Orb (`AIVoiceOrb`)
+- **Slug**: `ai-voice-orb`
+- **Category**: Motion
+- **Tagline**: Dynamic Siri and GPT-4o style chromatic voice mesh orb in Canvas 2D.
+- **Description**: Siri and GPT-4o style dynamic chromatic voice visualizer orb built with Canvas 2D. Smoothly transitions across idle, listening, thinking, and speaking states with organic fluid harmonic blobs.
+- **Docs URL**: https://boseui.site/components/ai-voice-orb
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-voice-orb.json`
+- **Registry Manifest**: https://boseui.site/r/ai-voice-orb.json
+- **Key Features**:
+  - Pure Canvas 2D implementation without heavy Three.js or WebGL dependencies.
+  - 4 interactive states: idle, listening, thinking, and speaking.
+  - 3 aesthetic palettes: chromatic, aurora, and monochrome.
+  - Responsive audioLevel input for real mic or speech synthesis reactivity.
+  - Zero layout shift with automatic high-DPI (Retina) screen scaling.
+- **Accessibility**:
+  - Gracefully stops organic oscillation when prefers-reduced-motion is enabled.
+  - Accessible as an interactive voice trigger button.
+- **Props**:
+  - `state` ("idle" | "listening" | "thinking" | "speaking", default: "idle"): Active lifecycle interaction state of the voice orb.
+  - `size` (number, default: 240): Diameter of the voice canvas in pixels.
+  - `theme` ("chromatic" | "aurora" | "monochrome", default: "chromatic"): Color palette gradient combination.
+  - `audioLevel` (number, default: 0): Audio amplitude from 0 to 1 for live acoustic reaction.
+- **Usage Example**:
+```tsx
+import { AIVoiceOrb } from "@/components/ui/AIVoiceOrb";
+
+export function Example() {
+  return (
+    <AIVoiceOrb
+      state="listening"
+      theme="chromatic"
+      audioLevel={0.45}
+      size={240}
+    />
   );
 }
 ```
@@ -499,6 +660,38 @@ export function Example() {
       placeholder="Search components..."
       onChange={(q) => console.log("Query:", q)}
     />
+  );
+}
+```
+
+---
+
+### Architecture Flowchart Node (`ArchitectureFlowchartNode`)
+- **Slug**: `architecture-flowchart-node`
+- **Category**: Cards
+- **Tagline**: Interactive cloud system architecture flowchart nodes with live telemetry metrics.
+- **Description**: ReactFlow and AWS Architecture diagrams inspired cloud infrastructure component card featuring interactive system nodes (Edge CDN, Serverless compute, Vector DB, Cache), downstream connection highlights, and real-time throughput metrics.
+- **Docs URL**: https://boseui.site/components/architecture-flowchart-node
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/architecture-flowchart-node.json`
+- **Registry Manifest**: https://boseui.site/r/architecture-flowchart-node.json
+- **Key Features**:
+  - Interactive cloud nodes for Edge CDN, Compute Workers, Vector Database, and Redis Cache.
+  - Click-to-highlight downstream connection topology pathways.
+  - Real-time RTT latency and request throughput telemetry banner.
+  - Responsive card layout with distinct subsystem color palettes.
+- **Accessibility**:
+  - High-contrast color badges for different infrastructure tiers.
+  - Keyboard accessible interactive nodes.
+- **Props**:
+  - `diagramTitle` (string, default: "High-Throughput Global Microservices Architecture"): Architecture diagram card title.
+  - `nodes` (SystemNode[]): Array of connected infrastructure nodes with telemetry.
+- **Usage Example**:
+```tsx
+import { ArchitectureFlowchartNode } from "@/components/ui/ArchitectureFlowchartNode";
+
+export function Example() {
+  return (
+    <ArchitectureFlowchartNode />
   );
 }
 ```
@@ -1236,6 +1429,48 @@ export function Example() {
 
 ---
 
+### Context Token Gauge (`ContextTokenGauge`)
+- **Slug**: `context-token-gauge`
+- **Category**: Cards
+- **Tagline**: LLM context window capacity gauge with radial and linear breakdown views.
+- **Description**: LLM context window capacity meter with radial and segmented linear bar variants, token breakdown metrics (System, Prompt, Completion), and adaptive threshold alerts.
+- **Docs URL**: https://boseui.site/components/context-token-gauge
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/context-token-gauge.json`
+- **Registry Manifest**: https://boseui.site/r/context-token-gauge.json
+- **Key Features**:
+  - Radial SVG arc and linear segmented bar modes.
+  - Dynamic color shifts: Optimal (<75%), High Load (75-90%), and Near Limit (>90%).
+  - Breakdown metrics for System prompt, User prompt, and Model completion tokens.
+  - Compact responsive container with high contrast dark/light theme support.
+- **Accessibility**:
+  - Textual percentage and token metrics accessible to screen readers.
+  - Respects prefers-reduced-motion for circle transitions.
+- **Props**:
+  - `usedTokens` (number, default: 42800): Total tokens currently occupied.
+  - `maxTokens` (number, default: 128000): Total context window capacity limit.
+  - `variant` ("radial" | "bar", default: "radial"): Display mode between radial circular meter or linear segmented bar.
+  - `modelName` (string, default: "Claude 3.5 Sonnet (128k)"): Badge text indicating the model or architecture.
+  - `showBreakdown` (boolean, default: true): Show segment detail cards underneath the gauge.
+- **Usage Example**:
+```tsx
+import { ContextTokenGauge } from "@/components/ui/ContextTokenGauge";
+
+export function Example() {
+  return (
+    <ContextTokenGauge
+      usedTokens={58400}
+      maxTokens={128000}
+      systemTokens={3200}
+      promptTokens={34000}
+      completionTokens={21200}
+      variant="radial"
+    />
+  );
+}
+```
+
+---
+
 ### Copy Code Block (`CopyCodeBlock`)
 - **Slug**: `copy-code-block`
 - **Category**: Cards
@@ -1279,6 +1514,42 @@ export function Example() {
 
 ---
 
+### Cron Schedule Builder (`CronScheduleBuilder`)
+- **Slug**: `cron-schedule-builder`
+- **Category**: Inputs
+- **Tagline**: Visual 5-segment cron schedule builder with natural English translation.
+- **Description**: Visual 5-segment Quartz/cron schedule builder with natural English translation, quick presets (hourly, daily, weekdays), input validation hints, and upcoming execution timeline preview.
+- **Docs URL**: https://boseui.site/components/cron-schedule-builder
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/cron-schedule-builder.json`
+- **Registry Manifest**: https://boseui.site/r/cron-schedule-builder.json
+- **Key Features**:
+  - 5 segmented fields for Minute, Hour, Day of Month, Month, and Day of Week.
+  - Real-time human-readable natural language translation.
+  - Quick presets for common schedules like weekdays, hourly, and midnight.
+  - Preview of the next 3 scheduled execution timestamps.
+  - One-click copy of the active cron string.
+- **Accessibility**:
+  - Semantic text input elements with descriptive hint labels.
+  - Keyboard accessible preset pills.
+- **Props**:
+  - `initialCron` (string, default: "0 9 * * 1-5"): Default 5-part cron expression string.
+  - `onChange` ((cron: string, humanDescription: string) => void): Callback invoked whenever cron string changes.
+- **Usage Example**:
+```tsx
+import { CronScheduleBuilder } from "@/components/ui/CronScheduleBuilder";
+
+export function Example() {
+  return (
+    <CronScheduleBuilder
+      initialCron="0 9 * * 1-5"
+      onChange={(cron, desc) => console.log(cron, desc)}
+    />
+  );
+}
+```
+
+---
+
 ### Cursor Follower (`CursorFollower`)
 - **Slug**: `cursor-follower`
 - **Category**: Motion
@@ -1312,6 +1583,44 @@ export function Example() {
         Hover me to morph the trailing cursor ring into a HUD pill.
       </div>
     </CursorFollower>
+  );
+}
+```
+
+---
+
+### Database Connection Health Badge (`DatabaseConnectionHealthBadge`)
+- **Slug**: `database-connection-health-badge`
+- **Category**: Cards
+- **Tagline**: Database connection pool monitor with latency ping and TLS health indicators.
+- **Description**: Prisma Accelerate and PlanetScale inspired database cluster health monitor with pooled connections gauge, regional ping latency, TLS 1.3 certificate status, and sanitized URI copying.
+- **Docs URL**: https://boseui.site/components/database-connection-health-badge
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/database-connection-health-badge.json`
+- **Registry Manifest**: https://boseui.site/r/database-connection-health-badge.json
+- **Key Features**:
+  - Live connection pool capacity meter with progress bar.
+  - Interactive ping test button with real-time latency fluctuations.
+  - TLS 1.3 SSL transport security status indicator.
+  - Copy sanitized connection URI with masked credentials.
+- **Accessibility**:
+  - High-contrast health status badges with pulsing status dots.
+  - Full semantic markup with keyboard operable buttons.
+- **Props**:
+  - `engine` (string, default: "PostgreSQL 16.4"): Database engine and version string.
+  - `clusterName` (string, default: "neon-edge-primary-01"): Database cluster identifier.
+  - `activeConnections` (number, default: 7): Currently open client connections.
+  - `maxPoolSize` (number, default: 25): Maximum pool connection limit.
+- **Usage Example**:
+```tsx
+import { DatabaseConnectionHealthBadge } from "@/components/ui/DatabaseConnectionHealthBadge";
+
+export function Example() {
+  return (
+    <DatabaseConnectionHealthBadge
+      clusterName="neon-edge-primary-01"
+      engine="PostgreSQL 16.4"
+      baseLatencyMs={14}
+    />
   );
 }
 ```
@@ -1761,6 +2070,77 @@ export function Example() {
 
 ---
 
+### Environment Secret Vault (`EnvSecretVault`)
+- **Slug**: `env-secret-vault`
+- **Category**: Cards
+- **Tagline**: Encrypted environment secret manager with masked values and .env export.
+- **Description**: Vercel and Doppler inspired encrypted environment variable manager with environment scope tags (Production, Preview, Development), masked values, individual and global reveal toggles, and .env export.
+- **Docs URL**: https://boseui.site/components/env-secret-vault
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/env-secret-vault.json`
+- **Registry Manifest**: https://boseui.site/r/env-secret-vault.json
+- **Key Features**:
+  - Environment scope pills for Production, Preview, and Local development.
+  - Individual eye toggles and global Reveal All / Mask All controls.
+  - One-click Copy as .env file format.
+  - Inline interactive Add Secret form with uppercase key enforcement.
+- **Accessibility**:
+  - Accessible toggle buttons with clear screen-reader state cues.
+  - High-contrast environment badges.
+- **Props**:
+  - `projectName` (string, default: "boseui-production"): Project identifier shown in vault header.
+  - `initialVariables` (EnvVariable[]): List of starting environment key-value pairs.
+- **Usage Example**:
+```tsx
+import { EnvSecretVault } from "@/components/ui/EnvSecretVault";
+
+export function Example() {
+  return (
+    <EnvSecretVault
+      projectName="acme-production"
+    />
+  );
+}
+```
+
+---
+
+### Error Stack Trace Inspector (`ErrorStackTraceInspector`)
+- **Slug**: `error-stack-trace-inspector`
+- **Category**: Cards
+- **Tagline**: Collapsible error stack trace inspector with source code context.
+- **Description**: Sentry and Bugsnag inspired error breakdown card with project vs vendor code frame filtering, inline source code context with error squiggles, and copy markdown issue formatting.
+- **Docs URL**: https://boseui.site/components/error-stack-trace-inspector
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/error-stack-trace-inspector.json`
+- **Registry Manifest**: https://boseui.site/r/error-stack-trace-inspector.json
+- **Key Features**:
+  - Collapsible stack frames with file path, line, and function symbols.
+  - Toggle between in-app project code and external vendor dependencies.
+  - Inline code context viewer showing surrounding lines and error indicators.
+  - Quick actions to mark resolved and export formatted Markdown.
+- **Accessibility**:
+  - Clear visual error cues and accessible button interactions.
+  - Accessible focus outlines on expandable frame buttons.
+- **Props**:
+  - `errorType` (string, default: "TypeError"): Class name of the runtime exception.
+  - `errorMessage` (string, default: "Cannot read properties of undefined (reading 'permissions')"): Error message text.
+  - `eventId` (string, default: "evt_91b8a7c29e"): Unique telemetry event identifier.
+- **Usage Example**:
+```tsx
+import { ErrorStackTraceInspector } from "@/components/ui/ErrorStackTraceInspector";
+
+export function Example() {
+  return (
+    <ErrorStackTraceInspector
+      errorType="TypeError"
+      errorMessage="Cannot read properties of undefined (reading 'permissions')"
+      eventId="evt_91b8a7c29e"
+    />
+  );
+}
+```
+
+---
+
 ### Expandable Bento Card (`ExpandableBentoCard`)
 - **Slug**: `expandable-bento-card`
 - **Category**: Cards
@@ -1932,6 +2312,38 @@ export function Example() {
       description="Every interaction responds with spring physics and zero layout shift."
       ctaLabel="Learn More"
     />
+  );
+}
+```
+
+---
+
+### Feature Flag Toggle Stack (`FeatureFlagToggleStack`)
+- **Slug**: `feature-flag-toggle-stack`
+- **Category**: Cards
+- **Tagline**: Feature flag rollout controller with gradual traffic allocation sliders.
+- **Description**: LaunchDarkly and PostHog inspired feature flag management card with master kill-switch toggles, gradual traffic allocation sliders (0% to 100%), targeting rule badges, and environment scopes.
+- **Docs URL**: https://boseui.site/components/feature-flag-toggle-stack
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/feature-flag-toggle-stack.json`
+- **Registry Manifest**: https://boseui.site/r/feature-flag-toggle-stack.json
+- **Key Features**:
+  - Master boolean toggles for instant kill-switch feature disarming.
+  - Granular 0% to 100% traffic allocation sliders.
+  - Targeting rules chips (e.g. Beta users, Internal IP scopes).
+  - Environment scope pills for Production vs Staging.
+- **Accessibility**:
+  - Keyboard accessible toggle switch and range inputs.
+  - Semantic text descriptions and percentage indicators.
+- **Props**:
+  - `initialFlags` (FeatureFlag[]): Initial list of feature flags.
+  - `onChange` ((flags: FeatureFlag[]) => void): Callback invoked on flag state updates.
+- **Usage Example**:
+```tsx
+import { FeatureFlagToggleStack } from "@/components/ui/FeatureFlagToggleStack";
+
+export function Example() {
+  return (
+    <FeatureFlagToggleStack />
   );
 }
 ```
@@ -2339,6 +2751,41 @@ export function Example() {
 
 ---
 
+### Health Check Status Matrix (`HealthCheckStatusMatrix`)
+- **Slug**: `health-check-status-matrix`
+- **Category**: Cards
+- **Tagline**: Rolling 45-day uptime status matrix with interactive incident telemetry.
+- **Description**: BetterStack and Statuspage inspired service availability tracker with segmented rolling uptime day bars, multi-service breakdowns, hover incident popovers, and overall SLA metrics.
+- **Docs URL**: https://boseui.site/components/health-check-status-matrix
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/health-check-status-matrix.json`
+- **Registry Manifest**: https://boseui.site/r/health-check-status-matrix.json
+- **Key Features**:
+  - Interactive segmented rolling day bars for multiple microservices.
+  - Color-coded day indicators for operational, degraded, and downtime incidents.
+  - Hover telemetry banner revealing incident details for specific days.
+  - Prominent overall SLA percentage badge.
+- **Accessibility**:
+  - High-contrast color indicators supplemented with text status captions.
+  - Accessible hover and keyboard interactions.
+- **Props**:
+  - `systemName` (string, default: "BoseUI Cloud Platform"): Platform or organization name.
+  - `overallUptime` (number, default: 99.98): Overall system availability SLA percentage.
+- **Usage Example**:
+```tsx
+import { HealthCheckStatusMatrix } from "@/components/ui/HealthCheckStatusMatrix";
+
+export function Example() {
+  return (
+    <HealthCheckStatusMatrix
+      systemName="Acme Cloud Platform"
+      overallUptime={99.98}
+    />
+  );
+}
+```
+
+---
+
 ### Heart Burst Button (`HeartBurstButton`)
 - **Slug**: `heart-burst-button`
 - **Category**: Buttons
@@ -2714,6 +3161,119 @@ export function Example() {
 
 ---
 
+### Interactive API Endpoint Bar (`InteractiveApiEndpointBar`)
+- **Slug**: `interactive-api-endpoint-bar`
+- **Category**: Cards
+- **Tagline**: Live HTTP request runner with expandable JSON response payload.
+- **Description**: Postman and Scalar inspired monospace live HTTP request runner with method pills (GET, POST, PUT, DELETE), endpoint path editing, status latency indicators, and expandable JSON response viewer.
+- **Docs URL**: https://boseui.site/components/interactive-api-endpoint-bar
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/interactive-api-endpoint-bar.json`
+- **Registry Manifest**: https://boseui.site/r/interactive-api-endpoint-bar.json
+- **Key Features**:
+  - Support for GET, POST, PUT, PATCH, and DELETE methods with color-coded badges.
+  - Live mock execution with simulated latency and animated loading spinner.
+  - Expandable JSON response body, HTTP headers, and query parameters tabs.
+  - One-click copy for endpoint URL and formatted cURL command.
+- **Accessibility**:
+  - Full keyboard navigation and semantic form controls.
+  - High contrast status badges with accessible ARIA live states.
+- **Props**:
+  - `defaultMethod` ("GET" | "POST" | "PUT" | "PATCH" | "DELETE", default: "GET"): Default HTTP method selected.
+  - `defaultEndpoint` (string, default: "https://api.boseui.com/v1/users/usr_94b1e84a"): Endpoint URL route displayed in the input field.
+  - `latencyMs` (number, default: 28): Simulated response latency in milliseconds.
+  - `statusCode` (number, default: 200): Simulated HTTP response status code.
+- **Usage Example**:
+```tsx
+import { InteractiveApiEndpointBar } from "@/components/ui/InteractiveApiEndpointBar";
+
+export function Example() {
+  return (
+    <InteractiveApiEndpointBar
+      defaultMethod="GET"
+      defaultEndpoint="https://api.boseui.com/v1/users/usr_94b1e84a"
+      latencyMs={24}
+    />
+  );
+}
+```
+
+---
+
+### Interactive Code Diff (`InteractiveCodeDiff`)
+- **Slug**: `interactive-code-diff`
+- **Category**: Cards
+- **Tagline**: Split and Unified developer syntax code diff comparator.
+- **Description**: Monospace developer diff card with line gutters, hunk headers, collapsible code blocks, unified versus split 2-column layouts, and copy hunk controls.
+- **Docs URL**: https://boseui.site/components/interactive-code-diff
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/interactive-code-diff.json`
+- **Registry Manifest**: https://boseui.site/r/interactive-code-diff.json
+- **Key Features**:
+  - Unified and Split 2-column layout toggle.
+  - Collapsible hunk headers with line range metadata (@@ -18,6 +18,10 @@).
+  - Distinct addition (+ green) and deletion (- red) gutter styling.
+  - One-click copy raw git diff format to clipboard.
+  - Responsive horizontal scrolling for wide code lines.
+- **Accessibility**:
+  - Color-blind safe addition and deletion indicators with explicit + and - symbols.
+  - Collapsible hunk buttons with keyboard access.
+- **Props**:
+  - `filename` (string, default: "src/server/auth.ts"): File path displayed in the diff header.
+  - `compareRange` (string, default: "main...feature/audit-logs"): Git branch or commit comparison range.
+  - `hunks` (CodeDiffHunk[]): Array of hunk objects containing headers and line items.
+  - `defaultMode` ("unified" | "split", default: "unified"): Initial layout mode.
+- **Usage Example**:
+```tsx
+import { InteractiveCodeDiff } from "@/components/ui/InteractiveCodeDiff";
+
+export function Example() {
+  return (
+    <InteractiveCodeDiff
+      filename="src/auth.ts"
+      compareRange="main...feature/sso"
+      defaultMode="unified"
+    />
+  );
+}
+```
+
+---
+
+### Interactive Git Graph (`InteractiveGitGraph`)
+- **Slug**: `interactive-git-graph`
+- **Category**: Cards
+- **Tagline**: Visual SVG Git commit tree with multi-branch lanes and commit inspection.
+- **Description**: Visual SVG Git commit tree illustrating multi-branch workflows with animated bezier curves, branch lane filtering, interactive commit nodes, and SHA copying.
+- **Docs URL**: https://boseui.site/components/interactive-git-graph
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/interactive-git-graph.json`
+- **Registry Manifest**: https://boseui.site/r/interactive-git-graph.json
+- **Key Features**:
+  - Smooth SVG Bezier curved tracks illustrating branch splits and merges.
+  - Clickable commit nodes with pulsating selected HEAD indicator.
+  - Branch filter chips to isolate main, feature, or hotfix tracks.
+  - Integrated commit inspector with one-click SHA copying.
+  - Full responsive dark/light mode palette with accessible contrast.
+- **Accessibility**:
+  - Keyboard accessible commit list items.
+  - Clear visual focus and active selection highlights.
+- **Props**:
+  - `commits` (GitGraphCommit[]): Array of commit items with sha, branch, message, author, and lane.
+  - `defaultSelectedSha` (string): Initial commit SHA selected in the tree.
+  - `onSelectCommit` ((commit: GitGraphCommit) => void): Callback when a commit node or row is clicked.
+- **Usage Example**:
+```tsx
+import { InteractiveGitGraph } from "@/components/ui/InteractiveGitGraph";
+
+export function Example() {
+  return (
+    <InteractiveGitGraph
+      onSelectCommit={(commit) => console.log("Selected commit:", commit.sha)}
+    />
+  );
+}
+```
+
+---
+
 ### Interactive Grid Beam (`InteractiveGridBeam`)
 - **Slug**: `interactive-grid-beam`
 - **Category**: Backgrounds
@@ -2746,6 +3306,45 @@ export function Example() {
         <span className="text-sm font-semibold">Click any grid intersection</span>
       </div>
     </InteractiveGridBeam>
+  );
+}
+```
+
+---
+
+### Interactive Pricing Tier Dial (`InteractivePricingTierDial`)
+- **Slug**: `interactive-pricing-tier-dial`
+- **Category**: Cards
+- **Tagline**: Logarithmic scrubbable pricing slider with dynamic tier switching.
+- **Description**: Logarithmic scrubbable SaaS pricing calculator with dynamic tier switching (Starter, Pro, Growth, Scale), annual discount percentage toggles, and live feature checklists.
+- **Docs URL**: https://boseui.site/components/interactive-pricing-tier-dial
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/interactive-pricing-tier-dial.json`
+- **Registry Manifest**: https://boseui.site/r/interactive-pricing-tier-dial.json
+- **Key Features**:
+  - Logarithmic user slider adjusting MAU smoothly from 1k to 1M.
+  - Dynamic tier classification: Starter ($0), Pro ($29+), Growth ($129+), and Scale ($499+).
+  - Annual billing toggle with automatic 20% discount deduction.
+  - Dynamic tier feature checklist adapting with plan upgrades.
+  - Responsive, accessible range slider with keyboard step navigation.
+- **Accessibility**:
+  - Accessible HTML range input with proper aria-label.
+  - High contrast price and tier typography.
+- **Props**:
+  - `initialUsers` (number, default: 50000): Default starting number of monthly active users.
+  - `currency` (string, default: "$"): Currency symbol displayed alongside numbers.
+  - `annualDiscountPercent` (number, default: 20): Discount percentage applied when Annual billing is toggled.
+  - `onSelectPlan` ((tier: string, price: number, isAnnual: boolean) => void): Callback when the CTA plan button is clicked.
+- **Usage Example**:
+```tsx
+import { InteractivePricingTierDial } from "@/components/ui/InteractivePricingTierDial";
+
+export function Example() {
+  return (
+    <InteractivePricingTierDial
+      initialUsers={25000}
+      annualDiscountPercent={20}
+      onSelectPlan={(tier, price) => console.log(`Selected ${tier} at $${price}/mo`)}
+    />
   );
 }
 ```
@@ -2788,6 +3387,86 @@ export function Example() {
       colorPalette="midnight"
       windowFlicker
     />
+  );
+}
+```
+
+---
+
+### JSON Schema Form Validator (`JsonSchemaFormValidator`)
+- **Slug**: `json-schema-form-validator`
+- **Category**: Cards
+- **Tagline**: Split-view JSON schema editor with real-time constraint diagnostics.
+- **Description**: VSCode Problems tab and Monaco inspired split editor with real-time JSON syntax parsing, schema constraint validation diagnostics, one-click formatting/prettify, and clipboard payload copying.
+- **Docs URL**: https://boseui.site/components/json-schema-form-validator
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/json-schema-form-validator.json`
+- **Registry Manifest**: https://boseui.site/r/json-schema-form-validator.json
+- **Key Features**:
+  - Live JSON parsing with error boundary catching.
+  - Diagnostics panel with line number and property violation markers.
+  - Prettify and format button for instant JSON indentation.
+  - One-click payload copying.
+- **Accessibility**:
+  - High-contrast error callout boxes with clear semantic icons.
+  - Full keyboard operable textarea and action buttons.
+- **Props**:
+  - `initialJson` (string): Default starting JSON document text.
+  - `schemaName` (string, default: "UserConfigSchema.json"): JSON Schema reference file name.
+- **Usage Example**:
+```tsx
+import { JsonSchemaFormValidator } from "@/components/ui/JsonSchemaFormValidator";
+
+export function Example() {
+  return (
+    <JsonSchemaFormValidator
+      schemaName="UserConfigSchema.json"
+    />
+  );
+}
+```
+
+---
+
+### Keyboard Shortcut Stack (`KeyboardShortcutStack`)
+- **Slug**: `keyboard-shortcut-stack`
+- **Category**: Buttons
+- **Tagline**: Tactile 3D keyboard keycap badges with real-time physical keyboard listeners.
+- **Description**: Raycast and Linear inspired tactile 3D keyboard keycap badges with real window keyboard event listeners that physically depress and glow when pressed on physical keyboards.
+- **Docs URL**: https://boseui.site/components/keyboard-shortcut-stack
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/keyboard-shortcut-stack.json`
+- **Registry Manifest**: https://boseui.site/r/keyboard-shortcut-stack.json
+- **Key Features**:
+  - Tactile 3D beveled keycap styling that depresses by 3px on press.
+  - Real window keyboard listener matching physical modifier and alphanumeric keys.
+  - Responsive sizing: sm, md, and lg.
+  - Stack container for full shortcuts with title and description.
+  - Zero-dependency spring physics and prefers-reduced-motion support.
+- **Accessibility**:
+  - Keyboard accessible button elements with standard focus rings.
+  - Clear visual press states in both light and dark themes.
+- **Props**:
+  - `keys` (string[], default: ["⌘", "K"]): Array of key labels displayed in the stack.
+  - `title` (string, default: "Command Palette"): Shortcut action title.
+  - `description` (string): Secondary helper text.
+  - `size` ("sm" | "md" | "lg", default: "md"): Size of all keycaps in the stack.
+  - `onTrigger` (() => void): Callback when shortcut is clicked or triggered.
+- **Usage Example**:
+```tsx
+import { KeyboardShortcutStack, PhysicalKeycap } from "@/components/ui/KeyboardShortcutStack";
+
+export function Example() {
+  return (
+    <div className="space-y-4">
+      <KeyboardShortcutStack
+        keys={["⌘", "Shift", "P"]}
+        title="Command Palette"
+        description="Try pressing ⌘, Shift, or P on your keyboard"
+      />
+      <div className="flex gap-2">
+        <PhysicalKeycap keyLabel="⌘" />
+        <PhysicalKeycap keyLabel="K" />
+      </div>
+    </div>
   );
 }
 ```
@@ -3234,6 +3913,41 @@ export function Example() {
     <div className="w-full">
       <LiveCardForm defaultAmount="$89.00" />
     </div>
+  );
+}
+```
+
+---
+
+### Live Log Streamer (`LiveLogStreamer`)
+- **Slug**: `live-log-streamer`
+- **Category**: Cards
+- **Tagline**: Real-time streaming console log viewer with level filtering and search.
+- **Description**: Datadog and Cloudflare Workers inspired streaming terminal log viewer with log level filters (INFO, WARN, ERROR, DEBUG), auto-scroll lock, live pause/resume stream, search filtering, and copy logs.
+- **Docs URL**: https://boseui.site/components/live-log-streamer
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/live-log-streamer.json`
+- **Registry Manifest**: https://boseui.site/r/live-log-streamer.json
+- **Key Features**:
+  - Live event stream with simulated real-time logs.
+  - Log level toggle buttons for INFO, WARN, ERROR, and DEBUG.
+  - Instant text filter across log messages and system sources.
+  - Auto-scroll lock with pause and resume controls.
+- **Accessibility**:
+  - Monospace high-contrast developer theme with distinct semantic color badges.
+  - Keyboard accessible controls and clipboard copy.
+- **Props**:
+  - `serviceName` (string, default: "edge-compute-gateway"): Identifier for the service emitting logs.
+  - `maxBuffer` (number, default: 100): Maximum logs preserved in memory buffer before eviction.
+- **Usage Example**:
+```tsx
+import { LiveLogStreamer } from "@/components/ui/LiveLogStreamer";
+
+export function Example() {
+  return (
+    <LiveLogStreamer
+      serviceName="edge-compute-gateway"
+      maxBuffer={100}
+    />
   );
 }
 ```
@@ -4056,6 +4770,43 @@ export function Example() {
 
 ---
 
+### Package Dependency Tree (`PackageDependencyTree`)
+- **Slug**: `package-dependency-tree`
+- **Category**: Cards
+- **Tagline**: Interactive package dependency tree with bundle size and license inspection.
+- **Description**: Bundlephobia and Socket.dev inspired package dependency inspector with direct and transitive node nesting, license badges, vulnerability advisories, bundle size calculations, and install script copying.
+- **Docs URL**: https://boseui.site/components/package-dependency-tree
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/package-dependency-tree.json`
+- **Registry Manifest**: https://boseui.site/r/package-dependency-tree.json
+- **Key Features**:
+  - Collapsible hierarchical tree view of direct and transitive packages.
+  - Calculated bundle size metrics and open-source license tags.
+  - Real-time text filter across package names.
+  - Security vulnerability advisory alerts.
+- **Accessibility**:
+  - Keyboard accessible tree nodes with aria-expanded states.
+  - Clear visual contrasts for warning and security indicators.
+- **Props**:
+  - `packageName` (string, default: "boseui"): Root package name.
+  - `version` (string, default: "1.0.0"): Root package semver string.
+  - `bundleSizeKb` (number, default: 60.8): Total minified and gzipped bundle size in kilobytes.
+- **Usage Example**:
+```tsx
+import { PackageDependencyTree } from "@/components/ui/PackageDependencyTree";
+
+export function Example() {
+  return (
+    <PackageDependencyTree
+      packageName="boseui"
+      version="1.0.0"
+      bundleSizeKb={60.8}
+    />
+  );
+}
+```
+
+---
+
 ### Parallax Tilt Card (`ParallaxTiltCard`)
 - **Slug**: `parallax-tilt-card`
 - **Category**: Cards
@@ -4240,6 +4991,41 @@ export function Example() {
     <PickerWheel
       title="Schedule Deployment"
       onChange={(values) => console.log("Selected:", values)}
+    />
+  );
+}
+```
+
+---
+
+### Pipeline DAG Viewer (`PipelineDAGViewer`)
+- **Slug**: `pipeline-dag-viewer`
+- **Category**: Cards
+- **Tagline**: Directed Acyclic Graph CI/CD build pipeline with step logs viewer.
+- **Description**: GitHub Actions and GitLab CI inspired Directed Acyclic Graph (DAG) build pipeline visualizer with sequential and parallel stage columns, live status animations, and embedded console output inspector.
+- **Docs URL**: https://boseui.site/components/pipeline-dag-viewer
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/pipeline-dag-viewer.json`
+- **Registry Manifest**: https://boseui.site/r/pipeline-dag-viewer.json
+- **Key Features**:
+  - Multi-stage columns supporting parallel job execution (e.g., Unit & E2E tests).
+  - Visual status indicators for success, running, failed, and queued stages.
+  - Interactive stage node selection revealing terminal build console output.
+  - Commit SHA and workflow run telemetry header.
+- **Accessibility**:
+  - Keyboard accessible interactive stage buttons.
+  - High contrast status badges with clear semantic icons.
+- **Props**:
+  - `pipelineName` (string, default: "ci-cd-matrix.yml"): Workflow definition file or pipeline title.
+  - `commitSha` (string, default: "main • 4b2e8c1"): Git branch and commit reference that triggered the run.
+- **Usage Example**:
+```tsx
+import { PipelineDAGViewer } from "@/components/ui/PipelineDAGViewer";
+
+export function Example() {
+  return (
+    <PipelineDAGViewer
+      pipelineName="production-deploy.yml"
+      commitSha="main • 8a1f9e2"
     />
   );
 }
@@ -4516,6 +5302,45 @@ export function Example() {
 
 ---
 
+### Rate Limit Meter (`RateLimitMeter`)
+- **Slug**: `rate-limit-meter`
+- **Category**: Cards
+- **Tagline**: Token bucket rate limit and quota capacity visualizer with burst simulation.
+- **Description**: Token bucket and sliding-window rate limit visualizer with burst request simulation, spring-physics capacity transitions, real-time quota reset countdowns, and 429 Too Many Requests retry-after badges.
+- **Docs URL**: https://boseui.site/components/rate-limit-meter
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/rate-limit-meter.json`
+- **Registry Manifest**: https://boseui.site/r/rate-limit-meter.json
+- **Key Features**:
+  - Animated token bucket capacity bar with spring-weighted updates.
+  - Interactive single request and burst (-15) simulation triggers.
+  - Automatic sliding window replenishment timer ticking in real-time.
+  - Dynamic color shifts for Healthy (green), Warning (amber), and 429 Exceeded (red).
+- **Accessibility**:
+  - Clear numeric percentage labels alongside progress meters.
+  - Accessible color contrast with distinct iconography for state changes.
+- **Props**:
+  - `maxLimit` (number, default: 120): Maximum number of requests permitted within the window.
+  - `initialRemaining` (number, default: 92): Initial available capacity tokens.
+  - `windowSeconds` (number, default: 60): Sliding window duration in seconds before token replenish.
+  - `tierLabel` (string, default: "Pro Plan (Global Edge)"): Identifier for the active API tier or subscription plan.
+- **Usage Example**:
+```tsx
+import { RateLimitMeter } from "@/components/ui/RateLimitMeter";
+
+export function Example() {
+  return (
+    <RateLimitMeter
+      maxLimit={120}
+      initialRemaining={92}
+      windowSeconds={60}
+      tierLabel="Pro Plan (Global Edge)"
+    />
+  );
+}
+```
+
+---
+
 ### Reaction Picker (`ReactionPicker`)
 - **Slug**: `reaction-picker`
 - **Category**: Overlays
@@ -4551,6 +5376,41 @@ export function Example() {
       authorName="Sophia Nakamoto"
       authorRole="Core Protocol Engineer"
       messageText="Smart contract audit passed with 0 critical findings! 🚀"
+    />
+  );
+}
+```
+
+---
+
+### Regex Playground (`RegexPlayground`)
+- **Slug**: `regex-playground`
+- **Category**: Cards
+- **Tagline**: Live regular expression tester with preset patterns and flag controls.
+- **Description**: Raycast and Regex101 inspired regular expression matching sandbox with flag toggles (g, i, m), presets (Email, Semver, UUID, Hex), real-time match extraction, and error syntax diagnostics.
+- **Docs URL**: https://boseui.site/components/regex-playground
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/regex-playground.json`
+- **Registry Manifest**: https://boseui.site/r/regex-playground.json
+- **Key Features**:
+  - Interactive regular expression pattern and flag inputs.
+  - Real-time evaluation with syntax error boundary catching.
+  - Popular pattern presets for Email, UUID, Semver, and Hex Colors.
+  - Visual matched token badge list.
+- **Accessibility**:
+  - Keyboard accessible flag toggles and textarea inputs.
+  - High-contrast match badge highlighting.
+- **Props**:
+  - `initialPattern` (string, default: "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"): Default regular expression pattern.
+  - `initialFlags` (string, default: "g"): Default RegExp execution flags.
+- **Usage Example**:
+```tsx
+import { RegexPlayground } from "@/components/ui/RegexPlayground";
+
+export function Example() {
+  return (
+    <RegexPlayground
+      initialPattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+      initialFlags="g"
     />
   );
 }
@@ -4853,6 +5713,77 @@ export function Example() {
     <SegmentedRangePicker
       defaultRange="1M"
       onRangeChange={(range) => console.log("Selected range:", range)}
+    />
+  );
+}
+```
+
+---
+
+### Semver Release Draft Card (`SemverReleaseDraftCard`)
+- **Slug**: `semver-release-draft-card`
+- **Category**: Cards
+- **Tagline**: Conventional commit release drafter with automated Semver bump calculations.
+- **Description**: GitHub Releases and Changesets inspired release notes generator with Semver bump selector (patch, minor, major), conventional commit categorization, Markdown changelog export, and release publishing.
+- **Docs URL**: https://boseui.site/components/semver-release-draft-card
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/semver-release-draft-card.json`
+- **Registry Manifest**: https://boseui.site/r/semver-release-draft-card.json
+- **Key Features**:
+  - Automatic semver bump calculation for Patch, Minor, and Major version updates.
+  - Categorized conventional commit list with breaking change warnings.
+  - Interactive commit selection checkboxes.
+  - Real-time Markdown release notes preview and clipboard copy.
+- **Accessibility**:
+  - Accessible toggle controls with native checkboxes.
+  - Clear visual badges for commit classification.
+- **Props**:
+  - `currentVersion` (string, default: "v1.2.4"): Previous release version tag.
+  - `repoName` (string, default: "boseui/core"): Repository name identifier.
+- **Usage Example**:
+```tsx
+import { SemverReleaseDraftCard } from "@/components/ui/SemverReleaseDraftCard";
+
+export function Example() {
+  return (
+    <SemverReleaseDraftCard
+      currentVersion="v1.2.4"
+      repoName="acme/web"
+      onPublish={(v, md) => console.log("Published", v, md)}
+    />
+  );
+}
+```
+
+---
+
+### Server Metrics Sparkboard (`ServerMetricsSparkboard`)
+- **Slug**: `server-metrics-sparkboard`
+- **Category**: Cards
+- **Tagline**: Synchronized multi-sparkline server telemetry dashboard with crosshair scrubber.
+- **Description**: Grafana and Railway inspired multi-sparkline telemetry dashboard monitoring CPU, Memory, Disk I/O, and Network Egress with synchronized crosshair cursor inspection across all graphs simultaneously.
+- **Docs URL**: https://boseui.site/components/server-metrics-sparkboard
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/server-metrics-sparkboard.json`
+- **Registry Manifest**: https://boseui.site/r/server-metrics-sparkboard.json
+- **Key Features**:
+  - 4 synchronized sparkline graphs for CPU, Memory, Disk, and Network.
+  - Global crosshair scrub cursor updating values across all charts simultaneously.
+  - Interactive time range selectors (1h, 6h, 24h, 7d).
+  - Real-time server host and cloud region telemetry headers.
+- **Accessibility**:
+  - High-contrast color-coded metric series.
+  - Accessible numeric labels with proper units.
+- **Props**:
+  - `hostName` (string, default: "edge-compute-node-42.iad1"): Host server name or DNS identifier.
+  - `region` (string, default: "AWS us-east-1 (N. Virginia)"): Cloud region or datacenter location.
+- **Usage Example**:
+```tsx
+import { ServerMetricsSparkboard } from "@/components/ui/ServerMetricsSparkboard";
+
+export function Example() {
+  return (
+    <ServerMetricsSparkboard
+      hostName="edge-compute-node-42.iad1"
+      region="AWS us-east-1 (N. Virginia)"
     />
   );
 }
@@ -5381,6 +6312,41 @@ export function Example() {
       length={6}
       defaultValue="482"
       onComplete={(code) => console.log("Verified:", code)}
+    />
+  );
+}
+```
+
+---
+
+### SQL Data Grid (`SqlDataGrid`)
+- **Slug**: `sql-data-grid`
+- **Category**: Cards
+- **Tagline**: Keyboard-navigable database table with SQL types and inline cell editing.
+- **Description**: Supabase and Neon inspired keyboard-navigable micro data table with SQL column type badges (UUID, VARCHAR, BOOLEAN, TIMESTAMPTZ, JSONB), double-click inline cell editing, and SQL INSERT export.
+- **Docs URL**: https://boseui.site/components/sql-data-grid
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/sql-data-grid.json`
+- **Registry Manifest**: https://boseui.site/r/sql-data-grid.json
+- **Key Features**:
+  - SQL schema column header types with dedicated color badges.
+  - Click or double-click to edit any cell inline with Enter/Esc shortcuts.
+  - Instant table row search and substring filtering.
+  - One-click SQL INSERT statement export.
+- **Accessibility**:
+  - Full semantic HTML table markup.
+  - Keyboard accessible cell editing with focus lock and key handlers.
+- **Props**:
+  - `tableName` (string, default: "public.users"): Database table schema name displayed in header.
+  - `columns` (SqlColumn[]): Array of column schemas with types.
+  - `initialRows` (SqlRow[]): Initial dataset rows.
+- **Usage Example**:
+```tsx
+import { SqlDataGrid } from "@/components/ui/SqlDataGrid";
+
+export function Example() {
+  return (
+    <SqlDataGrid
+      tableName="public.users"
     />
   );
 }
@@ -5992,6 +6958,48 @@ export function Example() {
 
 ---
 
+### Transaction Receipt (`TransactionReceipt`)
+- **Slug**: `transaction-receipt`
+- **Category**: Cards
+- **Tagline**: Perforated digital fintech receipt with spring-physics rubber stamp animation.
+- **Description**: Perforated fintech digital receipt card inspired by Monzo and Stripe with an authentic zigzag bottom tear edge, itemized breakdown, barcode, and animated spring rubber stamps (PAID, SETTLED, REFUNDED).
+- **Docs URL**: https://boseui.site/components/transaction-receipt
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/transaction-receipt.json`
+- **Registry Manifest**: https://boseui.site/r/transaction-receipt.json
+- **Key Features**:
+  - Authentic SVG zigzag perforated bottom tear edge.
+  - Interactive spring rubber stamp overlay (PAID, SETTLED, REFUNDED).
+  - Itemized subtotal, estimated tax, discount, and total payment calculation.
+  - Integrated transaction barcode and one-click reference ID copying.
+  - Zero external graphic assets with complete dark/light mode responsiveness.
+- **Accessibility**:
+  - Accessible semantic table/flex layout for screen readers.
+  - High contrast monochromatic typography with WCAG AA compliance.
+- **Props**:
+  - `merchantName` (string, default: "BoseUI Cloud Infrastructure"): Header company or merchant business name.
+  - `transactionId` (string, default: "TXN-84920481"): Transaction unique reference identifier.
+  - `date` (string, default: "Oct 12, 2026 • 13:42 UTC"): Formatted timestamp of payment.
+  - `items` (ReceiptItem[]): List of purchased line items with name, quantity, and price.
+  - `stampText` ("PAID" | "SETTLED" | "REFUNDED" | null, default: "PAID"): Rubber stamp watermark label.
+- **Usage Example**:
+```tsx
+import { TransactionReceipt } from "@/components/ui/TransactionReceipt";
+
+export function Example() {
+  return (
+    <TransactionReceipt
+      merchantName="Stripe Platform Services"
+      transactionId="ch_3M498Fhsd92"
+      stampText="PAID"
+      subtotal={120.00}
+      tax={12.00}
+    />
+  );
+}
+```
+
+---
+
 ### Typewriter Cursor Effect (`TypewriterCursorEffect`)
 - **Slug**: `typewriter-cursor-effect`
 - **Category**: Text
@@ -6343,6 +7351,42 @@ export function Example() {
       color="#38BDF8"
       curtainWidth={0.75}
       splashIntensity={1.0}
+    />
+  );
+}
+```
+
+---
+
+### Webhook Payload Simulator (`WebhookPayloadSimulator`)
+- **Slug**: `webhook-payload-simulator`
+- **Category**: Cards
+- **Tagline**: Signed test webhook event dispatcher with HMAC signature verification.
+- **Description**: Stripe and GitHub inspired webhook inspection card with HMAC-SHA256 signature auto-signing, event topic selectors, formatted JSON payload viewer, and live test delivery dispatcher.
+- **Docs URL**: https://boseui.site/components/webhook-payload-simulator
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/webhook-payload-simulator.json`
+- **Registry Manifest**: https://boseui.site/r/webhook-payload-simulator.json
+- **Key Features**:
+  - Pre-configured standard events (payment_intent, subscription, invoice).
+  - Simulated HMAC header generation with auto-signed hash indicator.
+  - Interactive Dispatch trigger with simulated round-trip HTTP latency.
+  - One-click copy for the formatted JSON event body.
+- **Accessibility**:
+  - Accessible select menus with keyboard selection.
+  - High-contrast delivery response indicators with dual color and icon cues.
+- **Props**:
+  - `defaultTargetUrl` (string, default: "https://app.acme.com/api/webhooks/stripe"): Default receiving endpoint URL.
+  - `defaultEventType` (string, default: "payment_intent.succeeded"): Initial webhook event topic selected.
+  - `hmacSecret` (string, default: "whsec_94b8109d72c1a8e"): Mock HMAC signing secret key.
+- **Usage Example**:
+```tsx
+import { WebhookPayloadSimulator } from "@/components/ui/WebhookPayloadSimulator";
+
+export function Example() {
+  return (
+    <WebhookPayloadSimulator
+      defaultEventType="payment_intent.succeeded"
+      defaultTargetUrl="https://app.acme.com/api/webhooks/stripe"
     />
   );
 }

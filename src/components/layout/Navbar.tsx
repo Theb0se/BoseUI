@@ -240,7 +240,7 @@ export function Navbar() {
           </motion.button>
 
           {/* GitHub Repo Button (Desktop) */}
-          <motion.a
+          {/* <motion.a
             whileTap={{ scale: 0.92 }}
             whileHover={{ scale: 1.05 }}
             href={SITE_CONFIG.author.repo}
@@ -256,7 +256,7 @@ export function Navbar() {
             )}
           >
             <Github className="h-4 w-4" />
-          </motion.a>
+          </motion.a> */}
 
           {/* Mobile Menu Toggle Button */}
           <motion.button
@@ -358,7 +358,7 @@ export function Navbar() {
                     )}
                   </button>
 
-                  <a
+                  {/* <a
                     href={SITE_CONFIG.author.repo}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -366,7 +366,7 @@ export function Navbar() {
                   >
                     <Github className="h-4 w-4" />
                     <span>GitHub</span>
-                  </a>
+                  </a> */}
                 </div>
               </div>
             </nav>
