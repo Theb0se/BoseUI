@@ -11,11 +11,11 @@ import {
   Maximize2,
   Columns,
   Layers,
+  Check,
+  Clock,
+  ArrowRight,
 } from "lucide-react";
 import { FileTree } from "@/components/ui/FileTree";
-import { DeploymentTimeline } from "@/components/ui/DeploymentTimeline";
-import { DiffViewer } from "@/components/ui/DiffViewer";
-import { MultiplayerCursors } from "@/components/ui/MultiplayerCursors";
 import { cn } from "@/lib/utils";
 
 export interface DashboardShellBlockProps {
@@ -23,6 +23,23 @@ export interface DashboardShellBlockProps {
   branchName?: string;
   className?: string;
 }
+
+const SAMPLE_DIFF_LINES = [
+  { type: "normal", oldLine: 12, newLine: 12, code: "export interface ButtonProps {" },
+  { type: "normal", oldLine: 13, newLine: 13, code: "  variant?: 'primary' | 'secondary';" },
+  { type: "remove", oldLine: 14, newLine: null, code: "- size?: 'sm' | 'md';" },
+  { type: "add", oldLine: null, newLine: 14, code: "+ size?: 'sm' | 'md' | 'lg' | 'xl';" },
+  { type: "add", oldLine: null, newLine: 15, code: "+ kineticFeedback?: boolean;" },
+  { type: "normal", oldLine: 15, newLine: 16, code: "  children: React.ReactNode;" },
+  { type: "normal", oldLine: 16, newLine: 17, code: "}" },
+];
+
+const DEPLOYMENT_STEPS = [
+  { name: "Static Asset Compilation", duration: "1.2s", status: "completed" },
+  { name: "TypeScript 5.6 Typecheck", duration: "0.8s", status: "completed" },
+  { name: "Edge Middleware Bundling", duration: "1.4s", status: "completed" },
+  { name: "Global CDN Edge Propagation (310 PoPs)", duration: "0.3s", status: "completed" },
+];
 
 export function DashboardShellBlock({
   repoName = "boseui/quantum-core",
@@ -105,7 +122,7 @@ export function DashboardShellBlock({
           />
         </div>
 
-        {/* Main Center Panel: Tabbed between DiffViewer and DeploymentTimeline */}
+        {/* Main Center Panel */}
         <div className="relative flex-1 p-4 lg:p-6 overflow-hidden flex flex-col justify-between">
           {activeTab === "diff" ? (
             <div className="space-y-4">
@@ -115,11 +132,23 @@ export function DashboardShellBlock({
                 </span>
                 <span className="text-xs font-mono text-emerald-400">+148 additions / -32 deletions</span>
               </div>
-              <DiffViewer
-                fileName={selectedFile}
-                initialViewMode="split"
-                className="min-h-[460px] border-neutral-800 bg-neutral-950/70"
-              />
+              <div className="rounded-xl border border-neutral-800 bg-neutral-950/90 p-4 font-mono text-xs overflow-x-auto min-h-[420px]">
+                {SAMPLE_DIFF_LINES.map((line, idx) => (
+                  <div
+                    key={idx}
+                    className={cn(
+                      "flex items-center gap-4 py-1 px-2 rounded font-mono",
+                      line.type === "add" && "bg-emerald-500/10 text-emerald-300",
+                      line.type === "remove" && "bg-rose-500/10 text-rose-300",
+                      line.type === "normal" && "text-neutral-400"
+                    )}
+                  >
+                    <span className="w-6 text-right select-none text-neutral-600">{line.oldLine || " "}</span>
+                    <span className="w-6 text-right select-none text-neutral-600">{line.newLine || " "}</span>
+                    <pre className="flex-1 font-mono">{line.code}</pre>
+                  </div>
+                ))}
+              </div>
             </div>
           ) : (
             <div className="space-y-4">
@@ -127,13 +156,22 @@ export function DashboardShellBlock({
                 <span className="text-xs font-mono text-neutral-400">
                   Active Vercel Edge Pipeline: <strong className="text-emerald-400">Ready in 310 Regions</strong>
                 </span>
+                <span className="text-xs font-mono text-neutral-500">commit #8f2a9e1</span>
               </div>
-              <DeploymentTimeline
-                branch={branchName}
-                commitSha="8f2a9e1"
-                autoPlay={true}
-                className="min-h-[460px] border-neutral-800 bg-neutral-950/70"
-              />
+              <div className="rounded-xl border border-neutral-800 bg-neutral-950/90 p-6 space-y-4 min-h-[420px]">
+                {DEPLOYMENT_STEPS.map((step, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-3 rounded-lg border border-neutral-800/80 bg-neutral-900/60 font-mono text-xs"
+                  >
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                      <span className="text-neutral-200">{step.name}</span>
+                    </div>
+                    <span className="text-neutral-500">{step.duration}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
@@ -147,13 +185,6 @@ export function DashboardShellBlock({
           </div>
         </div>
       </div>
-
-      {/* Real-time Multiplayer Collaborative Cursors Overlay */}
-      <MultiplayerCursors
-        showGrid={false}
-        overlayOnly={true}
-        className="pointer-events-none absolute inset-0 z-20"
-      />
     </div>
   );
 }

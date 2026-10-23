@@ -7,50 +7,25 @@
 
 import type React from "react";
 import { createComponentDemo } from "@/registry/ComponentDemoWrapper";
-import { AIChatBubble } from "@/components/ui/AIChatBubble";
-import { AICodeExecutionSandbox } from "@/components/ui/AICodeExecutionSandbox";
-import { AICommandBar } from "@/components/ui/AICommandBar";
-import { AIGenerationProgress } from "@/components/ui/AIGenerationProgress";
-import { AIPromptDiffViewer } from "@/components/ui/AIPromptDiffViewer";
-import { AIPromptInput } from "@/components/ui/AIPromptInput";
-import { AIReasoningAccordion } from "@/components/ui/AIReasoningAccordion";
-import { AIStatusBadge } from "@/components/ui/AIStatusBadge";
-import { AIStreamingText } from "@/components/ui/AIStreamingText";
-import { AIThinkingLoader } from "@/components/ui/AIThinkingLoader";
 import { AIVoiceOrb } from "@/components/ui/AIVoiceOrb";
 import { Accordion } from "@/components/ui/Accordion";
 import { AccordionStackCards } from "@/components/ui/AccordionStackCards";
 import { AnimatedTabs } from "@/components/ui/AnimatedTabs";
 import { AppleContextMenu } from "@/components/ui/AppleContextMenu";
 import { AppleSearchField } from "@/components/ui/AppleSearchField";
-import { ArchitectureFlowchartNode } from "@/components/ui/ArchitectureFlowchartNode";
-import { AsteroidField } from "@/components/ui/AsteroidField";
 import { AtmosphericFog } from "@/components/ui/AtmosphericFog";
 import { AuroraBackground } from "@/components/ui/AuroraBackground";
-import { AuroraFluxSurface } from "@/components/ui/AuroraFluxSurface";
 import { Autocomplete } from "@/components/ui/Autocomplete";
-import { AutoplayStoryCarousel } from "@/components/ui/AutoplayStoryCarousel";
-import { AvatarStackPresence } from "@/components/ui/AvatarStackPresence";
 import { BlackHole } from "@/components/ui/BlackHole";
 import { BlurFadeInText } from "@/components/ui/BlurFadeInText";
 import { CarouselWithDots } from "@/components/ui/CarouselWithDots";
-import { CategoryFilterScroller } from "@/components/ui/CategoryFilterScroller";
 import { ChromaticAberrationGlitchText } from "@/components/ui/ChromaticAberrationGlitchText";
 import { CipherScrambleText } from "@/components/ui/CipherScrambleText";
 import { CloudsDrift } from "@/components/ui/CloudsDrift";
-import { ColorFinishPicker } from "@/components/ui/ColorFinishPicker";
 import { CommandMenu } from "@/components/ui/CommandMenu";
-import { ConstellationMap } from "@/components/ui/ConstellationMap";
 import { ConstellationMeshField } from "@/components/ui/ConstellationMeshField";
-import { ContextTokenGauge } from "@/components/ui/ContextTokenGauge";
-import { CopyCodeBlock } from "@/components/ui/CopyCodeBlock";
-import { CronScheduleBuilder } from "@/components/ui/CronScheduleBuilder";
 import { CursorFollower } from "@/components/ui/CursorFollower";
-import { DatabaseConnectionHealthBadge } from "@/components/ui/DatabaseConnectionHealthBadge";
-import { DeploymentTimeline } from "@/components/ui/DeploymentTimeline";
-import { DiffViewer } from "@/components/ui/DiffViewer";
 import { DigitalRadar } from "@/components/ui/DigitalRadar";
-import { DockMagnification } from "@/components/ui/DockMagnification";
 import { Drawer } from "@/components/ui/Drawer";
 import { DynamicIslandToast } from "@/components/ui/DynamicIslandToast";
 import { ElasticDock } from "@/components/ui/ElasticDock";
@@ -58,24 +33,16 @@ import { ElasticSnapSortable } from "@/components/ui/ElasticSnapSortable";
 import { ElasticSwipeSlider } from "@/components/ui/ElasticSwipeSlider";
 import { ElasticTagInput } from "@/components/ui/ElasticTagInput";
 import { ElasticWaveText } from "@/components/ui/ElasticWaveText";
-import { EnvSecretVault } from "@/components/ui/EnvSecretVault";
-import { ErrorStackTraceInspector } from "@/components/ui/ErrorStackTraceInspector";
 import { ExpandableBentoCard } from "@/components/ui/ExpandableBentoCard";
-import { ExpandingSearchPill } from "@/components/ui/ExpandingSearchPill";
 import { FallingPetals } from "@/components/ui/FallingPetals";
 import { FeatureCard } from "@/components/ui/FeatureCard";
-import { FeatureFlagToggleStack } from "@/components/ui/FeatureFlagToggleStack";
 import { FileTree } from "@/components/ui/FileTree";
-import { Fireflies } from "@/components/ui/Fireflies";
 import { FloatingCompassNav } from "@/components/ui/FloatingCompassNav";
 import { FloatingLabelInput } from "@/components/ui/FloatingLabelInput";
 import { GalaxyNebula } from "@/components/ui/GalaxyNebula";
-import { GlobeArcs } from "@/components/ui/GlobeArcs";
 import { GlowBorderCard } from "@/components/ui/GlowBorderCard";
-import { GradientMeshHero } from "@/components/ui/GradientMeshHero";
 import { GravityWellPortal } from "@/components/ui/GravityWellPortal";
 import { GridHorizon } from "@/components/ui/GridHorizon";
-import { HealthCheckStatusMatrix } from "@/components/ui/HealthCheckStatusMatrix";
 import { HeartBurstButton } from "@/components/ui/HeartBurstButton";
 import { HoldToConfirmButton } from "@/components/ui/HoldToConfirmButton";
 import { HoldToEngageFAB } from "@/components/ui/HoldToEngageFAB";
@@ -83,30 +50,16 @@ import { HolographicFlipCard } from "@/components/ui/HolographicFlipCard";
 import { HorizonLight } from "@/components/ui/HorizonLight";
 import { HoverCursorShimmerText } from "@/components/ui/HoverCursorShimmerText";
 import { HoverRevealFeatureGrid } from "@/components/ui/HoverRevealFeatureGrid";
-import { IPadProMockup } from "@/components/ui/IPadProMockup";
-import { IPhone16ProMockup } from "@/components/ui/IPhone16ProMockup";
 import { InteractiveApiEndpointBar } from "@/components/ui/InteractiveApiEndpointBar";
-import { InteractiveCodeDiff } from "@/components/ui/InteractiveCodeDiff";
-import { InteractiveGitGraph } from "@/components/ui/InteractiveGitGraph";
 import { InteractiveGridBeam } from "@/components/ui/InteractiveGridBeam";
-import { InteractivePricingTierDial } from "@/components/ui/InteractivePricingTierDial";
 import { IsometricCity } from "@/components/ui/IsometricCity";
-import { JsonSchemaFormValidator } from "@/components/ui/JsonSchemaFormValidator";
-import { KeyboardShortcutStack } from "@/components/ui/KeyboardShortcutStack";
-import { KeycapChips } from "@/components/ui/KeycapChips";
 import { KineticDrawerSheet } from "@/components/ui/KineticDrawerSheet";
 import { KineticRollingCounter } from "@/components/ui/KineticRollingCounter";
 import { KineticSlider } from "@/components/ui/KineticSlider";
 import { KineticStepIndicator } from "@/components/ui/KineticStepIndicator";
 import { KineticSwipeButton } from "@/components/ui/KineticSwipeButton";
-import { LavaLamp } from "@/components/ui/LavaLamp";
 import { LiquidGlassCard } from "@/components/ui/LiquidGlassCard";
-import { LiquidGradientBlob } from "@/components/ui/LiquidGradientBlob";
 import { LiquidPillTabs } from "@/components/ui/LiquidPillTabs";
-import { LiveCardForm } from "@/components/ui/LiveCardForm";
-import { LiveLogStreamer } from "@/components/ui/LiveLogStreamer";
-import { MacBookProMockup } from "@/components/ui/MacBookProMockup";
-import { MacOSWindowMockup } from "@/components/ui/MacOSWindowMockup";
 import { MagneticAvatarStack } from "@/components/ui/MagneticAvatarStack";
 import { MagneticBreadcrumb } from "@/components/ui/MagneticBreadcrumb";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -114,47 +67,29 @@ import { MagneticPopoverMenu } from "@/components/ui/MagneticPopoverMenu";
 import { MagneticScatterText } from "@/components/ui/MagneticScatterText";
 import { MaskRevealSlideText } from "@/components/ui/MaskRevealSlideText";
 import { MatrixRain } from "@/components/ui/MatrixRain";
-import { MeshGradient } from "@/components/ui/MeshGradient";
 import { ModalPopup } from "@/components/ui/ModalPopup";
 import { MorphingActionButton } from "@/components/ui/MorphingActionButton";
+import { MorphingBlob } from "@/components/ui/MorphingBlob";
 import { MorphingDialog } from "@/components/ui/MorphingDialog";
 import { MorphingFlipText } from "@/components/ui/MorphingFlipText";
-import { MorphingMegaMenu } from "@/components/ui/MorphingMegaMenu";
 import { MovingGridLines } from "@/components/ui/MovingGridLines";
 import { MultiSelectTagInput } from "@/components/ui/MultiSelectTagInput";
-import { MultiplayerCursors } from "@/components/ui/MultiplayerCursors";
-import { NowPlayingWaveform } from "@/components/ui/NowPlayingWaveform";
-import { OceanWaves } from "@/components/ui/OceanWaves";
-import { PackageDependencyTree } from "@/components/ui/PackageDependencyTree";
 import { ParallaxTiltCard } from "@/components/ui/ParallaxTiltCard";
 import { ParticleNetwork } from "@/components/ui/ParticleNetwork";
 import { PeelRevealCard } from "@/components/ui/PeelRevealCard";
 import { PerspectiveTiltText } from "@/components/ui/PerspectiveTiltText";
 import { PickerWheel } from "@/components/ui/PickerWheel";
-import { PipelineDAGViewer } from "@/components/ui/PipelineDAGViewer";
-import { PlanetHorizon } from "@/components/ui/PlanetHorizon";
-import { PlusGridBorder } from "@/components/ui/PlusGridBorder";
 import { PopoverCard } from "@/components/ui/PopoverCard";
 import { PricingCalculator } from "@/components/ui/PricingCalculator";
 import { ProductCompareTable } from "@/components/ui/ProductCompareTable";
 import { RadialMenuOrb } from "@/components/ui/RadialMenuOrb";
 import { RainOnGlass } from "@/components/ui/RainOnGlass";
-import { RateLimitMeter } from "@/components/ui/RateLimitMeter";
-import { ReactionPicker } from "@/components/ui/ReactionPicker";
-import { RegexPlayground } from "@/components/ui/RegexPlayground";
 import { RippleBurstButton } from "@/components/ui/RippleBurstButton";
 import { RollingNumberTicker } from "@/components/ui/RollingNumberTicker";
 import { RotarySpringDial } from "@/components/ui/RotarySpringDial";
-import { SafariBrowserMockup } from "@/components/ui/SafariBrowserMockup";
 import { ScrubbableNumberInput } from "@/components/ui/ScrubbableNumberInput";
-import { ScrubbableSparkline } from "@/components/ui/ScrubbableSparkline";
-import { SegmentedRangePicker } from "@/components/ui/SegmentedRangePicker";
-import { SemverReleaseDraftCard } from "@/components/ui/SemverReleaseDraftCard";
-import { ServerMetricsSparkboard } from "@/components/ui/ServerMetricsSparkboard";
 import { ShimmerText } from "@/components/ui/ShimmerText";
 import { ShootingStars } from "@/components/ui/ShootingStars";
-import { SiriGlowEdge } from "@/components/ui/SiriGlowEdge";
-import { SlashCommandMenu } from "@/components/ui/SlashCommandMenu";
 import { Snowfall } from "@/components/ui/Snowfall";
 import { SolarFlare } from "@/components/ui/SolarFlare";
 import { SplitButton } from "@/components/ui/SplitButton";
@@ -168,75 +103,40 @@ import { SqlDataGrid } from "@/components/ui/SqlDataGrid";
 import { StarryNight } from "@/components/ui/StarryNight";
 import { Stepper } from "@/components/ui/Stepper";
 import { StepperSliderControl } from "@/components/ui/StepperSliderControl";
+import { StickyPages } from "@/components/ui/StickyPages";
 import { StickyScrollStory } from "@/components/ui/StickyScrollStory";
-import { StickySubNav } from "@/components/ui/StickySubNav";
-import { StreakCounter } from "@/components/ui/StreakCounter";
-import { SunriseHorizon } from "@/components/ui/SunriseHorizon";
-import { SwipeCards } from "@/components/ui/SwipeCards";
-import { TabbedCodeBlock } from "@/components/ui/TabbedCodeBlock";
+import { StoryCards } from "@/components/ui/StoryCards";
 import { TerminalWindowMockup } from "@/components/ui/TerminalWindowMockup";
 import { Thunderstorm } from "@/components/ui/Thunderstorm";
 import { TiltCreditCard3D } from "@/components/ui/TiltCreditCard3D";
-import { TiltPinInput } from "@/components/ui/TiltPinInput";
 import { ToastStack } from "@/components/ui/ToastStack";
-import { TopographicRippleSurface } from "@/components/ui/TopographicRippleSurface";
 import { TransactionReceipt } from "@/components/ui/TransactionReceipt";
 import { TypewriterCursorEffect } from "@/components/ui/TypewriterCursorEffect";
 import { UnderwaterCaustics } from "@/components/ui/UnderwaterCaustics";
 import { VariableProximityText } from "@/components/ui/VariableProximityText";
-import { VolcanoEmbers } from "@/components/ui/VolcanoEmbers";
 import { WarpSpeed } from "@/components/ui/WarpSpeed";
-import { WarpText } from "@/components/ui/WarpText";
 import { WaterRipples } from "@/components/ui/WaterRipples";
-import { Waterfall } from "@/components/ui/Waterfall";
-import { WebhookPayloadSimulator } from "@/components/ui/WebhookPayloadSimulator";
-import { WormholeTunnel } from "@/components/ui/WormholeTunnel";
 
 export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
-  "ai-chat-bubble": createComponentDemo("ai-chat-bubble", AIChatBubble),
-  "ai-code-execution-sandbox": createComponentDemo("ai-code-execution-sandbox", AICodeExecutionSandbox),
-  "ai-command-bar": createComponentDemo("ai-command-bar", AICommandBar),
-  "ai-generation-progress": createComponentDemo("ai-generation-progress", AIGenerationProgress),
-  "ai-prompt-diff-viewer": createComponentDemo("ai-prompt-diff-viewer", AIPromptDiffViewer),
-  "ai-prompt-input": createComponentDemo("ai-prompt-input", AIPromptInput),
-  "ai-reasoning-accordion": createComponentDemo("ai-reasoning-accordion", AIReasoningAccordion),
-  "ai-status-badge": createComponentDemo("ai-status-badge", AIStatusBadge),
-  "ai-streaming-text": createComponentDemo("ai-streaming-text", AIStreamingText),
-  "ai-thinking-loader": createComponentDemo("ai-thinking-loader", AIThinkingLoader),
   "ai-voice-orb": createComponentDemo("ai-voice-orb", AIVoiceOrb),
   "accordion": createComponentDemo("accordion", Accordion),
   "accordion-stack-cards": createComponentDemo("accordion-stack-cards", AccordionStackCards),
   "animated-tabs": createComponentDemo("animated-tabs", AnimatedTabs),
   "apple-context-menu": createComponentDemo("apple-context-menu", AppleContextMenu),
   "apple-search-field": createComponentDemo("apple-search-field", AppleSearchField),
-  "architecture-flowchart-node": createComponentDemo("architecture-flowchart-node", ArchitectureFlowchartNode),
-  "asteroid-field": createComponentDemo("asteroid-field", AsteroidField),
   "atmospheric-fog": createComponentDemo("atmospheric-fog", AtmosphericFog),
   "aurora-background": createComponentDemo("aurora-background", AuroraBackground),
-  "aurora-flux-surface": createComponentDemo("aurora-flux-surface", AuroraFluxSurface),
   "autocomplete": createComponentDemo("autocomplete", Autocomplete),
-  "autoplay-story-carousel": createComponentDemo("autoplay-story-carousel", AutoplayStoryCarousel),
-  "avatar-stack-presence": createComponentDemo("avatar-stack-presence", AvatarStackPresence),
   "black-hole": createComponentDemo("black-hole", BlackHole),
   "blur-fade-in-text": createComponentDemo("blur-fade-in-text", BlurFadeInText),
   "carousel-with-dots": createComponentDemo("carousel-with-dots", CarouselWithDots),
-  "category-filter-scroller": createComponentDemo("category-filter-scroller", CategoryFilterScroller),
   "chromatic-aberration-glitch-text": createComponentDemo("chromatic-aberration-glitch-text", ChromaticAberrationGlitchText),
   "cipher-scramble-text": createComponentDemo("cipher-scramble-text", CipherScrambleText),
   "clouds-drift": createComponentDemo("clouds-drift", CloudsDrift),
-  "color-finish-picker": createComponentDemo("color-finish-picker", ColorFinishPicker),
   "command-menu": createComponentDemo("command-menu", CommandMenu),
-  "constellation-map": createComponentDemo("constellation-map", ConstellationMap),
   "constellation-mesh-field": createComponentDemo("constellation-mesh-field", ConstellationMeshField),
-  "context-token-gauge": createComponentDemo("context-token-gauge", ContextTokenGauge),
-  "copy-code-block": createComponentDemo("copy-code-block", CopyCodeBlock),
-  "cron-schedule-builder": createComponentDemo("cron-schedule-builder", CronScheduleBuilder),
   "cursor-follower": createComponentDemo("cursor-follower", CursorFollower),
-  "database-connection-health-badge": createComponentDemo("database-connection-health-badge", DatabaseConnectionHealthBadge),
-  "deployment-timeline": createComponentDemo("deployment-timeline", DeploymentTimeline),
-  "diff-viewer": createComponentDemo("diff-viewer", DiffViewer),
   "digital-radar": createComponentDemo("digital-radar", DigitalRadar),
-  "dock-magnification": createComponentDemo("dock-magnification", DockMagnification),
   "drawer": createComponentDemo("drawer", Drawer),
   "dynamic-island-toast": createComponentDemo("dynamic-island-toast", DynamicIslandToast),
   "elastic-dock": createComponentDemo("elastic-dock", ElasticDock),
@@ -244,24 +144,16 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "elastic-swipe-slider": createComponentDemo("elastic-swipe-slider", ElasticSwipeSlider),
   "elastic-tag-input": createComponentDemo("elastic-tag-input", ElasticTagInput),
   "elastic-wave-text": createComponentDemo("elastic-wave-text", ElasticWaveText),
-  "env-secret-vault": createComponentDemo("env-secret-vault", EnvSecretVault),
-  "error-stack-trace-inspector": createComponentDemo("error-stack-trace-inspector", ErrorStackTraceInspector),
   "expandable-bento-card": createComponentDemo("expandable-bento-card", ExpandableBentoCard),
-  "expanding-search-pill": createComponentDemo("expanding-search-pill", ExpandingSearchPill),
   "falling-petals": createComponentDemo("falling-petals", FallingPetals),
   "feature-card": createComponentDemo("feature-card", FeatureCard),
-  "feature-flag-toggle-stack": createComponentDemo("feature-flag-toggle-stack", FeatureFlagToggleStack),
   "file-tree": createComponentDemo("file-tree", FileTree),
-  "fireflies": createComponentDemo("fireflies", Fireflies),
   "floating-compass-nav": createComponentDemo("floating-compass-nav", FloatingCompassNav),
   "floating-label-input": createComponentDemo("floating-label-input", FloatingLabelInput),
   "galaxy-nebula": createComponentDemo("galaxy-nebula", GalaxyNebula),
-  "globe-arcs": createComponentDemo("globe-arcs", GlobeArcs),
   "glow-border-card": createComponentDemo("glow-border-card", GlowBorderCard),
-  "gradient-mesh-hero": createComponentDemo("gradient-mesh-hero", GradientMeshHero),
   "gravity-well-portal": createComponentDemo("gravity-well-portal", GravityWellPortal),
   "grid-horizon": createComponentDemo("grid-horizon", GridHorizon),
-  "health-check-status-matrix": createComponentDemo("health-check-status-matrix", HealthCheckStatusMatrix),
   "heart-burst-button": createComponentDemo("heart-burst-button", HeartBurstButton),
   "hold-to-confirm-button": createComponentDemo("hold-to-confirm-button", HoldToConfirmButton),
   "hold-to-engage-fab": createComponentDemo("hold-to-engage-fab", HoldToEngageFAB),
@@ -269,30 +161,16 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "horizon-light": createComponentDemo("horizon-light", HorizonLight),
   "hover-cursor-shimmer-text": createComponentDemo("hover-cursor-shimmer-text", HoverCursorShimmerText),
   "hover-reveal-feature-grid": createComponentDemo("hover-reveal-feature-grid", HoverRevealFeatureGrid),
-  "i-pad-pro-mockup": createComponentDemo("i-pad-pro-mockup", IPadProMockup),
-  "i-phone16-pro-mockup": createComponentDemo("i-phone16-pro-mockup", IPhone16ProMockup),
   "interactive-api-endpoint-bar": createComponentDemo("interactive-api-endpoint-bar", InteractiveApiEndpointBar),
-  "interactive-code-diff": createComponentDemo("interactive-code-diff", InteractiveCodeDiff),
-  "interactive-git-graph": createComponentDemo("interactive-git-graph", InteractiveGitGraph),
   "interactive-grid-beam": createComponentDemo("interactive-grid-beam", InteractiveGridBeam),
-  "interactive-pricing-tier-dial": createComponentDemo("interactive-pricing-tier-dial", InteractivePricingTierDial),
   "isometric-city": createComponentDemo("isometric-city", IsometricCity),
-  "json-schema-form-validator": createComponentDemo("json-schema-form-validator", JsonSchemaFormValidator),
-  "keyboard-shortcut-stack": createComponentDemo("keyboard-shortcut-stack", KeyboardShortcutStack),
-  "keycap-chips": createComponentDemo("keycap-chips", KeycapChips),
   "kinetic-drawer-sheet": createComponentDemo("kinetic-drawer-sheet", KineticDrawerSheet),
   "kinetic-rolling-counter": createComponentDemo("kinetic-rolling-counter", KineticRollingCounter),
   "kinetic-slider": createComponentDemo("kinetic-slider", KineticSlider),
   "kinetic-step-indicator": createComponentDemo("kinetic-step-indicator", KineticStepIndicator),
   "kinetic-swipe-button": createComponentDemo("kinetic-swipe-button", KineticSwipeButton),
-  "lava-lamp": createComponentDemo("lava-lamp", LavaLamp),
   "liquid-glass-card": createComponentDemo("liquid-glass-card", LiquidGlassCard),
-  "liquid-gradient-blob": createComponentDemo("liquid-gradient-blob", LiquidGradientBlob),
   "liquid-pill-tabs": createComponentDemo("liquid-pill-tabs", LiquidPillTabs),
-  "live-card-form": createComponentDemo("live-card-form", LiveCardForm),
-  "live-log-streamer": createComponentDemo("live-log-streamer", LiveLogStreamer),
-  "mac-book-pro-mockup": createComponentDemo("mac-book-pro-mockup", MacBookProMockup),
-  "mac-os-window-mockup": createComponentDemo("mac-os-window-mockup", MacOSWindowMockup),
   "magnetic-avatar-stack": createComponentDemo("magnetic-avatar-stack", MagneticAvatarStack),
   "magnetic-breadcrumb": createComponentDemo("magnetic-breadcrumb", MagneticBreadcrumb),
   "magnetic-button": createComponentDemo("magnetic-button", MagneticButton),
@@ -300,47 +178,29 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "magnetic-scatter-text": createComponentDemo("magnetic-scatter-text", MagneticScatterText),
   "mask-reveal-slide-text": createComponentDemo("mask-reveal-slide-text", MaskRevealSlideText),
   "matrix-rain": createComponentDemo("matrix-rain", MatrixRain),
-  "mesh-gradient": createComponentDemo("mesh-gradient", MeshGradient),
   "modal-popup": createComponentDemo("modal-popup", ModalPopup),
   "morphing-action-button": createComponentDemo("morphing-action-button", MorphingActionButton),
+  "morphing-blob": createComponentDemo("morphing-blob", MorphingBlob),
   "morphing-dialog": createComponentDemo("morphing-dialog", MorphingDialog),
   "morphing-flip-text": createComponentDemo("morphing-flip-text", MorphingFlipText),
-  "morphing-mega-menu": createComponentDemo("morphing-mega-menu", MorphingMegaMenu),
   "moving-grid-lines": createComponentDemo("moving-grid-lines", MovingGridLines),
   "multi-select-tag-input": createComponentDemo("multi-select-tag-input", MultiSelectTagInput),
-  "multiplayer-cursors": createComponentDemo("multiplayer-cursors", MultiplayerCursors),
-  "now-playing-waveform": createComponentDemo("now-playing-waveform", NowPlayingWaveform),
-  "ocean-waves": createComponentDemo("ocean-waves", OceanWaves),
-  "package-dependency-tree": createComponentDemo("package-dependency-tree", PackageDependencyTree),
   "parallax-tilt-card": createComponentDemo("parallax-tilt-card", ParallaxTiltCard),
   "particle-network": createComponentDemo("particle-network", ParticleNetwork),
   "peel-reveal-card": createComponentDemo("peel-reveal-card", PeelRevealCard),
   "perspective-tilt-text": createComponentDemo("perspective-tilt-text", PerspectiveTiltText),
   "picker-wheel": createComponentDemo("picker-wheel", PickerWheel),
-  "pipeline-dag-viewer": createComponentDemo("pipeline-dag-viewer", PipelineDAGViewer),
-  "planet-horizon": createComponentDemo("planet-horizon", PlanetHorizon),
-  "plus-grid-border": createComponentDemo("plus-grid-border", PlusGridBorder),
   "popover-card": createComponentDemo("popover-card", PopoverCard),
   "pricing-calculator": createComponentDemo("pricing-calculator", PricingCalculator),
   "product-compare-table": createComponentDemo("product-compare-table", ProductCompareTable),
   "radial-menu-orb": createComponentDemo("radial-menu-orb", RadialMenuOrb),
   "rain-on-glass": createComponentDemo("rain-on-glass", RainOnGlass),
-  "rate-limit-meter": createComponentDemo("rate-limit-meter", RateLimitMeter),
-  "reaction-picker": createComponentDemo("reaction-picker", ReactionPicker),
-  "regex-playground": createComponentDemo("regex-playground", RegexPlayground),
   "ripple-burst-button": createComponentDemo("ripple-burst-button", RippleBurstButton),
   "rolling-number-ticker": createComponentDemo("rolling-number-ticker", RollingNumberTicker),
   "rotary-spring-dial": createComponentDemo("rotary-spring-dial", RotarySpringDial),
-  "safari-browser-mockup": createComponentDemo("safari-browser-mockup", SafariBrowserMockup),
   "scrubbable-number-input": createComponentDemo("scrubbable-number-input", ScrubbableNumberInput),
-  "scrubbable-sparkline": createComponentDemo("scrubbable-sparkline", ScrubbableSparkline),
-  "segmented-range-picker": createComponentDemo("segmented-range-picker", SegmentedRangePicker),
-  "semver-release-draft-card": createComponentDemo("semver-release-draft-card", SemverReleaseDraftCard),
-  "server-metrics-sparkboard": createComponentDemo("server-metrics-sparkboard", ServerMetricsSparkboard),
   "shimmer-text": createComponentDemo("shimmer-text", ShimmerText),
   "shooting-stars": createComponentDemo("shooting-stars", ShootingStars),
-  "siri-glow-edge": createComponentDemo("siri-glow-edge", SiriGlowEdge),
-  "slash-command-menu": createComponentDemo("slash-command-menu", SlashCommandMenu),
   "snowfall": createComponentDemo("snowfall", Snowfall),
   "solar-flare": createComponentDemo("solar-flare", SolarFlare),
   "split-button": createComponentDemo("split-button", SplitButton),
@@ -354,27 +214,17 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "starry-night": createComponentDemo("starry-night", StarryNight),
   "stepper": createComponentDemo("stepper", Stepper),
   "stepper-slider-control": createComponentDemo("stepper-slider-control", StepperSliderControl),
+  "sticky-pages": createComponentDemo("sticky-pages", StickyPages),
   "sticky-scroll-story": createComponentDemo("sticky-scroll-story", StickyScrollStory),
-  "sticky-sub-nav": createComponentDemo("sticky-sub-nav", StickySubNav),
-  "streak-counter": createComponentDemo("streak-counter", StreakCounter),
-  "sunrise-horizon": createComponentDemo("sunrise-horizon", SunriseHorizon),
-  "swipe-cards": createComponentDemo("swipe-cards", SwipeCards),
-  "tabbed-code-block": createComponentDemo("tabbed-code-block", TabbedCodeBlock),
+  "story-cards": createComponentDemo("story-cards", StoryCards),
   "terminal-window-mockup": createComponentDemo("terminal-window-mockup", TerminalWindowMockup),
   "thunderstorm": createComponentDemo("thunderstorm", Thunderstorm),
   "tilt-credit-card3-d": createComponentDemo("tilt-credit-card3-d", TiltCreditCard3D),
-  "tilt-pin-input": createComponentDemo("tilt-pin-input", TiltPinInput),
   "toast-stack": createComponentDemo("toast-stack", ToastStack),
-  "topographic-ripple-surface": createComponentDemo("topographic-ripple-surface", TopographicRippleSurface),
   "transaction-receipt": createComponentDemo("transaction-receipt", TransactionReceipt),
   "typewriter-cursor-effect": createComponentDemo("typewriter-cursor-effect", TypewriterCursorEffect),
   "underwater-caustics": createComponentDemo("underwater-caustics", UnderwaterCaustics),
   "variable-proximity-text": createComponentDemo("variable-proximity-text", VariableProximityText),
-  "volcano-embers": createComponentDemo("volcano-embers", VolcanoEmbers),
   "warp-speed": createComponentDemo("warp-speed", WarpSpeed),
-  "warp-text": createComponentDemo("warp-text", WarpText),
   "water-ripples": createComponentDemo("water-ripples", WaterRipples),
-  "waterfall": createComponentDemo("waterfall", Waterfall),
-  "webhook-payload-simulator": createComponentDemo("webhook-payload-simulator", WebhookPayloadSimulator),
-  "wormhole-tunnel": createComponentDemo("wormhole-tunnel", WormholeTunnel),
 };

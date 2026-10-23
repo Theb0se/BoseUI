@@ -112,7 +112,7 @@ export function Navbar() {
               </span>
               <span className="hidden items-center gap-1 rounded-full border border-neutral-200/80 bg-neutral-100/80 px-1.5 py-0.5 font-mono text-[10px] font-medium text-neutral-500 transition-colors group-hover:border-neutral-300 dark:border-neutral-800/80 dark:bg-neutral-900/80 dark:text-neutral-400 dark:group-hover:border-neutral-700 md:inline-flex">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                v1.0
+                v2
               </span>
             </div>
           </Link>
@@ -332,7 +332,7 @@ export function Navbar() {
                 >
                   <div className="flex items-center gap-2.5">
                     <Search className="h-3.5 w-3.5" />
-                    <span>Search all 135+ components...</span>
+                    <span>Search components...</span>
                   </div>
                   <kbd className="rounded border border-neutral-200 bg-white px-1.5 py-0.5 font-mono text-[10px] text-neutral-500 shadow-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400">
                     {shortcut}

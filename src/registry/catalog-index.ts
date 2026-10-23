@@ -8,250 +8,6 @@ import type { CatalogIndexEntry } from "@/types/component";
 
 export const CATALOG_INDEX: CatalogIndexEntry[] = [
   {
-    "id": "ai-chat-bubble",
-    "slug": "ai-chat-bubble",
-    "componentName": "AIChatBubble",
-    "title": "AI Chat Bubble",
-    "description": "Spring-entrance chat message bubble for AI interfaces. Supports user (right, filled) and assistant (left, outlined) roles, animated typing dots state, optional avatar initials, and timestamp.",
-    "tagline": "Physics spring-entrance chat bubble for AI conversation UIs.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "AI",
-      "Chat"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "chat bubble",
-      "ai chat",
-      "message bubble",
-      "chat ui",
-      "ai conversation",
-      "typing indicator"
-    ]
-  },
-  {
-    "id": "ai-code-execution-sandbox",
-    "slug": "ai-code-execution-sandbox",
-    "componentName": "AICodeExecutionSandbox",
-    "title": "AI Code Execution Sandbox",
-    "description": "Interactive code execution terminal for AI-generated code with Code and Console Output tabs, real-time stdout streaming, execution time telemetry, and run/copy controls.",
-    "tagline": "Interactive terminal execution sandbox for running AI-generated code.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "AI",
-      "Terminal",
-      "Code"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "ai code runner",
-      "code execution sandbox",
-      "ai terminal",
-      "stdout stream",
-      "code output",
-      "developer ai"
-    ]
-  },
-  {
-    "id": "ai-command-bar",
-    "slug": "ai-command-bar",
-    "componentName": "AICommandBar",
-    "title": "AI Command Bar",
-    "description": "Slash-command aware AI input bar inspired by Linear and Raycast. Type / to reveal a spring-animated suggestions panel with keyboard navigation, staggered item entrance, and a shimmer idle border.",
-    "tagline": "Slash-command AI bar with spring suggestions panel and keyboard nav.",
-    "category": "Navigation",
-    "badges": [
-      "New",
-      "AI",
-      "Command"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "ai command bar",
-      "slash command",
-      "command input",
-      "ai search",
-      "linear command",
-      "raycast input"
-    ]
-  },
-  {
-    "id": "ai-generation-progress",
-    "slug": "ai-generation-progress",
-    "componentName": "AIGenerationProgress",
-    "title": "AI Generation Progress",
-    "description": "Spring-animated SVG ring progress indicator for AI token generation. Shows determinate progress with a rolling token counter, or an indeterminate spin when total is unknown.",
-    "tagline": "Spring-physics ring progress for AI generation with token counter.",
-    "category": "Motion",
-    "badges": [
-      "New",
-      "AI",
-      "Progress"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": false,
-    "keywords": [
-      "ai progress",
-      "generation progress",
-      "token counter",
-      "progress ring",
-      "circular progress",
-      "ai spinner"
-    ]
-  },
-  {
-    "id": "ai-prompt-diff-viewer",
-    "slug": "ai-prompt-diff-viewer",
-    "componentName": "AIPromptDiffViewer",
-    "title": "AI Prompt Diff Viewer",
-    "description": "Cursor and Copilot inspired inline code and text suggestion comparator with inline additions, deletions, split vs inline views, and keyboard-accessible Accept/Reject actions.",
-    "tagline": "Cursor-style inline code suggestion diff comparator with split/inline modes.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "AI",
-      "Diff",
-      "Code"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "ai diff viewer",
-      "cursor diff",
-      "inline suggestion diff",
-      "code comparator",
-      "accept reject diff",
-      "copilot diff"
-    ]
-  },
-  {
-    "id": "ai-prompt-input",
-    "slug": "ai-prompt-input",
-    "componentName": "AIPromptInput",
-    "title": "AI Prompt Input",
-    "description": "Auto-expanding AI textarea with a morphing submit button that transitions between arrow, spinner, and check states using spring physics. Includes character counter with color warnings and ⌘↵ keyboard shortcut.",
-    "tagline": "Auto-expanding AI prompt field with spring-morphing submit button.",
-    "category": "Inputs",
-    "badges": [
-      "New",
-      "AI",
-      "Input"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "ai input",
-      "prompt input",
-      "ai textarea",
-      "chat input",
-      "expandable input",
-      "submit button morph"
-    ]
-  },
-  {
-    "id": "ai-reasoning-accordion",
-    "slug": "ai-reasoning-accordion",
-    "componentName": "AIReasoningAccordion",
-    "title": "AI Reasoning Accordion",
-    "description": "Collapsible DeepSeek-R1 and OpenAI o1 inspired thinking step drawer with animated timeline dots, thought duration timer, spring chevron physics, and one-click step copying.",
-    "tagline": "Collapsible DeepSeek-R1 and o1 style AI reasoning drawer with spring physics.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "AI",
-      "Thinking",
-      "Interactive"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "ai reasoning",
-      "deepseek thinking",
-      "o1 thought drawer",
-      "ai accordion",
-      "chain of thought",
-      "thinking steps",
-      "ai ui"
-    ]
-  },
-  {
-    "id": "ai-status-badge",
-    "slug": "ai-status-badge",
-    "componentName": "AIStatusBadge",
-    "title": "AI Status Badge",
-    "description": "Live AI presence pill that communicates real-time processing state — Idle, Thinking, Generating, Done, or Error. Each state transitions with spring animation and a pulsing beacon dot.",
-    "tagline": "Animated AI state pill with spring transitions and beacon pulse.",
-    "category": "Motion",
-    "badges": [
-      "New",
-      "AI",
-      "Badge"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": false,
-    "keywords": [
-      "ai status",
-      "ai badge",
-      "status indicator",
-      "live badge",
-      "ai state",
-      "presence badge"
-    ]
-  },
-  {
-    "id": "ai-streaming-text",
-    "slug": "ai-streaming-text",
-    "componentName": "AIStreamingText",
-    "title": "AI Streaming Text",
-    "description": "Character-by-character text renderer that simulates real-time AI token streaming, complete with a physics-spring blinking cursor that vanishes when generation completes.",
-    "tagline": "Render AI responses character-by-character with a live cursor.",
-    "category": "Text",
-    "badges": [
-      "New",
-      "AI",
-      "Streaming"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "ai text",
-      "streaming text",
-      "typewriter ai",
-      "chatgpt animation",
-      "token streaming",
-      "llm output"
-    ]
-  },
-  {
-    "id": "ai-thinking-loader",
-    "slug": "ai-thinking-loader",
-    "componentName": "AIThinkingLoader",
-    "title": "AI Thinking Loader",
-    "description": "Physics-grade animated loading indicator that communicates AI processing states. Three spring-animated orbs in dots, wave, or ring variants — far richer than plain CSS keyframe spinners.",
-    "tagline": "Spring-physics AI thinking indicator with dots, wave, and ring variants.",
-    "category": "Motion",
-    "badges": [
-      "New",
-      "AI",
-      "Loader"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": false,
-    "keywords": [
-      "ai loader",
-      "thinking indicator",
-      "dots loader",
-      "wave loader",
-      "ai spinner",
-      "loading animation"
-    ]
-  },
-  {
     "id": "ai-voice-orb",
     "slug": "ai-voice-orb",
     "componentName": "AIVoiceOrb",
@@ -392,57 +148,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "architecture-flowchart-node",
-    "slug": "architecture-flowchart-node",
-    "componentName": "ArchitectureFlowchartNode",
-    "title": "Architecture Flowchart Node",
-    "description": "ReactFlow and AWS Architecture diagrams inspired cloud infrastructure component card featuring interactive system nodes (Edge CDN, Serverless compute, Vector DB, Cache), downstream connection highlights, and real-time throughput metrics.",
-    "tagline": "Interactive cloud system architecture flowchart nodes with live telemetry metrics.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Architecture",
-      "Cloud"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "architecture diagram",
-      "system flowchart",
-      "reactflow node",
-      "cloud infrastructure card",
-      "microservices topology",
-      "aws diagram card"
-    ]
-  },
-  {
-    "id": "asteroid-field",
-    "slug": "asteroid-field",
-    "componentName": "AsteroidField",
-    "title": "Asteroid Field",
-    "description": "Deep-space parallax asteroid field and meteor shower on Canvas 2D featuring procedural faceted rock polygons across three depth layers, crater shading, ambient dust motes, and high-speed bolide meteors.",
-    "tagline": "Three-layer parallax planetesimals with live meteor showers.",
-    "category": "Backgrounds",
-    "badges": [
-      "Canvas 2D",
-      "Parallax",
-      "Procedural",
-      "Cosmic"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": false,
-    "keywords": [
-      "asteroid field",
-      "meteor shower",
-      "space debris",
-      "parallax background",
-      "kuiper belt",
-      "shooting stars",
-      "procedural rocks"
-    ]
-  },
-  {
     "id": "atmospheric-fog",
     "slug": "atmospheric-fog",
     "componentName": "AtmosphericFog",
@@ -494,29 +199,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "aurora-flux-surface",
-    "slug": "aurora-flux-surface",
-    "componentName": "AuroraFluxSurface",
-    "title": "Aurora Flux Surface",
-    "description": "GPU-composited ambient aurora canvas where dual radial luminance fields with contrasting spring mass chase the pointer.",
-    "tagline": "Dual-mass GPU radial aurora surface with zero React re-renders.",
-    "category": "Backgrounds",
-    "badges": [
-      "New",
-      "Dual-Mass Spring",
-      "GPU Composited"
-    ],
-    "createdAt": "2026-10-07",
-    "featured": false,
-    "keywords": [
-      "aurora flux surface",
-      "ambient glow background",
-      "radial gradient cursor",
-      "framer motion aurora",
-      "hero background surface"
-    ]
-  },
-  {
     "id": "autocomplete",
     "slug": "autocomplete",
     "componentName": "Autocomplete",
@@ -538,58 +220,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "dropdown select",
       "react autocomplete",
       "tailwind combobox"
-    ]
-  },
-  {
-    "id": "autoplay-story-carousel",
-    "slug": "autoplay-story-carousel",
-    "componentName": "AutoplayStoryCarousel",
-    "title": "Autoplay Story Carousel",
-    "description": "Apple News and Instagram-style interactive story carousel featuring segmented pill progress bars, directional half-card tap navigation, hover-to-pause gestures, and fluid slide transitions.",
-    "tagline": "Apple News-inspired story carousel with pill progress bars and hold-to-pause.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "Story Carousel",
-      "Pill Progress",
-      "Autoplay",
-      "Apple News"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "story carousel",
-      "autoplay carousel",
-      "pill progress bar",
-      "instagram stories",
-      "apple news story",
-      "hold to pause",
-      "fluid transitions"
-    ]
-  },
-  {
-    "id": "avatar-stack-presence",
-    "slug": "avatar-stack-presence",
-    "componentName": "AvatarStackPresence",
-    "title": "Avatar Stack Presence",
-    "description": "Slack and Figma-style overlapping user avatar stack with live online/idle/offline status indicator dots, +N overflow chip, rich member profile popover cards with timezone and quick ping, and full team drawer directory.",
-    "tagline": "Overlapping team avatar stack with live presence dots and rich profile hover cards.",
-    "category": "Overlays",
-    "badges": [
-      "Collaboration",
-      "Presence",
-      "Avatars"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": false,
-    "keywords": [
-      "avatar stack",
-      "presence indicators",
-      "figma avatars",
-      "slack presence",
-      "overflow avatar",
-      "hover card profile",
-      "team stack"
     ]
   },
   {
@@ -668,32 +298,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "category-filter-scroller",
-    "slug": "category-filter-scroller",
-    "componentName": "CategoryFilterScroller",
-    "title": "Category Filter Scroller",
-    "description": "Airbnb-style horizontal scrolling category filter bar with edge gradient fade masks, spring active underline indicator, and tactile left/right chevron navigation.",
-    "tagline": "Airbnb-inspired horizontal category filter bar with edge fade masks.",
-    "category": "Navigation",
-    "badges": [
-      "Airbnb",
-      "Framer Motion",
-      "Navigation",
-      "Scroll Snap"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "category filter scroller",
-      "airbnb categories",
-      "horizontal scroll tabs",
-      "edge fade mask",
-      "framer motion layoutId underline",
-      "travel categories",
-      "filter bar"
-    ]
-  },
-  {
     "id": "chromatic-aberration-glitch-text",
     "slug": "chromatic-aberration-glitch-text",
     "componentName": "ChromaticAberrationGlitchText",
@@ -763,32 +367,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "color-finish-picker",
-    "slug": "color-finish-picker",
-    "componentName": "ColorFinishPicker",
-    "title": "Color Finish Picker",
-    "description": "Apple-style device finish selector featuring concentric selection rings, synchronized ambient page background tinting, crossfading vector hardware graphics, and technical metallurgy specifications.",
-    "tagline": "Apple-inspired titanium finish selector with concentric rings and ambient tinting.",
-    "category": "Inputs",
-    "badges": [
-      "New",
-      "Apple Finish",
-      "Color Swatches",
-      "Ambient Glow"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "color finish picker",
-      "apple color picker",
-      "swatch selector",
-      "titanium finish",
-      "concentric rings",
-      "ambient tint",
-      "hardware selector"
-    ]
-  },
-  {
     "id": "command-menu",
     "slug": "command-menu",
     "componentName": "CommandMenu",
@@ -809,29 +387,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "cmd k",
       "spotlight search",
       "keyboard launcher"
-    ]
-  },
-  {
-    "id": "constellation-map",
-    "slug": "constellation-map",
-    "componentName": "ConstellationMap",
-    "title": "Constellation Map",
-    "description": "Astronomical SVG star chart plotting authentic geometries for Orion, Cassiopeia, Ursa Major, Cygnus, and Lyra over a celestial Right Ascension and Declination coordinate grid with animated stroke-dashoffset line tracing.",
-    "tagline": "Precision J2000.0 celestial star chart with animated constellation vectors.",
-    "category": "Backgrounds",
-    "badges": [
-      "SVG Vector",
-      "Astrometry",
-      "Interactive"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": false,
-    "keywords": [
-      "constellation map",
-      "star chart background",
-      "astronomy svg",
-      "celestial grid",
-      "orion cassiopeia"
     ]
   },
   {
@@ -858,79 +413,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "context-token-gauge",
-    "slug": "context-token-gauge",
-    "componentName": "ContextTokenGauge",
-    "title": "Context Token Gauge",
-    "description": "LLM context window capacity meter with radial and segmented linear bar variants, token breakdown metrics (System, Prompt, Completion), and adaptive threshold alerts.",
-    "tagline": "LLM context window capacity gauge with radial and linear breakdown views.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "AI",
-      "Metrics",
-      "LLM"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "context token gauge",
-      "token limit",
-      "llm context window",
-      "token meter",
-      "radial gauge",
-      "ai capacity"
-    ]
-  },
-  {
-    "id": "copy-code-block",
-    "slug": "copy-code-block",
-    "componentName": "CopyCodeBlock",
-    "title": "Copy Code Block",
-    "description": "Multi-tab CLI and code snippet block with sliding spring package-manager tabs (npx, pnpm, bun, yarn), optional line numbers, and one-click clipboard copy feedback.",
-    "tagline": "Multi-tab CLI command and code block with instant copy feedback.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "Developer UX",
-      "Clipboard"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": false,
-    "keywords": [
-      "copy code block",
-      "cli command switcher",
-      "package manager tabs",
-      "code snippet card",
-      "clipboard button"
-    ]
-  },
-  {
-    "id": "cron-schedule-builder",
-    "slug": "cron-schedule-builder",
-    "componentName": "CronScheduleBuilder",
-    "title": "Cron Schedule Builder",
-    "description": "Visual 5-segment Quartz/cron schedule builder with natural English translation, quick presets (hourly, daily, weekdays), input validation hints, and upcoming execution timeline preview.",
-    "tagline": "Visual 5-segment cron schedule builder with natural English translation.",
-    "category": "Inputs",
-    "badges": [
-      "New",
-      "DevTools",
-      "Cron",
-      "Utility"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "cron builder",
-      "quartz cron",
-      "schedule selector",
-      "job scheduler",
-      "cron expression",
-      "github actions cron"
-    ]
-  },
-  {
     "id": "cursor-follower",
     "slug": "cursor-follower",
     "componentName": "CursorFollower",
@@ -954,82 +436,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "database-connection-health-badge",
-    "slug": "database-connection-health-badge",
-    "componentName": "DatabaseConnectionHealthBadge",
-    "title": "Database Connection Health Badge",
-    "description": "Prisma Accelerate and PlanetScale inspired database cluster health monitor with pooled connections gauge, regional ping latency, TLS 1.3 certificate status, and sanitized URI copying.",
-    "tagline": "Database connection pool monitor with latency ping and TLS health indicators.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Database",
-      "Monitoring"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "database health",
-      "connection pool badge",
-      "prisma accelerate",
-      "planetscale status",
-      "latency ping",
-      "tls badge"
-    ]
-  },
-  {
-    "id": "deployment-timeline",
-    "slug": "deployment-timeline",
-    "componentName": "DeploymentTimeline",
-    "title": "Deployment Timeline",
-    "description": "Vercel-inspired deployment pipeline stepper with multi-phase statuses, elapsed timers, commit SHA metadata, and an interactive streaming build stdout log console.",
-    "tagline": "Vercel-style deployment pipeline stepper with live streaming build console.",
-    "category": "Motion",
-    "badges": [
-      "New",
-      "Vercel Style",
-      "Pipeline",
-      "Streaming Logs"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "deployment timeline",
-      "vercel deployment",
-      "ci/cd pipeline",
-      "build logs",
-      "deployment stepper",
-      "stdout console"
-    ]
-  },
-  {
-    "id": "diff-viewer",
-    "slug": "diff-viewer",
-    "componentName": "DiffViewer",
-    "title": "Diff Viewer",
-    "description": "GitHub and GitLab-inspired code difference viewer featuring side-by-side split and unified inspection modes, line gutter numbering, collapsible unchanged regions, and copy diff clipboard actions.",
-    "tagline": "GitHub/GitLab-style code diff viewer with unified and split view modes.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "Code Diff",
-      "Developer Tools",
-      "Syntax Highlighting"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "diff viewer",
-      "git diff",
-      "code comparison",
-      "unified diff",
-      "split diff",
-      "git patch",
-      "pull request viewer"
-    ]
-  },
-  {
     "id": "digital-radar",
     "slug": "digital-radar",
     "componentName": "DigitalRadar",
@@ -1050,32 +456,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "tactical hud background",
       "sonar sweep",
       "telemetry canvas"
-    ]
-  },
-  {
-    "id": "dock-magnification",
-    "slug": "dock-magnification",
-    "componentName": "DockMagnification",
-    "title": "macOS Dock Magnification",
-    "description": "macOS-inspired dock magnification bar with continuous Gaussian/cosine pointer falloff, spring physics scaling, click-to-bounce launch animations, floating tooltip labels, and running indicator dots.",
-    "tagline": "Fluid macOS dock magnification with spring physics and launch bounce.",
-    "category": "Navigation",
-    "badges": [
-      "New",
-      "macOS Dock",
-      "Magnification",
-      "Spring Physics"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "dock magnification",
-      "macos dock",
-      "apple dock",
-      "spring physics",
-      "gaussian falloff",
-      "dock bounce",
-      "floating bar"
     ]
   },
   {
@@ -1241,56 +621,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "env-secret-vault",
-    "slug": "env-secret-vault",
-    "componentName": "EnvSecretVault",
-    "title": "Environment Secret Vault",
-    "description": "Vercel and Doppler inspired encrypted environment variable manager with environment scope tags (Production, Preview, Development), masked values, individual and global reveal toggles, and .env export.",
-    "tagline": "Encrypted environment secret manager with masked values and .env export.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Security",
-      "Secrets"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "env vault",
-      "secret manager",
-      "vercel env",
-      "masked secrets",
-      "dotenv export",
-      "environment variables"
-    ]
-  },
-  {
-    "id": "error-stack-trace-inspector",
-    "slug": "error-stack-trace-inspector",
-    "componentName": "ErrorStackTraceInspector",
-    "title": "Error Stack Trace Inspector",
-    "description": "Sentry and Bugsnag inspired error breakdown card with project vs vendor code frame filtering, inline source code context with error squiggles, and copy markdown issue formatting.",
-    "tagline": "Collapsible error stack trace inspector with source code context.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Observability",
-      "Debugging"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "error stack trace",
-      "sentry inspector",
-      "exception frame",
-      "bugsnag card",
-      "error context",
-      "debugging tool"
-    ]
-  },
-  {
     "id": "expandable-bento-card",
     "slug": "expandable-bento-card",
     "componentName": "ExpandableBentoCard",
@@ -1311,32 +641,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "framer motion accordion card",
       "bento grid card",
       "spring height animation"
-    ]
-  },
-  {
-    "id": "expanding-search-pill",
-    "slug": "expanding-search-pill",
-    "componentName": "ExpandingSearchPill",
-    "title": "Expanding Search Pill",
-    "description": "Airbnb-style compact floating search pill that fluidly morphs with layout springs into an expanded multi-segment drawer with destination, date, and guest selection panels.",
-    "tagline": "Airbnb-inspired morphing search pill with shared layout springs.",
-    "category": "Navigation",
-    "badges": [
-      "Airbnb",
-      "Shared Layout",
-      "Spring Physics",
-      "Search"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "expanding search pill",
-      "airbnb search bar",
-      "framer motion layoutId",
-      "multi-segment search",
-      "compact search pill",
-      "guest stepper",
-      "travel search bar"
     ]
   },
   {
@@ -1390,31 +694,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "feature-flag-toggle-stack",
-    "slug": "feature-flag-toggle-stack",
-    "componentName": "FeatureFlagToggleStack",
-    "title": "Feature Flag Toggle Stack",
-    "description": "LaunchDarkly and PostHog inspired feature flag management card with master kill-switch toggles, gradual traffic allocation sliders (0% to 100%), targeting rule badges, and environment scopes.",
-    "tagline": "Feature flag rollout controller with gradual traffic allocation sliders.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Flags",
-      "Rollouts"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "feature flag",
-      "launchdarkly card",
-      "traffic rollout",
-      "kill switch",
-      "posthog feature flags",
-      "gradual rollout"
-    ]
-  },
-  {
     "id": "file-tree",
     "slug": "file-tree",
     "componentName": "FileTree",
@@ -1435,33 +714,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "tree view react",
       "directory tree",
       "collapsible tree"
-    ]
-  },
-  {
-    "id": "fireflies",
-    "slug": "fireflies",
-    "componentName": "Fireflies",
-    "title": "Fireflies",
-    "description": "Enchanted twilight forest background with bioluminescent firefly orbs drifting along smooth organic trajectories and pulsing with soft radial halos.",
-    "tagline": "Bioluminescent twilight fireflies above a layered pine forest.",
-    "category": "Backgrounds",
-    "badges": [
-      "Canvas 2D",
-      "Nature",
-      "Interactive",
-      "Particles"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": false,
-    "keywords": [
-      "fireflies",
-      "forest",
-      "bioluminescence",
-      "twilight",
-      "nature",
-      "particles",
-      "glow",
-      "ambient"
     ]
   },
   {
@@ -1534,33 +786,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "globe-arcs",
-    "slug": "globe-arcs",
-    "componentName": "GlobeArcs",
-    "title": "Globe Arcs",
-    "description": "Interactive 3D dotted Canvas globe featuring glowing multi-point transaction flight arcs, traveling light pulses, drag-to-rotate interaction with inertia dampening, and global city routing nodes.",
-    "tagline": "Interactive 3D dotted globe with glowing transaction flight arcs and drag-to-rotate inertia.",
-    "category": "Backgrounds",
-    "badges": [
-      "Stripe",
-      "Canvas 3D",
-      "Globe",
-      "Flight Arcs",
-      "Backgrounds"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "globe arcs",
-      "stripe globe",
-      "3d canvas globe",
-      "transaction arcs",
-      "flight routes",
-      "interactive globe",
-      "point cloud earth"
-    ]
-  },
-  {
     "id": "glow-border-card",
     "slug": "glow-border-card",
     "componentName": "GlowBorderCard",
@@ -1584,31 +809,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "radial gradient border",
       "neon border card",
       "feature card grid"
-    ]
-  },
-  {
-    "id": "gradient-mesh-hero",
-    "slug": "gradient-mesh-hero",
-    "componentName": "GradientMeshHero",
-    "title": "Gradient Mesh Hero",
-    "description": "Stripe-style angled flowing gradient mesh hero section featuring multi-layered organic color blobs, diagonal polygon clip-path, and live palette switching.",
-    "tagline": "Stripe-inspired multi-color drifting gradient mesh hero with diagonal clip-path.",
-    "category": "Backgrounds",
-    "badges": [
-      "Stripe",
-      "Gradient Mesh",
-      "Hero",
-      "Clip-Path"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "gradient mesh hero",
-      "stripe hero gradient",
-      "flowing gradient background",
-      "diagonal hero section",
-      "css mesh drift",
-      "mesh background"
     ]
   },
   {
@@ -1655,31 +855,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "perspective grid road",
       "outrun sunset background",
       "3d wireframe horizon"
-    ]
-  },
-  {
-    "id": "health-check-status-matrix",
-    "slug": "health-check-status-matrix",
-    "componentName": "HealthCheckStatusMatrix",
-    "title": "Health Check Status Matrix",
-    "description": "BetterStack and Statuspage inspired service availability tracker with segmented rolling uptime day bars, multi-service breakdowns, hover incident popovers, and overall SLA metrics.",
-    "tagline": "Rolling 45-day uptime status matrix with interactive incident telemetry.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Observability",
-      "Status"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "status matrix",
-      "uptime tracker",
-      "health check",
-      "betterstack status",
-      "incident monitor",
-      "sla metric"
     ]
   },
   {
@@ -1855,57 +1030,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "i-pad-pro-mockup",
-    "slug": "i-pad-pro-mockup",
-    "componentName": "IPadProMockup",
-    "title": "iPad Pro Mockup",
-    "description": "Apple iPad Pro hardware frame with symmetrical ultra-thin bezels, landscape/portrait spring orientation transitions, Apple Pencil magnetic strip, and 3D parallax tilt.",
-    "tagline": "Apple iPad Pro tablet frame with landscape/portrait mode and 3D parallax tilt.",
-    "category": "Mockups",
-    "badges": [
-      "New",
-      "Apple",
-      "Device",
-      "Tablet"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": false,
-    "keywords": [
-      "ipad mockup",
-      "tablet mockup",
-      "apple ipad pro",
-      "device frame",
-      "3d tilt",
-      "tablet frame"
-    ]
-  },
-  {
-    "id": "i-phone16-pro-mockup",
-    "slug": "i-phone16-pro-mockup",
-    "componentName": "IPhone16ProMockup",
-    "title": "iPhone 16 Pro Mockup",
-    "description": "Architectural Apple iPhone 16 Pro hardware frame with an interactive spring-expanding Dynamic Island, 3D cursor parallax tilt, specular glass reflection, and titanium chassis finishes.",
-    "tagline": "Apple iPhone 16 Pro mockup with interactive Dynamic Island and 3D parallax tilt.",
-    "category": "Mockups",
-    "badges": [
-      "New",
-      "Apple",
-      "Device",
-      "Interactive"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "iphone mockup",
-      "apple mockup",
-      "iphone 16 pro",
-      "dynamic island",
-      "device frame",
-      "3d tilt",
-      "mobile mockup"
-    ]
-  },
-  {
     "id": "interactive-api-endpoint-bar",
     "slug": "interactive-api-endpoint-bar",
     "componentName": "InteractiveApiEndpointBar",
@@ -1928,56 +1052,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "json response viewer",
       "curl copy",
       "postman style"
-    ]
-  },
-  {
-    "id": "interactive-code-diff",
-    "slug": "interactive-code-diff",
-    "componentName": "InteractiveCodeDiff",
-    "title": "Interactive Code Diff",
-    "description": "Monospace developer diff card with line gutters, hunk headers, collapsible code blocks, unified versus split 2-column layouts, and copy hunk controls.",
-    "tagline": "Split and Unified developer syntax code diff comparator.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Code",
-      "Git"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "code diff",
-      "git diff",
-      "syntax comparator",
-      "split diff",
-      "unified diff",
-      "developer tools"
-    ]
-  },
-  {
-    "id": "interactive-git-graph",
-    "slug": "interactive-git-graph",
-    "componentName": "InteractiveGitGraph",
-    "title": "Interactive Git Graph",
-    "description": "Visual SVG Git commit tree illustrating multi-branch workflows with animated bezier curves, branch lane filtering, interactive commit nodes, and SHA copying.",
-    "tagline": "Visual SVG Git commit tree with multi-branch lanes and commit inspection.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Git",
-      "Interactive"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "git graph",
-      "git tree",
-      "commit graph",
-      "branch visualizer",
-      "developer tools",
-      "svg git tree"
     ]
   },
   {
@@ -2004,31 +1078,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "interactive-pricing-tier-dial",
-    "slug": "interactive-pricing-tier-dial",
-    "componentName": "InteractivePricingTierDial",
-    "title": "Interactive Pricing Tier Dial",
-    "description": "Logarithmic scrubbable SaaS pricing calculator with dynamic tier switching (Starter, Pro, Growth, Scale), annual discount percentage toggles, and live feature checklists.",
-    "tagline": "Logarithmic scrubbable pricing slider with dynamic tier switching.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "Fintech",
-      "Pricing",
-      "Interactive"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "pricing slider",
-      "saas pricing calculator",
-      "tier dial",
-      "stripe pricing",
-      "usage billing",
-      "interactive pricing"
-    ]
-  },
-  {
     "id": "isometric-city",
     "slug": "isometric-city",
     "componentName": "IsometricCity",
@@ -2049,82 +1098,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "procedural buildings canvas",
       "night city background",
       "isometric grid"
-    ]
-  },
-  {
-    "id": "json-schema-form-validator",
-    "slug": "json-schema-form-validator",
-    "componentName": "JsonSchemaFormValidator",
-    "title": "JSON Schema Form Validator",
-    "description": "VSCode Problems tab and Monaco inspired split editor with real-time JSON syntax parsing, schema constraint validation diagnostics, one-click formatting/prettify, and clipboard payload copying.",
-    "tagline": "Split-view JSON schema editor with real-time constraint diagnostics.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "JSON",
-      "Validation"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "json schema",
-      "json validator",
-      "vscode problems",
-      "monaco diagnostics",
-      "schema checker",
-      "syntax validator"
-    ]
-  },
-  {
-    "id": "keyboard-shortcut-stack",
-    "slug": "keyboard-shortcut-stack",
-    "componentName": "KeyboardShortcutStack",
-    "title": "Keyboard Shortcut Stack",
-    "description": "Raycast and Linear inspired tactile 3D keyboard keycap badges with real window keyboard event listeners that physically depress and glow when pressed on physical keyboards.",
-    "tagline": "Tactile 3D keyboard keycap badges with real-time physical keyboard listeners.",
-    "category": "Buttons",
-    "badges": [
-      "New",
-      "DevTools",
-      "Interactive",
-      "3D"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "keyboard shortcut",
-      "physical keycap",
-      "raycast hotkey",
-      "linear keycap",
-      "3d keycap",
-      "shortcut badges"
-    ]
-  },
-  {
-    "id": "keycap-chips",
-    "slug": "keycap-chips",
-    "componentName": "KeycapChips",
-    "title": "Keycap Chips",
-    "description": "Raycast-inspired 3D tactile physical keyboard keycaps with realistic chamfer bevels, inset mechanical shadows, physical depression animations, and interactive keyboard listener.",
-    "tagline": "Raycast-style 3D tactile keycaps with mechanical depression feedback.",
-    "category": "Buttons",
-    "badges": [
-      "New",
-      "3D Keycaps",
-      "Raycast Style",
-      "Interactive"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "keycap chips",
-      "raycast shortcut",
-      "keyboard chip",
-      "keyboard shortcuts",
-      "kbd badge",
-      "mechanical key",
-      "hotkey pill"
     ]
   },
   {
@@ -2243,29 +1216,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "lava-lamp",
-    "slug": "lava-lamp",
-    "componentName": "LavaLamp",
-    "title": "Lava Lamp",
-    "description": "True WebGL signed distance field (SDF) metaball lava lamp shader using polynomial smooth-minimum (smin) surface tension blending, 3D specular/Fresnel subsurface rim lighting, and pointer thermal attraction.",
-    "tagline": "WebGL SDF metaballs with smooth-minimum liquid tension and 3D rim glow.",
-    "category": "Backgrounds",
-    "badges": [
-      "New",
-      "WebGL SDF",
-      "Metaballs"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": true,
-    "keywords": [
-      "lava lamp shader",
-      "webgl metaballs background",
-      "signed distance field smin",
-      "liquid wax blobs",
-      "subsurface scattering shader"
-    ]
-  },
-  {
     "id": "liquid-glass-card",
     "slug": "liquid-glass-card",
     "componentName": "LiquidGlassCard",
@@ -2294,29 +1244,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "liquid-gradient-blob",
-    "slug": "liquid-gradient-blob",
-    "componentName": "LiquidGradientBlob",
-    "title": "Liquid Gradient Blob",
-    "description": "Organic metaball background powered by an SVG `feGaussianBlur` + `feColorMatrix` alpha-threshold gooey filter where orbiting and cursor-tracked blobs fuse seamlessly.",
-    "tagline": "SVG gooey filter metaballs that merge like liquid lava.",
-    "category": "Backgrounds",
-    "badges": [
-      "New",
-      "SVG Gooey Filter",
-      "Interactive"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": true,
-    "keywords": [
-      "liquid gradient blob",
-      "svg gooey filter",
-      "metaball animation",
-      "feColorMatrix gooey",
-      "lava lamp background"
-    ]
-  },
-  {
     "id": "liquid-pill-tabs",
     "slug": "liquid-pill-tabs",
     "componentName": "LiquidPillTabs",
@@ -2337,109 +1264,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "segmented control",
       "framer motion tabs",
       "sliding pill navigation"
-    ]
-  },
-  {
-    "id": "live-card-form",
-    "slug": "live-card-form",
-    "componentName": "LiveCardForm",
-    "title": "Live Card Form",
-    "description": "Interactive payment checkout form paired with a photorealistic 3D credit card that automatically flips 180° when CVC is focused, with brand detection and Luhn algorithm validation.",
-    "tagline": "Photorealistic 3D credit card with auto-flip CVC focus and Luhn validation.",
-    "category": "Inputs",
-    "badges": [
-      "Stripe",
-      "Payment",
-      "3D Flip",
-      "Luhn Validation",
-      "Inputs"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "live card form",
-      "credit card checkout",
-      "stripe card input",
-      "3d flip credit card",
-      "luhn algorithm",
-      "card brand detection",
-      "payment ui"
-    ]
-  },
-  {
-    "id": "live-log-streamer",
-    "slug": "live-log-streamer",
-    "componentName": "LiveLogStreamer",
-    "title": "Live Log Streamer",
-    "description": "Datadog and Cloudflare Workers inspired streaming terminal log viewer with log level filters (INFO, WARN, ERROR, DEBUG), auto-scroll lock, live pause/resume stream, search filtering, and copy logs.",
-    "tagline": "Real-time streaming console log viewer with level filtering and search.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Logging",
-      "Observability"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "log streamer",
-      "terminal logs",
-      "datadog console",
-      "live tailing",
-      "cloud log viewer",
-      "observability"
-    ]
-  },
-  {
-    "id": "mac-book-pro-mockup",
-    "slug": "mac-book-pro-mockup",
-    "componentName": "MacBookProMockup",
-    "title": "MacBook Pro Mockup",
-    "description": "Precision Apple MacBook Pro laptop hardware frame with a camera notch, aluminum chassis base deck, Liquid Retina XDR screen viewport, and 3D cursor parallax tilt.",
-    "tagline": "Apple MacBook Pro laptop frame with camera notch and 3D parallax tilt.",
-    "category": "Mockups",
-    "badges": [
-      "New",
-      "Apple",
-      "Device",
-      "Laptop"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "macbook mockup",
-      "laptop mockup",
-      "apple laptop",
-      "macbook pro",
-      "device frame",
-      "3d tilt",
-      "screen showcase"
-    ]
-  },
-  {
-    "id": "mac-os-window-mockup",
-    "slug": "mac-os-window-mockup",
-    "componentName": "MacOSWindowMockup",
-    "title": "macOS Window Mockup",
-    "description": "Authentic macOS Sequoia frosted glass window frame with interactive traffic light controls (close, minimize, expand with hover symbols), centered window title, and active/inactive window states.",
-    "tagline": "Authentic macOS frosted window frame with interactive traffic lights.",
-    "category": "Mockups",
-    "badges": [
-      "New",
-      "macOS",
-      "Window",
-      "Software"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": false,
-    "keywords": [
-      "macos window",
-      "window mockup",
-      "traffic lights",
-      "apple window",
-      "frosted glass",
-      "desktop frame"
     ]
   },
   {
@@ -2605,29 +1429,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "mesh-gradient",
-    "slug": "mesh-gradient",
-    "componentName": "MeshGradient",
-    "title": "Mesh Gradient",
-    "description": "Apple Music and macOS-inspired fluid multi-point mesh gradient where 5 color nodes orbit on independent trajectories and blend seamlessly.",
-    "tagline": "Apple Music style fluid multi-point mesh gradient.",
-    "category": "Backgrounds",
-    "badges": [
-      "New",
-      "Apple Music UI",
-      "CSS Mesh"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": true,
-    "keywords": [
-      "mesh gradient",
-      "apple music background",
-      "macos fluid gradient",
-      "animated color mesh",
-      "gradient wallpaper css"
-    ]
-  },
-  {
     "id": "modal-popup",
     "slug": "modal-popup",
     "componentName": "ModalPopup",
@@ -2672,6 +1473,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "animated submit button",
       "framer motion button",
       "pill width morph"
+    ]
+  },
+  {
+    "id": "morphing-blob",
+    "slug": "morphing-blob",
+    "componentName": "MorphingBlob",
+    "title": "Morphing Blob",
+    "description": "Organic fluid morphing SVG blob driven by Catmull-Rom cubic spline interpolation, Hooke's Law spring physics per node, and smooth real-time cursor attraction.",
+    "tagline": "Organic fluid SVG blob driven by Catmull-Rom splines and spring dynamics.",
+    "category": "Backgrounds",
+    "badges": [
+      "New",
+      "Interactive",
+      "Spring Physics",
+      "SVG"
+    ],
+    "createdAt": "2026-10-23",
+    "featured": true,
+    "keywords": [
+      "morphing blob",
+      "fluid blob svg",
+      "catmull rom spline",
+      "spring physics blob",
+      "cursor follow blob",
+      "liquid gradient blob"
     ]
   },
   {
@@ -2721,31 +1547,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "morphing-mega-menu",
-    "slug": "morphing-mega-menu",
-    "componentName": "MorphingMegaMenu",
-    "title": "Morphing Mega Menu",
-    "description": "Stripe-style floating mega menu popover that fluidly glides across navigation links with spring physics, morphing width, height, and caret position synchronously.",
-    "tagline": "Stripe-inspired morphing popover navbar with synchronized spring caret.",
-    "category": "Navigation",
-    "badges": [
-      "Stripe",
-      "Morphing",
-      "Spring Physics",
-      "Dropdown"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "morphing mega menu",
-      "stripe navigation",
-      "stripe menu",
-      "framer motion popover",
-      "animated dropdown",
-      "fluid navbar"
-    ]
-  },
-  {
     "id": "moving-grid-lines",
     "slug": "moving-grid-lines",
     "componentName": "MovingGridLines",
@@ -2790,105 +1591,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "chip input",
       "token input",
       "autocomplete tags"
-    ]
-  },
-  {
-    "id": "multiplayer-cursors",
-    "slug": "multiplayer-cursors",
-    "componentName": "MultiplayerCursors",
-    "title": "Multiplayer Cursors",
-    "description": "Figma-style real-time collaboration canvas with animated multiplayer cursor pointers, user name tags, color badges, interactive live cursor chat bubbles, and click ripple wave broadcasts.",
-    "tagline": "Figma-style real-time multiplayer canvas with animated cursors and live speech bubbles.",
-    "category": "Motion",
-    "badges": [
-      "Collaboration",
-      "Multiplayer",
-      "Live Presence"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": false,
-    "keywords": [
-      "multiplayer cursors",
-      "figma cursors",
-      "live collaboration",
-      "real-time presence",
-      "cursor chat",
-      "webrtc presence",
-      "canvas cursors"
-    ]
-  },
-  {
-    "id": "now-playing-waveform",
-    "slug": "now-playing-waveform",
-    "componentName": "NowPlayingWaveform",
-    "title": "Now Playing Waveform",
-    "description": "Spotify-style music player featuring dancing multi-octave equalizer frequency bars, spinning vinyl cover artwork, scrubbable progress bar with hover time tooltip, and playback controls.",
-    "tagline": "Spotify-inspired media player with real-time reactive dancing waveform bars.",
-    "category": "Motion",
-    "badges": [
-      "Spotify",
-      "Waveform",
-      "Audio Player",
-      "Equalizer"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "now playing waveform",
-      "spotify player",
-      "audio frequency visualizer",
-      "equalizer bars",
-      "scrubbable timeline",
-      "music player ui",
-      "framer motion music"
-    ]
-  },
-  {
-    "id": "ocean-waves",
-    "slug": "ocean-waves",
-    "componentName": "OceanWaves",
-    "title": "Ocean Waves",
-    "description": "Multi-layered rolling ocean waves rendered on Canvas 2D using multi-harmonic trochoidal wave equations, translucent subsurface ridge scattering, and shimmering crest foam highlights.",
-    "tagline": "Multi-harmonic parallax ocean swells with subsurface glow.",
-    "category": "Backgrounds",
-    "badges": [
-      "New",
-      "Canvas 2D",
-      "Parallax Swells"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": true,
-    "keywords": [
-      "ocean waves background",
-      "sea swell animation",
-      "parallax water waves",
-      "trochoidal wave canvas",
-      "subsurface scattering water"
-    ]
-  },
-  {
-    "id": "package-dependency-tree",
-    "slug": "package-dependency-tree",
-    "componentName": "PackageDependencyTree",
-    "title": "Package Dependency Tree",
-    "description": "Bundlephobia and Socket.dev inspired package dependency inspector with direct and transitive node nesting, license badges, vulnerability advisories, bundle size calculations, and install script copying.",
-    "tagline": "Interactive package dependency tree with bundle size and license inspection.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Packages",
-      "NPM"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "package dependency tree",
-      "bundlephobia card",
-      "npm dependency viewer",
-      "bundle size inspector",
-      "transitive dependencies",
-      "license badge"
     ]
   },
   {
@@ -3004,81 +1706,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "time picker wheel",
       "drum roll picker",
       "scroll wheel selector"
-    ]
-  },
-  {
-    "id": "pipeline-dag-viewer",
-    "slug": "pipeline-dag-viewer",
-    "componentName": "PipelineDAGViewer",
-    "title": "Pipeline DAG Viewer",
-    "description": "GitHub Actions and GitLab CI inspired Directed Acyclic Graph (DAG) build pipeline visualizer with sequential and parallel stage columns, live status animations, and embedded console output inspector.",
-    "tagline": "Directed Acyclic Graph CI/CD build pipeline with step logs viewer.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "CI/CD",
-      "Workflows"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "pipeline dag",
-      "ci cd visualizer",
-      "github actions graph",
-      "workflow visualizer",
-      "build pipeline",
-      "dag viewer"
-    ]
-  },
-  {
-    "id": "planet-horizon",
-    "slug": "planet-horizon",
-    "componentName": "PlanetHorizon",
-    "title": "Planet Horizon",
-    "description": "Orbital sunrise-from-space hero background featuring a twinkling starfield, a giant curved planetary sphere with a multi-layered glowing atmospheric limb, and an animated anamorphic solar flare cresting along the terminator.",
-    "tagline": "Cinematic orbital sunrise with atmospheric Rayleigh scattering.",
-    "category": "Backgrounds",
-    "badges": [
-      "Canvas 2D",
-      "Cosmic",
-      "Atmospheric",
-      "Hero"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": true,
-    "keywords": [
-      "planet horizon",
-      "earth from space",
-      "orbital sunrise",
-      "atmospheric limb",
-      "lens flare",
-      "space hero background",
-      "terminator line"
-    ]
-  },
-  {
-    "id": "plus-grid-border",
-    "slug": "plus-grid-border",
-    "componentName": "PlusGridBorder",
-    "title": "Plus Grid Border",
-    "description": "Vercel-inspired blueprint grid architecture with precision hairline section borders and interactive corner plus markers that illuminate on pointer proximity.",
-    "tagline": "Architectural blueprint grid with illuminated corner crosshairs.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "Blueprint",
-      "Interactive Grid"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "plus grid border",
-      "vercel grid",
-      "blueprint grid",
-      "crosshair grid",
-      "border intersections",
-      "corner plus markers"
     ]
   },
   {
@@ -3200,80 +1827,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "rate-limit-meter",
-    "slug": "rate-limit-meter",
-    "componentName": "RateLimitMeter",
-    "title": "Rate Limit Meter",
-    "description": "Token bucket and sliding-window rate limit visualizer with burst request simulation, spring-physics capacity transitions, real-time quota reset countdowns, and 429 Too Many Requests retry-after badges.",
-    "tagline": "Token bucket rate limit and quota capacity visualizer with burst simulation.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "API",
-      "Network"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "rate limit meter",
-      "token bucket",
-      "sliding window",
-      "429 too many requests",
-      "api quota",
-      "cloudflare rate limiting"
-    ]
-  },
-  {
-    "id": "reaction-picker",
-    "slug": "reaction-picker",
-    "componentName": "ReactionPicker",
-    "title": "Reaction Picker",
-    "description": "Slack-style floating emoji reaction bar with quick reactions, spring count bump badges, toggleable personal reaction state, hover tooltip user attributions, and an expandable full emoji picker with search.",
-    "tagline": "Slack-style floating emoji reaction bar with spring counts and full picker popover.",
-    "category": "Overlays",
-    "badges": [
-      "Feedback",
-      "Reactions",
-      "Spring Physics"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": false,
-    "keywords": [
-      "reaction picker",
-      "slack reactions",
-      "emoji reactions",
-      "framer motion bump",
-      "chat reactions",
-      "interactive feedback"
-    ]
-  },
-  {
-    "id": "regex-playground",
-    "slug": "regex-playground",
-    "componentName": "RegexPlayground",
-    "title": "Regex Playground",
-    "description": "Raycast and Regex101 inspired regular expression matching sandbox with flag toggles (g, i, m), presets (Email, Semver, UUID, Hex), real-time match extraction, and error syntax diagnostics.",
-    "tagline": "Live regular expression tester with preset patterns and flag controls.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Utility",
-      "Regex"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "regex playground",
-      "regex tester",
-      "regular expression",
-      "regex101 clone",
-      "pattern matching",
-      "developer utilities"
-    ]
-  },
-  {
     "id": "ripple-burst-button",
     "slug": "ripple-burst-button",
     "componentName": "RippleBurstButton",
@@ -3346,31 +1899,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "safari-browser-mockup",
-    "slug": "safari-browser-mockup",
-    "componentName": "SafariBrowserMockup",
-    "title": "Safari Browser Mockup",
-    "description": "macOS Safari browser chrome with traffic light controls, a central frosted unified address bar with SSL padlock, tab strip, and live viewport slot.",
-    "tagline": "Apple Safari browser chrome mockup with interactive address bar and tabs.",
-    "category": "Mockups",
-    "badges": [
-      "New",
-      "Apple",
-      "Browser",
-      "Software"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": false,
-    "keywords": [
-      "safari mockup",
-      "browser mockup",
-      "apple safari",
-      "browser window",
-      "chrome mockup",
-      "address bar"
-    ]
-  },
-  {
     "id": "scrubbable-number-input",
     "slug": "scrubbable-number-input",
     "componentName": "ScrubbableNumberInput",
@@ -3391,105 +1919,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "drag to scrub input",
       "kinetic spinbutton",
       "framer motion input"
-    ]
-  },
-  {
-    "id": "scrubbable-sparkline",
-    "slug": "scrubbable-sparkline",
-    "componentName": "ScrubbableSparkline",
-    "title": "Scrubbable Sparkline",
-    "description": "Robinhood-style financial stock and cryptocurrency sparkline chart with interactive touch/mouse scrubbing, dynamic cursor crosshair, live price readout, and animated delta gains or losses.",
-    "tagline": "Robinhood-style financial sparkline chart with cursor scrubbing and live ticker readouts.",
-    "category": "Motion",
-    "badges": [
-      "Fintech",
-      "Interactive Chart",
-      "SVG Animation"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": false,
-    "keywords": [
-      "sparkline",
-      "financial chart",
-      "robinhood sparkline",
-      "stock chart",
-      "crypto ticker",
-      "scrubbable line chart",
-      "svg graph"
-    ]
-  },
-  {
-    "id": "segmented-range-picker",
-    "slug": "segmented-range-picker",
-    "componentName": "SegmentedRangePicker",
-    "title": "Segmented Range Picker",
-    "description": "Financial timeframe range selector (1D, 1W, 1M, 1Y, ALL) with a sliding pill highlight, synchronized animated chart transitions, interval resolution badge, and high/low metric cards.",
-    "tagline": "Financial timeframe selector with spring sliding pill and synchronized chart morphing.",
-    "category": "Navigation",
-    "badges": [
-      "Fintech",
-      "Timeframe Picker",
-      "Spring Motion"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": false,
-    "keywords": [
-      "segmented range picker",
-      "financial timeframe",
-      "sliding pill tabs",
-      "chart range selector",
-      "crypto time range",
-      "framer motion segmented control"
-    ]
-  },
-  {
-    "id": "semver-release-draft-card",
-    "slug": "semver-release-draft-card",
-    "componentName": "SemverReleaseDraftCard",
-    "title": "Semver Release Draft Card",
-    "description": "GitHub Releases and Changesets inspired release notes generator with Semver bump selector (patch, minor, major), conventional commit categorization, Markdown changelog export, and release publishing.",
-    "tagline": "Conventional commit release drafter with automated Semver bump calculations.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Git",
-      "Releases"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "semver release",
-      "github release drafter",
-      "conventional commits",
-      "changelog generator",
-      "version bump",
-      "changesets"
-    ]
-  },
-  {
-    "id": "server-metrics-sparkboard",
-    "slug": "server-metrics-sparkboard",
-    "componentName": "ServerMetricsSparkboard",
-    "title": "Server Metrics Sparkboard",
-    "description": "Grafana and Railway inspired multi-sparkline telemetry dashboard monitoring CPU, Memory, Disk I/O, and Network Egress with synchronized crosshair cursor inspection across all graphs simultaneously.",
-    "tagline": "Synchronized multi-sparkline server telemetry dashboard with crosshair scrubber.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "Observability",
-      "Metrics"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "server metrics",
-      "sparkboard",
-      "cpu monitor",
-      "grafana telemetry",
-      "synchronized sparkline",
-      "observability"
     ]
   },
   {
@@ -3538,57 +1967,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "falling stars css canvas",
       "space hero background",
       "streak animation"
-    ]
-  },
-  {
-    "id": "siri-glow-edge",
-    "slug": "siri-glow-edge",
-    "componentName": "SiriGlowEdge",
-    "title": "Siri Glow Edge",
-    "description": "Apple Intelligence-inspired fluid perimeter rainbow chromatic aura with multi-layer conic gradient blur, breathing light cycles, live voice waveform reaction, and adjustable glow thickness.",
-    "tagline": "Apple Intelligence chromatic perimeter glow with voice waveform reactions.",
-    "category": "Motion",
-    "badges": [
-      "New",
-      "Apple Intelligence",
-      "Siri Aura",
-      "Conic Glow"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "siri glow",
-      "apple intelligence",
-      "chromatic aura",
-      "rainbow border",
-      "conic gradient glow",
-      "voice waveform",
-      "breathing light"
-    ]
-  },
-  {
-    "id": "slash-command-menu",
-    "slug": "slash-command-menu",
-    "componentName": "SlashCommandMenu",
-    "title": "Slash Command Menu",
-    "description": "Notion-style rich-text editor command menu triggered via '/', featuring fuzzy search filtering, keyboard arrow navigation, enter-to-insert blocks (Headings, To-Dos, Code Blocks, Callouts, Quotes), and delete controls.",
-    "tagline": "Notion-style rich-text editor with '/' command popover and keyboard navigation.",
-    "category": "Inputs",
-    "badges": [
-      "Editor",
-      "Popover Menu",
-      "Keyboard Navigation"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": false,
-    "keywords": [
-      "slash command menu",
-      "notion editor",
-      "command menu",
-      "rich text editor",
-      "slash command",
-      "keyboard shortcut menu",
-      "markdown blocks"
     ]
   },
   {
@@ -3890,6 +2268,32 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "sticky-pages",
+    "slug": "sticky-pages",
+    "componentName": "StickyPages",
+    "title": "Sticky Pages",
+    "description": "Apple-style sticky stacking full-viewport pages with progressive scale shrinking, cumulative dimming overlays, smooth scroll transitions, and subtle top elevation borders.",
+    "tagline": "Apple-style sticky stacking cards that scale and dim on scroll.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "Interactive",
+      "Scroll Physics",
+      "Layout"
+    ],
+    "createdAt": "2026-10-23",
+    "featured": true,
+    "keywords": [
+      "sticky pages",
+      "stacking cards",
+      "sticky scroll",
+      "scroll shrink cards",
+      "apple sticky cards",
+      "viewport cards",
+      "stacking sections"
+    ]
+  },
+  {
     "id": "sticky-scroll-story",
     "slug": "sticky-scroll-story",
     "componentName": "StickyScrollStory",
@@ -3913,130 +2317,29 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "sticky-sub-nav",
-    "slug": "sticky-sub-nav",
-    "componentName": "StickySubNav",
-    "title": "Sticky Sub-Nav",
-    "description": "Product-level frosted sticky sub-navigation bar that smoothly slides into view once the hero section scrolls out, pairing the product title on the left with a 'Buy' CTA pill on the right.",
-    "tagline": "Product sub-navigation bar that appears on scroll with Buy CTA.",
-    "category": "Navigation",
-    "badges": [
-      "New",
-      "Sticky Header",
-      "E-Commerce UX"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": true,
-    "keywords": [
-      "sticky sub nav",
-      "apple product navbar",
-      "sticky buy bar",
-      "scroll reveal header",
-      "product navigation bar"
-    ]
-  },
-  {
-    "id": "streak-counter",
-    "slug": "streak-counter",
-    "componentName": "StreakCounter",
-    "title": "Streak Counter",
-    "description": "Duolingo-style gamified streak counter featuring a pulsing animated flame avatar with floating sparks, 7-day calendar circle row with completion checks, freeze shield, and celebratory confetti explosion.",
-    "tagline": "Duolingo-inspired gamified streak counter with pulsing flame and confetti explosion.",
-    "category": "Motion",
-    "badges": [
-      "Duolingo",
-      "Gamification",
-      "Habit Loop",
-      "Confetti"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "streak counter",
-      "duolingo streak",
-      "habit tracker",
-      "pulsing flame",
-      "streak freeze",
-      "confetti burst",
-      "milestone progress",
-      "gamification ui"
-    ]
-  },
-  {
-    "id": "sunrise-horizon",
-    "slug": "sunrise-horizon",
-    "componentName": "SunriseHorizon",
-    "title": "Sunrise Horizon",
-    "description": "Layered atmospheric sky background that interpolates zenith, horizon, and solar glow gradients along a continuous solar arc from dawn to noon to dusk.",
-    "tagline": "Dynamic sky gradient with solar arc and horizon silhouettes.",
-    "category": "Backgrounds",
-    "badges": [
-      "New",
-      "Atmosphere",
-      "Pure CSS"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": true,
-    "keywords": [
-      "sunrise horizon",
-      "sky gradient background",
-      "day night cycle css",
-      "sunset animation",
-      "atmospheric hero background"
-    ]
-  },
-  {
-    "id": "swipe-cards",
-    "slug": "swipe-cards",
-    "componentName": "SwipeCards",
-    "title": "Swipe Cards",
-    "description": "Tinder-style swipeable card deck with drag physics, rotational tilt proportional to delta X, floating LIKE and NOPE stamp overlays, stack scale-up, and rewind capabilities.",
-    "tagline": "Tinder-inspired swipeable card deck with drag physics and stamp overlays.",
+    "id": "story-cards",
+    "slug": "story-cards",
+    "componentName": "StoryCards",
+    "title": "Story Cards",
+    "description": "Interactive looped story card showcase featuring continuous virtual looping, spring-animated expanding active slides, mouse-wheel scrub, touch gestures, and keyboard navigation.",
+    "tagline": "Interactive looped story carousel with spring expansions and gesture controls.",
     "category": "Cards",
     "badges": [
-      "Tinder",
-      "Gestures",
-      "Drag Physics",
-      "Deck"
+      "New",
+      "Interactive",
+      "Spring Physics",
+      "Touch Friendly"
     ],
-    "createdAt": "2026-10-09",
+    "createdAt": "2026-10-23",
     "featured": true,
     "keywords": [
-      "swipe cards",
-      "tinder card deck",
-      "draggable cards",
-      "framer motion drag",
-      "rotational tilt",
-      "stamp overlays",
-      "rewind card",
-      "card stack physics"
-    ]
-  },
-  {
-    "id": "tabbed-code-block",
-    "slug": "tabbed-code-block",
-    "componentName": "TabbedCodeBlock",
-    "title": "Tabbed Code Block",
-    "description": "Multi-language developer code block featuring smooth sliding active tab underlines, syntax-token highlighting, line numbering, one-click copy, and an interactive simulated terminal runner.",
-    "tagline": "Multi-language developer code block with sliding tab underlines and terminal console runner.",
-    "category": "Cards",
-    "badges": [
-      "Stripe",
-      "Code Block",
-      "Developer UI",
-      "Terminal",
-      "Tabs"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "tabbed code block",
-      "stripe code block",
-      "developer docs code block",
-      "framer motion tabs",
-      "syntax highlight",
-      "terminal output",
-      "code snippet"
+      "story cards",
+      "expandable carousel",
+      "loop carousel",
+      "framer motion cards",
+      "interactive stories",
+      "touch swipe cards",
+      "virtual trackpad scroll"
     ]
   },
   {
@@ -4118,29 +2421,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "tilt-pin-input",
-    "slug": "tilt-pin-input",
-    "componentName": "TiltPinInput",
-    "title": "Tilt Pin Input",
-    "description": "Tactile OTP digit pin input with spring keystroke lifts, auto-advance focus, paste parsing, and harmonic error shake mechanics.",
-    "tagline": "Tactile OTP pin input with keystroke spring lifts and error shake.",
-    "category": "Inputs",
-    "badges": [
-      "New",
-      "Micro-interaction",
-      "Auth UI"
-    ],
-    "createdAt": "2026-10-10",
-    "featured": false,
-    "keywords": [
-      "pin input",
-      "otp input",
-      "digit input",
-      "shake input",
-      "framer motion input"
-    ]
-  },
-  {
     "id": "toast-stack",
     "slug": "toast-stack",
     "componentName": "ToastStack",
@@ -4161,29 +2441,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "sonner toast",
       "viewport toast",
       "framer motion toast"
-    ]
-  },
-  {
-    "id": "topographic-ripple-surface",
-    "slug": "topographic-ripple-surface",
-    "componentName": "TopographicRippleSurface",
-    "title": "Topographic Ripple Surface",
-    "description": "Concentric contour ring background where pointer movement warps isolines with graduated spring mass and clicks emit a radial ripple.",
-    "tagline": "Multi-mass concentric contour rings with radial ripple propagation.",
-    "category": "Backgrounds",
-    "badges": [
-      "New",
-      "Multi-Mass Springs",
-      "Zero Re-renders"
-    ],
-    "createdAt": "2026-10-07",
-    "featured": false,
-    "keywords": [
-      "topographic ripple surface",
-      "contour lines background",
-      "parallax rings",
-      "framer motion background",
-      "isoline wave"
     ]
   },
   {
@@ -4281,33 +2538,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "volcano-embers",
-    "slug": "volcano-embers",
-    "componentName": "VolcanoEmbers",
-    "title": "Volcano Embers",
-    "description": "Rising volcanic embers and charred thermal ash on Canvas 2D with molten caldera horizon glow, velocity-aligned incandescent spark trails, and turbulent updraft vortices.",
-    "tagline": "Incandescent sparks and thermal ash rising from a molten horizon.",
-    "category": "Backgrounds",
-    "badges": [
-      "Canvas 2D",
-      "Nature",
-      "Particles",
-      "Thermal"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": false,
-    "keywords": [
-      "volcano",
-      "embers",
-      "sparks",
-      "fire",
-      "magma",
-      "ash",
-      "thermal",
-      "particles"
-    ]
-  },
-  {
     "id": "warp-speed",
     "slug": "warp-speed",
     "componentName": "WarpSpeed",
@@ -4331,31 +2561,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "warp-text",
-    "slug": "warp-text",
-    "componentName": "WarpText",
-    "title": "Warp Text",
-    "description": "Cinematic sci-fi typography animation inspired by spaceship hyperspace jumps with directional motion blur, velocity scale stretch, and photonic light trail echoes.",
-    "tagline": "Cinematic spaceship hyperspace warp drive typography animation.",
-    "category": "Text",
-    "badges": [
-      "New",
-      "Cinematic Motion",
-      "Hyperspace"
-    ],
-    "createdAt": "2026-10-11",
-    "featured": true,
-    "keywords": [
-      "warp text",
-      "hyperspace text animation",
-      "sci-fi text effect",
-      "directional motion blur",
-      "framer motion text",
-      "kinetic typography",
-      "warp drive animation"
-    ]
-  },
-  {
     "id": "water-ripples",
     "slug": "water-ripples",
     "componentName": "WaterRipples",
@@ -4376,81 +2581,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "2d wave equation",
       "rain drop ripples",
       "cursor wake effect"
-    ]
-  },
-  {
-    "id": "waterfall",
-    "slug": "waterfall",
-    "componentName": "Waterfall",
-    "title": "Waterfall",
-    "description": "Physics-driven cascading waterfall background rendered on HTML5 Canvas 2D with 240+ layered vertical hydro streaks, gravity-accelerated splash droplets, and a pulsing volumetric mist cloud at the plunge basin.",
-    "tagline": "Gravity-accelerated hydro streaks and volumetric plunge mist.",
-    "category": "Backgrounds",
-    "badges": [
-      "New",
-      "Canvas 2D",
-      "Fluid Physics"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": true,
-    "keywords": [
-      "waterfall background",
-      "water cascade canvas",
-      "hydro streaks",
-      "mist particles",
-      "fluid simulation",
-      "plunge pool animation"
-    ]
-  },
-  {
-    "id": "webhook-payload-simulator",
-    "slug": "webhook-payload-simulator",
-    "componentName": "WebhookPayloadSimulator",
-    "title": "Webhook Payload Simulator",
-    "description": "Stripe and GitHub inspired webhook inspection card with HMAC-SHA256 signature auto-signing, event topic selectors, formatted JSON payload viewer, and live test delivery dispatcher.",
-    "tagline": "Signed test webhook event dispatcher with HMAC signature verification.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "DevTools",
-      "API",
-      "Webhooks"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "webhook simulator",
-      "stripe webhook",
-      "hmac signature",
-      "event payload",
-      "api test tool",
-      "delivery status"
-    ]
-  },
-  {
-    "id": "wormhole-tunnel",
-    "slug": "wormhole-tunnel",
-    "componentName": "WormholeTunnel",
-    "title": "Wormhole Tunnel",
-    "description": "Structured hyperspace wormhole tunnel on Canvas 2D featuring concentric polygonal energy rings and longitudinal warp ribs scaling from an interactive Lissajous vanishing point.",
-    "tagline": "Interactive Einstein-Rosen conduit with helical twist and spectrum shift.",
-    "category": "Backgrounds",
-    "badges": [
-      "Canvas 2D",
-      "Interactive",
-      "3D Perspective",
-      "Cosmic"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": false,
-    "keywords": [
-      "wormhole",
-      "hyperspace tunnel",
-      "warp drive",
-      "portal background",
-      "vortex",
-      "perspective grid",
-      "sci-fi canvas"
     ]
   }
 ];

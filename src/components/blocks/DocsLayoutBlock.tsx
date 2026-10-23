@@ -5,15 +5,10 @@ import {
   BookOpen,
   ArrowRight,
   ArrowLeft,
-  Terminal,
-  CheckCircle2,
-  Code2,
-  Sparkles,
-  Search,
+  Copy,
+  Check,
 } from "lucide-react";
 import { FileTree, FileTreeNode } from "@/components/ui/FileTree";
-import { StickySubNav } from "@/components/ui/StickySubNav";
-import { CopyCodeBlock } from "@/components/ui/CopyCodeBlock";
 import { CommandMenu } from "@/components/ui/CommandMenu";
 import { cn } from "@/lib/utils";
 
@@ -47,12 +42,46 @@ const DOCS_TREE: FileTreeNode[] = [
   },
 ];
 
+const CLI_COMMANDS: Record<string, string> = {
+  npx: "npx boseui@latest add cosmic-launch-hero",
+  pnpm: "pnpm dlx boseui@latest add cosmic-launch-hero",
+  bun: "bunx boseui@latest add cosmic-launch-hero",
+};
+
+const USAGE_CODE = `import { CosmicLaunchHero } from "@/components/blocks/CosmicLaunchHero";
+
+export default function LandingPage() {
+  return (
+    <main className="w-full min-h-screen bg-black">
+      <CosmicLaunchHero
+        headline="Launch at the speed of thought"
+        tagline="Production-grade kinetic interfaces designed for scale."
+      />
+    </main>
+  );
+}`;
+
 export function DocsLayoutBlock({
   pageTitle = "Cosmic Launch Hero Block",
   category = "Composite Blocks // Landing",
   className,
 }: DocsLayoutBlockProps) {
   const [selectedDoc, setSelectedDoc] = useState(pageTitle);
+  const [cliTab, setCliTab] = useState<"npx" | "pnpm" | "bun">("npx");
+  const [copiedCli, setCopiedCli] = useState(false);
+  const [copiedUsage, setCopiedUsage] = useState(false);
+
+  const handleCopyCli = () => {
+    navigator.clipboard?.writeText(CLI_COMMANDS[cliTab]);
+    setCopiedCli(true);
+    setTimeout(() => setCopiedCli(false), 2000);
+  };
+
+  const handleCopyUsage = () => {
+    navigator.clipboard?.writeText(USAGE_CODE);
+    setCopiedUsage(true);
+    setTimeout(() => setCopiedUsage(false), 2000);
+  };
 
   return (
     <div
@@ -63,18 +92,26 @@ export function DocsLayoutBlock({
       )}
     >
       {/* Pinned SubNav Header */}
-      <StickySubNav
-        productTitle="BoseUI Documentation"
-        priceLabel="v2.4 LTS"
-        ctaLabel="Feedback"
-        links={[
-          { id: "quickstart", label: "Quickstart" },
-          { id: "installation", label: "Installation" },
-          { id: "props", label: "Props API" },
-          { id: "accessibility", label: "Accessibility" },
-        ]}
-        className="rounded-t-3xl border-b border-neutral-800 bg-neutral-950/90"
-      />
+      <div className="rounded-t-3xl border-b border-neutral-800 bg-neutral-950/90 px-6 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="font-semibold text-sm tracking-tight text-white">BoseUI Documentation</span>
+          <span className="rounded-full bg-cyan-500/15 border border-cyan-500/30 px-2 py-0.5 text-[11px] font-mono text-cyan-400">
+            v2.4 LTS
+          </span>
+        </div>
+        <div className="hidden md:flex items-center gap-6 text-xs text-neutral-400 font-medium">
+          <span className="text-white hover:text-cyan-400 transition-colors cursor-pointer">Quickstart</span>
+          <span className="hover:text-white transition-colors cursor-pointer">Installation</span>
+          <span className="hover:text-white transition-colors cursor-pointer">Props API</span>
+          <span className="hover:text-white transition-colors cursor-pointer">Accessibility</span>
+        </div>
+        <button
+          type="button"
+          className="rounded-lg bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 px-3 py-1.5 text-xs font-medium text-neutral-200 transition-colors"
+        >
+          Feedback
+        </button>
+      </div>
 
       {/* Main Documentation Body */}
       <div className="relative flex flex-1 flex-col lg:flex-row overflow-hidden">
@@ -110,7 +147,7 @@ export function DocsLayoutBlock({
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-              {pageTitle}
+              {selectedDoc || pageTitle}
             </h1>
 
             <p className="mt-2 text-sm sm:text-base text-neutral-400 max-w-2xl leading-relaxed">
@@ -124,29 +161,38 @@ export function DocsLayoutBlock({
             <h2 className="text-sm font-semibold uppercase tracking-wider text-neutral-400 font-mono">
               CLI Installation
             </h2>
-            <CopyCodeBlock
-              tabs={[
-                {
-                  id: "npx",
-                  label: "npx",
-                  code: "npx boseui@latest add cosmic-launch-hero",
-                  language: "bash",
-                },
-                {
-                  id: "pnpm",
-                  label: "pnpm",
-                  code: "pnpm dlx boseui@latest add cosmic-launch-hero",
-                  language: "bash",
-                },
-                {
-                  id: "bun",
-                  label: "bun",
-                  code: "bunx boseui@latest add cosmic-launch-hero",
-                  language: "bash",
-                },
-              ]}
-              className="border-neutral-800 bg-neutral-900/90"
-            />
+            <div className="rounded-xl border border-neutral-800 bg-neutral-900/90 overflow-hidden">
+              <div className="flex items-center justify-between border-b border-neutral-800 bg-neutral-950/70 px-3 py-2">
+                <div className="flex gap-1">
+                  {(["npx", "pnpm", "bun"] as const).map((tab) => (
+                    <button
+                      key={tab}
+                      type="button"
+                      onClick={() => setCliTab(tab)}
+                      className={cn(
+                        "rounded px-2.5 py-1 text-xs font-mono transition-colors",
+                        cliTab === tab
+                          ? "bg-neutral-800 text-white font-medium"
+                          : "text-neutral-400 hover:text-neutral-200"
+                      )}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={handleCopyCli}
+                  className="rounded p-1 text-neutral-400 hover:text-white transition-colors"
+                  title="Copy command"
+                >
+                  {copiedCli ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+                </button>
+              </div>
+              <pre className="p-3.5 font-mono text-xs text-neutral-300 overflow-x-auto">
+                <code>{CLI_COMMANDS[cliTab]}</code>
+              </pre>
+            </div>
           </div>
 
           {/* Component Usage Example */}
@@ -154,23 +200,22 @@ export function DocsLayoutBlock({
             <h2 className="text-sm font-semibold uppercase tracking-wider text-neutral-400 font-mono">
               Usage
             </h2>
-            <CopyCodeBlock
-              title="page.tsx"
-              showLineNumbers={true}
-              code={`import { CosmicLaunchHero } from "@/components/ui/CosmicLaunchHero";
-
-export default function LandingPage() {
-  return (
-    <main className="w-full min-h-screen bg-black">
-      <CosmicLaunchHero
-        headline="Launch at the speed of thought"
-        tagline="Production-grade kinetic interfaces designed for scale."
-      />
-    </main>
-  );
-}`}
-              className="border-neutral-800 bg-neutral-900/90"
-            />
+            <div className="rounded-xl border border-neutral-800 bg-neutral-900/90 overflow-hidden">
+              <div className="flex items-center justify-between border-b border-neutral-800 bg-neutral-950/70 px-4 py-2">
+                <span className="font-mono text-xs text-neutral-400">page.tsx</span>
+                <button
+                  type="button"
+                  onClick={handleCopyUsage}
+                  className="rounded p-1 text-neutral-400 hover:text-white transition-colors"
+                  title="Copy code"
+                >
+                  {copiedUsage ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+                </button>
+              </div>
+              <pre className="p-4 font-mono text-xs leading-relaxed text-neutral-300 overflow-x-auto">
+                <code>{USAGE_CODE}</code>
+              </pre>
+            </div>
           </div>
 
           {/* Pagination Navigation Footer */}
@@ -180,7 +225,7 @@ export default function LandingPage() {
               className="inline-flex items-center gap-2 text-xs font-mono text-neutral-400 hover:text-white transition-colors"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
-              <span>Previous: StickySubNav</span>
+              <span>Previous: Buttons</span>
             </a>
 
             <a

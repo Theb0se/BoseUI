@@ -130,7 +130,7 @@ export function InteractiveBentoShowcase() {
             href="/components"
             className={`inline-flex shrink-0 items-center gap-2 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-2.5 text-xs font-medium text-black transition-colors hover:border-black hover:bg-black hover:text-white dark:border-[#262626] dark:bg-[#0A0A0A] dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black ${focusRing}`}
           >
-            <span>All 142 Components</span>
+            <span>All Components</span>
             <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>

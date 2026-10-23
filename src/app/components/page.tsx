@@ -196,6 +196,10 @@ export default function ComponentsDirectoryPage() {
         <div>
           {/* Top Metric Badges */}
           <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 font-mono text-[11px] text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>BoseUI v2</span>
+            </span>
 
             <span className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 font-mono text-[11px] text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400">
               <span>React 19 & Next.js 15</span>
@@ -319,10 +323,7 @@ export default function ComponentsDirectoryPage() {
                 : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400 dark:hover:border-neutral-700 dark:hover:text-white"
             )}
           >
-            All{" "}
-            <span className="ml-1 font-mono text-[11px] opacity-70">
-              {uiComponents.length}
-            </span>
+            All
           </button>
 
           {/* Featured */}
@@ -338,9 +339,6 @@ export default function ComponentsDirectoryPage() {
           >
             <Sparkles className="h-3 w-3 text-amber-500" />
             <span>Featured</span>
-            <span className="font-mono text-[11px] opacity-70">
-              {featuredCount}
-            </span>
           </button>
 
           {/* Atomic UI Category Chips (Backgrounds excluded) */}
@@ -363,10 +361,7 @@ export default function ComponentsDirectoryPage() {
                     : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400 dark:hover:border-neutral-700 dark:hover:text-white"
                 )}
               >
-                {category}{" "}
-                <span className="ml-1 font-mono text-[11px] opacity-70">
-                  {count}
-                </span>
+                {category}
               </button>
             );
           })}

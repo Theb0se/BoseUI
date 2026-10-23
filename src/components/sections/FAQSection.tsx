@@ -13,7 +13,7 @@ const FAQS: FAQItem[] = [
   {
     question: "What is BoseUI?",
     answer:
-      "BoseUI is an open-source, animation-first component library for modern React applications. It provides over 142 production-grade UI primitives built with Framer Motion, Tailwind CSS, and TypeScript, engineered to make interfaces feel tactile and alive with fluid spring mechanics.",
+      "BoseUI is an open-source, animation-first component library for modern React applications. It provides production-grade UI primitives built with Framer Motion, Tailwind CSS, and TypeScript, engineered to make interfaces feel tactile and alive with fluid spring mechanics.",
   },
   {
     question: "Is BoseUI free to use?",

@@ -11,7 +11,6 @@ import {
   Disc as Discord,
   Send,
 } from "lucide-react";
-import { Fireflies } from "@/components/ui/Fireflies";
 import { FloatingLabelInput } from "@/components/ui/FloatingLabelInput";
 import { MorphingActionButton } from "@/components/ui/MorphingActionButton";
 import { cn } from "@/lib/utils";
@@ -38,17 +37,11 @@ export function NewsletterFooter({
         className
       )}
     >
-      {/* Background Bioluminescent Fireflies Atmosphere */}
-      <div className="absolute inset-0 pointer-events-none opacity-45">
-        <Fireflies
-          count={40}
-          glowColor="#A7F3D0"
-          showForest={true}
-          interactive={true}
-          className="h-full w-full rounded-none border-0"
-        >
-          <div className="hidden" />
-        </Fireflies>
+      {/* Background Bioluminescent Atmosphere */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/4 left-1/3 h-72 w-72 rounded-full bg-emerald-500/10 blur-[100px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-teal-500/10 blur-[120px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_120%,rgba(16,185,129,0.15),transparent)]" />
       </div>
 
       {/* Main Center Content */}

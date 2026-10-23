@@ -10,7 +10,6 @@ import {
   Sparkles,
   HelpCircle,
 } from "lucide-react";
-import { AsteroidField } from "@/components/ui/AsteroidField";
 import { SplitFlapText } from "@/components/ui/SplitFlapText";
 import { cn } from "@/lib/utils";
 
@@ -35,18 +34,10 @@ export function NotFound404Block({
         className
       )}
     >
-      {/* Background Deep Space Asteroid Belt */}
-      <div className="absolute inset-0 pointer-events-none opacity-50">
-        <AsteroidField
-          asteroidCount={28}
-          speed={0.8}
-          angle={20}
-          meteorFrequency={0.5}
-          colorTheme="basalt"
-          className="h-full w-full rounded-none border-0"
-        >
-          <div className="hidden" />
-        </AsteroidField>
+      {/* Background Deep Space Ambience */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-rose-500/10 blur-[130px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px]" />
       </div>
 
       {/* Top Sector Status Pill */}

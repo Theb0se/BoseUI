@@ -15,7 +15,7 @@ import {
   Code2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { TabbedCodeBlock } from "@/components/ui/TabbedCodeBlock";
+import { Copy, Check } from "lucide-react";
 
 export interface WalkthroughChapter {
   id: string;
@@ -270,24 +270,51 @@ export function FeatureWalkthroughBlock({
             </div>
           </div>
 
-          {/* Right Column: Pinned Tabbed Code Block with Live Terminal */}
+          {/* Right Column: Pinned Code Stage with Live Terminal */}
           <div className="lg:col-span-7 flex flex-col">
-            <div className="rounded-3xl border border-neutral-800 bg-neutral-900/60 p-2 backdrop-blur-xl shadow-2xl">
-              <div className="flex items-center justify-between px-4 py-2 border-b border-neutral-800 text-xs font-mono text-neutral-400">
+            <div className="rounded-3xl border border-neutral-800 bg-neutral-900/60 p-4 backdrop-blur-xl shadow-2xl">
+              <div className="flex items-center justify-between pb-3 border-b border-neutral-800 text-xs font-mono text-neutral-400">
                 <span className="flex items-center gap-2">
                   <Code2 className="h-4 w-4 text-blue-400" />
                   <span>SYNCHRONIZED_CODE_STAGE</span>
                 </span>
-                <span className="text-neutral-500">Language: {activeChapter.codeLang.toUpperCase()}</span>
+                <span className="text-neutral-500">Step {activeChapter.step} // {activeChapter.id.toUpperCase()}</span>
               </div>
 
-              {/* Tabbed Code Block synchronizing with selected chapter */}
-              <TabbedCodeBlock
-                key={`code-${activeChapter.codeLang}`}
-                defaultLang={activeChapter.codeLang}
-                showLineNumbers={true}
-                className="w-full border-0 bg-transparent shadow-none"
-              />
+              <div className="mt-3 rounded-2xl bg-neutral-950 border border-neutral-800/80 p-4 font-mono text-xs overflow-x-auto">
+                <pre className="text-neutral-300 leading-relaxed">
+                  <code>
+                    {activeChapter.id === "install" && `# 1. Initialize BoseUI in your project
+npx boseui@latest init
+
+# 2. Add kinetic primitives and composite blocks
+npx boseui add mega-navbar feature-bento
+
+# 3. Start local development server
+npm run dev`}
+                    {activeChapter.id === "configure" && `// tailwind.config.ts / tokens.ts
+export const boseConfig = {
+  springPhysics: {
+    stiffness: 420,
+    damping: 28,
+    mass: 0.8,
+  },
+  theming: {
+    defaultMode: "dark",
+    reducedMotion: "auto",
+  },
+};`}
+                    {activeChapter.id === "deploy" && `// Production build & edge deployment
+// pnpm build && pnpm start
+
+import { FinalCtaBlock } from "@/components/blocks/FinalCtaBlock";
+
+export default function Page() {
+  return <FinalCtaBlock headline="Ship 120Hz Fluid Interfaces" />;
+}`}
+                  </code>
+                </pre>
+              </div>
             </div>
           </div>
 

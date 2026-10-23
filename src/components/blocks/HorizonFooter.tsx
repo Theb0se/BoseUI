@@ -10,7 +10,6 @@ import {
   Mail,
   Sparkles,
 } from "lucide-react";
-import { PlanetHorizon } from "@/components/ui/PlanetHorizon";
 import { CipherScrambleText } from "@/components/ui/CipherScrambleText";
 import { cn } from "@/lib/utils";
 
@@ -97,18 +96,10 @@ export function HorizonFooter({
         className
       )}
     >
-      {/* Background Planet Horizon Effect */}
-      <div className="absolute inset-0 pointer-events-none opacity-40">
-        <PlanetHorizon
-          atmosphereColor="#38BDF8"
-          flareColor="#FDE047"
-          flarePosition={0.5}
-          starDensity={110}
-          autoplay={true}
-          className="h-full w-full rounded-none border-0"
-        >
-          <div className="hidden" />
-        </PlanetHorizon>
+      {/* Background Planetary Horizon Glow */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[140%] h-[320px] rounded-[100%] bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.2),rgba(59,130,246,0.05),transparent_70%)] blur-2xl" />
+        <div className="absolute -bottom-64 left-1/2 -translate-x-1/2 w-[160%] h-[200px] border-t border-cyan-500/20 rounded-[100%]" />
       </div>
 
       {/* Foreground Content Container */}

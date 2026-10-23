@@ -104,7 +104,7 @@ export function CategoryExplorerSection() {
             href="/components"
             className="group inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-neutral-900 dark:text-white"
           >
-            <span>Browse All {CATALOG_INDEX.length} Components</span>
+            <span>Browse All Components</span>
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
@@ -113,7 +113,6 @@ export function CategoryExplorerSection() {
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {CATEGORIES_DATA.map((cat) => {
             const Icon = cat.icon;
-            const count = CATALOG_INDEX.filter((c) => c.category === cat.name).length;
 
             return (
               <SpotlightCard
@@ -128,7 +127,7 @@ export function CategoryExplorerSection() {
                       <Icon className="h-4 w-4 text-black dark:text-white" />
                     </div>
                     <span className="rounded-md border border-neutral-200 bg-white px-2 py-0.5 font-mono text-[10px] text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400">
-                      {count} Primitives
+                      v2 Primitives
                     </span>
                   </div>
 

@@ -10,11 +10,8 @@ import {
   Figma,
   Mail,
   Sparkles,
-  ArrowRight,
-  ShieldCheck,
-  CheckCircle2,
 } from "lucide-react";
-import { DockMagnification, DockAppItem } from "@/components/ui/DockMagnification";
+import { ElasticDock, ElasticDockItem } from "@/components/ui/ElasticDock";
 import { cn } from "@/lib/utils";
 
 export interface SocialDockFooterProps {
@@ -23,59 +20,42 @@ export interface SocialDockFooterProps {
   className?: string;
 }
 
-const SOCIAL_ITEMS: DockAppItem[] = [
+const SOCIAL_ITEMS: ElasticDockItem[] = [
   {
     id: "github",
-    name: "GitHub (14.2k stars)",
-    icon: Github,
-    color: "#FFFFFF",
-    gradient: "from-neutral-800 to-neutral-950",
-    isRunning: true,
+    label: "GitHub (14.2k stars)",
+    icon: <Github className="h-5 w-5 text-white" />,
   },
   {
     id: "twitter",
-    name: "X / Twitter (@boseui)",
-    icon: Twitter,
-    color: "#38BDF8",
-    gradient: "from-sky-900 to-neutral-950",
-    isRunning: true,
+    label: "X / Twitter (@boseui)",
+    icon: <Twitter className="h-5 w-5 text-sky-400" />,
   },
   {
     id: "discord",
-    name: "Discord Community",
-    icon: Discord,
-    color: "#818CF8",
-    gradient: "from-indigo-900 to-neutral-950",
-    notificationCount: 3,
+    label: "Discord Community",
+    icon: <Discord className="h-5 w-5 text-indigo-400" />,
+    badge: 3,
   },
   {
     id: "youtube",
-    name: "YouTube Channel",
-    icon: Youtube,
-    color: "#F87171",
-    gradient: "from-red-900 to-neutral-950",
+    label: "YouTube Channel",
+    icon: <Youtube className="h-5 w-5 text-red-400" />,
   },
   {
     id: "linkedin",
-    name: "LinkedIn Network",
-    icon: Linkedin,
-    color: "#60A5FA",
-    gradient: "from-blue-900 to-neutral-950",
+    label: "LinkedIn Network",
+    icon: <Linkedin className="h-5 w-5 text-blue-400" />,
   },
   {
     id: "figma",
-    name: "Figma UI Kit",
-    icon: Figma,
-    color: "#F43F5E",
-    gradient: "from-rose-900 to-neutral-950",
+    label: "Figma UI Kit",
+    icon: <Figma className="h-5 w-5 text-rose-400" />,
   },
   {
     id: "email",
-    name: "Developer Support",
-    icon: Mail,
-    color: "#34D399",
-    gradient: "from-emerald-900 to-neutral-950",
-    isRunning: true,
+    label: "Developer Support",
+    icon: <Mail className="h-5 w-5 text-emerald-400" />,
   },
 ];
 
@@ -115,13 +95,14 @@ export function SocialDockFooter({
 
       {/* Center Interactive macOS Dock Bar */}
       <div className="relative z-10 my-10 flex flex-col items-center justify-center">
-        <DockMagnification
+        <ElasticDock
           items={SOCIAL_ITEMS}
-          baseSize={54}
-          magnification={1.75}
-          distance={160}
-          embedded={true}
-          onItemClick={(item) => setActiveItem(item.name)}
+          baseSize={52}
+          magnifiedSize={72}
+          onSelect={(id) => {
+            const found = SOCIAL_ITEMS.find((it) => it.id === id);
+            if (found) setActiveItem(found.label);
+          }}
           className="shadow-2xl"
         />
 

@@ -33,425 +33,7 @@ Our latest research on frontend engineering and UI/UX:
 - [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
 - [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
 
-## Available Kinetic Components (184)
-
-### AI Chat Bubble (`AIChatBubble`)
-- **Slug**: `ai-chat-bubble`
-- **Category**: Cards
-- **Tagline**: Physics spring-entrance chat bubble for AI conversation UIs.
-- **Description**: Spring-entrance chat message bubble for AI interfaces. Supports user (right, filled) and assistant (left, outlined) roles, animated typing dots state, optional avatar initials, and timestamp.
-- **Docs URL**: https://boseui.site/components/ai-chat-bubble
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-chat-bubble.json`
-- **Registry Manifest**: https://boseui.site/r/ai-chat-bubble.json
-- **Key Features**:
-  - Spring entrance animation: y:16→0 + opacity fade.
-  - Role-aware layout: user right-aligned filled, assistant left outlined.
-  - Typing dots variant with staggered bounce animation.
-  - Optional avatar initials and timestamp.
-  - prefers-reduced-motion: static render without animation.
-- **Accessibility**:
-  - Text content fully accessible to screen readers.
-  - No motion when prefers-reduced-motion is set.
-- **Props**:
-  - `role` ("user" | "assistant"): Controls bubble alignment and color scheme.
-  - `content` (string): Message text content.
-  - `typing` (boolean, default: false): Show animated typing dots instead of content.
-  - `avatar` (string): Optional avatar initials or emoji.
-  - `timestamp` (string): Optional timestamp string shown below content.
-- **Usage Example**:
-```tsx
-import { AIChatBubble } from "@/components/ui/ai-chat-bubble";
-
-export function Example() {
-  return (
-    <div className="flex flex-col gap-3 p-4 max-w-md">
-      <AIChatBubble role="user" content="How do I center a div?" avatar="U" />
-      <AIChatBubble role="assistant" typing />
-      <AIChatBubble
-        role="assistant"
-        content="Use flexbox: display: flex; align-items: center; justify-content: center;"
-        avatar="AI"
-        timestamp="Just now"
-      />
-    </div>
-  );
-}
-```
-
----
-
-### AI Code Execution Sandbox (`AICodeExecutionSandbox`)
-- **Slug**: `ai-code-execution-sandbox`
-- **Category**: Cards
-- **Tagline**: Interactive terminal execution sandbox for running AI-generated code.
-- **Description**: Interactive code execution terminal for AI-generated code with Code and Console Output tabs, real-time stdout streaming, execution time telemetry, and run/copy controls.
-- **Docs URL**: https://boseui.site/components/ai-code-execution-sandbox
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-code-execution-sandbox.json`
-- **Registry Manifest**: https://boseui.site/r/ai-code-execution-sandbox.json
-- **Key Features**:
-  - Dual-tab interface: Code editor view with line numbers and Console Output.
-  - Animated line-by-line typewriter output streaming on execution.
-  - Real-time execution telemetry badge (e.g. 'Exit 0 (142ms)').
-  - One-click source code copy to clipboard.
-  - Architectural dark monochrome aesthetics with zero heavy dependencies.
-- **Accessibility**:
-  - Tabs accessible with keyboard navigation.
-  - Monospace font sizing with WCAG compliant text contrast.
-- **Props**:
-  - `code` (string): Source code to display in the Code tab.
-  - `language` (string, default: "typescript"): Programming language identifier.
-  - `output` (string[]): Array of output terminal stream lines.
-  - `executionTimeMs` (number, default: 142): Reported execution duration in milliseconds.
-  - `onRun` (() => void): Callback invoked when user presses Run Code.
-- **Usage Example**:
-```tsx
-import { AICodeExecutionSandbox } from "@/components/ui/AICodeExecutionSandbox";
-
-export function Example() {
-  return (
-    <AICodeExecutionSandbox
-      language="typescript"
-      executionTimeMs={120}
-      onRun={() => console.log("Executing...")}
-    />
-  );
-}
-```
-
----
-
-### AI Command Bar (`AICommandBar`)
-- **Slug**: `ai-command-bar`
-- **Category**: Navigation
-- **Tagline**: Slash-command AI bar with spring suggestions panel and keyboard nav.
-- **Description**: Slash-command aware AI input bar inspired by Linear and Raycast. Type / to reveal a spring-animated suggestions panel with keyboard navigation, staggered item entrance, and a shimmer idle border.
-- **Docs URL**: https://boseui.site/components/ai-command-bar
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-command-bar.json`
-- **Registry Manifest**: https://boseui.site/r/ai-command-bar.json
-- **Key Features**:
-  - Type / to trigger animated suggestions panel with spring AnimatePresence.
-  - Staggered item entrance animation per suggestion row.
-  - Full keyboard navigation: Arrow keys to move, Enter to select, Escape to dismiss.
-  - layoutId spring highlight slides smoothly between hovered items.
-  - Rotating conic-gradient shimmer on border in idle state.
-  - Fully configurable commands array.
-- **Accessibility**:
-  - role='combobox' on input with aria-expanded and aria-autocomplete.
-  - role='listbox' + role='option' on suggestions panel.
-  - Keyboard-only navigation support.
-- **Props**:
-  - `commands` (AICommand[]): Array of slash commands with trigger, label, description.
-  - `onSelect` ((command: AICommand) => void): Called when a command is selected.
-  - `placeholder` (string, default: "Type / for AI commands…"): Input placeholder text.
-- **Usage Example**:
-```tsx
-import { AICommandBar } from "@/components/ui/ai-command-bar";
-
-const commands = [
-  { id: "summarize", trigger: "summarize", label: "Summarize", description: "Summarize selected text" },
-  { id: "explain", trigger: "explain", label: "Explain", description: "Explain this concept" },
-];
-
-export function Example() {
-  return (
-    <div className="w-full max-w-xl mx-auto">
-      <AICommandBar
-        commands={commands}
-        onSelect={(cmd) => console.log("Selected:", cmd.label)}
-      />
-    </div>
-  );
-}
-```
-
----
-
-### AI Generation Progress (`AIGenerationProgress`)
-- **Slug**: `ai-generation-progress`
-- **Category**: Motion
-- **Tagline**: Spring-physics ring progress for AI generation with token counter.
-- **Description**: Spring-animated SVG ring progress indicator for AI token generation. Shows determinate progress with a rolling token counter, or an indeterminate spin when total is unknown.
-- **Docs URL**: https://boseui.site/components/ai-generation-progress
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-generation-progress.json`
-- **Registry Manifest**: https://boseui.site/r/ai-generation-progress.json
-- **Key Features**:
-  - Spring-animated stroke-dashoffset for smooth arc fill on progress changes.
-  - Indeterminate spinning arc when total token count is unknown.
-  - Center displays current/total tokens or percentage.
-  - Configurable size and stroke width.
-  - Accessible with role=progressbar and aria attributes.
-- **Accessibility**:
-  - role='progressbar' with aria-valuenow, aria-valuemin, aria-valuemax.
-  - aria-label for screen reader identification.
-- **Props**:
-  - `progress` (number, default: 0): Progress 0–100. Ignored in indeterminate mode.
-  - `current` (number): Current token count shown in ring center.
-  - `total` (number): Total token count shown in ring center.
-  - `indeterminate` (boolean, default: false): Spin indeterminately when total is unknown.
-  - `size` (number, default: 96): Ring diameter in pixels.
-  - `strokeWidth` (number, default: 5): Ring stroke width in pixels.
-- **Usage Example**:
-```tsx
-import { AIGenerationProgress } from "@/components/ui/ai-generation-progress";
-
-export function Example() {
-  return (
-    <div className="flex items-center gap-6">
-      <AIGenerationProgress progress={65} current={325} total={500} />
-      <AIGenerationProgress indeterminate />
-    </div>
-  );
-}
-```
-
----
-
-### AI Prompt Diff Viewer (`AIPromptDiffViewer`)
-- **Slug**: `ai-prompt-diff-viewer`
-- **Category**: Cards
-- **Tagline**: Cursor-style inline code suggestion diff comparator with split/inline modes.
-- **Description**: Cursor and Copilot inspired inline code and text suggestion comparator with inline additions, deletions, split vs inline views, and keyboard-accessible Accept/Reject actions.
-- **Docs URL**: https://boseui.site/components/ai-prompt-diff-viewer
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-prompt-diff-viewer.json`
-- **Registry Manifest**: https://boseui.site/r/ai-prompt-diff-viewer.json
-- **Key Features**:
-  - Inline and 2-column Split view modes.
-  - Syntax-inspired addition (+ green) and deletion (- red) gutter styling.
-  - Native keyboard hotkeys: ⌘Y (Ctrl+Y) to Accept, ⌘N (Ctrl+N) to Reject.
-  - Persistent addition and deletion stats counters.
-  - Accessible buttons with spring feedback and state reset support.
-- **Accessibility**:
-  - Keyboard accessible with hotkeys and standard focus rings.
-  - High contrast color-safe additions and deletions indicators.
-- **Props**:
-  - `filename` (string, default: "hooks/useCounter.ts"): Header file title displayed in titlebar.
-  - `language` (string, default: "typescript"): Language badge identifier.
-  - `lines` (DiffLine[]): Array of line objects with type ('unchanged' | 'added' | 'removed') and content.
-  - `defaultViewMode` ("inline" | "split", default: "inline"): Initial layout between inline unified diff or split 2-column view.
-  - `onAccept` (() => void): Callback invoked when user accepts the diff suggestions.
-  - `onReject` (() => void): Callback invoked when user rejects the diff suggestions.
-- **Usage Example**:
-```tsx
-import { AIPromptDiffViewer } from "@/components/ui/AIPromptDiffViewer";
-
-export function Example() {
-  return (
-    <AIPromptDiffViewer
-      filename="utils/math.ts"
-      language="typescript"
-      onAccept={() => console.log("Accepted!")}
-      onReject={() => console.log("Rejected!")}
-    />
-  );
-}
-```
-
----
-
-### AI Prompt Input (`AIPromptInput`)
-- **Slug**: `ai-prompt-input`
-- **Category**: Inputs
-- **Tagline**: Auto-expanding AI prompt field with spring-morphing submit button.
-- **Description**: Auto-expanding AI textarea with a morphing submit button that transitions between arrow, spinner, and check states using spring physics. Includes character counter with color warnings and ⌘↵ keyboard shortcut.
-- **Docs URL**: https://boseui.site/components/ai-prompt-input
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-prompt-input.json`
-- **Registry Manifest**: https://boseui.site/r/ai-prompt-input.json
-- **Key Features**:
-  - Auto-resizes vertically as content grows (max 180px).
-  - Submit button morphs: arrow → spinner → check with spring AnimatePresence.
-  - Character counter appears on first keystroke with color warnings near limit.
-  - ⌘↵ keyboard shortcut to submit.
-  - External loading state prop for async submit flows.
-  - prefers-reduced-motion: no button morph animation.
-- **Accessibility**:
-  - aria-label on textarea and submit button.
-  - aria-multiline='true' on textarea.
-  - Disabled state on submit button when empty or loading.
-- **Props**:
-  - `placeholder` (string, default: "Ask anything…"): Textarea placeholder text.
-  - `maxLength` (number, default: 500): Maximum character count.
-  - `onSubmit` ((value: string) => void): Called with trimmed text when submitted.
-  - `loading` (boolean, default: false): External loading state — shows spinner and blocks submit.
-- **Usage Example**:
-```tsx
-import { AIPromptInput } from "@/components/ui/ai-prompt-input";
-
-export function Example() {
-  async function handleSubmit(text: string) {
-    console.log("Submitting:", text);
-  }
-
-  return (
-    <div className="w-full max-w-xl mx-auto">
-      <AIPromptInput
-        placeholder="Ask me anything…"
-        maxLength={400}
-        onSubmit={handleSubmit}
-      />
-    </div>
-  );
-}
-```
-
----
-
-### AI Reasoning Accordion (`AIReasoningAccordion`)
-- **Slug**: `ai-reasoning-accordion`
-- **Category**: Cards
-- **Tagline**: Collapsible DeepSeek-R1 and o1 style AI reasoning drawer with spring physics.
-- **Description**: Collapsible DeepSeek-R1 and OpenAI o1 inspired thinking step drawer with animated timeline dots, thought duration timer, spring chevron physics, and one-click step copying.
-- **Docs URL**: https://boseui.site/components/ai-reasoning-accordion
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-reasoning-accordion.json`
-- **Registry Manifest**: https://boseui.site/r/ai-reasoning-accordion.json
-- **Key Features**:
-  - Collapsible with Framer Motion spring accordion height physics.
-  - Live thought duration badge (e.g. 'Thought for 3.4s' or 'Thinking…').
-  - Sequential step timeline with pending, running spinner, and done checkmarks.
-  - One-click copy thought steps to clipboard.
-  - Full dark/light mode contrast and prefers-reduced-motion support.
-- **Accessibility**:
-  - Supports aria-expanded on toggle trigger button.
-  - Keyboard accessible with standard Enter / Space toggle handling.
-- **Props**:
-  - `thinkingTime` (number, default: 3.4): Thought duration in seconds displayed in header badge.
-  - `status` ("thinking" | "completed", default: "completed"): Current lifecycle state of the model's reasoning process.
-  - `steps` (ReasoningStep[]): Array of reasoning steps with label, details, and status.
-  - `defaultOpen` (boolean, default: true): Initial expanded state of the reasoning accordion.
-  - `children` (React.ReactNode): Final thought synthesis or reasoning summary content.
-  - `title` (string, default: "Thought Process"): Header label displayed next to the brain icon.
-- **Usage Example**:
-```tsx
-import { AIReasoningAccordion } from "@/components/ui/AIReasoningAccordion";
-
-export function Example() {
-  return (
-    <AIReasoningAccordion thinkingTime={2.8} status="completed">
-      <p>The solution utilizes React 19 optimistic updates combined with Framer Motion spring physics.</p>
-    </AIReasoningAccordion>
-  );
-}
-```
-
----
-
-### AI Status Badge (`AIStatusBadge`)
-- **Slug**: `ai-status-badge`
-- **Category**: Motion
-- **Tagline**: Animated AI state pill with spring transitions and beacon pulse.
-- **Description**: Live AI presence pill that communicates real-time processing state — Idle, Thinking, Generating, Done, or Error. Each state transitions with spring animation and a pulsing beacon dot.
-- **Docs URL**: https://boseui.site/components/ai-status-badge
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-status-badge.json`
-- **Registry Manifest**: https://boseui.site/r/ai-status-badge.json
-- **Key Features**:
-  - 5 states: idle, thinking, generating, done, error — each with distinct color.
-  - AnimatePresence spring morph between label text on state change.
-  - Pulsing beacon dot for active states (thinking, generating).
-  - CSS variable colors — works in dark and light mode automatically.
-  - prefers-reduced-motion: static badge without pulse or transitions.
-- **Accessibility**:
-  - role='status' + aria-label announces state to screen readers.
-  - Color is never the sole differentiator — label text always present.
-- **Props**:
-  - `status` ("idle" | "thinking" | "generating" | "done" | "error"): Current AI processing state.
-- **Usage Example**:
-```tsx
-import { AIStatusBadge } from "@/components/ui/ai-status-badge";
-
-export function Example() {
-  return (
-    <div className="flex gap-2 flex-wrap">
-      <AIStatusBadge status="idle" />
-      <AIStatusBadge status="thinking" />
-      <AIStatusBadge status="generating" />
-      <AIStatusBadge status="done" />
-      <AIStatusBadge status="error" />
-    </div>
-  );
-}
-```
-
----
-
-### AI Streaming Text (`AIStreamingText`)
-- **Slug**: `ai-streaming-text`
-- **Category**: Text
-- **Tagline**: Render AI responses character-by-character with a live cursor.
-- **Description**: Character-by-character text renderer that simulates real-time AI token streaming, complete with a physics-spring blinking cursor that vanishes when generation completes.
-- **Docs URL**: https://boseui.site/components/ai-streaming-text
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-streaming-text.json`
-- **Registry Manifest**: https://boseui.site/r/ai-streaming-text.json
-- **Key Features**:
-  - Configurable streaming speed per character in milliseconds.
-  - Blinking pipe cursor with AnimatePresence fade-out on completion.
-  - prefers-reduced-motion: instantly reveals full text.
-  - onComplete callback for chaining responses or UI transitions.
-  - Auto-restarts animation when text prop changes.
-- **Accessibility**:
-  - Uses inline span — preserves semantics for screen readers.
-  - Full text visible immediately for reduced-motion users.
-- **Props**:
-  - `text` (string): The full text to stream.
-  - `speed` (number, default: 28): Milliseconds per character.
-  - `showCursor` (boolean, default: true): Show blinking cursor while streaming.
-  - `cursorChar` (string, default: "|"): Character to use as cursor.
-  - `onComplete` (() => void): Called when streaming finishes.
-  - `autoRestart` (boolean, default: true): Restart animation when text prop changes.
-- **Usage Example**:
-```tsx
-import { AIStreamingText } from "@/components/ui/ai-streaming-text";
-
-export function Example() {
-  return (
-    <p className="text-lg font-medium">
-      <AIStreamingText
-        text="Here's how I can help you build beautiful interfaces."
-        speed={30}
-        onComplete={() => console.log("Done!")}
-      />
-    </p>
-  );
-}
-```
-
----
-
-### AI Thinking Loader (`AIThinkingLoader`)
-- **Slug**: `ai-thinking-loader`
-- **Category**: Motion
-- **Tagline**: Spring-physics AI thinking indicator with dots, wave, and ring variants.
-- **Description**: Physics-grade animated loading indicator that communicates AI processing states. Three spring-animated orbs in dots, wave, or ring variants — far richer than plain CSS keyframe spinners.
-- **Docs URL**: https://boseui.site/components/ai-thinking-loader
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ai-thinking-loader.json`
-- **Registry Manifest**: https://boseui.site/r/ai-thinking-loader.json
-- **Key Features**:
-  - Three variants: dots (scale pulse), wave (vertical oscillation), ring (arc spinner).
-  - Staggered spring physics per dot for natural organic feel.
-  - prefers-reduced-motion: static rendering.
-  - Fully accessible with role=status and aria-label.
-  - Configurable dot size and custom aria label.
-- **Accessibility**:
-  - role='status' + aria-label for screen reader announcement.
-  - Static rendering when reduced motion is preferred.
-- **Props**:
-  - `variant` ("dots" | "wave" | "ring", default: "dots"): Animation style variant.
-  - `size` (number, default: 8): Orb diameter in pixels.
-  - `label` (string, default: "AI is thinking…"): Accessible status label.
-- **Usage Example**:
-```tsx
-import { AIThinkingLoader } from "@/components/ui/ai-thinking-loader";
-
-export function Example() {
-  return (
-    <div className="flex items-center gap-3">
-      <AIThinkingLoader variant="dots" />
-      <AIThinkingLoader variant="wave" size={10} />
-      <AIThinkingLoader variant="ring" size={6} />
-    </div>
-  );
-}
-```
-
----
+## Available Kinetic Components (109)
 
 ### AI Voice Orb (`AIVoiceOrb`)
 - **Slug**: `ai-voice-orb`
@@ -666,81 +248,6 @@ export function Example() {
 
 ---
 
-### Architecture Flowchart Node (`ArchitectureFlowchartNode`)
-- **Slug**: `architecture-flowchart-node`
-- **Category**: Cards
-- **Tagline**: Interactive cloud system architecture flowchart nodes with live telemetry metrics.
-- **Description**: ReactFlow and AWS Architecture diagrams inspired cloud infrastructure component card featuring interactive system nodes (Edge CDN, Serverless compute, Vector DB, Cache), downstream connection highlights, and real-time throughput metrics.
-- **Docs URL**: https://boseui.site/components/architecture-flowchart-node
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/architecture-flowchart-node.json`
-- **Registry Manifest**: https://boseui.site/r/architecture-flowchart-node.json
-- **Key Features**:
-  - Interactive cloud nodes for Edge CDN, Compute Workers, Vector Database, and Redis Cache.
-  - Click-to-highlight downstream connection topology pathways.
-  - Real-time RTT latency and request throughput telemetry banner.
-  - Responsive card layout with distinct subsystem color palettes.
-- **Accessibility**:
-  - High-contrast color badges for different infrastructure tiers.
-  - Keyboard accessible interactive nodes.
-- **Props**:
-  - `diagramTitle` (string, default: "High-Throughput Global Microservices Architecture"): Architecture diagram card title.
-  - `nodes` (SystemNode[]): Array of connected infrastructure nodes with telemetry.
-- **Usage Example**:
-```tsx
-import { ArchitectureFlowchartNode } from "@/components/ui/ArchitectureFlowchartNode";
-
-export function Example() {
-  return (
-    <ArchitectureFlowchartNode />
-  );
-}
-```
-
----
-
-### Asteroid Field (`AsteroidField`)
-- **Slug**: `asteroid-field`
-- **Category**: Backgrounds
-- **Tagline**: Three-layer parallax planetesimals with live meteor showers.
-- **Description**: Deep-space parallax asteroid field and meteor shower on Canvas 2D featuring procedural faceted rock polygons across three depth layers, crater shading, ambient dust motes, and high-speed bolide meteors.
-- **Docs URL**: https://boseui.site/components/asteroid-field
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/asteroid-field.json`
-- **Registry Manifest**: https://boseui.site/r/asteroid-field.json
-- **Key Features**:
-  - Procedurally generated faceted polygon rocks with directional solar shading and surface craters
-  - Three distinct parallax depth planes (far, mid, near) rotating and drifting at realistic relative speeds
-  - High-speed glowing bolide meteors with linear gradient plasma tails
-  - Three mineral composition palettes: Basalt, Kuiper Ice, and Ferrous Iron
-- **Accessibility**:
-  - Decorative canvas is marked aria-hidden so screen readers focus on foreground content
-  - Velocity slider allows slowing or pausing orbital drift for motion-sensitive users
-- **Props**:
-  - `asteroidCount` (number, default: 32): Total number of procedural faceted asteroids across the 3 depth layers.
-  - `speed` (number, default: 1.0): Parallax drift velocity multiplier.
-  - `angle` (number, default: 18): Drift trajectory angle in degrees.
-  - `meteorFrequency` (number, default: 0.4): Spawn probability multiplier for high-speed glowing meteors.
-  - `colorTheme` ("basalt" | "ice" | "iron", default: "basalt"): Mineral color palette applied to asteroids, craters, and meteors.
-  - `children` (React.ReactNode): Optional foreground UI rendered above the asteroid field.
-  - `className` (string): Additional CSS classes for the root container.
-- **Usage Example**:
-```tsx
-import { AsteroidField } from "@/components/ui/AsteroidField";
-
-export function AsteroidFieldDemo() {
-  return (
-    <AsteroidField
-      asteroidCount={32}
-      speed={1.0}
-      angle={18}
-      meteorFrequency={0.4}
-      colorTheme="basalt"
-    />
-  );
-}
-```
-
----
-
 ### Atmospheric Fog (`AtmosphericFog`)
 - **Slug**: `atmospheric-fog`
 - **Category**: Backgrounds
@@ -832,39 +339,6 @@ export function Example() {
 
 ---
 
-### Aurora Flux Surface (`AuroraFluxSurface`)
-- **Slug**: `aurora-flux-surface`
-- **Category**: Backgrounds
-- **Tagline**: Dual-mass GPU radial aurora surface with zero React re-renders.
-- **Description**: GPU-composited ambient aurora canvas where dual radial luminance fields with contrasting spring mass chase the pointer.
-- **Docs URL**: https://boseui.site/components/aurora-flux-surface
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/aurora-flux-surface.json`
-- **Registry Manifest**: https://boseui.site/r/aurora-flux-surface.json
-- **Key Features**:
-  - Pairs a low-mass leading radial orb (m=0.4) with a high-mass trailing orb (m=1.4) for organic fluidseparation.
-  - Composited directly via Framer Motion useMotionTemplate with zero React state re-renders.
-  - Monochrome architectural dot overlay preserving BoseUI's high-contrast aesthetic.
-- **Accessibility**:
-  - Marks all ambient luminance and dot texture layers with aria-hidden='true'.
-  - Freezes luminance orb coordinates when prefers-reduced-motion is active.
-  - Preserves WCAG AA contrast inside the foreground container.
-- **Props**:
-  - `orbRadius` (number, default: 260): Radius of the primary radial luminance field in pixels.
-  - `stiffness` (number, default: 180): Spring stiffness coefficient for the leading luminance orb.
-  - `damping` (number, default: 24): Spring damping coefficient controlling luminance trail decay.
-- **Usage Example**:
-```tsx
-import { AuroraFluxSurface } from "@/components/ui/aurora-flux-surface";
-
-export function Example() {
-  return (
-    <AuroraFluxSurface orbRadius={260} stiffness={180} damping={24} />
-  );
-}
-```
-
----
-
 ### Autocomplete (`Autocomplete`)
 - **Slug**: `autocomplete`
 - **Category**: Inputs
@@ -909,89 +383,6 @@ export function Example() {
       placeholder="Select a framework..."
       options={FRAMEWORKS}
       defaultValue="nextjs"
-    />
-  );
-}
-```
-
----
-
-### Autoplay Story Carousel (`AutoplayStoryCarousel`)
-- **Slug**: `autoplay-story-carousel`
-- **Category**: Cards
-- **Tagline**: Apple News-inspired story carousel with pill progress bars and hold-to-pause.
-- **Description**: Apple News and Instagram-style interactive story carousel featuring segmented pill progress bars, directional half-card tap navigation, hover-to-pause gestures, and fluid slide transitions.
-- **Docs URL**: https://boseui.site/components/autoplay-story-carousel
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/autoplay-story-carousel.json`
-- **Registry Manifest**: https://boseui.site/r/autoplay-story-carousel.json
-- **Key Features**:
-  - Segmented pill progress bars that fill sequentially across autoplay intervals.
-  - Half-card tap navigation: left 40% returns to previous slide, right 60% advances.
-  - Pointer hold / hover-to-pause mechanism preserving elapsed progress accurately.
-  - Direction-aware Framer Motion spring slide transitions.
-  - Simulated audio sound toggle and customizable duration presets.
-- **Accessibility**:
-  - Includes play/pause toggle button for users who need non-moving content.
-  - Aria indicators and keyboard operable slide progression dots.
-  - Respects reduced motion preferences by switching to instant crossfade transitions.
-- **Props**:
-  - `slides` (StorySlide[]): Array of story slide objects containing titles, badges, and metrics.
-  - `duration` (number, default: 5000): Display duration per story slide in milliseconds.
-  - `defaultIndex` (number, default: 0): Initial story slide index.
-  - `autoPlay` (boolean, default: true): Whether the carousel automatically progresses through stories.
-  - `onSlideChange` ((index: number) => void): Callback invoked whenever the active slide index updates.
-  - `className` (string): Additional Tailwind CSS classes for the root container.
-  - `showHeader` (boolean): Whether to render header controls and story metadata chip
-  - `showControls` (boolean): Whether to show navigation arrows and pause/play controls
-- **Usage Example**:
-```tsx
-import { AutoplayStoryCarousel } from "@/components/ui/AutoplayStoryCarousel";
-
-export function Example() {
-  return (
-    <AutoplayStoryCarousel
-      duration={5000}
-      autoPlay={true}
-      onSlideChange={(index) => console.log("Current story:", index)}
-    />
-  );
-}
-```
-
----
-
-### Avatar Stack Presence (`AvatarStackPresence`)
-- **Slug**: `avatar-stack-presence`
-- **Category**: Overlays
-- **Tagline**: Overlapping team avatar stack with live presence dots and rich profile hover cards.
-- **Description**: Slack and Figma-style overlapping user avatar stack with live online/idle/offline status indicator dots, +N overflow chip, rich member profile popover cards with timezone and quick ping, and full team drawer directory.
-- **Docs URL**: https://boseui.site/components/avatar-stack-presence
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/avatar-stack-presence.json`
-- **Registry Manifest**: https://boseui.site/r/avatar-stack-presence.json
-- **Key Features**:
-  - Overlapping negative-space avatar ring styling with crisp border knockouts.
-  - Real-time presence status dots with emerald pulsing online, amber idle, and slate offline indicators.
-  - Dynamic +N overflow chip with expandable full-directory modal.
-  - Rich profile card popovers with timezones, role titles, recent activities, and interactive pings.
-  - Quick status filter buttons and adjustable visible avatar capacity limits.
-- **Accessibility**:
-  - Comprehensive aria-labels for each avatar announcing member name and current presence state.
-  - Full keyboard navigation into the hover card and team directory modal.
-  - Accessible focus rings and WCAG AAA compliance for avatar text contrast.
-- **Props**:
-  - `members` (TeamMember[]): Array of team member objects with name, role, initials, status, and timezone.
-  - `maxVisible` (number, default: 5): Maximum number of individual avatar rings displayed before grouping into +N.
-  - `size` ("sm" | "md" | "lg", default: "md"): Diameter scaling preset for the avatar stack.
-  - `className` (string): Additional CSS classes to apply to the root container.
-- **Usage Example**:
-```tsx
-import { AvatarStackPresence } from "@/components/ui/AvatarStackPresence";
-
-export function Example() {
-  return (
-    <AvatarStackPresence
-      maxVisible={4}
-      size="md"
     />
   );
 }
@@ -1122,44 +513,6 @@ export function Example() {
 
 ---
 
-### Category Filter Scroller (`CategoryFilterScroller`)
-- **Slug**: `category-filter-scroller`
-- **Category**: Navigation
-- **Tagline**: Airbnb-inspired horizontal category filter bar with edge fade masks.
-- **Description**: Airbnb-style horizontal scrolling category filter bar with edge gradient fade masks, spring active underline indicator, and tactile left/right chevron navigation.
-- **Docs URL**: https://boseui.site/components/category-filter-scroller
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/category-filter-scroller.json`
-- **Registry Manifest**: https://boseui.site/r/category-filter-scroller.json
-- **Key Features**:
-  - Horizontally scrolling row of curated category icons with smooth momentum and boundary detection.
-  - Dynamic left and right gradient edge masks that appear only when additional scrollable content exists.
-  - Spring-animated active underline pill that glides across categories using layoutId.
-  - Left and right chevron navigation buttons with spring hover physics.
-  - Responsive card showcase demonstrating reactive content switching on category change.
-- **Accessibility**:
-  - Buttons have distinct accessible labels for Left and Right scroll actions.
-  - Selected category communicates active status visually and semantically.
-  - Smooth scroll and spring transitions honor reduced motion preferences.
-- **Props**:
-  - `defaultCategory` (string, default: "trending"): ID of the category selected on mount.
-  - `onSelectCategory` ((category: CategoryItem) => void): Callback triggered when a user selects a new category.
-  - `className` (string): Optional custom CSS class names for the container wrapper.
-- **Usage Example**:
-```tsx
-import { CategoryFilterScroller } from "@/components/ui/category-filter-scroller";
-
-export function Example() {
-  return (
-    <CategoryFilterScroller
-      defaultCategory="beachfront"
-      onSelectCategory={(cat) => console.log("Category selected:", cat.label)}
-    />
-  );
-}
-```
-
----
-
 ### Chromatic Aberration Glitch Text (`ChromaticAberrationGlitchText`)
 - **Slug**: `chromatic-aberration-glitch-text`
 - **Category**: Text
@@ -1273,46 +626,6 @@ export function Example() {
 
 ---
 
-### Color Finish Picker (`ColorFinishPicker`)
-- **Slug**: `color-finish-picker`
-- **Category**: Inputs
-- **Tagline**: Apple-inspired titanium finish selector with concentric rings and ambient tinting.
-- **Description**: Apple-style device finish selector featuring concentric selection rings, synchronized ambient page background tinting, crossfading vector hardware graphics, and technical metallurgy specifications.
-- **Docs URL**: https://boseui.site/components/color-finish-picker
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/color-finish-picker.json`
-- **Registry Manifest**: https://boseui.site/r/color-finish-picker.json
-- **Key Features**:
-  - Concentric selection rings with smooth Apple-style scale and offset animations.
-  - Dynamic ambient page background tinting synchronized with selected finish hex.
-  - Smooth crossfading vector hardware preview across multiple view angles (rear, profile, camera).
-  - Comprehensive technical metallurgy specs panel with alloy, coating, and optical reflectance metrics.
-  - Fully keyboard accessible with ARIA selection attributes.
-- **Accessibility**:
-  - Each color swatch acts as an accessible radio/button element with descriptive `aria-label`.
-  - Keyboard focus indicators preserve high contrast regardless of dark/light theme.
-  - Respects reduced motion preferences for smooth crossfade transitions.
-- **Props**:
-  - `finishes` (ColorFinish[]): Array of finish definitions including hex colors, ambient rgba, and metallurgy specs.
-  - `defaultFinishId` (string, default: "natural-titanium"): Identifier of the finish selected by default on mount.
-  - `onChange` ((finish: ColorFinish) => void): Callback invoked whenever user selects a new color finish.
-  - `className` (string): Additional Tailwind CSS classes applied to the root container.
-  - `showHeader` (boolean): Whether to display the header title and titanium finish spec label
-- **Usage Example**:
-```tsx
-import { ColorFinishPicker } from "@/components/ui/ColorFinishPicker";
-
-export function Example() {
-  return (
-    <ColorFinishPicker
-      defaultFinishId="natural-titanium"
-      onChange={(finish) => console.log("Selected finish:", finish.name)}
-    />
-  );
-}
-```
-
----
-
 ### Command Menu (`CommandMenu`)
 - **Slug**: `command-menu`
 - **Category**: Navigation
@@ -1355,48 +668,6 @@ export function Example() {
 
 ---
 
-### Constellation Map (`ConstellationMap`)
-- **Slug**: `constellation-map`
-- **Category**: Backgrounds
-- **Tagline**: Precision J2000.0 celestial star chart with animated constellation vectors.
-- **Description**: Astronomical SVG star chart plotting authentic geometries for Orion, Cassiopeia, Ursa Major, Cygnus, and Lyra over a celestial Right Ascension and Declination coordinate grid with animated stroke-dashoffset line tracing.
-- **Docs URL**: https://boseui.site/components/constellation-map
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/constellation-map.json`
-- **Registry Manifest**: https://boseui.site/r/constellation-map.json
-- **Key Features**:
-  - Authentic stellar coordinates and Bayer designations for Orion, Cassiopeia, Ursa Major, Cygnus, and Lyra.
-  - Staggered SVG pathLength vector animation over a toggleable Right Ascension / Declination grid.
-  - Interactive star nodes displaying apparent visual magnitude and Bayer designation telemetry on hover.
-- **Accessibility**:
-  - Semantic SVG chart includes an aria-label while background field stars are marked aria-hidden='true'.
-  - Interactive HUD toggles support full keyboard navigation and clear active state indicators.
-- **Props**:
-  - `lineColor` (string, default: "#38BDF8"): Stroke color for constellation edges and celestial grid lines.
-  - `starColor` (string, default: "#F8FAFC"): Fill color for primary constellation star nodes and field stars.
-  - `drawSpeed` (number, default: 1.0): Speed multiplier for the constellation line-drawing animation.
-  - `showGrid` (boolean, default: true): Renders Right Ascension meridians, Declination parallels, and the ecliptic arc.
-  - `showLabels` (boolean, default: true): Displays constellation headers, Bayer designations, and star names.
-  - `children` (React.ReactNode): Optional foreground overlay content.
-  - `className` (string): Additional Tailwind CSS classes for the container.
-- **Usage Example**:
-```tsx
-import { ConstellationMap } from "@/components/ui/ConstellationMap";
-
-export function Example() {
-  return (
-    <ConstellationMap
-      lineColor="#38BDF8"
-      starColor="#F8FAFC"
-      drawSpeed={1.2}
-      showGrid
-      showLabels
-    />
-  );
-}
-```
-
----
-
 ### Constellation Mesh Field (`ConstellationMeshField`)
 - **Slug**: `constellation-mesh-field`
 - **Category**: Backgrounds
@@ -1423,127 +694,6 @@ import { ConstellationMeshField } from "@/components/ui/constellation-mesh-field
 export function Example() {
   return (
     <ConstellationMeshField connectRadius={130} />
-  );
-}
-```
-
----
-
-### Context Token Gauge (`ContextTokenGauge`)
-- **Slug**: `context-token-gauge`
-- **Category**: Cards
-- **Tagline**: LLM context window capacity gauge with radial and linear breakdown views.
-- **Description**: LLM context window capacity meter with radial and segmented linear bar variants, token breakdown metrics (System, Prompt, Completion), and adaptive threshold alerts.
-- **Docs URL**: https://boseui.site/components/context-token-gauge
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/context-token-gauge.json`
-- **Registry Manifest**: https://boseui.site/r/context-token-gauge.json
-- **Key Features**:
-  - Radial SVG arc and linear segmented bar modes.
-  - Dynamic color shifts: Optimal (<75%), High Load (75-90%), and Near Limit (>90%).
-  - Breakdown metrics for System prompt, User prompt, and Model completion tokens.
-  - Compact responsive container with high contrast dark/light theme support.
-- **Accessibility**:
-  - Textual percentage and token metrics accessible to screen readers.
-  - Respects prefers-reduced-motion for circle transitions.
-- **Props**:
-  - `usedTokens` (number, default: 42800): Total tokens currently occupied.
-  - `maxTokens` (number, default: 128000): Total context window capacity limit.
-  - `variant` ("radial" | "bar", default: "radial"): Display mode between radial circular meter or linear segmented bar.
-  - `modelName` (string, default: "Claude 3.5 Sonnet (128k)"): Badge text indicating the model or architecture.
-  - `showBreakdown` (boolean, default: true): Show segment detail cards underneath the gauge.
-- **Usage Example**:
-```tsx
-import { ContextTokenGauge } from "@/components/ui/ContextTokenGauge";
-
-export function Example() {
-  return (
-    <ContextTokenGauge
-      usedTokens={58400}
-      maxTokens={128000}
-      systemTokens={3200}
-      promptTokens={34000}
-      completionTokens={21200}
-      variant="radial"
-    />
-  );
-}
-```
-
----
-
-### Copy Code Block (`CopyCodeBlock`)
-- **Slug**: `copy-code-block`
-- **Category**: Cards
-- **Tagline**: Multi-tab CLI command and code block with instant copy feedback.
-- **Description**: Multi-tab CLI and code snippet block with sliding spring package-manager tabs (npx, pnpm, bun, yarn), optional line numbers, and one-click clipboard copy feedback.
-- **Docs URL**: https://boseui.site/components/copy-code-block
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/copy-code-block.json`
-- **Registry Manifest**: https://boseui.site/r/copy-code-block.json
-- **Key Features**:
-  - Spring-animated tab pill indicator for switching between npx, pnpm, bun, and yarn or multiple files.
-  - One-click clipboard copy button with animated Check/Copy icon transition.
-  - Supports single-line CLI prompts ($) as well as multi-line code blocks with line numbers.
-- **Accessibility**:
-  - Uses native button elements with focus-visible rings for tab switching and clipboard copy.
-  - Provides explicit aria-label on the clipboard button.
-  - Respects prefers-reduced-motion for tab indicator transitions.
-- **Props**:
-  - `tabs` (CodeSnippetTab[]): Array of tabs ({ id, label, code, language }) displayed in the header bar.
-  - `code` (string): Optional single code string when multiple tabs are not needed.
-  - `title` (string, default: "Terminal"): Header label used when a single `code` prop is provided.
-  - `showLineNumbers` (boolean, default: false): Displays line numbers next to multi-line code snippets.
-  - `showPromptPrefix` (boolean, default: true): Displays a `$` terminal prefix before single-line commands.
-  - `onCopy` ((copiedText: string) => void): Callback fired when the active snippet is copied.
-  - `className` (string): Additional Tailwind CSS classes for the outer card.
-- **Usage Example**:
-```tsx
-import { CopyCodeBlock } from "@/components/ui/copy-code-block";
-
-export function Example() {
-  return (
-    <CopyCodeBlock
-      tabs={[
-        { id: "npx", label: "npx", code: "npx shadcn@latest add button" },
-        { id: "pnpm", label: "pnpm", code: "pnpm dlx shadcn@latest add button" },
-        { id: "bun", label: "bun", code: "bunx shadcn@latest add button" },
-      ]}
-    />
-  );
-}
-```
-
----
-
-### Cron Schedule Builder (`CronScheduleBuilder`)
-- **Slug**: `cron-schedule-builder`
-- **Category**: Inputs
-- **Tagline**: Visual 5-segment cron schedule builder with natural English translation.
-- **Description**: Visual 5-segment Quartz/cron schedule builder with natural English translation, quick presets (hourly, daily, weekdays), input validation hints, and upcoming execution timeline preview.
-- **Docs URL**: https://boseui.site/components/cron-schedule-builder
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/cron-schedule-builder.json`
-- **Registry Manifest**: https://boseui.site/r/cron-schedule-builder.json
-- **Key Features**:
-  - 5 segmented fields for Minute, Hour, Day of Month, Month, and Day of Week.
-  - Real-time human-readable natural language translation.
-  - Quick presets for common schedules like weekdays, hourly, and midnight.
-  - Preview of the next 3 scheduled execution timestamps.
-  - One-click copy of the active cron string.
-- **Accessibility**:
-  - Semantic text input elements with descriptive hint labels.
-  - Keyboard accessible preset pills.
-- **Props**:
-  - `initialCron` (string, default: "0 9 * * 1-5"): Default 5-part cron expression string.
-  - `onChange` ((cron: string, humanDescription: string) => void): Callback invoked whenever cron string changes.
-- **Usage Example**:
-```tsx
-import { CronScheduleBuilder } from "@/components/ui/CronScheduleBuilder";
-
-export function Example() {
-  return (
-    <CronScheduleBuilder
-      initialCron="0 9 * * 1-5"
-      onChange={(cron, desc) => console.log(cron, desc)}
-    />
   );
 }
 ```
@@ -1589,122 +739,6 @@ export function Example() {
 
 ---
 
-### Database Connection Health Badge (`DatabaseConnectionHealthBadge`)
-- **Slug**: `database-connection-health-badge`
-- **Category**: Cards
-- **Tagline**: Database connection pool monitor with latency ping and TLS health indicators.
-- **Description**: Prisma Accelerate and PlanetScale inspired database cluster health monitor with pooled connections gauge, regional ping latency, TLS 1.3 certificate status, and sanitized URI copying.
-- **Docs URL**: https://boseui.site/components/database-connection-health-badge
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/database-connection-health-badge.json`
-- **Registry Manifest**: https://boseui.site/r/database-connection-health-badge.json
-- **Key Features**:
-  - Live connection pool capacity meter with progress bar.
-  - Interactive ping test button with real-time latency fluctuations.
-  - TLS 1.3 SSL transport security status indicator.
-  - Copy sanitized connection URI with masked credentials.
-- **Accessibility**:
-  - High-contrast health status badges with pulsing status dots.
-  - Full semantic markup with keyboard operable buttons.
-- **Props**:
-  - `engine` (string, default: "PostgreSQL 16.4"): Database engine and version string.
-  - `clusterName` (string, default: "neon-edge-primary-01"): Database cluster identifier.
-  - `activeConnections` (number, default: 7): Currently open client connections.
-  - `maxPoolSize` (number, default: 25): Maximum pool connection limit.
-- **Usage Example**:
-```tsx
-import { DatabaseConnectionHealthBadge } from "@/components/ui/DatabaseConnectionHealthBadge";
-
-export function Example() {
-  return (
-    <DatabaseConnectionHealthBadge
-      clusterName="neon-edge-primary-01"
-      engine="PostgreSQL 16.4"
-      baseLatencyMs={14}
-    />
-  );
-}
-```
-
----
-
-### Deployment Timeline (`DeploymentTimeline`)
-- **Slug**: `deployment-timeline`
-- **Category**: Motion
-- **Tagline**: Vercel-style deployment pipeline stepper with live streaming build console.
-- **Description**: Vercel-inspired deployment pipeline stepper with multi-phase statuses, elapsed timers, commit SHA metadata, and an interactive streaming build stdout log console.
-- **Docs URL**: https://boseui.site/components/deployment-timeline
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/deployment-timeline.json`
-- **Registry Manifest**: https://boseui.site/r/deployment-timeline.json
-- **Key Features**:
-  - Four-phase deployment workflow: Queued, Building, Assigning Domains, and Production Ready.
-  - Animated spinners, real-time elapsed timer clocks, and automated state transitions.
-  - Live simulated stdout log terminal with ANSI-styled build step outputs and auto-scroll.
-  - Interactive simulation toolbar to restart deployments, simulate failures, copy commit SHAs, and toggle log streams.
-- **Accessibility**:
-  - Pipeline status steps provide aria-current and status badges with high contrast text.
-  - Live terminal console exposes an accessible aria-live region for screen reader progress announcements.
-  - Log viewer is scrollable and supports standard keyboard navigation.
-- **Props**:
-  - `commitSha` (string, default: "a89e4c1"): Git commit hash associated with the pipeline run.
-  - `branch` (string, default: "main"): Repository branch triggered for continuous deployment.
-  - `autoPlay` (boolean, default: true): Whether the deployment simulation advances through stages automatically.
-  - `className` (string): Optional custom classes applied to the root container.
-- **Usage Example**:
-```tsx
-import { DeploymentTimeline } from "@/components/ui/DeploymentTimeline";
-
-export function Example() {
-  return (
-    <DeploymentTimeline
-      commitSha="a89e4c1"
-      branch="main"
-      autoPlay={true}
-    />
-  );
-}
-```
-
----
-
-### Diff Viewer (`DiffViewer`)
-- **Slug**: `diff-viewer`
-- **Category**: Cards
-- **Tagline**: GitHub/GitLab-style code diff viewer with unified and split view modes.
-- **Description**: GitHub and GitLab-inspired code difference viewer featuring side-by-side split and unified inspection modes, line gutter numbering, collapsible unchanged regions, and copy diff clipboard actions.
-- **Docs URL**: https://boseui.site/components/diff-viewer
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/diff-viewer.json`
-- **Registry Manifest**: https://boseui.site/r/diff-viewer.json
-- **Key Features**:
-  - Side-by-side split and unified single-column view layout modes with instant toggle.
-  - Dual line gutter numbering, deletion red gutters (-), and addition green gutters (+).
-  - Collapsible unchanged code fold markers with expandable hidden line counts.
-  - Multiple diff file presets (TypeScript Auth, Rust Engine, and Prisma Schema).
-  - One-click copy raw unified git patch or patched final source code.
-- **Accessibility**:
-  - Line gutters include descriptive ARIA attributes and screen-reader accessible deletion/addition prefixes.
-  - Supports full keyboard navigation across fold toggle controls and diff panels.
-  - High-contrast color tokens adhering to WCAG AAA contrast for deletion and addition highlights.
-- **Props**:
-  - `initialViewMode` ("split" | "unified", default: "unified"): Default display layout presentation mode.
-  - `fileName` (string, default: "src/auth/session.ts"): Filename and file path header for the active diff view.
-  - `allowCopyDiff` (boolean, default: true): Whether the copy raw diff button is displayed in the header toolbar.
-  - `className` (string): Optional custom classes applied to the root container.
-- **Usage Example**:
-```tsx
-import { DiffViewer } from "@/components/ui/DiffViewer";
-
-export function Example() {
-  return (
-    <DiffViewer
-      initialViewMode="split"
-      fileName="src/auth/session.ts"
-    />
-  );
-}
-```
-
----
-
 ### Digital Radar (`DigitalRadar`)
 - **Slug**: `digital-radar`
 - **Category**: Backgrounds
@@ -1740,49 +774,6 @@ export function Example() {
       blipCount={8}
       rangeRings={4}
       showTelemetry
-    />
-  );
-}
-```
-
----
-
-### macOS Dock Magnification (`DockMagnification`)
-- **Slug**: `dock-magnification`
-- **Category**: Navigation
-- **Tagline**: Fluid macOS dock magnification with spring physics and launch bounce.
-- **Description**: macOS-inspired dock magnification bar with continuous Gaussian/cosine pointer falloff, spring physics scaling, click-to-bounce launch animations, floating tooltip labels, and running indicator dots.
-- **Docs URL**: https://boseui.site/components/dock-magnification
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/dock-magnification.json`
-- **Registry Manifest**: https://boseui.site/r/dock-magnification.json
-- **Key Features**:
-  - Continuous Gaussian/cosine pointer falloff calculating dynamic icon sizing smoothly in real-time.
-  - Spring-damped physics eliminating jarring jumps during rapid pointer movement.
-  - Click-to-bounce keyframe oscillation simulating macOS application launch feedback.
-  - Frosted backdrop glass container with specular reflections and dark/light mode elegance.
-  - Customizable magnification factor, falloff radius, and app running indicator dots.
-- **Accessibility**:
-  - Keyboard accessible with tab navigation and focus indicators on dock apps.
-  - Clear ARIA labels for each application icon with tooltips for screen readers.
-  - Respects reduced motion settings for bounce oscillations and scale effects.
-- **Props**:
-  - `items` (DockAppItem[]): Array of dock application objects with icons, colors, running states, and badges.
-  - `baseSize` (number, default: 48): Default unmagnified icon size in pixels.
-  - `magnification` (number, default: 1.65): Peak magnification multiplier when cursor directly hovers an item.
-  - `distance` (number, default: 140): Gaussian falloff influence radius in pixels on either side of pointer.
-  - `onItemClick` ((item: DockAppItem) => void): Callback triggered when a dock icon is clicked.
-  - `className` (string): Additional Tailwind CSS classes applied to root container.
-  - `embedded` (boolean): Whether the dock renders embedded inside container rather than fixed to viewport
-- **Usage Example**:
-```tsx
-import { DockMagnification } from "@/components/ui/DockMagnification";
-
-export function Example() {
-  return (
-    <DockMagnification
-      magnification={1.7}
-      distance={150}
-      onItemClick={(app) => console.log("Launched:", app.name)}
     />
   );
 }
@@ -2070,77 +1061,6 @@ export function Example() {
 
 ---
 
-### Environment Secret Vault (`EnvSecretVault`)
-- **Slug**: `env-secret-vault`
-- **Category**: Cards
-- **Tagline**: Encrypted environment secret manager with masked values and .env export.
-- **Description**: Vercel and Doppler inspired encrypted environment variable manager with environment scope tags (Production, Preview, Development), masked values, individual and global reveal toggles, and .env export.
-- **Docs URL**: https://boseui.site/components/env-secret-vault
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/env-secret-vault.json`
-- **Registry Manifest**: https://boseui.site/r/env-secret-vault.json
-- **Key Features**:
-  - Environment scope pills for Production, Preview, and Local development.
-  - Individual eye toggles and global Reveal All / Mask All controls.
-  - One-click Copy as .env file format.
-  - Inline interactive Add Secret form with uppercase key enforcement.
-- **Accessibility**:
-  - Accessible toggle buttons with clear screen-reader state cues.
-  - High-contrast environment badges.
-- **Props**:
-  - `projectName` (string, default: "boseui-production"): Project identifier shown in vault header.
-  - `initialVariables` (EnvVariable[]): List of starting environment key-value pairs.
-- **Usage Example**:
-```tsx
-import { EnvSecretVault } from "@/components/ui/EnvSecretVault";
-
-export function Example() {
-  return (
-    <EnvSecretVault
-      projectName="acme-production"
-    />
-  );
-}
-```
-
----
-
-### Error Stack Trace Inspector (`ErrorStackTraceInspector`)
-- **Slug**: `error-stack-trace-inspector`
-- **Category**: Cards
-- **Tagline**: Collapsible error stack trace inspector with source code context.
-- **Description**: Sentry and Bugsnag inspired error breakdown card with project vs vendor code frame filtering, inline source code context with error squiggles, and copy markdown issue formatting.
-- **Docs URL**: https://boseui.site/components/error-stack-trace-inspector
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/error-stack-trace-inspector.json`
-- **Registry Manifest**: https://boseui.site/r/error-stack-trace-inspector.json
-- **Key Features**:
-  - Collapsible stack frames with file path, line, and function symbols.
-  - Toggle between in-app project code and external vendor dependencies.
-  - Inline code context viewer showing surrounding lines and error indicators.
-  - Quick actions to mark resolved and export formatted Markdown.
-- **Accessibility**:
-  - Clear visual error cues and accessible button interactions.
-  - Accessible focus outlines on expandable frame buttons.
-- **Props**:
-  - `errorType` (string, default: "TypeError"): Class name of the runtime exception.
-  - `errorMessage` (string, default: "Cannot read properties of undefined (reading 'permissions')"): Error message text.
-  - `eventId` (string, default: "evt_91b8a7c29e"): Unique telemetry event identifier.
-- **Usage Example**:
-```tsx
-import { ErrorStackTraceInspector } from "@/components/ui/ErrorStackTraceInspector";
-
-export function Example() {
-  return (
-    <ErrorStackTraceInspector
-      errorType="TypeError"
-      errorMessage="Cannot read properties of undefined (reading 'permissions')"
-      eventId="evt_91b8a7c29e"
-    />
-  );
-}
-```
-
----
-
 ### Expandable Bento Card (`ExpandableBentoCard`)
 - **Slug**: `expandable-bento-card`
 - **Category**: Cards
@@ -2173,49 +1093,6 @@ export function Example() {
     <ExpandableBentoCard
       badge="RUNTIME_TELEMETRY"
       title="GPU Compositor Pipeline"
-    />
-  );
-}
-```
-
----
-
-### Expanding Search Pill (`ExpandingSearchPill`)
-- **Slug**: `expanding-search-pill`
-- **Category**: Navigation
-- **Tagline**: Airbnb-inspired morphing search pill with shared layout springs.
-- **Description**: Airbnb-style compact floating search pill that fluidly morphs with layout springs into an expanded multi-segment drawer with destination, date, and guest selection panels.
-- **Docs URL**: https://boseui.site/components/expanding-search-pill
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/expanding-search-pill.json`
-- **Registry Manifest**: https://boseui.site/r/expanding-search-pill.json
-- **Key Features**:
-  - Compact pill showing dynamic summary for destination, travel dates, and guest headcount.
-  - Framer Motion layoutId morphing between compact pill and expanded multi-segment drawer.
-  - Interactive tabbed popover sheets for destination regions, date presets, and guest steppers.
-  - Live reactive simulated results cards updating as filters and guest parameters change.
-  - Click outside and escape key handling with smooth spring collapse physics.
-- **Accessibility**:
-  - Interactive segments support standard keyboard navigation (Enter / Space).
-  - Descriptive ARIA labels for search triggers and guest stepper buttons.
-  - Disabled steppers communicate minimum boundaries (e.g. at least 1 adult required).
-- **Props**:
-  - `initialDestination` (string, default: "Anywhere"): Default destination text shown in the first segment.
-  - `initialDateRange` (string, default: "Any week"): Default travel duration or date range string.
-  - `initialAdults` (number, default: 1): Default adult guest count.
-  - `onSearch` ((state: SearchState) => void): Callback invoked when search is triggered with current parameters.
-  - `className` (string): Additional CSS classes for the container wrapper.
-  - `embedded` (boolean): Whether pill renders embedded in container or floating with fixed coordinates
-- **Usage Example**:
-```tsx
-import { ExpandingSearchPill } from "@/components/ui/expanding-search-pill";
-
-export function Example() {
-  return (
-    <ExpandingSearchPill
-      initialDestination="Kyoto, Japan"
-      initialDateRange="Autumn Foliage"
-      initialAdults={2}
-      onSearch={(state) => console.log("Searching stays:", state)}
     />
   );
 }
@@ -2318,38 +1195,6 @@ export function Example() {
 
 ---
 
-### Feature Flag Toggle Stack (`FeatureFlagToggleStack`)
-- **Slug**: `feature-flag-toggle-stack`
-- **Category**: Cards
-- **Tagline**: Feature flag rollout controller with gradual traffic allocation sliders.
-- **Description**: LaunchDarkly and PostHog inspired feature flag management card with master kill-switch toggles, gradual traffic allocation sliders (0% to 100%), targeting rule badges, and environment scopes.
-- **Docs URL**: https://boseui.site/components/feature-flag-toggle-stack
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/feature-flag-toggle-stack.json`
-- **Registry Manifest**: https://boseui.site/r/feature-flag-toggle-stack.json
-- **Key Features**:
-  - Master boolean toggles for instant kill-switch feature disarming.
-  - Granular 0% to 100% traffic allocation sliders.
-  - Targeting rules chips (e.g. Beta users, Internal IP scopes).
-  - Environment scope pills for Production vs Staging.
-- **Accessibility**:
-  - Keyboard accessible toggle switch and range inputs.
-  - Semantic text descriptions and percentage indicators.
-- **Props**:
-  - `initialFlags` (FeatureFlag[]): Initial list of feature flags.
-  - `onChange` ((flags: FeatureFlag[]) => void): Callback invoked on flag state updates.
-- **Usage Example**:
-```tsx
-import { FeatureFlagToggleStack } from "@/components/ui/FeatureFlagToggleStack";
-
-export function Example() {
-  return (
-    <FeatureFlagToggleStack />
-  );
-}
-```
-
----
-
 ### File Tree (`FileTree`)
 - **Slug**: `file-tree`
 - **Category**: Navigation
@@ -2382,60 +1227,6 @@ export function Example() {
       searchable
       onSelect={(node) => console.log("Selected:", node.id)}
     />
-  );
-}
-```
-
----
-
-### Fireflies (`Fireflies`)
-- **Slug**: `fireflies`
-- **Category**: Backgrounds
-- **Tagline**: Bioluminescent twilight fireflies above a layered pine forest.
-- **Description**: Enchanted twilight forest background with bioluminescent firefly orbs drifting along smooth organic trajectories and pulsing with soft radial halos.
-- **Docs URL**: https://boseui.site/components/fireflies
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/fireflies.json`
-- **Registry Manifest**: https://boseui.site/r/fireflies.json
-- **Key Features**:
-  - Smooth harmonic drift trajectories with depth-sorted parallax layers
-  - Non-linear bioluminescent flash curves with soft radial halos and motion trails
-  - Procedural multi-ridge pine forest silhouette with atmospheric horizon mist
-  - Gentle cursor attraction field and live interactive HUD controls
-- **Accessibility**:
-  - Decorative Canvas 2D layer marked pointer-events-none so overlay content remains accessible
-  - High-contrast glassmorphic HUD controls with keyboard-focusable range inputs and buttons
-- **Props**:
-  - `count` (number, default: 55): Total number of glowing firefly orbs in the scene.
-  - `glowColor` (string, default: "#D9F99D"): Hex color used for the firefly bioluminescent core and halo.
-  - `speed` (number, default: 1.0): Multiplier for the organic flight velocity of the fireflies.
-  - `pulseRate` (number, default: 1.0): Multiplier for individual firefly brightness pulse frequency.
-  - `showForest` (boolean, default: true): Whether to render the multi-layered pine forest silhouette at the bottom.
-  - `interactive` (boolean, default: true): Gently attracts nearby fireflies toward the pointer position.
-  - `children` (React.ReactNode): Optional foreground content rendered above the firefly canvas.
-  - `className` (string): Additional Tailwind CSS classes for the root container.
-- **Usage Example**:
-```tsx
-import { Fireflies } from "@/components/ui/Fireflies";
-
-export default function FirefliesDemo() {
-  return (
-    <Fireflies
-      count={65}
-      glowColor="#D9F99D"
-      speed={1.0}
-      pulseRate={1.1}
-      showForest
-      interactive
-    >
-      <div className="flex min-h-[520px] flex-col items-center justify-center p-8 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-white">
-          Into the Quiet Woods
-        </h1>
-        <p className="mt-3 max-w-md text-slate-300">
-          Bioluminescent particles drifting through a calm twilight sanctuary.
-        </p>
-      </div>
-    </Fireflies>
   );
 }
 ```
@@ -2559,45 +1350,6 @@ export function Example() {
 
 ---
 
-### Globe Arcs (`GlobeArcs`)
-- **Slug**: `globe-arcs`
-- **Category**: Backgrounds
-- **Tagline**: Interactive 3D dotted globe with glowing transaction flight arcs and drag-to-rotate inertia.
-- **Description**: Interactive 3D dotted Canvas globe featuring glowing multi-point transaction flight arcs, traveling light pulses, drag-to-rotate interaction with inertia dampening, and global city routing nodes.
-- **Docs URL**: https://boseui.site/components/globe-arcs
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/globe-arcs.json`
-- **Registry Manifest**: https://boseui.site/r/globe-arcs.json
-- **Key Features**:
-  - Lightweight Canvas 2D spherical projection with 800+ golden-angle dotted point cloud vertices.
-  - Elevated great-circle 3D bezier arcs connecting major financial hubs (SF, NYC, London, Tokyo, Singapore, Sydney).
-  - Traveling glowing light pulse heads and trail rendering on each active transaction route.
-  - Intuitive touch & pointer drag-to-rotate with physics-based inertia dampening and auto-rotation.
-  - Live interactive stage controls to adjust spin speed, emit pulses, reset angles, and select edge nodes.
-- **Accessibility**:
-  - Fully pauseable auto-rotation via visible interactive toggle button.
-  - Handles reduced-motion preferences by maintaining static inspection without continuous spinning.
-  - Does not block keyboard focus order or document scrolling.
-- **Props**:
-  - `autoRotateSpeed` (number, default: 0.004): Angular speed (radians per frame) for the continuous globe rotation.
-  - `initialRadius` (number, default: 160): Base spherical radius benchmark used for coordinate scaling.
-  - `className` (string): Optional CSS classes to apply to the root container.
-  - `showHeader` (boolean): Whether to render the telemetry title and status indicator header
-  - `showControls` (boolean): Whether to show rotation speed and arc interaction sliders
-- **Usage Example**:
-```tsx
-import { GlobeArcs } from "@/components/ui/GlobeArcs";
-
-export function Example() {
-  return (
-    <div className="w-full">
-      <GlobeArcs autoRotateSpeed={0.004} />
-    </div>
-  );
-}
-```
-
----
-
 ### Glow Border Card (`GlowBorderCard`)
 - **Slug**: `glow-border-card`
 - **Category**: Cards
@@ -2628,47 +1380,6 @@ export function Example() {
   return (
     <div className="w-full">
       <GlowBorderCard defaultRadius={280} defaultIntensity={0.5} />
-    </div>
-  );
-}
-```
-
----
-
-### Gradient Mesh Hero (`GradientMeshHero`)
-- **Slug**: `gradient-mesh-hero`
-- **Category**: Backgrounds
-- **Tagline**: Stripe-inspired multi-color drifting gradient mesh hero with diagonal clip-path.
-- **Description**: Stripe-style angled flowing gradient mesh hero section featuring multi-layered organic color blobs, diagonal polygon clip-path, and live palette switching.
-- **Docs URL**: https://boseui.site/components/gradient-mesh-hero
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/gradient-mesh-hero.json`
-- **Registry Manifest**: https://boseui.site/r/gradient-mesh-hero.json
-- **Key Features**:
-  - Angled flowing gradient mesh with signature Stripe diagonal bottom clip-path (`polygon(0 0, 100% 0, 100% 88%, 0 100%)`).
-  - Layered organic animated color blobs (violet, indigo, cyan, vermilion, amber) drifting smoothly.
-  - Integrated hero typography, feature pill badge, dual action CTAs, and live telemetry metric strip.
-  - Live interactive stage controls for color presets, drift cycle duration, blur radii, and clip-path toggling.
-- **Accessibility**:
-  - Subtle CSS keyframe animations optimized for GPU compositing with low CPU overhead.
-  - High contrast hero copy (WCAG AAA against the dark backdrop overlay).
-  - All interactive preset buttons and sliders include descriptive labels and keyboard navigation.
-- **Props**:
-  - `defaultPreset` (string, default: 'stripe-classic'): Initial color preset id ('stripe-classic', 'neon-cyber', 'sunset-ray', 'deep-aurora').
-  - `enableClipPath` (boolean, default: true): Whether to apply the diagonal polygon bottom clip-path.
-  - `className` (string): Optional CSS classes to apply to the root container.
-  - `preset` ("aurora" | "sunset" | "neon" | "ocean"): Active color gradient palette preset for background blobs
-  - `headline` (string): Main headline text rendered in the hero section
-  - `description` (string): Subtitle or supporting paragraph under the headline
-  - `primaryCtaText` (string): Label for the primary call-to-action button
-  - `secondaryCtaText` (string): Label for the secondary action button
-- **Usage Example**:
-```tsx
-import { GradientMeshHero } from "@/components/ui/GradientMeshHero";
-
-export function Example() {
-  return (
-    <div className="w-full">
-      <GradientMeshHero defaultPreset="stripe-classic" enableClipPath={true} />
     </div>
   );
 }
@@ -2744,41 +1455,6 @@ export function Example() {
       speed={1}
       gridSize={44}
       showSun
-    />
-  );
-}
-```
-
----
-
-### Health Check Status Matrix (`HealthCheckStatusMatrix`)
-- **Slug**: `health-check-status-matrix`
-- **Category**: Cards
-- **Tagline**: Rolling 45-day uptime status matrix with interactive incident telemetry.
-- **Description**: BetterStack and Statuspage inspired service availability tracker with segmented rolling uptime day bars, multi-service breakdowns, hover incident popovers, and overall SLA metrics.
-- **Docs URL**: https://boseui.site/components/health-check-status-matrix
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/health-check-status-matrix.json`
-- **Registry Manifest**: https://boseui.site/r/health-check-status-matrix.json
-- **Key Features**:
-  - Interactive segmented rolling day bars for multiple microservices.
-  - Color-coded day indicators for operational, degraded, and downtime incidents.
-  - Hover telemetry banner revealing incident details for specific days.
-  - Prominent overall SLA percentage badge.
-- **Accessibility**:
-  - High-contrast color indicators supplemented with text status captions.
-  - Accessible hover and keyboard interactions.
-- **Props**:
-  - `systemName` (string, default: "BoseUI Cloud Platform"): Platform or organization name.
-  - `overallUptime` (number, default: 99.98): Overall system availability SLA percentage.
-- **Usage Example**:
-```tsx
-import { HealthCheckStatusMatrix } from "@/components/ui/HealthCheckStatusMatrix";
-
-export function Example() {
-  return (
-    <HealthCheckStatusMatrix
-      systemName="Acme Cloud Platform"
-      overallUptime={99.98}
     />
   );
 }
@@ -3083,84 +1759,6 @@ export function Example() {
 
 ---
 
-### iPad Pro Mockup (`IPadProMockup`)
-- **Slug**: `i-pad-pro-mockup`
-- **Category**: Mockups
-- **Tagline**: Apple iPad Pro tablet frame with landscape/portrait mode and 3D parallax tilt.
-- **Description**: Apple iPad Pro hardware frame with symmetrical ultra-thin bezels, landscape/portrait spring orientation transitions, Apple Pencil magnetic strip, and 3D parallax tilt.
-- **Docs URL**: https://boseui.site/components/i-pad-pro-mockup
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/i-pad-pro-mockup.json`
-- **Registry Manifest**: https://boseui.site/r/i-pad-pro-mockup.json
-- **Key Features**:
-  - Supports both landscape and portrait orientations with smooth layout spring transitions.
-  - Hardware-accurate Apple Pencil magnetic charging dock indicator.
-  - Realistic specular light glare overlay that follows mouse movements.
-  - Space Black and Silver aluminum finishes.
-  - Renders any React children inside the Tandem OLED screen container.
-- **Accessibility**:
-  - Disables 3D parallax tilt when prefers-reduced-motion is enabled.
-  - Content inside the screen remains fully accessible.
-- **Props**:
-  - `orientation` ("landscape" | "portrait", default: "landscape"): Screen orientation.
-  - `color` ("space-black" | "silver", default: "space-black"): Chassis finish color.
-  - `enableTilt` (boolean, default: true): Enable 3D cursor tilt physics.
-  - `children` (React.ReactNode): Custom screen content or app UI.
-- **Usage Example**:
-```tsx
-import { IPadProMockup } from "@/components/ui/IPadProMockup";
-
-export function Example() {
-  return (
-    <IPadProMockup orientation="landscape" color="space-black">
-      <div className="flex h-full items-center justify-center bg-neutral-900 text-white p-6">
-        <h3 className="text-xl font-bold">Your Tablet Experience</h3>
-      </div>
-    </IPadProMockup>
-  );
-}
-```
-
----
-
-### iPhone 16 Pro Mockup (`IPhone16ProMockup`)
-- **Slug**: `i-phone16-pro-mockup`
-- **Category**: Mockups
-- **Tagline**: Apple iPhone 16 Pro mockup with interactive Dynamic Island and 3D parallax tilt.
-- **Description**: Architectural Apple iPhone 16 Pro hardware frame with an interactive spring-expanding Dynamic Island, 3D cursor parallax tilt, specular glass reflection, and titanium chassis finishes.
-- **Docs URL**: https://boseui.site/components/i-phone16-pro-mockup
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/i-phone16-pro-mockup.json`
-- **Registry Manifest**: https://boseui.site/r/i-phone16-pro-mockup.json
-- **Key Features**:
-  - Interactive Dynamic Island that fluidly morphs with spring physics on click.
-  - Hardware-accurate titanium bezels, action button, and volume rocker.
-  - Realistic specular light glare overlay that tracks cursor coordinates.
-  - 4 titanium finishes: Natural, Desert, Black, and White Titanium.
-  - Accepts any React children (images, video, or interactive app UI).
-- **Accessibility**:
-  - Gracefully respects prefers-reduced-motion by disabling 3D rotation and glare movement.
-  - Internal screen supports accessible screen reader markup.
-- **Props**:
-  - `color` ("natural" | "desert" | "black" | "white", default: "natural"): Titanium chassis finish.
-  - `enableTilt` (boolean, default: true): Enable 3D cursor tilt physics.
-  - `interactiveIsland` (boolean, default: true): Allow clicking the Dynamic Island to expand into a Live Activity.
-  - `children` (React.ReactNode): Custom screen content or screenshot.
-- **Usage Example**:
-```tsx
-import { IPhone16ProMockup } from "@/components/ui/IPhone16ProMockup";
-
-export function Example() {
-  return (
-    <IPhone16ProMockup color="natural" enableTilt>
-      <div className="flex h-full items-center justify-center bg-neutral-900 text-white p-6">
-        <h1 className="text-xl font-bold">Your Mobile App</h1>
-      </div>
-    </IPhone16ProMockup>
-  );
-}
-```
-
----
-
 ### Interactive API Endpoint Bar (`InteractiveApiEndpointBar`)
 - **Slug**: `interactive-api-endpoint-bar`
 - **Category**: Cards
@@ -3192,81 +1790,6 @@ export function Example() {
       defaultMethod="GET"
       defaultEndpoint="https://api.boseui.com/v1/users/usr_94b1e84a"
       latencyMs={24}
-    />
-  );
-}
-```
-
----
-
-### Interactive Code Diff (`InteractiveCodeDiff`)
-- **Slug**: `interactive-code-diff`
-- **Category**: Cards
-- **Tagline**: Split and Unified developer syntax code diff comparator.
-- **Description**: Monospace developer diff card with line gutters, hunk headers, collapsible code blocks, unified versus split 2-column layouts, and copy hunk controls.
-- **Docs URL**: https://boseui.site/components/interactive-code-diff
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/interactive-code-diff.json`
-- **Registry Manifest**: https://boseui.site/r/interactive-code-diff.json
-- **Key Features**:
-  - Unified and Split 2-column layout toggle.
-  - Collapsible hunk headers with line range metadata (@@ -18,6 +18,10 @@).
-  - Distinct addition (+ green) and deletion (- red) gutter styling.
-  - One-click copy raw git diff format to clipboard.
-  - Responsive horizontal scrolling for wide code lines.
-- **Accessibility**:
-  - Color-blind safe addition and deletion indicators with explicit + and - symbols.
-  - Collapsible hunk buttons with keyboard access.
-- **Props**:
-  - `filename` (string, default: "src/server/auth.ts"): File path displayed in the diff header.
-  - `compareRange` (string, default: "main...feature/audit-logs"): Git branch or commit comparison range.
-  - `hunks` (CodeDiffHunk[]): Array of hunk objects containing headers and line items.
-  - `defaultMode` ("unified" | "split", default: "unified"): Initial layout mode.
-- **Usage Example**:
-```tsx
-import { InteractiveCodeDiff } from "@/components/ui/InteractiveCodeDiff";
-
-export function Example() {
-  return (
-    <InteractiveCodeDiff
-      filename="src/auth.ts"
-      compareRange="main...feature/sso"
-      defaultMode="unified"
-    />
-  );
-}
-```
-
----
-
-### Interactive Git Graph (`InteractiveGitGraph`)
-- **Slug**: `interactive-git-graph`
-- **Category**: Cards
-- **Tagline**: Visual SVG Git commit tree with multi-branch lanes and commit inspection.
-- **Description**: Visual SVG Git commit tree illustrating multi-branch workflows with animated bezier curves, branch lane filtering, interactive commit nodes, and SHA copying.
-- **Docs URL**: https://boseui.site/components/interactive-git-graph
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/interactive-git-graph.json`
-- **Registry Manifest**: https://boseui.site/r/interactive-git-graph.json
-- **Key Features**:
-  - Smooth SVG Bezier curved tracks illustrating branch splits and merges.
-  - Clickable commit nodes with pulsating selected HEAD indicator.
-  - Branch filter chips to isolate main, feature, or hotfix tracks.
-  - Integrated commit inspector with one-click SHA copying.
-  - Full responsive dark/light mode palette with accessible contrast.
-- **Accessibility**:
-  - Keyboard accessible commit list items.
-  - Clear visual focus and active selection highlights.
-- **Props**:
-  - `commits` (GitGraphCommit[]): Array of commit items with sha, branch, message, author, and lane.
-  - `defaultSelectedSha` (string): Initial commit SHA selected in the tree.
-  - `onSelectCommit` ((commit: GitGraphCommit) => void): Callback when a commit node or row is clicked.
-- **Usage Example**:
-```tsx
-import { InteractiveGitGraph } from "@/components/ui/InteractiveGitGraph";
-
-export function Example() {
-  return (
-    <InteractiveGitGraph
-      onSelectCommit={(commit) => console.log("Selected commit:", commit.sha)}
     />
   );
 }
@@ -3312,45 +1835,6 @@ export function Example() {
 
 ---
 
-### Interactive Pricing Tier Dial (`InteractivePricingTierDial`)
-- **Slug**: `interactive-pricing-tier-dial`
-- **Category**: Cards
-- **Tagline**: Logarithmic scrubbable pricing slider with dynamic tier switching.
-- **Description**: Logarithmic scrubbable SaaS pricing calculator with dynamic tier switching (Starter, Pro, Growth, Scale), annual discount percentage toggles, and live feature checklists.
-- **Docs URL**: https://boseui.site/components/interactive-pricing-tier-dial
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/interactive-pricing-tier-dial.json`
-- **Registry Manifest**: https://boseui.site/r/interactive-pricing-tier-dial.json
-- **Key Features**:
-  - Logarithmic user slider adjusting MAU smoothly from 1k to 1M.
-  - Dynamic tier classification: Starter ($0), Pro ($29+), Growth ($129+), and Scale ($499+).
-  - Annual billing toggle with automatic 20% discount deduction.
-  - Dynamic tier feature checklist adapting with plan upgrades.
-  - Responsive, accessible range slider with keyboard step navigation.
-- **Accessibility**:
-  - Accessible HTML range input with proper aria-label.
-  - High contrast price and tier typography.
-- **Props**:
-  - `initialUsers` (number, default: 50000): Default starting number of monthly active users.
-  - `currency` (string, default: "$"): Currency symbol displayed alongside numbers.
-  - `annualDiscountPercent` (number, default: 20): Discount percentage applied when Annual billing is toggled.
-  - `onSelectPlan` ((tier: string, price: number, isAnnual: boolean) => void): Callback when the CTA plan button is clicked.
-- **Usage Example**:
-```tsx
-import { InteractivePricingTierDial } from "@/components/ui/InteractivePricingTierDial";
-
-export function Example() {
-  return (
-    <InteractivePricingTierDial
-      initialUsers={25000}
-      annualDiscountPercent={20}
-      onSelectPlan={(tier, price) => console.log(`Selected ${tier} at $${price}/mo`)}
-    />
-  );
-}
-```
-
----
-
 ### Isometric City (`IsometricCity`)
 - **Slug**: `isometric-city`
 - **Category**: Backgrounds
@@ -3386,130 +1870,6 @@ export function Example() {
       trafficSpeed={1.0}
       colorPalette="midnight"
       windowFlicker
-    />
-  );
-}
-```
-
----
-
-### JSON Schema Form Validator (`JsonSchemaFormValidator`)
-- **Slug**: `json-schema-form-validator`
-- **Category**: Cards
-- **Tagline**: Split-view JSON schema editor with real-time constraint diagnostics.
-- **Description**: VSCode Problems tab and Monaco inspired split editor with real-time JSON syntax parsing, schema constraint validation diagnostics, one-click formatting/prettify, and clipboard payload copying.
-- **Docs URL**: https://boseui.site/components/json-schema-form-validator
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/json-schema-form-validator.json`
-- **Registry Manifest**: https://boseui.site/r/json-schema-form-validator.json
-- **Key Features**:
-  - Live JSON parsing with error boundary catching.
-  - Diagnostics panel with line number and property violation markers.
-  - Prettify and format button for instant JSON indentation.
-  - One-click payload copying.
-- **Accessibility**:
-  - High-contrast error callout boxes with clear semantic icons.
-  - Full keyboard operable textarea and action buttons.
-- **Props**:
-  - `initialJson` (string): Default starting JSON document text.
-  - `schemaName` (string, default: "UserConfigSchema.json"): JSON Schema reference file name.
-- **Usage Example**:
-```tsx
-import { JsonSchemaFormValidator } from "@/components/ui/JsonSchemaFormValidator";
-
-export function Example() {
-  return (
-    <JsonSchemaFormValidator
-      schemaName="UserConfigSchema.json"
-    />
-  );
-}
-```
-
----
-
-### Keyboard Shortcut Stack (`KeyboardShortcutStack`)
-- **Slug**: `keyboard-shortcut-stack`
-- **Category**: Buttons
-- **Tagline**: Tactile 3D keyboard keycap badges with real-time physical keyboard listeners.
-- **Description**: Raycast and Linear inspired tactile 3D keyboard keycap badges with real window keyboard event listeners that physically depress and glow when pressed on physical keyboards.
-- **Docs URL**: https://boseui.site/components/keyboard-shortcut-stack
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/keyboard-shortcut-stack.json`
-- **Registry Manifest**: https://boseui.site/r/keyboard-shortcut-stack.json
-- **Key Features**:
-  - Tactile 3D beveled keycap styling that depresses by 3px on press.
-  - Real window keyboard listener matching physical modifier and alphanumeric keys.
-  - Responsive sizing: sm, md, and lg.
-  - Stack container for full shortcuts with title and description.
-  - Zero-dependency spring physics and prefers-reduced-motion support.
-- **Accessibility**:
-  - Keyboard accessible button elements with standard focus rings.
-  - Clear visual press states in both light and dark themes.
-- **Props**:
-  - `keys` (string[], default: ["⌘", "K"]): Array of key labels displayed in the stack.
-  - `title` (string, default: "Command Palette"): Shortcut action title.
-  - `description` (string): Secondary helper text.
-  - `size` ("sm" | "md" | "lg", default: "md"): Size of all keycaps in the stack.
-  - `onTrigger` (() => void): Callback when shortcut is clicked or triggered.
-- **Usage Example**:
-```tsx
-import { KeyboardShortcutStack, PhysicalKeycap } from "@/components/ui/KeyboardShortcutStack";
-
-export function Example() {
-  return (
-    <div className="space-y-4">
-      <KeyboardShortcutStack
-        keys={["⌘", "Shift", "P"]}
-        title="Command Palette"
-        description="Try pressing ⌘, Shift, or P on your keyboard"
-      />
-      <div className="flex gap-2">
-        <PhysicalKeycap keyLabel="⌘" />
-        <PhysicalKeycap keyLabel="K" />
-      </div>
-    </div>
-  );
-}
-```
-
----
-
-### Keycap Chips (`KeycapChips`)
-- **Slug**: `keycap-chips`
-- **Category**: Buttons
-- **Tagline**: Raycast-style 3D tactile keycaps with mechanical depression feedback.
-- **Description**: Raycast-inspired 3D tactile physical keyboard keycaps with realistic chamfer bevels, inset mechanical shadows, physical depression animations, and interactive keyboard listener.
-- **Docs URL**: https://boseui.site/components/keycap-chips
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/keycap-chips.json`
-- **Registry Manifest**: https://boseui.site/r/keycap-chips.json
-- **Key Features**:
-  - Physical 3D bevels with layered drop-shadows and tactile bottom edge extrusion.
-  - Realistic spring depression physics on active click or physical keyboard press.
-  - Integrated live keyboard listener detecting key strokes in real time.
-  - Preset command pallets (Command Menu ⌘K, Spotlight ⌥Space, Git Commit ⌘↵, Quick Search Ctrl/).
-  - Multiple finishes: Matte Obsidian, Mechanical Classic, Cyber Amber, and Porcelain White.
-- **Accessibility**:
-  - Key combinations are semantically marked up with HTML <kbd> elements.
-  - Each keycap is keyboard focusable and playable with Space or Enter.
-  - Includes ARIA labels clearly communicating the keystroke sequence to screen readers.
-- **Props**:
-  - `shortcuts` (ShortcutItem[]): Array of shortcut items with label, category, and keys list.
-  - `size` ("sm" | "md" | "lg", default: "md"): Physical dimensions and typography scale of keycaps.
-  - `variant` ("obsidian" | "classic" | "cyber" | "porcelain", default: "obsidian"): Aesthetic colorway and shadow finish of the keycaps.
-  - `enableGlobalListener` (boolean, default: true): Whether physical keystrokes on the user's keyboard trigger key depression.
-  - `className` (string): Optional custom classes applied to the root container.
-  - `keys` (string[]): Array of individual keycap symbols to render
-  - `inline` (boolean): Whether keycaps render inline with prose text
-  - `onShortcutPress` ((shortcut: ShortcutCombo) => void): Callback triggered when physical shortcut combination is activated
-- **Usage Example**:
-```tsx
-import { KeycapChips } from "@/components/ui/KeycapChips";
-
-export function Example() {
-  return (
-    <KeycapChips
-      size="md"
-      variant="obsidian"
-      enableGlobalListener={true}
     />
   );
 }
@@ -3708,51 +2068,6 @@ export function Example() {
 
 ---
 
-### Lava Lamp (`LavaLamp`)
-- **Slug**: `lava-lamp`
-- **Category**: Backgrounds
-- **Tagline**: WebGL SDF metaballs with smooth-minimum liquid tension and 3D rim glow.
-- **Description**: True WebGL signed distance field (SDF) metaball lava lamp shader using polynomial smooth-minimum (smin) surface tension blending, 3D specular/Fresnel subsurface rim lighting, and pointer thermal attraction.
-- **Docs URL**: https://boseui.site/components/lava-lamp
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/lava-lamp.json`
-- **Registry Manifest**: https://boseui.site/r/lava-lamp.json
-- **Key Features**:
-  - True polynomial smooth-minimum (`smin`) SDF blending with adjustable liquid surface tension.
-  - Finite-difference 3D hemisphere normal reconstruction for glassy specular highlights and Fresnel rim glow.
-  - Buoyant thermal wax cycle coupled with a gentle pointer heat attractor.
-- **Accessibility**:
-  - Marks the WebGL metaball canvas with `aria-hidden='true'`.
-  - Interactive Magma, Cyber Acid, and Ultraviolet color presets are keyboard accessible.
-  - Dark translucent HUD container preserves legible contrast over bright molten blobs.
-- **Props**:
-  - `blobCount` (number, default: 7): Number of buoyant wax metaballs inside the vessel (3 to 12).
-  - `primaryColor` (string, default: "#FF3B00"): Core molten wax hex color.
-  - `secondaryColor` (string, default: "#FFB800"): Subsurface Fresnel rim and thermal highlight hex color.
-  - `backgroundColor` (string, default: "#0F071E"): Ambient vessel background hex color.
-  - `speed` (number, default: 1.0): Thermal buoyancy convection speed multiplier.
-  - `viscosity` (number, default: 0.45): Smooth-minimum (`smin`) surface tension blending factor (0.15 to 0.85).
-  - `children` (React.ReactNode): Optional foreground UI rendered above the lava lamp shader.
-  - `className` (string): Additional Tailwind CSS classes for the root container.
-- **Usage Example**:
-```tsx
-import { LavaLamp } from "@/components/ui/lava-lamp";
-
-export function Example() {
-  return (
-    <LavaLamp
-      blobCount={7}
-      primaryColor="#FF3B00"
-      secondaryColor="#FFB800"
-      backgroundColor="#0F071E"
-      speed={1.0}
-      viscosity={0.45}
-    />
-  );
-}
-```
-
----
-
 ### Liquid Glass Card (`LiquidGlassCard`)
 - **Slug**: `liquid-glass-card`
 - **Category**: Cards
@@ -3801,45 +2116,6 @@ export function Example() {
 
 ---
 
-### Liquid Gradient Blob (`LiquidGradientBlob`)
-- **Slug**: `liquid-gradient-blob`
-- **Category**: Backgrounds
-- **Tagline**: SVG gooey filter metaballs that merge like liquid lava.
-- **Description**: Organic metaball background powered by an SVG `feGaussianBlur` + `feColorMatrix` alpha-threshold gooey filter where orbiting and cursor-tracked blobs fuse seamlessly.
-- **Docs URL**: https://boseui.site/components/liquid-gradient-blob
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/liquid-gradient-blob.json`
-- **Registry Manifest**: https://boseui.site/r/liquid-gradient-blob.json
-- **Key Features**:
-  - Uses an inline SVG `<feGaussianBlur>` + `<feColorMatrix>` filter (`0 0 0 24 -10`) for sharp surface-tension merging.
-  - Combines autonomous orbiting blobs with a spring-loaded cursor-following metaball.
-  - Customizable blob `colors`, `speed`, and `gooeyIntensity` radius.
-- **Accessibility**:
-  - Marks the hidden SVG filter definition and decorative blob layer with `aria-hidden='true'`.
-  - Uses `useId()` to guarantee unique SVG filter IDs when multiple instances are mounted.
-  - Maintains high foreground text contrast.
-- **Props**:
-  - `colors` (string[], default: ["#8B5CF6", "#EC4899", "#06B6D4", "#3B82F6"]): Array of colors applied to the metaball blobs.
-  - `speed` (number, default: 1): Orbit animation speed multiplier.
-  - `gooeyIntensity` (number, default: 22): Standard deviation for the `feGaussianBlur` filter.
-  - `children` (React.ReactNode): Optional foreground content rendered above the blobs.
-  - `className` (string): Additional Tailwind CSS classes for the container.
-- **Usage Example**:
-```tsx
-import { LiquidGradientBlob } from "@/components/ui/liquid-gradient-blob";
-
-export function Example() {
-  return (
-    <LiquidGradientBlob
-      colors={["#8B5CF6", "#EC4899", "#06B6D4", "#3B82F6"]}
-      speed={1}
-      gooeyIntensity={22}
-    />
-  );
-}
-```
-
----
-
 ### Liquid Pill Tabs (`LiquidPillTabs`)
 - **Slug**: `liquid-pill-tabs`
 - **Category**: Navigation
@@ -3876,156 +2152,6 @@ export function Example() {
         { id: "code", label: "Source" },
       ]}
     />
-  );
-}
-```
-
----
-
-### Live Card Form (`LiveCardForm`)
-- **Slug**: `live-card-form`
-- **Category**: Inputs
-- **Tagline**: Photorealistic 3D credit card with auto-flip CVC focus and Luhn validation.
-- **Description**: Interactive payment checkout form paired with a photorealistic 3D credit card that automatically flips 180° when CVC is focused, with brand detection and Luhn algorithm validation.
-- **Docs URL**: https://boseui.site/components/live-card-form
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/live-card-form.json`
-- **Registry Manifest**: https://boseui.site/r/live-card-form.json
-- **Key Features**:
-  - Photorealistic 3D credit card with EMV gold chip, wireless antenna, and realistic holographic sheen.
-  - Automatic 180° 3D flip (`rotateY(180deg)`) revealing magnetic stripe and signature strip when focusing CVC.
-  - Real-time card brand detection for Visa, Mastercard, American Express, and Discover with dynamic styling.
-  - Real-time card number masking and client-side Luhn checksum algorithm validation indicator.
-  - Interactive stage preset fillers for instant demo testing and flipping inspection.
-- **Accessibility**:
-  - Fully accessible HTML5 form inputs with descriptive labels, autocomplete, and ARIA statuses.
-  - Keyboard-focusable inputs and interactive 3D card preview with Space/Enter toggle.
-  - Reduced motion support maintains input responsiveness without disorienting 3D animations.
-- **Props**:
-  - `defaultAmount` (string, default: '$89.00'): Default transaction amount displayed on the payment CTA button.
-  - `onSuccess` (() => void): Callback invoked after successful simulated card payment authorization.
-  - `className` (string): Optional CSS classes to apply to the root container.
-- **Usage Example**:
-```tsx
-import { LiveCardForm } from "@/components/ui/LiveCardForm";
-
-export function Example() {
-  return (
-    <div className="w-full">
-      <LiveCardForm defaultAmount="$89.00" />
-    </div>
-  );
-}
-```
-
----
-
-### Live Log Streamer (`LiveLogStreamer`)
-- **Slug**: `live-log-streamer`
-- **Category**: Cards
-- **Tagline**: Real-time streaming console log viewer with level filtering and search.
-- **Description**: Datadog and Cloudflare Workers inspired streaming terminal log viewer with log level filters (INFO, WARN, ERROR, DEBUG), auto-scroll lock, live pause/resume stream, search filtering, and copy logs.
-- **Docs URL**: https://boseui.site/components/live-log-streamer
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/live-log-streamer.json`
-- **Registry Manifest**: https://boseui.site/r/live-log-streamer.json
-- **Key Features**:
-  - Live event stream with simulated real-time logs.
-  - Log level toggle buttons for INFO, WARN, ERROR, and DEBUG.
-  - Instant text filter across log messages and system sources.
-  - Auto-scroll lock with pause and resume controls.
-- **Accessibility**:
-  - Monospace high-contrast developer theme with distinct semantic color badges.
-  - Keyboard accessible controls and clipboard copy.
-- **Props**:
-  - `serviceName` (string, default: "edge-compute-gateway"): Identifier for the service emitting logs.
-  - `maxBuffer` (number, default: 100): Maximum logs preserved in memory buffer before eviction.
-- **Usage Example**:
-```tsx
-import { LiveLogStreamer } from "@/components/ui/LiveLogStreamer";
-
-export function Example() {
-  return (
-    <LiveLogStreamer
-      serviceName="edge-compute-gateway"
-      maxBuffer={100}
-    />
-  );
-}
-```
-
----
-
-### MacBook Pro Mockup (`MacBookProMockup`)
-- **Slug**: `mac-book-pro-mockup`
-- **Category**: Mockups
-- **Tagline**: Apple MacBook Pro laptop frame with camera notch and 3D parallax tilt.
-- **Description**: Precision Apple MacBook Pro laptop hardware frame with a camera notch, aluminum chassis base deck, Liquid Retina XDR screen viewport, and 3D cursor parallax tilt.
-- **Docs URL**: https://boseui.site/components/mac-book-pro-mockup
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/mac-book-pro-mockup.json`
-- **Registry Manifest**: https://boseui.site/r/mac-book-pro-mockup.json
-- **Key Features**:
-  - Hardware-accurate aluminum top lid with display notch and slim bezels.
-  - Integrated bottom keyboard deck lip and display opening indentation.
-  - Realistic specular light glare overlay that reacts to cursor position.
-  - Space Black and Silver aluminum finishes.
-  - Responsive aspect ratio (16:10) that scales cleanly on all viewport widths.
-- **Accessibility**:
-  - Respects prefers-reduced-motion by disabling 3D rotation and specular glare shifts.
-  - Interactive children remain fully accessible and focusable.
-- **Props**:
-  - `color` ("space-black" | "silver", default: "space-black"): Aluminum chassis finish.
-  - `enableTilt` (boolean, default: true): Enable 3D cursor parallax tilt.
-  - `children` (React.ReactNode): Custom app UI, video, or screenshot.
-- **Usage Example**:
-```tsx
-import { MacBookProMockup } from "@/components/ui/MacBookProMockup";
-
-export function Example() {
-  return (
-    <MacBookProMockup color="space-black" enableTilt>
-      <div className="flex h-full items-center justify-center bg-neutral-950 text-white p-8">
-        <h2 className="text-2xl font-bold">Your SaaS Dashboard</h2>
-      </div>
-    </MacBookProMockup>
-  );
-}
-```
-
----
-
-### macOS Window Mockup (`MacOSWindowMockup`)
-- **Slug**: `mac-os-window-mockup`
-- **Category**: Mockups
-- **Tagline**: Authentic macOS frosted window frame with interactive traffic lights.
-- **Description**: Authentic macOS Sequoia frosted glass window frame with interactive traffic light controls (close, minimize, expand with hover symbols), centered window title, and active/inactive window states.
-- **Docs URL**: https://boseui.site/components/mac-os-window-mockup
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/mac-os-window-mockup.json`
-- **Registry Manifest**: https://boseui.site/r/mac-os-window-mockup.json
-- **Key Features**:
-  - Interactive traffic lights with hover action symbols (✕, −, ⤢).
-  - Spring minimize collapse and expand animation.
-  - Frosted glass backdrop-blur titlebar with centered title label.
-  - Active and inactive window focus styles.
-  - Fully customizable children slot for dashboards, code, or documentation.
-- **Accessibility**:
-  - Traffic light buttons include accessible aria-label attributes.
-  - Content inside window retains natural DOM focus order.
-- **Props**:
-  - `title` (string, default: "Untitled Window"): Window title in center of header.
-  - `subtitle` (string): Optional breadcrumb or subtitle text.
-  - `frosted` (boolean, default: true): Enable backdrop-blur frosted glass vibrancy.
-  - `active` (boolean, default: true): Active window focus state.
-  - `children` (React.ReactNode): Window body content.
-- **Usage Example**:
-```tsx
-import { MacOSWindowMockup } from "@/components/ui/MacOSWindowMockup";
-
-export function Example() {
-  return (
-    <MacOSWindowMockup title="Analytics Overview" subtitle="Production">
-      <div className="p-6">
-        <p>Your app content goes here.</p>
-      </div>
-    </MacOSWindowMockup>
   );
 }
 ```
@@ -4303,46 +2429,6 @@ export function Example() {
 
 ---
 
-### Mesh Gradient (`MeshGradient`)
-- **Slug**: `mesh-gradient`
-- **Category**: Backgrounds
-- **Tagline**: Apple Music style fluid multi-point mesh gradient.
-- **Description**: Apple Music and macOS-inspired fluid multi-point mesh gradient where 5 color nodes orbit on independent trajectories and blend seamlessly.
-- **Docs URL**: https://boseui.site/components/mesh-gradient
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/mesh-gradient.json`
-- **Registry Manifest**: https://boseui.site/r/mesh-gradient.json
-- **Key Features**:
-  - Blends 5 orbiting color control points using high-radius Gaussian blur and saturation boost.
-  - Includes Apple Music, Sequoia, and Obsidian palette presets in the interactive preview.
-  - Optional micro-grain overlay to prevent color banding on 8-bit displays.
-- **Accessibility**:
-  - Marks decorative mesh control points and grain layers with `aria-hidden='true'`.
-  - Maintains readable foreground typography with subtle backdrop blur badges.
-  - Palette switcher buttons support keyboard navigation.
-- **Props**:
-  - `colors` (string[], default: ["#FF2D55", "#5856D6", "#FF9500", "#AF52DE", "#00C7BE"]): Array of 4 to 5 hex colors for the mesh nodes.
-  - `speed` (number, default: 1): Orbit animation speed multiplier.
-  - `blur` (number, default: 70): Gaussian blur radius in pixels used to fuse the color points.
-  - `grain` (boolean, default: true): Overlays a subtle film grain texture.
-  - `children` (React.ReactNode): Optional foreground content rendered above the mesh.
-  - `className` (string): Additional Tailwind CSS classes for the container.
-- **Usage Example**:
-```tsx
-import { MeshGradient } from "@/components/ui/mesh-gradient";
-
-export function Example() {
-  return (
-    <MeshGradient
-      colors={["#FF2D55", "#5856D6", "#FF9500", "#AF52DE", "#00C7BE"]}
-      speed={1}
-      blur={70}
-    />
-  );
-}
-```
-
----
-
 ### Modal Popup (`ModalPopup`)
 - **Slug**: `modal-popup`
 - **Category**: Overlays
@@ -4431,6 +2517,56 @@ export function Example() {
 
 ---
 
+### Morphing Blob (`MorphingBlob`)
+- **Slug**: `morphing-blob`
+- **Category**: Backgrounds
+- **Tagline**: Organic fluid SVG blob driven by Catmull-Rom splines and spring dynamics.
+- **Description**: Organic fluid morphing SVG blob driven by Catmull-Rom cubic spline interpolation, Hooke's Law spring physics per node, and smooth real-time cursor attraction.
+- **Docs URL**: https://boseui.site/components/morphing-blob
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/morphing-blob.json`
+- **Registry Manifest**: https://boseui.site/r/morphing-blob.json
+- **Key Features**:
+  - Continuous Catmull-Rom cubic bezier closed loop path computation.
+  - Hooke's Law spring-mass-damping physics simulation per radial node.
+  - Real-time cursor parallax offset with smooth damping and viewport scaling.
+  - Accessible automatic fallback for prefers-reduced-motion environments.
+- **Accessibility**:
+  - Marks ambient SVG canvas with aria-hidden='true' and role='presentation'.
+  - Automatically bypasses frame animation loops if prefers-reduced-motion is detected.
+- **Props**:
+  - `width` (number, default: 400): Width of the SVG viewBox in pixels.
+  - `height` (number, default: 400): Height of the SVG viewBox in pixels.
+  - `points` (number, default: 8): Number of radial anchor nodes forming the organic perimeter.
+  - `baseRadius` (number, default: 120): Resting base radius of the blob from center in pixels.
+  - `variance` (number, default: 28): Maximum radial fluctuation delta applied to node targets.
+  - `speed` (number, default: 0.7): Frequency of retargeting cycles for organic movement.
+  - `stiffness` (number, default: 45): Spring stiffness constant pulling nodes toward their targets.
+  - `damping` (number, default: 9): Velocity damping factor preventing wild oscillations.
+  - `cursorFollow` (boolean, default: true): Enable smooth attraction toward the pointer location.
+  - `cursorStrength` (number, default: 0.35): Offset multiplier applied to the blob center relative to pointer position.
+  - `cursorSmoothness` (number, default: 0.08): Lerp interpolation speed for cursor tracking.
+  - `colors` ([string, string], default: ['#7C3AED', '#06B6D4']): Two-stop linear gradient hex colors filling the blob.
+- **Usage Example**:
+```tsx
+import { MorphingBlob } from "@/components/ui/MorphingBlob";
+
+export function Example() {
+  return (
+    <div className="relative flex h-96 w-full items-center justify-center overflow-hidden rounded-2xl bg-neutral-950">
+      <MorphingBlob
+        width={420}
+        height={420}
+        baseRadius={130}
+        variance={32}
+        colors={["#8B5CF6", "#3B82F6"]}
+      />
+    </div>
+  );
+}
+```
+
+---
+
 ### Morphing Dialog (`MorphingDialog`)
 - **Slug**: `morphing-dialog`
 - **Category**: Overlays
@@ -4506,44 +2642,6 @@ export function Example() {
         className="text-neutral-900 dark:text-white"
       />
     </h2>
-  );
-}
-```
-
----
-
-### Morphing Mega Menu (`MorphingMegaMenu`)
-- **Slug**: `morphing-mega-menu`
-- **Category**: Navigation
-- **Tagline**: Stripe-inspired morphing popover navbar with synchronized spring caret.
-- **Description**: Stripe-style floating mega menu popover that fluidly glides across navigation links with spring physics, morphing width, height, and caret position synchronously.
-- **Docs URL**: https://boseui.site/components/morphing-mega-menu
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/morphing-mega-menu.json`
-- **Registry Manifest**: https://boseui.site/r/morphing-mega-menu.json
-- **Key Features**:
-  - Single floating popover container that glides smoothly across nav items on hover or focus.
-  - Dynamic width, height, and horizontal offset calculation with Hooke's Law spring physics.
-  - Synchronized sliding top caret pointing directly to the active navigation item.
-  - Crossfading multi-column panels for Products, Solutions, and Developer tooling.
-  - Interactive stage controls to inspect stiffness, damping, and force-pinned previews.
-- **Accessibility**:
-  - Uses accessible ARIA menubar and role attributes with aria-expanded status.
-  - Supports keyboard navigation and focus triggers across all nav links and panels.
-  - Graceful fallback without layout jumping when JavaScript or motion is reduced.
-- **Props**:
-  - `stiffness` (number, default: 380): Spring stiffness coefficient for the morphing container and caret translation.
-  - `damping` (number, default: 30): Spring damping coefficient governing oscillation decay.
-  - `className` (string): Optional CSS classes to append to the stage container.
-  - `embedded` (boolean): Whether menu renders embedded within container rather than fixed top
-- **Usage Example**:
-```tsx
-import { MorphingMegaMenu } from "@/components/ui/MorphingMegaMenu";
-
-export function Example() {
-  return (
-    <div className="w-full">
-      <MorphingMegaMenu stiffness={380} damping={30} />
-    </div>
   );
 }
 ```
@@ -4632,174 +2730,6 @@ export function Example() {
       maxTags={6}
       allowCustomTags
       onChange={(tags) => console.log("Selected tags:", tags)}
-    />
-  );
-}
-```
-
----
-
-### Multiplayer Cursors (`MultiplayerCursors`)
-- **Slug**: `multiplayer-cursors`
-- **Category**: Motion
-- **Tagline**: Figma-style real-time multiplayer canvas with animated cursors and live speech bubbles.
-- **Description**: Figma-style real-time collaboration canvas with animated multiplayer cursor pointers, user name tags, color badges, interactive live cursor chat bubbles, and click ripple wave broadcasts.
-- **Docs URL**: https://boseui.site/components/multiplayer-cursors
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/multiplayer-cursors.json`
-- **Registry Manifest**: https://boseui.site/r/multiplayer-cursors.json
-- **Key Features**:
-  - Authentic Figma-geometry SVG cursor arrows paired with colored user name badges.
-  - Integrated live cursor chat bubble broadcasts with spring scale and fade animations.
-  - Click wave propagation displaying expanding ripple rings from pointer interactions.
-  - Simulated autonomous collaborator wander motion with pause and resume toggles.
-  - Instant collaborator addition and customizable presence status indicators.
-- **Accessibility**:
-  - Announces presence joined and chat message broadcasts for screen reader users via aria-live.
-  - Supports keyboard shortcut triggers and accessible input forms for sending chat messages.
-  - Respects reduced-motion preferences by turning off wandering trajectories.
-- **Props**:
-  - `initialCollaborators` (Collaborator[]): Array of collaborator objects containing id, name, color, coordinates, and messages.
-  - `showGrid` (boolean, default: true): Whether to render a Figma-style radial dot grid background.
-  - `className` (string): Additional CSS classes to apply to the root container.
-  - `overlayOnly` (boolean): Render cursors as an transparent overlay without outer card container
-- **Usage Example**:
-```tsx
-import { MultiplayerCursors } from "@/components/ui/MultiplayerCursors";
-
-export function Example() {
-  return (
-    <MultiplayerCursors
-      showGrid={true}
-      initialCollaborators={[
-        {
-          id: "user-1",
-          name: "Amara Okafor",
-          color: "#8b5cf6",
-          x: 35,
-          y: 40,
-          message: "Reviewing the payment flows",
-          state: "active",
-        },
-      ]}
-    />
-  );
-}
-```
-
----
-
-### Now Playing Waveform (`NowPlayingWaveform`)
-- **Slug**: `now-playing-waveform`
-- **Category**: Motion
-- **Tagline**: Spotify-inspired media player with real-time reactive dancing waveform bars.
-- **Description**: Spotify-style music player featuring dancing multi-octave equalizer frequency bars, spinning vinyl cover artwork, scrubbable progress bar with hover time tooltip, and playback controls.
-- **Docs URL**: https://boseui.site/components/now-playing-waveform
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/now-playing-waveform.json`
-- **Registry Manifest**: https://boseui.site/r/now-playing-waveform.json
-- **Key Features**:
-  - 32 reactive audio equalizer bars oscillating dynamically to simulate real-time audio playback.
-  - Rotating vinyl sleeve simulation with dynamic track-specific background glow halos.
-  - Scrubbable timeline with precision cursor hover tooltip and simulated playback progression.
-  - Comprehensive media controls: Play/Pause, Next/Prev, Shuffle, and 3-state Repeat.
-  - Quick track switcher allowing seamless preview of different music genres and color themes.
-- **Accessibility**:
-  - Full semantic button labeling with dynamic play/pause state communication.
-  - Scrubber input accessible via click, drag, and standard volume sliders.
-  - Equalizer animation gracefully responds to paused states without layout shifts.
-- **Props**:
-  - `tracks` (TrackItem[]): Array of music track objects with metadata, colors, and duration.
-  - `initialPlaying` (boolean, default: true): Whether the audio playback visualizer starts in active playing state.
-  - `className` (string): Optional custom CSS classes for the container wrapper.
-- **Usage Example**:
-```tsx
-import { NowPlayingWaveform } from "@/components/ui/now-playing-waveform";
-
-export function Example() {
-  return (
-    <NowPlayingWaveform
-      initialPlaying={true}
-    />
-  );
-}
-```
-
----
-
-### Ocean Waves (`OceanWaves`)
-- **Slug**: `ocean-waves`
-- **Category**: Backgrounds
-- **Tagline**: Multi-harmonic parallax ocean swells with subsurface glow.
-- **Description**: Multi-layered rolling ocean waves rendered on Canvas 2D using multi-harmonic trochoidal wave equations, translucent subsurface ridge scattering, and shimmering crest foam highlights.
-- **Docs URL**: https://boseui.site/components/ocean-waves
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/ocean-waves.json`
-- **Registry Manifest**: https://boseui.site/r/ocean-waves.json
-- **Key Features**:
-  - 5+ stacked parallax wave layers computed via 3-harmonic sine and cosine superposition.
-  - Translucent subsurface turquoise ridge glow with depth-graded ocean color attenuation.
-  - Shimmering white crest foam lines and dynamic peak sparkles along breaking wave ridges.
-- **Accessibility**:
-  - Marks decorative wave canvas with `aria-hidden='true'`.
-  - Maintains accessible contrast over dark abyssal gradients for hero typography and controls.
-  - Interactive swell and foam controls are keyboard accessible.
-- **Props**:
-  - `waveCount` (number, default: 5): Number of stacked parallax ocean wave layers (3 to 9).
-  - `amplitude` (number, default: 28): Peak vertical wave height in pixels.
-  - `frequency` (number, default: 0.008): Horizontal wave frequency in radians per pixel.
-  - `speed` (number, default: 1.0): Animation speed multiplier for wave propagation.
-  - `oceanColor` (string, default: "#0284C7"): Base hex color used to compute subsurface crest and deep water gradients.
-  - `foam` (boolean, default: true): Toggles shimmering white foam lines and peak sparkles along wave crests.
-  - `children` (React.ReactNode): Optional foreground UI rendered above the ocean waves.
-  - `className` (string): Additional Tailwind CSS classes for the container.
-- **Usage Example**:
-```tsx
-import { OceanWaves } from "@/components/ui/ocean-waves";
-
-export function Example() {
-  return (
-    <OceanWaves
-      waveCount={5}
-      amplitude={28}
-      frequency={0.008}
-      speed={1.0}
-      oceanColor="#0284C7"
-      foam
-    />
-  );
-}
-```
-
----
-
-### Package Dependency Tree (`PackageDependencyTree`)
-- **Slug**: `package-dependency-tree`
-- **Category**: Cards
-- **Tagline**: Interactive package dependency tree with bundle size and license inspection.
-- **Description**: Bundlephobia and Socket.dev inspired package dependency inspector with direct and transitive node nesting, license badges, vulnerability advisories, bundle size calculations, and install script copying.
-- **Docs URL**: https://boseui.site/components/package-dependency-tree
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/package-dependency-tree.json`
-- **Registry Manifest**: https://boseui.site/r/package-dependency-tree.json
-- **Key Features**:
-  - Collapsible hierarchical tree view of direct and transitive packages.
-  - Calculated bundle size metrics and open-source license tags.
-  - Real-time text filter across package names.
-  - Security vulnerability advisory alerts.
-- **Accessibility**:
-  - Keyboard accessible tree nodes with aria-expanded states.
-  - Clear visual contrasts for warning and security indicators.
-- **Props**:
-  - `packageName` (string, default: "boseui"): Root package name.
-  - `version` (string, default: "1.0.0"): Root package semver string.
-  - `bundleSizeKb` (number, default: 60.8): Total minified and gzipped bundle size in kilobytes.
-- **Usage Example**:
-```tsx
-import { PackageDependencyTree } from "@/components/ui/PackageDependencyTree";
-
-export function Example() {
-  return (
-    <PackageDependencyTree
-      packageName="boseui"
-      version="1.0.0"
-      bundleSizeKb={60.8}
     />
   );
 }
@@ -4998,123 +2928,6 @@ export function Example() {
 
 ---
 
-### Pipeline DAG Viewer (`PipelineDAGViewer`)
-- **Slug**: `pipeline-dag-viewer`
-- **Category**: Cards
-- **Tagline**: Directed Acyclic Graph CI/CD build pipeline with step logs viewer.
-- **Description**: GitHub Actions and GitLab CI inspired Directed Acyclic Graph (DAG) build pipeline visualizer with sequential and parallel stage columns, live status animations, and embedded console output inspector.
-- **Docs URL**: https://boseui.site/components/pipeline-dag-viewer
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/pipeline-dag-viewer.json`
-- **Registry Manifest**: https://boseui.site/r/pipeline-dag-viewer.json
-- **Key Features**:
-  - Multi-stage columns supporting parallel job execution (e.g., Unit & E2E tests).
-  - Visual status indicators for success, running, failed, and queued stages.
-  - Interactive stage node selection revealing terminal build console output.
-  - Commit SHA and workflow run telemetry header.
-- **Accessibility**:
-  - Keyboard accessible interactive stage buttons.
-  - High contrast status badges with clear semantic icons.
-- **Props**:
-  - `pipelineName` (string, default: "ci-cd-matrix.yml"): Workflow definition file or pipeline title.
-  - `commitSha` (string, default: "main • 4b2e8c1"): Git branch and commit reference that triggered the run.
-- **Usage Example**:
-```tsx
-import { PipelineDAGViewer } from "@/components/ui/PipelineDAGViewer";
-
-export function Example() {
-  return (
-    <PipelineDAGViewer
-      pipelineName="production-deploy.yml"
-      commitSha="main • 8a1f9e2"
-    />
-  );
-}
-```
-
----
-
-### Planet Horizon (`PlanetHorizon`)
-- **Slug**: `planet-horizon`
-- **Category**: Backgrounds
-- **Tagline**: Cinematic orbital sunrise with atmospheric Rayleigh scattering.
-- **Description**: Orbital sunrise-from-space hero background featuring a twinkling starfield, a giant curved planetary sphere with a multi-layered glowing atmospheric limb, and an animated anamorphic solar flare cresting along the terminator.
-- **Docs URL**: https://boseui.site/components/planet-horizon
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/planet-horizon.json`
-- **Registry Manifest**: https://boseui.site/r/planet-horizon.json
-- **Key Features**:
-  - Curved planetary sphere with multi-layered radial exosphere and razor-thin bright limb edge
-  - Animated solar crest with horizontal anamorphic lens flare streaks and chromatic iris ghosts
-  - Twinkling deep-space starfield automatically occluded by the planetary body
-  - Supports both continuous orbital autoplay and manual solar flare scrubbing from 0 to 1
-  - Built-in atmospheric theme presets (Terra Dawn, Exoplanet Violet, Martian Amber)
-- **Accessibility**:
-  - Canvas is marked aria-hidden so foreground hero copy and CTAs remain cleanly navigable
-  - Includes play/pause orbital motion toggle for users who prefer stationary lighting
-- **Props**:
-  - `atmosphereColor` (string, default: "#38BDF8"): Hex color of the glowing planetary atmospheric limb.
-  - `flareColor` (string, default: "#FDE047"): Hex color of the cresting solar flare core and diffraction rays.
-  - `flarePosition` (number, default: 0.5): Normalized position (0 to 1) of the sun along the horizon when autoplay is disabled.
-  - `autoplay` (boolean, default: true): Whether the solar flare smoothly orbits along the planetary horizon.
-  - `starDensity` (number, default: 140): Number of twinkling background stars rendered above the planet.
-  - `children` (React.ReactNode): Optional foreground hero content rendered over the horizon.
-  - `className` (string): Additional CSS classes for the root container.
-- **Usage Example**:
-```tsx
-import { PlanetHorizon } from "@/components/ui/PlanetHorizon";
-
-export function PlanetHorizonDemo() {
-  return (
-    <PlanetHorizon
-      atmosphereColor="#38BDF8"
-      flareColor="#FDE047"
-      flarePosition={0.5}
-      autoplay
-      starDensity={140}
-    />
-  );
-}
-```
-
----
-
-### Plus Grid Border (`PlusGridBorder`)
-- **Slug**: `plus-grid-border`
-- **Category**: Cards
-- **Tagline**: Architectural blueprint grid with illuminated corner crosshairs.
-- **Description**: Vercel-inspired blueprint grid architecture with precision hairline section borders and interactive corner plus markers that illuminate on pointer proximity.
-- **Docs URL**: https://boseui.site/components/plus-grid-border
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/plus-grid-border.json`
-- **Registry Manifest**: https://boseui.site/r/plus-grid-border.json
-- **Key Features**:
-  - Precision architectural hairline borders with corner '+' crosshairs at all junction nodes.
-  - Dynamic pointer proximity lighting that illuminates nearby crosses and borders based on mouse coordinates.
-  - Multiple layout presets including 2x2 quadrant and 3-column feature bento showcase.
-  - Interactive configuration toolbar for adjusting cross scale, border glow tone, and hover intensity.
-- **Accessibility**:
-  - Decorative '+' markers are hidden from assistive technology via aria-hidden.
-  - Cards remain fully keyboard navigable with standard focus-visible rings.
-  - Respects prefers-reduced-motion by keeping illumination static without jitter.
-- **Props**:
-  - `items` (GridCardItem[]): Array of content cards to frame inside the plus grid system.
-  - `glowColor` (string, default: "cyan"): Accent illumination color for the crosshairs and proximity borders.
-  - `interactiveProximity` (boolean, default: true): Whether mouse pointer distance dynamically illuminates junction crosses.
-  - `className` (string): Optional custom classes applied to the root grid container.
-- **Usage Example**:
-```tsx
-import { PlusGridBorder } from "@/components/ui/PlusGridBorder";
-
-export function Example() {
-  return (
-    <PlusGridBorder
-      glowColor="cyan"
-      interactiveProximity={true}
-    />
-  );
-}
-```
-
----
-
 ### Popover Card (`PopoverCard`)
 - **Slug**: `popover-card`
 - **Category**: Overlays
@@ -5302,122 +3115,6 @@ export function Example() {
 
 ---
 
-### Rate Limit Meter (`RateLimitMeter`)
-- **Slug**: `rate-limit-meter`
-- **Category**: Cards
-- **Tagline**: Token bucket rate limit and quota capacity visualizer with burst simulation.
-- **Description**: Token bucket and sliding-window rate limit visualizer with burst request simulation, spring-physics capacity transitions, real-time quota reset countdowns, and 429 Too Many Requests retry-after badges.
-- **Docs URL**: https://boseui.site/components/rate-limit-meter
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/rate-limit-meter.json`
-- **Registry Manifest**: https://boseui.site/r/rate-limit-meter.json
-- **Key Features**:
-  - Animated token bucket capacity bar with spring-weighted updates.
-  - Interactive single request and burst (-15) simulation triggers.
-  - Automatic sliding window replenishment timer ticking in real-time.
-  - Dynamic color shifts for Healthy (green), Warning (amber), and 429 Exceeded (red).
-- **Accessibility**:
-  - Clear numeric percentage labels alongside progress meters.
-  - Accessible color contrast with distinct iconography for state changes.
-- **Props**:
-  - `maxLimit` (number, default: 120): Maximum number of requests permitted within the window.
-  - `initialRemaining` (number, default: 92): Initial available capacity tokens.
-  - `windowSeconds` (number, default: 60): Sliding window duration in seconds before token replenish.
-  - `tierLabel` (string, default: "Pro Plan (Global Edge)"): Identifier for the active API tier or subscription plan.
-- **Usage Example**:
-```tsx
-import { RateLimitMeter } from "@/components/ui/RateLimitMeter";
-
-export function Example() {
-  return (
-    <RateLimitMeter
-      maxLimit={120}
-      initialRemaining={92}
-      windowSeconds={60}
-      tierLabel="Pro Plan (Global Edge)"
-    />
-  );
-}
-```
-
----
-
-### Reaction Picker (`ReactionPicker`)
-- **Slug**: `reaction-picker`
-- **Category**: Overlays
-- **Tagline**: Slack-style floating emoji reaction bar with spring counts and full picker popover.
-- **Description**: Slack-style floating emoji reaction bar with quick reactions, spring count bump badges, toggleable personal reaction state, hover tooltip user attributions, and an expandable full emoji picker with search.
-- **Docs URL**: https://boseui.site/components/reaction-picker
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/reaction-picker.json`
-- **Registry Manifest**: https://boseui.site/r/reaction-picker.json
-- **Key Features**:
-  - Floating quick reaction bar hovering seamlessly over message containers.
-  - Spring bounce animation on numeric reaction badges when voted or unvoted.
-  - Active user state highlighting reacted badges with tinted borders and glow fills.
-  - Expandable full emoji search picker popover with category filtering.
-  - Hover tooltip attribution displaying names of reacting teammates.
-- **Accessibility**:
-  - Each reaction button includes descriptive aria-label with emoji name and current vote count.
-  - Full keyboard navigation through the quick bar and search picker popover.
-  - Color contrast adheres strictly to WCAG AA requirements in dark and light modes.
-- **Props**:
-  - `initialReactions` (ReactionItem[]): Array of reaction items with emoji, count, reactedByMe state, and user list.
-  - `messageText` (string, default: "Just shipped the brand-new financial charts..."): Text content of the message being reacted to.
-  - `authorName` (string, default: "Alexander Vance"): Name of the message author.
-  - `authorRole` (string, default: "Staff Design Technologist"): Role or title of the message author.
-  - `className` (string): Additional CSS classes to apply to the root container.
-  - `inline` (boolean): Whether reaction bar is rendered inline with content or in popover
-- **Usage Example**:
-```tsx
-import { ReactionPicker } from "@/components/ui/ReactionPicker";
-
-export function Example() {
-  return (
-    <ReactionPicker
-      authorName="Sophia Nakamoto"
-      authorRole="Core Protocol Engineer"
-      messageText="Smart contract audit passed with 0 critical findings! 🚀"
-    />
-  );
-}
-```
-
----
-
-### Regex Playground (`RegexPlayground`)
-- **Slug**: `regex-playground`
-- **Category**: Cards
-- **Tagline**: Live regular expression tester with preset patterns and flag controls.
-- **Description**: Raycast and Regex101 inspired regular expression matching sandbox with flag toggles (g, i, m), presets (Email, Semver, UUID, Hex), real-time match extraction, and error syntax diagnostics.
-- **Docs URL**: https://boseui.site/components/regex-playground
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/regex-playground.json`
-- **Registry Manifest**: https://boseui.site/r/regex-playground.json
-- **Key Features**:
-  - Interactive regular expression pattern and flag inputs.
-  - Real-time evaluation with syntax error boundary catching.
-  - Popular pattern presets for Email, UUID, Semver, and Hex Colors.
-  - Visual matched token badge list.
-- **Accessibility**:
-  - Keyboard accessible flag toggles and textarea inputs.
-  - High-contrast match badge highlighting.
-- **Props**:
-  - `initialPattern` (string, default: "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"): Default regular expression pattern.
-  - `initialFlags` (string, default: "g"): Default RegExp execution flags.
-- **Usage Example**:
-```tsx
-import { RegexPlayground } from "@/components/ui/RegexPlayground";
-
-export function Example() {
-  return (
-    <RegexPlayground
-      initialPattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-      initialFlags="g"
-    />
-  );
-}
-```
-
----
-
 ### Ripple Burst Button (`RippleBurstButton`)
 - **Slug**: `ripple-burst-button`
 - **Category**: Buttons
@@ -5541,44 +3238,6 @@ export function Example() {
 
 ---
 
-### Safari Browser Mockup (`SafariBrowserMockup`)
-- **Slug**: `safari-browser-mockup`
-- **Category**: Mockups
-- **Tagline**: Apple Safari browser chrome mockup with interactive address bar and tabs.
-- **Description**: macOS Safari browser chrome with traffic light controls, a central frosted unified address bar with SSL padlock, tab strip, and live viewport slot.
-- **Docs URL**: https://boseui.site/components/safari-browser-mockup
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/safari-browser-mockup.json`
-- **Registry Manifest**: https://boseui.site/r/safari-browser-mockup.json
-- **Key Features**:
-  - macOS Safari unified toolbar with SSL padlock and traffic lights.
-  - Interactive address bar with reload button and URL editing.
-  - Optional tab strip bar with page title and icon.
-  - Responsive container that renders any landing page or screenshot.
-- **Accessibility**:
-  - Input element has accessible aria-label.
-  - Buttons include standard accessible labels.
-- **Props**:
-  - `url` (string, default: "https://boseui.site"): URL shown in the address bar.
-  - `title` (string, default: "BoseUI — Architectural UI Components"): Active page title.
-  - `showTabs` (boolean, default: true): Show Safari tab bar strip.
-  - `children` (React.ReactNode): Viewport content.
-- **Usage Example**:
-```tsx
-import { SafariBrowserMockup } from "@/components/ui/SafariBrowserMockup";
-
-export function Example() {
-  return (
-    <SafariBrowserMockup url="https://yourproduct.com" title="Your Product">
-      <div className="p-8">
-        <h1>Your Landing Page Content</h1>
-      </div>
-    </SafariBrowserMockup>
-  );
-}
-```
-
----
-
 ### Scrubbable Number Input (`ScrubbableNumberInput`)
 - **Slug**: `scrubbable-number-input`
 - **Category**: Inputs
@@ -5618,172 +3277,6 @@ export function Example() {
       max={600}
       step={5}
       unit="N/m"
-    />
-  );
-}
-```
-
----
-
-### Scrubbable Sparkline (`ScrubbableSparkline`)
-- **Slug**: `scrubbable-sparkline`
-- **Category**: Motion
-- **Tagline**: Robinhood-style financial sparkline chart with cursor scrubbing and live ticker readouts.
-- **Description**: Robinhood-style financial stock and cryptocurrency sparkline chart with interactive touch/mouse scrubbing, dynamic cursor crosshair, live price readout, and animated delta gains or losses.
-- **Docs URL**: https://boseui.site/components/scrubbable-sparkline
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/scrubbable-sparkline.json`
-- **Registry Manifest**: https://boseui.site/r/scrubbable-sparkline.json
-- **Key Features**:
-  - Interactive pointer and touch scrubbing with smooth cubic bezier SVG curve calculation.
-  - Dynamic delta percentage computation with conditional emerald (gain) or rose (loss) theme.
-  - Live vertical crosshair indicator with glowing cursor dot tracking the curve value.
-  - Smooth animated SVG area gradient fill with configurable glow and gridlines.
-  - Responsive SVG coordinate scaling across desktop and mobile screens.
-- **Accessibility**:
-  - Provides tabular data fallback and aria-label readouts for screen readers.
-  - Maintains high contrast color ratios for gains (emerald) and losses (rose).
-  - Supports keyboard reset and touch dragging without trapping scroll.
-- **Props**:
-  - `data` (SparklinePoint[]): Array of sparkline points with time string and numeric value.
-  - `title` (string, default: "Bitcoin"): Title of the asset or financial instrument.
-  - `ticker` (string, default: "BTC/USD"): Ticker symbol displayed in the header badge.
-  - `currency` (string, default: "$"): Currency symbol prefix for price formatting.
-  - `height` (number, default: 240): SVG viewport coordinate height in pixels.
-  - `showGradient` (boolean, default: true): Whether to render the animated area fill gradient underneath the line.
-  - `showGrid` (boolean, default: true): Whether to render horizontal reference grid lines.
-  - `className` (string): Additional CSS classes to apply to the root container.
-  - `minimal` (boolean): Compact sparkline display mode hiding telemetry header and stats
-- **Usage Example**:
-```tsx
-import { ScrubbableSparkline } from "@/components/ui/ScrubbableSparkline";
-
-const btcData = [
-  { time: "09:30", value: 64250 },
-  { time: "11:30", value: 65120 },
-  { time: "13:30", value: 64980 },
-  { time: "15:30", value: 66420 },
-  { time: "18:30", value: 67890 },
-  { time: "20:30", value: 68340 },
-];
-
-export function Example() {
-  return (
-    <ScrubbableSparkline
-      title="Bitcoin"
-      ticker="BTC/USD"
-      currency="$"
-      data={btcData}
-      showGradient={true}
-    />
-  );
-}
-```
-
----
-
-### Segmented Range Picker (`SegmentedRangePicker`)
-- **Slug**: `segmented-range-picker`
-- **Category**: Navigation
-- **Tagline**: Financial timeframe selector with spring sliding pill and synchronized chart morphing.
-- **Description**: Financial timeframe range selector (1D, 1W, 1M, 1Y, ALL) with a sliding pill highlight, synchronized animated chart transitions, interval resolution badge, and high/low metric cards.
-- **Docs URL**: https://boseui.site/components/segmented-range-picker
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/segmented-range-picker.json`
-- **Registry Manifest**: https://boseui.site/r/segmented-range-picker.json
-- **Key Features**:
-  - Shared layoutId sliding pill highlight with Hooke's Law spring dynamics.
-  - Synchronized chart morphing and data transition between daily, weekly, monthly, and yearly windows.
-  - Integrated range metrics displaying interval resolution, range high, range low, and volume.
-  - Seamless switching between smooth spline curve and volume histogram view.
-  - Contextual emerald/rose colorway reflecting positive or negative net return across the selected range.
-- **Accessibility**:
-  - Operates as a standard WAI-ARIA segmented tablist with arrow key navigation.
-  - Clear visual focus rings and contrast ratios exceeding WCAG AAA standards.
-  - Respects reduced-motion preferences with crossfade fallbacks for graph transitions.
-- **Props**:
-  - `ranges` (("1D" | "1W" | "1M" | "1Y" | "ALL")[], default: ["1D", "1W", "1M", "1Y", "ALL"]): Array of timeframe options displayed in the segmented control.
-  - `defaultRange` ("1D" | "1W" | "1M" | "1Y" | "ALL", default: "1D"): Initially active timeframe option.
-  - `onRangeChange` ((range: TimeRange) => void): Callback function fired whenever the selected timeframe changes.
-  - `className` (string): Additional CSS classes to apply to the root container.
-- **Usage Example**:
-```tsx
-import { SegmentedRangePicker } from "@/components/ui/SegmentedRangePicker";
-
-export function Example() {
-  return (
-    <SegmentedRangePicker
-      defaultRange="1M"
-      onRangeChange={(range) => console.log("Selected range:", range)}
-    />
-  );
-}
-```
-
----
-
-### Semver Release Draft Card (`SemverReleaseDraftCard`)
-- **Slug**: `semver-release-draft-card`
-- **Category**: Cards
-- **Tagline**: Conventional commit release drafter with automated Semver bump calculations.
-- **Description**: GitHub Releases and Changesets inspired release notes generator with Semver bump selector (patch, minor, major), conventional commit categorization, Markdown changelog export, and release publishing.
-- **Docs URL**: https://boseui.site/components/semver-release-draft-card
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/semver-release-draft-card.json`
-- **Registry Manifest**: https://boseui.site/r/semver-release-draft-card.json
-- **Key Features**:
-  - Automatic semver bump calculation for Patch, Minor, and Major version updates.
-  - Categorized conventional commit list with breaking change warnings.
-  - Interactive commit selection checkboxes.
-  - Real-time Markdown release notes preview and clipboard copy.
-- **Accessibility**:
-  - Accessible toggle controls with native checkboxes.
-  - Clear visual badges for commit classification.
-- **Props**:
-  - `currentVersion` (string, default: "v1.2.4"): Previous release version tag.
-  - `repoName` (string, default: "boseui/core"): Repository name identifier.
-- **Usage Example**:
-```tsx
-import { SemverReleaseDraftCard } from "@/components/ui/SemverReleaseDraftCard";
-
-export function Example() {
-  return (
-    <SemverReleaseDraftCard
-      currentVersion="v1.2.4"
-      repoName="acme/web"
-      onPublish={(v, md) => console.log("Published", v, md)}
-    />
-  );
-}
-```
-
----
-
-### Server Metrics Sparkboard (`ServerMetricsSparkboard`)
-- **Slug**: `server-metrics-sparkboard`
-- **Category**: Cards
-- **Tagline**: Synchronized multi-sparkline server telemetry dashboard with crosshair scrubber.
-- **Description**: Grafana and Railway inspired multi-sparkline telemetry dashboard monitoring CPU, Memory, Disk I/O, and Network Egress with synchronized crosshair cursor inspection across all graphs simultaneously.
-- **Docs URL**: https://boseui.site/components/server-metrics-sparkboard
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/server-metrics-sparkboard.json`
-- **Registry Manifest**: https://boseui.site/r/server-metrics-sparkboard.json
-- **Key Features**:
-  - 4 synchronized sparkline graphs for CPU, Memory, Disk, and Network.
-  - Global crosshair scrub cursor updating values across all charts simultaneously.
-  - Interactive time range selectors (1h, 6h, 24h, 7d).
-  - Real-time server host and cloud region telemetry headers.
-- **Accessibility**:
-  - High-contrast color-coded metric series.
-  - Accessible numeric labels with proper units.
-- **Props**:
-  - `hostName` (string, default: "edge-compute-node-42.iad1"): Host server name or DNS identifier.
-  - `region` (string, default: "AWS us-east-1 (N. Virginia)"): Cloud region or datacenter location.
-- **Usage Example**:
-```tsx
-import { ServerMetricsSparkboard } from "@/components/ui/ServerMetricsSparkboard";
-
-export function Example() {
-  return (
-    <ServerMetricsSparkboard
-      hostName="edge-compute-node-42.iad1"
-      region="AWS us-east-1 (N. Virginia)"
     />
   );
 }
@@ -5867,86 +3360,6 @@ export function Example() {
       angle={35}
       color="#FFFFFF"
       maxConcurrent={6}
-    />
-  );
-}
-```
-
----
-
-### Siri Glow Edge (`SiriGlowEdge`)
-- **Slug**: `siri-glow-edge`
-- **Category**: Motion
-- **Tagline**: Apple Intelligence chromatic perimeter glow with voice waveform reactions.
-- **Description**: Apple Intelligence-inspired fluid perimeter rainbow chromatic aura with multi-layer conic gradient blur, breathing light cycles, live voice waveform reaction, and adjustable glow thickness.
-- **Docs URL**: https://boseui.site/components/siri-glow-edge
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/siri-glow-edge.json`
-- **Registry Manifest**: https://boseui.site/r/siri-glow-edge.json
-- **Key Features**:
-  - Multi-layer rotating conic rainbow gradient wrapping any container or card.
-  - Dual-blur architecture combining sharp perimeter border sheen with atmospheric ambient bloom.
-  - Realistic breathing light cycle with state-dependent pulse speeds (idle, listening, thinking, responding).
-  - Dynamic live audio waveform bars synchronized with assistant voice modes.
-  - Adjustable aura intensity and spread radius slider controls.
-- **Accessibility**:
-  - Uses accessible ARIA status updates when assistant state transitions between listening and idle.
-  - Respects reduced motion preferences by dampening rotational speed and breathing pulsation.
-  - High-contrast card core ensures text remains comfortably legible over luminous borders.
-- **Props**:
-  - `initialState` ("idle" | "listening" | "thinking" | "responding", default: "idle"): Initial state of the Apple Intelligence assistant aura.
-  - `intensity` (number, default: 1.0): Brightness and opacity multiplier for the chromatic aura.
-  - `glowWidth` (number, default: 14): Perimeter blur spread radius in pixels.
-  - `enableBreathing` (boolean, default: true): Whether the aura subtly expands and breathes over time.
-  - `children` (React.ReactNode): Content wrapped inside the illuminated glassmorphic card.
-  - `className` (string): Tailwind CSS classes for the root container.
-- **Usage Example**:
-```tsx
-import { SiriGlowEdge } from "@/components/ui/SiriGlowEdge";
-
-export function Example() {
-  return (
-    <SiriGlowEdge initialState="listening" intensity={1.2}>
-      <div className="p-6">
-        <h3 className="font-semibold text-white">Apple Intelligence Active</h3>
-        <p className="text-sm text-neutral-300">Listening to user instructions...</p>
-      </div>
-    </SiriGlowEdge>
-  );
-}
-```
-
----
-
-### Slash Command Menu (`SlashCommandMenu`)
-- **Slug**: `slash-command-menu`
-- **Category**: Inputs
-- **Tagline**: Notion-style rich-text editor with '/' command popover and keyboard navigation.
-- **Description**: Notion-style rich-text editor command menu triggered via '/', featuring fuzzy search filtering, keyboard arrow navigation, enter-to-insert blocks (Headings, To-Dos, Code Blocks, Callouts, Quotes), and delete controls.
-- **Docs URL**: https://boseui.site/components/slash-command-menu
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/slash-command-menu.json`
-- **Registry Manifest**: https://boseui.site/r/slash-command-menu.json
-- **Key Features**:
-  - Instant '/' command activation with real-time fuzzy query filtering.
-  - Full keyboard ergonomics: ArrowUp / ArrowDown navigation, Enter insertion, and Escape dismissal.
-  - Support for eight core block types: Headings 1/2/3, To-Do checklists, Code blocks, Callouts, and Quotes.
-  - Interactive document canvas with toggleable todo checkboxes and delete actions.
-  - Floating popover menu with glassmorphism backdrop blur and category organization.
-- **Accessibility**:
-  - Follows WAI-ARIA Combobox pattern with aria-expanded, aria-activedescendant, and role='listbox'.
-  - Announces filtered search results and active block selections to assistive technology.
-  - High-contrast focus rings and keyboard-friendly dismissal mechanics.
-- **Props**:
-  - `initialBlocks` (DocumentBlock[]): Initial list of rich document blocks to render in the editor canvas.
-  - `placeholder` (string, default: "Type '/' for commands or start writing..."): Placeholder text rendered in the active writing input field.
-  - `className` (string): Additional CSS classes to apply to the root container.
-- **Usage Example**:
-```tsx
-import { SlashCommandMenu } from "@/components/ui/SlashCommandMenu";
-
-export function Example() {
-  return (
-    <SlashCommandMenu
-      placeholder="Type '/' to insert headings, code snippets, or checklists..."
     />
   );
 }
@@ -6480,6 +3893,75 @@ export function Example() {
 
 ---
 
+### Sticky Pages (`StickyPages`)
+- **Slug**: `sticky-pages`
+- **Category**: Cards
+- **Tagline**: Apple-style sticky stacking cards that scale and dim on scroll.
+- **Description**: Apple-style sticky stacking full-viewport pages with progressive scale shrinking, cumulative dimming overlays, smooth scroll transitions, and subtle top elevation borders.
+- **Docs URL**: https://boseui.site/components/sticky-pages
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/sticky-pages.json`
+- **Registry Manifest**: https://boseui.site/r/sticky-pages.json
+- **Key Features**:
+  - CSS position sticky stacking with progressive top offsets and dynamic viewport tracking.
+  - Hardware-accelerated scale reduction calculated per covered layer using requestAnimationFrame.
+  - Graduated dark dimming backdrop overlays reflecting exact layer overlap depths.
+  - Dual-mode support: structured pages array configuration or declarative nested JSX children.
+- **Accessibility**:
+  - Retains native document scroll ergonomics with predictable touch, trackpad, and keyboard behavior.
+  - Uses accessible high-contrast text ratios across stacked panels with readable typography hierarchies.
+  - Leaves child elements interactive and focusable when not fully covered.
+- **Props**:
+  - `pages` (StickyPageItem[]): Structured array of page objects with id, title, subtitle, description, badge, and background styles.
+  - `pageHeight` (string, default: "100vh"): Height specification of each sticky page or card section.
+  - `topOffset` (number, default: 0): Distance in pixels from viewport top where each page locks sticky.
+  - `stackOffset` (number, default: 0): Progressive pixel gap preserved between stacked page headers.
+  - `rounded` (boolean, default: true): Apply rounded top corners (rounded-t-[2rem]) to stacked pages.
+  - `shadow` (boolean, default: true): Apply top drop shadow when pages overlap previous layers.
+  - `border` (boolean, default: true): Render subtle top highlight border on stacked cards.
+  - `scaleStep` (number, default: 0.05): Scale percentage delta by which each successive covering page shrinks lower layers.
+  - `dim` (boolean, default: true): Gradually darken covered layers as they are occluded by subsequent pages.
+- **Usage Example**:
+```tsx
+import { StickyPages } from "@/components/ui/StickyPages";
+
+const demoPages = [
+  {
+    id: 1,
+    badge: "Foundation",
+    subtitle: "Architecture",
+    title: "Engineered for Velocity",
+    description: "Atomic primitives sculpted for instant responsiveness and tactile micro-interactions.",
+    bg: "bg-slate-950",
+  },
+  {
+    id: 2,
+    badge: "Motion",
+    subtitle: "Fluid Physics",
+    title: "Organic Interpolation",
+    description: "Every curve uses spring stiffness and mass damping modeled after real-world kinematics.",
+    bg: "bg-violet-950",
+  },
+  {
+    id: 3,
+    badge: "Production",
+    subtitle: "Enterprise",
+    title: "Production Ready",
+    description: "Zero external dependencies beyond standard peer primitives. Copy, paste, and deploy.",
+    bg: "bg-zinc-950",
+  },
+];
+
+export function Example() {
+  return (
+    <div className="w-full">
+      <StickyPages pages={demoPages} pageHeight="80vh" />
+    </div>
+  );
+}
+```
+
+---
+
 ### Sticky Scroll Storytelling (`StickyScrollStory`)
 - **Slug**: `sticky-scroll-story`
 - **Category**: Cards
@@ -6511,197 +3993,45 @@ export function Example() {
 
 ---
 
-### Sticky Sub-Nav (`StickySubNav`)
-- **Slug**: `sticky-sub-nav`
-- **Category**: Navigation
-- **Tagline**: Product sub-navigation bar that appears on scroll with Buy CTA.
-- **Description**: Product-level frosted sticky sub-navigation bar that smoothly slides into view once the hero section scrolls out, pairing the product title on the left with a 'Buy' CTA pill on the right.
-- **Docs URL**: https://boseui.site/components/sticky-sub-nav
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/sticky-sub-nav.json`
-- **Registry Manifest**: https://boseui.site/r/sticky-sub-nav.json
-- **Key Features**:
-  - Automatically reveals with a spring slide-down animation (`backdrop-blur-xl`) once the hero section scrolls past.
-  - Displays product title on the left, section links in the center, and price + 'Buy' CTA pill on the right.
-  - Includes a self-contained scrollable demo viewport so you can test the scroll trigger immediately.
-- **Accessibility**:
-  - Uses semantic `<header>` and `<nav>` landmarks.
-  - Interactive Buy button announces confirmation state visually and via text.
-  - Respects `prefers-reduced-motion` for header entry and exit transitions.
-- **Props**:
-  - `productTitle` (string, default: "Studio Display Pro"): Product name displayed on the left side of the sticky bar.
-  - `priceLabel` (string, default: "$1,599"): Price string displayed next to the Buy button.
-  - `ctaLabel` (string, default: "Buy"): Label inside the primary right-hand CTA pill.
-  - `links` (SubNavLink[]): Array of navigation links ({ id, label }) shown in the bar.
-  - `onBuy` (() => void): Callback fired when the Buy button is clicked.
-  - `className` (string): Additional Tailwind CSS classes for the outer container.
-- **Usage Example**:
-```tsx
-import { StickySubNav } from "@/components/ui/sticky-sub-nav";
-
-export function Example() {
-  return (
-    <StickySubNav
-      productTitle="Studio Display Pro"
-      priceLabel="$1,599"
-      ctaLabel="Buy"
-    />
-  );
-}
-```
-
----
-
-### Streak Counter (`StreakCounter`)
-- **Slug**: `streak-counter`
-- **Category**: Motion
-- **Tagline**: Duolingo-inspired gamified streak counter with pulsing flame and confetti explosion.
-- **Description**: Duolingo-style gamified streak counter featuring a pulsing animated flame avatar with floating sparks, 7-day calendar circle row with completion checks, freeze shield, and celebratory confetti explosion.
-- **Docs URL**: https://boseui.site/components/streak-counter
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/streak-counter.json`
-- **Registry Manifest**: https://boseui.site/r/streak-counter.json
-- **Key Features**:
-  - Pulsing heat wave and floating ember sparks surrounding a rich gradient flame badge.
-  - Dynamic 7-day calendar circle row reflecting past completion, today's active state, and locked days.
-  - Radial multi-color confetti explosion upon claiming the day's streak.
-  - Milestone progress indicator tracking user progression to subsequent tier badges (e.g. 21-Day Club).
-  - Interactive streak freeze shield badge communicating protection against broken streaks.
-  - Live controls to inspect different streak counts and reset demonstration states.
-- **Accessibility**:
-  - Semantic buttons with full state descriptions (claimed vs pending).
-  - High contrast status badges communicating completed and locked days.
-  - Animations respect prefers-reduced-motion for reduced motion users.
-- **Props**:
-  - `initialStreak` (number, default: 14): Initial number of consecutive active days.
-  - `initialClaimed` (boolean, default: false): Whether the streak has already been locked in for today.
-  - `hasStreakFreeze` (boolean, default: true): Whether the user has a streak freeze equipped to protect missed days.
-  - `onClaim` ((newStreak: number) => void): Callback invoked when today's streak is claimed.
-  - `className` (string): Optional custom CSS classes for the container wrapper.
-- **Usage Example**:
-```tsx
-import { StreakCounter } from "@/components/ui/streak-counter";
-
-export function Example() {
-  return (
-    <StreakCounter
-      initialStreak={14}
-      initialClaimed={false}
-      hasStreakFreeze={true}
-      onClaim={(newStreak) => console.log("Claimed streak:", newStreak)}
-    />
-  );
-}
-```
-
----
-
-### Sunrise Horizon (`SunriseHorizon`)
-- **Slug**: `sunrise-horizon`
-- **Category**: Backgrounds
-- **Tagline**: Dynamic sky gradient with solar arc and horizon silhouettes.
-- **Description**: Layered atmospheric sky background that interpolates zenith, horizon, and solar glow gradients along a continuous solar arc from dawn to noon to dusk.
-- **Docs URL**: https://boseui.site/components/sunrise-horizon
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/sunrise-horizon.json`
-- **Registry Manifest**: https://boseui.site/r/sunrise-horizon.json
-- **Key Features**:
-  - Interpolates deep navy, violet, amber, and sky-blue stops via a normalized `time` value (0 to 1) or named presets ('dawn', 'noon', 'dusk').
-  - Translates the sun orb and radial horizon bloom along a sinusoidal arc behind SVG mountain silhouettes.
-  - Includes interactive Dawn/Noon/Dusk preset buttons and a live solar-arc scrubber out of the box.
-- **Accessibility**:
-  - Decorative sky layers and SVG silhouettes are marked with `aria-hidden='true'`.
-  - Interactive time scrubber and play/pause controls include explicit `aria-label` attributes.
-  - Supports pausing continuous sky animation at any time.
-- **Props**:
-  - `time` (number | "dawn" | "noon" | "dusk", default: "dawn"): Time of day from 0 to 1, or a named preset ('dawn', 'noon', 'dusk').
-  - `autoplay` (boolean, default: true): Continuously animates the solar arc through the day cycle.
-  - `sunSize` (number, default: 92): Diameter of the sun orb in pixels.
-  - `grain` (boolean, default: true): Overlays a subtle atmospheric grain texture.
-  - `children` (React.ReactNode): Optional foreground content rendered above the horizon.
-  - `className` (string): Additional Tailwind CSS classes for the container.
-- **Usage Example**:
-```tsx
-import { SunriseHorizon } from "@/components/ui/sunrise-horizon";
-
-export function Example() {
-  return (
-    <SunriseHorizon
-      time="dawn"
-      autoplay
-      sunSize={96}
-      grain
-    />
-  );
-}
-```
-
----
-
-### Swipe Cards (`SwipeCards`)
-- **Slug**: `swipe-cards`
+### Story Cards (`StoryCards`)
+- **Slug**: `story-cards`
 - **Category**: Cards
-- **Tagline**: Tinder-inspired swipeable card deck with drag physics and stamp overlays.
-- **Description**: Tinder-style swipeable card deck with drag physics, rotational tilt proportional to delta X, floating LIKE and NOPE stamp overlays, stack scale-up, and rewind capabilities.
-- **Docs URL**: https://boseui.site/components/swipe-cards
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/swipe-cards.json`
-- **Registry Manifest**: https://boseui.site/r/swipe-cards.json
+- **Tagline**: Interactive looped story carousel with spring expansions and gesture controls.
+- **Description**: Interactive looped story card showcase featuring continuous virtual looping, spring-animated expanding active slides, mouse-wheel scrub, touch gestures, and keyboard navigation.
+- **Docs URL**: https://boseui.site/components/story-cards
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/story-cards.json`
+- **Registry Manifest**: https://boseui.site/r/story-cards.json
 - **Key Features**:
-  - Intuitive horizontal drag gestures with Hooke's Law spring returns and velocity discard threshold.
-  - Dynamic rotational tilt and opacity stamps ('LIKE' / 'NOPE') mapped to drag offset.
-  - Background cards dynamically scale up and lift forward as top cards are swiped away.
-  - Tactile bottom action buttons (Rewind, Nope, Super Like, Like, Boost) with spring tap feedback.
-  - Undo / Rewind stack tracking allowing users to bring back recently swiped cards.
+  - Virtual circular index math allowing continuous, endless forward and backward looping.
+  - Spring-physics flex width interpolation allocating expanded focus to the active story.
+  - Multi-input gesture support: arrow keys, mouse wheel/trackpad horizontal scrub, and touch swipes.
+  - Accessible semantic landmarks with aria-live announcements and full keyboard controls.
 - **Accessibility**:
-  - Fully operable via standalone action buttons for keyboard and assistive tech users.
-  - All action triggers include accessible ARIA labels with state feedback.
-  - Gracefully operates with reduced motion settings enabled.
+  - Uses semantic <section> with aria-label='Stories' and aria-live announcements.
+  - Provides Left/Right arrow key navigation while ignoring inputs and editable fields.
+  - Respects prefers-reduced-motion to instantly switch slides without spring oscillations.
 - **Props**:
-  - `profiles` (ProfileCard[]): Array of profile items containing bio, metadata, tags, and visuals.
-  - `onSwipe` ((card: ProfileCard, direction: "like" | "nope" | "superlike") => void): Callback invoked when a card is swiped or action button is pressed.
-  - `className` (string): Optional custom CSS classes for the container wrapper.
+  - `cards` (StoryCard[]): Array of story items with id, title, description, image, and optional ctaLabel/href.
+  - `initialIndex` (number, default: 0): Starting active card index.
+  - `autoPlay` (boolean, default: false): Automatically cycle through stories on an interval.
+  - `autoPlayInterval` (number, default: 5000): Autoplay advance interval in milliseconds.
+  - `showNavigation` (boolean, default: true): Render previous and next icon buttons in the header.
+  - `loop` (boolean, default: true): When true, cycling wraps seamlessly around the beginning and end.
+  - `enableWheelScroll` (boolean, default: true): Allow trackpad or mouse-wheel gestures to step through cards.
+  - `title` (string, default: What's happening): Section headline text.
+  - `subtitle` (string, default: Discover the latest stories.): Section descriptive subtitle text.
 - **Usage Example**:
 ```tsx
-import { SwipeCards } from "@/components/ui/swipe-cards";
+import { StoryCards } from "@/components/ui/StoryCards";
 
 export function Example() {
   return (
-    <SwipeCards
-      onSwipe={(card, dir) => console.log(`Swiped ${dir} on ${card.name}`)}
-    />
-  );
-}
-```
-
----
-
-### Tabbed Code Block (`TabbedCodeBlock`)
-- **Slug**: `tabbed-code-block`
-- **Category**: Cards
-- **Tagline**: Multi-language developer code block with sliding tab underlines and terminal console runner.
-- **Description**: Multi-language developer code block featuring smooth sliding active tab underlines, syntax-token highlighting, line numbering, one-click copy, and an interactive simulated terminal runner.
-- **Docs URL**: https://boseui.site/components/tabbed-code-block
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/tabbed-code-block.json`
-- **Registry Manifest**: https://boseui.site/r/tabbed-code-block.json
-- **Key Features**:
-  - Multi-language tabs (cURL, Node.js, Python, Go) with spring layout sliding indicator.
-  - Granular token-based syntax coloring without hefty runtime parsing dependencies.
-  - Configurable line numbering and emphasized line highlight callouts.
-  - One-click copy to clipboard with responsive checkmark confirmation.
-  - Integrated collapsible live terminal console simulating real HTTP 200 JSON API responses.
-- **Accessibility**:
-  - Built with ARIA tablist, tab, and tabpanel semantic roles.
-  - Accessible clipboard feedback with screen-reader friendly status transitions.
-  - High-contrast color scheme adhering to WCAG AAA developer terminal guidelines.
-- **Props**:
-  - `defaultLang` (string, default: 'node'): Default active programming language tab ('curl', 'node', 'python', 'go').
-  - `showLineNumbers` (boolean, default: true): Whether to display line numbers alongside the code tokens.
-  - `className` (string): Optional CSS classes to apply to the root container.
-- **Usage Example**:
-```tsx
-import { TabbedCodeBlock } from "@/components/ui/TabbedCodeBlock";
-
-export function Example() {
-  return (
-    <div className="w-full">
-      <TabbedCodeBlock defaultLang="node" showLineNumbers={true} />
+    <div className="w-full max-w-5xl mx-auto p-4">
+      <StoryCards
+        title="Featured Stories"
+        subtitle="Swipe or scroll to explore latest releases."
+        autoPlay={false}
+      />
     </div>
   );
 }
@@ -6844,45 +4174,6 @@ export function Example() {
 
 ---
 
-### Tilt Pin Input (`TiltPinInput`)
-- **Slug**: `tilt-pin-input`
-- **Category**: Inputs
-- **Tagline**: Tactile OTP pin input with keystroke spring lifts and error shake.
-- **Description**: Tactile OTP digit pin input with spring keystroke lifts, auto-advance focus, paste parsing, and harmonic error shake mechanics.
-- **Docs URL**: https://boseui.site/components/tilt-pin-input
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/tilt-pin-input.json`
-- **Registry Manifest**: https://boseui.site/r/tilt-pin-input.json
-- **Key Features**:
-  - Harmonic shake animation across digit boxes upon invalid code submission.
-  - Spring-pressured vertical lift and scaling on active focused digits.
-  - Smart clipboard paste parsing that distributes code across boxes seamlessly.
-  - Full backspace backwards navigation and keyboard controls.
-- **Accessibility**:
-  - Individual digit boxes labeled with aria-label='Digit X of Y'.
-  - Numeric inputMode='numeric' optimized for mobile virtual keypads.
-  - Respects prefers-reduced-motion for shake effects.
-- **Props**:
-  - `length` (number, default: 4): Total number of code digits.
-  - `onComplete` ((pin: string) => void): Callback fired when all digits are entered.
-  - `onChange` ((pin: string) => void): Callback fired on every digit entry.
-  - `hasError` (boolean, default: false): Triggers harmonic error shake when true.
-  - `masked` (boolean, default: false): Masks numbers with dots for sensitive pins.
-- **Usage Example**:
-```tsx
-import { TiltPinInput } from "@/components/ui/tilt-pin-input";
-
-export function Example() {
-  return (
-    <TiltPinInput
-      length={6}
-      onComplete={(pin) => console.log("PIN Verified:", pin)}
-    />
-  );
-}
-```
-
----
-
 ### Toast Stack (`ToastStack`)
 - **Slug**: `toast-stack`
 - **Category**: Overlays
@@ -6919,39 +4210,6 @@ export function Example() {
       autoDismiss
       duration={4500}
     />
-  );
-}
-```
-
----
-
-### Topographic Ripple Surface (`TopographicRippleSurface`)
-- **Slug**: `topographic-ripple-surface`
-- **Category**: Backgrounds
-- **Tagline**: Multi-mass concentric contour rings with radial ripple propagation.
-- **Description**: Concentric contour ring background where pointer movement warps isolines with graduated spring mass and clicks emit a radial ripple.
-- **Docs URL**: https://boseui.site/components/topographic-ripple-surface
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/topographic-ripple-surface.json`
-- **Registry Manifest**: https://boseui.site/r/topographic-ripple-surface.json
-- **Key Features**:
-  - Graduated spring stiffness and mass per contour ring so inner isolines track tightly while outer rings trail organically.
-  - Click-triggered radial shockwave that ripples outward across all concentric rings.
-  - Zero React state re-renders during continuous pointer movement.
-- **Accessibility**:
-  - All decorative contour rings are marked aria-hidden='true'.
-  - Locks contour rings in concentric alignment and disables shockwave scaling when prefers-reduced-motion is active.
-  - Maintains high foreground contrast with a frosted backdrop container.
-- **Props**:
-  - `ringCount` (number, default: 6): Number of concentric topographic contour rings.
-  - `stiffness` (number, default: 220): Base spring stiffness coefficient for the innermost contour ring.
-  - `damping` (number, default: 20): Base spring damping coefficient for contour displacement.
-- **Usage Example**:
-```tsx
-import { TopographicRippleSurface } from "@/components/ui/topographic-ripple-surface";
-
-export function Example() {
-  return (
-    <TopographicRippleSurface ringCount={6} stiffness={220} damping={20} />
   );
 }
 ```
@@ -7125,58 +4383,6 @@ export function Example() {
 
 ---
 
-### Volcano Embers (`VolcanoEmbers`)
-- **Slug**: `volcano-embers`
-- **Category**: Backgrounds
-- **Tagline**: Incandescent sparks and thermal ash rising from a molten horizon.
-- **Description**: Rising volcanic embers and charred thermal ash on Canvas 2D with molten caldera horizon glow, velocity-aligned incandescent spark trails, and turbulent updraft vortices.
-- **Docs URL**: https://boseui.site/components/volcano-embers
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/volcano-embers.json`
-- **Registry Manifest**: https://boseui.site/r/volcano-embers.json
-- **Key Features**:
-  - Velocity-aligned incandescent ember streaks with radial bloom halos and cooling curves
-  - Mixed particle simulation combining glowing sparks and charred floating thermal ash
-  - Pulsing molten caldera horizon glow behind a dark basalt rim silhouette
-  - Interactive pointer updraft repulsion and live HUD controls for ember color, updraft, and swirl
-- **Accessibility**:
-  - Canvas layer uses pointer-events-none so foreground interactive elements remain unobstructed
-  - Interactive HUD presets and sliders support full keyboard focus and manipulation
-- **Props**:
-  - `emberCount` (number, default: 110): Total number of rising embers and thermal ash particles.
-  - `updraftSpeed` (number, default: 1.2): Vertical thermal updraft velocity multiplier.
-  - `turbulence` (number, default: 1.0): Intensity of horizontal curl turbulence and vortex swirl.
-  - `emberColor` (string, default: "#FF6B1A"): Primary hex color for the glowing embers and caldera horizon.
-  - `coreGlow` (number, default: 0.8): Intensity of the molten magma glow along the bottom horizon (0 to 1.5).
-  - `children` (React.ReactNode): Optional foreground UI rendered above the embers canvas.
-  - `className` (string): Additional Tailwind CSS classes for the root container.
-- **Usage Example**:
-```tsx
-import { VolcanoEmbers } from "@/components/ui/VolcanoEmbers";
-
-export default function VolcanoEmbersDemo() {
-  return (
-    <VolcanoEmbers
-      emberCount={110}
-      updraftSpeed={1.2}
-      turbulence={1.0}
-      emberColor="#FF6B1A"
-      coreGlow={0.8}
-    >
-      <div className="flex min-h-[520px] flex-col items-center justify-center p-8 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-white">
-          Forged in Magma
-        </h1>
-        <p className="mt-3 max-w-md text-orange-100/80">
-          Incandescent embers and ash rising on turbulent volcanic updrafts.
-        </p>
-      </div>
-    </VolcanoEmbers>
-  );
-}
-```
-
----
-
 ### Warp Speed (`WarpSpeed`)
 - **Slug**: `warp-speed`
 - **Category**: Backgrounds
@@ -7220,58 +4426,6 @@ export function Example() {
 
 ---
 
-### Warp Text (`WarpText`)
-- **Slug**: `warp-text`
-- **Category**: Text
-- **Tagline**: Cinematic spaceship hyperspace warp drive typography animation.
-- **Description**: Cinematic sci-fi typography animation inspired by spaceship hyperspace jumps with directional motion blur, velocity scale stretch, and photonic light trail echoes.
-- **Docs URL**: https://boseui.site/components/warp-text
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/warp-text.json`
-- **Registry Manifest**: https://boseui.site/r/warp-text.json
-- **Key Features**:
-  - Cinematic directional acceleration supporting forward, left, right, up, and down warp trajectories.
-  - Integrated motion blur, photonic glow bloom, and trailing ghost echoes.
-  - Granular splitting control by character, word, or line with preserved whitespace boundaries.
-  - Continuous velocity loop mode and interactive trigger options (mount, viewport, hover).
-  - Screen-reader accessible: single accessible text label with aria-hidden animated tokens.
-- **Accessibility**:
-  - Includes sr-only complete text phrase so screen readers read the sentence smoothly rather than spelling out characters.
-  - Fully respects prefers-reduced-motion by replacing high-speed blur/scaling with a gentle opacity fade.
-  - Non-layout shifting transforms ensure zero Cumulative Layout Shift (CLS).
-- **Props**:
-  - `text` (string, default: "WARP SPEED"): Text content to animate through hyperspace warp.
-  - `direction` ("forward" | "left" | "right" | "up" | "down", default: "forward"): Directional trajectory of the warp acceleration.
-  - `speed` (number, default: 1): Speed multiplier for the warp acceleration.
-  - `duration` (number, default: 1.1): Base animation duration in seconds.
-  - `delay` (number, default: 0): Delay before the animation starts in seconds.
-  - `blur` (boolean, default: true): Whether to apply directional motion blur during travel.
-  - `glow` (boolean, default: true): Whether to render photonic bloom and glow highlights.
-  - `trail` (boolean, default: true): Whether to render velocity motion trail echoes.
-  - `loop` (boolean, default: false): Whether to cycle the warp animation continuously.
-  - `trigger` ("mount" | "viewport" | "hover" | "manual", default: "mount"): Condition that triggers the warp jump animation.
-  - `split` ("character" | "word" | "line", default: "character"): How text is partitioned for sequential stagger.
-  - `glowColor` (string, default: "rgba(56, 189, 248, 0.75)"): Custom glow accent color.
-- **Usage Example**:
-```tsx
-import { WarpText } from "@/components/ui/WarpText";
-
-export function HeroHeadline() {
-  return (
-    <WarpText
-      text="HYPERSPACE ACTIVE"
-      direction="forward"
-      speed={1.4}
-      blur={true}
-      glow={true}
-      trail={true}
-      className="text-5xl font-black text-white"
-    />
-  );
-}
-```
-
----
-
 ### Water Ripples (`WaterRipples`)
 - **Slug**: `water-ripples`
 - **Category**: Backgrounds
@@ -7307,130 +4461,6 @@ export function Example() {
       rippleRadius={140}
       ambientDrops
       color="#38BDF8"
-      interactive
-    />
-  );
-}
-```
-
----
-
-### Waterfall (`Waterfall`)
-- **Slug**: `waterfall`
-- **Category**: Backgrounds
-- **Tagline**: Gravity-accelerated hydro streaks and volumetric plunge mist.
-- **Description**: Physics-driven cascading waterfall background rendered on HTML5 Canvas 2D with 240+ layered vertical hydro streaks, gravity-accelerated splash droplets, and a pulsing volumetric mist cloud at the plunge basin.
-- **Docs URL**: https://boseui.site/components/waterfall
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/waterfall.json`
-- **Registry Manifest**: https://boseui.site/r/waterfall.json
-- **Key Features**:
-  - Three depth-sorted hydro streak layers with independent speed, thickness, and additive screen luminance.
-  - Ballistic splash droplets launched upward from the plunge line with real-time gravity decay.
-  - Pulsing volumetric mist puffs and shimmering water surface ripples along the basin floor.
-- **Accessibility**:
-  - Marks the decorative Canvas 2D element and vignette overlays with `aria-hidden='true'`.
-  - High-contrast glassmorphic HUD controls remain keyboard accessible when no custom children are passed.
-  - Automatically scales to devicePixelRatio (capped at 2x) via ResizeObserver without layout thrashing.
-- **Props**:
-  - `flow` (number, default: 1.0): Velocity multiplier for falling water streaks and splash kinetics.
-  - `mistAmount` (number, default: 0.75): Opacity and density of the pulsing volumetric mist cloud at the plunge pool line (0 to 1).
-  - `color` (string, default: "#38BDF8"): Primary hex color tint for the water streaks, subsurface glow, and mist.
-  - `curtainWidth` (number, default: 0.75): Horizontal span of the waterfall curtain relative to the container width (0.3 to 1.0).
-  - `splashIntensity` (number, default: 1.0): Spawn rate multiplier for upward-bouncing splash droplets at the plunge line.
-  - `children` (React.ReactNode): Optional foreground UI rendered above the waterfall canvas.
-  - `className` (string): Additional Tailwind CSS classes for the root container.
-- **Usage Example**:
-```tsx
-import { Waterfall } from "@/components/ui/waterfall";
-
-export function Example() {
-  return (
-    <Waterfall
-      flow={1.15}
-      mistAmount={0.8}
-      color="#38BDF8"
-      curtainWidth={0.75}
-      splashIntensity={1.0}
-    />
-  );
-}
-```
-
----
-
-### Webhook Payload Simulator (`WebhookPayloadSimulator`)
-- **Slug**: `webhook-payload-simulator`
-- **Category**: Cards
-- **Tagline**: Signed test webhook event dispatcher with HMAC signature verification.
-- **Description**: Stripe and GitHub inspired webhook inspection card with HMAC-SHA256 signature auto-signing, event topic selectors, formatted JSON payload viewer, and live test delivery dispatcher.
-- **Docs URL**: https://boseui.site/components/webhook-payload-simulator
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/webhook-payload-simulator.json`
-- **Registry Manifest**: https://boseui.site/r/webhook-payload-simulator.json
-- **Key Features**:
-  - Pre-configured standard events (payment_intent, subscription, invoice).
-  - Simulated HMAC header generation with auto-signed hash indicator.
-  - Interactive Dispatch trigger with simulated round-trip HTTP latency.
-  - One-click copy for the formatted JSON event body.
-- **Accessibility**:
-  - Accessible select menus with keyboard selection.
-  - High-contrast delivery response indicators with dual color and icon cues.
-- **Props**:
-  - `defaultTargetUrl` (string, default: "https://app.acme.com/api/webhooks/stripe"): Default receiving endpoint URL.
-  - `defaultEventType` (string, default: "payment_intent.succeeded"): Initial webhook event topic selected.
-  - `hmacSecret` (string, default: "whsec_94b8109d72c1a8e"): Mock HMAC signing secret key.
-- **Usage Example**:
-```tsx
-import { WebhookPayloadSimulator } from "@/components/ui/WebhookPayloadSimulator";
-
-export function Example() {
-  return (
-    <WebhookPayloadSimulator
-      defaultEventType="payment_intent.succeeded"
-      defaultTargetUrl="https://app.acme.com/api/webhooks/stripe"
-    />
-  );
-}
-```
-
----
-
-### Wormhole Tunnel (`WormholeTunnel`)
-- **Slug**: `wormhole-tunnel`
-- **Category**: Backgrounds
-- **Tagline**: Interactive Einstein-Rosen conduit with helical twist and spectrum shift.
-- **Description**: Structured hyperspace wormhole tunnel on Canvas 2D featuring concentric polygonal energy rings and longitudinal warp ribs scaling from an interactive Lissajous vanishing point.
-- **Docs URL**: https://boseui.site/components/wormhole-tunnel
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/wormhole-tunnel.json`
-- **Registry Manifest**: https://boseui.site/r/wormhole-tunnel.json
-- **Key Features**:
-  - Exponential 3D perspective projection of concentric geodesic rings and longitudinal ribs
-  - Pointer-reactive vanishing throat that smoothly falls back to an organic Lissajous oscillation
-  - Continuous helical twist and spectral HSL hue shifting from throat to outer aperture
-  - Interactive HUD with Cherenkov Cyan, Hyperdrive Magenta, and Chrono Gold presets
-- **Accessibility**:
-  - Canvas is marked aria-hidden so screen readers bypass decorative tunnel geometry
-  - Interactive speed and twist sliders allow reducing motion velocity on demand
-- **Props**:
-  - `ringCount` (number, default: 28): Number of concentric depth rings rendered along the wormhole.
-  - `speed` (number, default: 1.0): Forward traversal velocity multiplier.
-  - `baseHue` (number, default: 195): Starting HSL hue angle in degrees (0-360).
-  - `hueShift` (number, default: 90): Total hue shift across the depth of the tunnel.
-  - `twist` (number, default: 1.2): Helical rotational twist factor along the tunnel axis.
-  - `interactive` (boolean, default: true): Whether pointer movement bends the wormhole vanishing point.
-  - `children` (React.ReactNode): Optional foreground UI rendered inside the wormhole container.
-  - `className` (string): Additional CSS classes for the root container.
-- **Usage Example**:
-```tsx
-import { WormholeTunnel } from "@/components/ui/WormholeTunnel";
-
-export function WormholeTunnelDemo() {
-  return (
-    <WormholeTunnel
-      ringCount={28}
-      speed={1.0}
-      baseHue={195}
-      hueShift={90}
-      twist={1.2}
       interactive
     />
   );

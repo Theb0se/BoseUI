@@ -9,19 +9,13 @@ import {
   Globe2,
   ArrowUpRight,
   Sparkles,
-  Server,
   Activity,
-  Layers,
   RotateCcw,
   Plus,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RollingNumberTicker } from "@/components/ui/RollingNumberTicker";
 import { KineticRollingCounter } from "@/components/ui/KineticRollingCounter";
-import {
-  ScrubbableSparkline,
-  type SparklinePoint,
-} from "@/components/ui/ScrubbableSparkline";
 
 export interface StatsStripBlockProps {
   /** Section eyebrow label */
@@ -33,7 +27,7 @@ export interface StatsStripBlockProps {
   className?: string;
 }
 
-const SAMPLE_GROWTH_DATA: SparklinePoint[] = [
+const SAMPLE_GROWTH_DATA = [
   { time: "00:00", value: 3120 },
   { time: "04:00", value: 3450 },
   { time: "08:00", value: 4180 },
@@ -51,6 +45,9 @@ export function StatsStripBlock({
 }: StatsStripBlockProps) {
   const [tickerValue, setTickerValue] = useState(4820);
   const [activeTimeframe, setActiveTimeframe] = useState<"24h" | "7d" | "30d">("24h");
+  const [hoveredPoint, setHoveredPoint] = useState<number | null>(SAMPLE_GROWTH_DATA.length - 1);
+
+  const activePoint = hoveredPoint !== null ? SAMPLE_GROWTH_DATA[hoveredPoint] : SAMPLE_GROWTH_DATA[SAMPLE_GROWTH_DATA.length - 1];
 
   return (
     <div
@@ -210,7 +207,7 @@ export function StatsStripBlock({
             </div>
           </div>
 
-          {/* Card 3: Scrubbable Sparkline (Interactive Growth Chart) */}
+          {/* Card 3: Interactive Throughput Sparkline */}
           <div className="flex flex-col justify-between rounded-3xl border border-neutral-800 bg-neutral-900/80 p-6 sm:p-7 backdrop-blur-xl shadow-xl transition-all duration-300 hover:border-neutral-700 md:col-span-2 lg:col-span-1">
             <div>
               <div className="flex items-center justify-between">
@@ -218,8 +215,8 @@ export function StatsStripBlock({
                   <Zap className="h-3.5 w-3.5" />
                   REALTIME_THROUGHPUT
                 </span>
-                <span className="font-mono text-[11px] text-neutral-500">
-                  SCRUB_TO_INSPECT
+                <span className="font-mono text-[11px] text-purple-400 font-semibold">
+                  {activePoint.value.toLocaleString()} REQ/S
                 </span>
               </div>
 
@@ -227,22 +224,55 @@ export function StatsStripBlock({
                 Network Requests Throughput
               </h3>
               <p className="mt-1 text-xs text-neutral-400">
-                Hover or scrub across the sparkline to view granular timestamp telemetry.
+                Hover across the sparkline to view granular timestamp telemetry.
               </p>
 
-              {/* Embedded Scrubbable Sparkline Component */}
+              {/* Mini Sparkline Visualization */}
               <div className="mt-4 rounded-2xl border border-neutral-800/80 bg-neutral-950/70 p-3">
-                <ScrubbableSparkline
-                  data={SAMPLE_GROWTH_DATA}
-                  title="Peak Edge Traffic"
-                  ticker="REQ / SEC"
-                  currency=""
-                  height={120}
-                  showGradient={true}
-                  showGrid={true}
-                  minimal={true}
-                  className="border-0 bg-transparent p-0 shadow-none"
-                />
+                <div className="flex items-center justify-between text-[11px] font-mono text-neutral-500 mb-2">
+                  <span>Peak Edge Traffic</span>
+                  <span className="text-white">{activePoint.time} UTC</span>
+                </div>
+                <div className="relative h-24 w-full flex items-end">
+                  <svg className="w-full h-full overflow-visible" viewBox="0 0 300 100" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="purpleGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#a855f7" stopOpacity="0.4" />
+                        <stop offset="100%" stopColor="#a855f7" stopOpacity="0.0" />
+                      </linearGradient>
+                    </defs>
+                    {/* Fill */}
+                    <path
+                      d="M 0 85 L 50 75 L 100 55 L 150 40 L 200 35 L 250 22 L 300 8 L 300 100 L 0 100 Z"
+                      fill="url(#purpleGrad)"
+                    />
+                    {/* Line */}
+                    <path
+                      d="M 0 85 L 50 75 L 100 55 L 150 40 L 200 35 L 250 22 L 300 8"
+                      fill="none"
+                      stroke="#c084fc"
+                      strokeWidth="2.5"
+                    />
+                  </svg>
+                  {/* Hover Hitboxes */}
+                  <div className="absolute inset-0 flex justify-between">
+                    {SAMPLE_GROWTH_DATA.map((pt, i) => (
+                      <button
+                        key={pt.time}
+                        type="button"
+                        onMouseEnter={() => setHoveredPoint(i)}
+                        className="flex-1 h-full cursor-pointer group focus:outline-none flex flex-col justify-end items-center"
+                      >
+                        <div
+                          className={cn(
+                            "w-1.5 h-1.5 rounded-full transition-transform",
+                            hoveredPoint === i ? "bg-purple-300 scale-150" : "bg-transparent group-hover:bg-purple-500/50"
+                          )}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -274,3 +304,5 @@ export function StatsStripBlock({
     </div>
   );
 }
+
+export default StatsStripBlock;

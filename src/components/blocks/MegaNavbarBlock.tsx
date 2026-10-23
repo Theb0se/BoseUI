@@ -15,12 +15,12 @@ import {
   Zap,
   Github,
   ChevronRight,
+  ChevronDown,
   ExternalLink,
+  Search,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DynamicIslandToast } from "@/components/ui/DynamicIslandToast";
-import { MorphingMegaMenu } from "@/components/ui/MorphingMegaMenu";
-import { ExpandingSearchPill } from "@/components/ui/ExpandingSearchPill";
 
 export interface MegaNavbarBlockProps {
   /** Brand or product name */
@@ -46,6 +46,30 @@ export function MegaNavbarBlock({
 }: MegaNavbarBlockProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+
+  const NAV_ITEMS = [
+    {
+      id: "products",
+      label: "Products",
+      items: [
+        { title: "Kinetic Primitives", desc: "Physics-based micro-interactions" },
+        { title: "Composite Blocks", desc: "Production landing sections" },
+        { title: "Background Shaders", desc: "WebGL and canvas backdrops" },
+      ],
+    },
+    {
+      id: "solutions",
+      label: "Solutions",
+      items: [
+        { title: "Fintech & Billing", desc: "Real-time ledger and checkout views" },
+        { title: "Enterprise SaaS", desc: "High density dashboards and controls" },
+      ],
+    },
+    { id: "developers", label: "Developers", href: "/docs" },
+    { id: "pricing", label: "Pricing", href: "#pricing" },
+  ];
 
   return (
     <div
@@ -132,9 +156,46 @@ export function MegaNavbarBlock({
             </a>
           </div>
 
-          {/* Center: Morphing Mega Menu (Desktop) */}
-          <div className="hidden lg:flex items-center justify-center flex-1 px-4">
-            <MorphingMegaMenu embedded={true} className="justify-center" />
+          {/* Center: Mega Menu Navigation (Desktop) */}
+          <div className="hidden lg:flex items-center justify-center gap-1 px-4">
+            {NAV_ITEMS.map((item) => (
+              <div
+                key={item.id}
+                className="relative"
+                onMouseEnter={() => item.items && setActiveDropdown(item.id)}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <button
+                  type="button"
+                  className={cn(
+                    "flex items-center gap-1 px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors",
+                    activeDropdown === item.id
+                      ? "text-white bg-neutral-800/80"
+                      : "text-neutral-400 hover:text-white"
+                  )}
+                >
+                  {item.label}
+                  {item.items && <ChevronDown className="h-3 w-3 opacity-60" />}
+                </button>
+
+                {item.items && activeDropdown === item.id && (
+                  <div className="absolute left-0 top-full pt-2 w-64 z-50">
+                    <div className="rounded-xl border border-neutral-800 bg-neutral-900/95 p-2 shadow-2xl backdrop-blur-xl">
+                      {item.items.map((sub, i) => (
+                        <a
+                          key={i}
+                          href="#item"
+                          className="block p-2.5 rounded-lg hover:bg-neutral-800/80 transition-colors"
+                        >
+                          <div className="text-xs font-medium text-white">{sub.title}</div>
+                          <div className="text-[11px] text-neutral-400 mt-0.5">{sub.desc}</div>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
 
           {/* Right Header Actions */}
@@ -248,19 +309,19 @@ export function MegaNavbarBlock({
         </AnimatePresence>
       </header>
 
-      {/* Expanding Search Pill Stage (Collapsible Bar or Standalone Modal) */}
+      {/* Search Modal / Bar */}
       <AnimatePresence>
         {showSearchModal && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="relative z-20 border-b border-neutral-800 bg-neutral-900/90 px-4 py-4 backdrop-blur-xl"
+            className="relative z-20 border-b border-neutral-800 bg-neutral-900/95 px-4 py-4 backdrop-blur-xl"
           >
-            <div className="mx-auto max-w-4xl flex flex-col items-center gap-3">
+            <div className="mx-auto max-w-2xl flex flex-col gap-3">
               <div className="flex w-full items-center justify-between">
                 <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                  Global Unified Search & Directory
+                  Global Unified Search
                 </span>
                 <button
                   type="button"
@@ -270,11 +331,17 @@ export function MegaNavbarBlock({
                   <X className="h-4 w-4" />
                 </button>
               </div>
-              <ExpandingSearchPill
-                embedded={true}
-                initialDestination="San Francisco, CA"
-                className="w-full flex justify-center"
-              />
+              <div className="relative">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search components, shaders, documentation..."
+                  className="w-full h-11 pl-10 pr-4 rounded-xl border border-neutral-700 bg-neutral-950 text-sm text-white placeholder-neutral-500 focus:border-blue-500 focus:outline-none"
+                  autoFocus
+                />
+              </div>
             </div>
           </motion.div>
         )}
@@ -322,3 +389,5 @@ export function MegaNavbarBlock({
     </div>
   );
 }
+
+export default MegaNavbarBlock;

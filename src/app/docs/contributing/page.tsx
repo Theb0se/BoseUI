@@ -223,7 +223,7 @@ export default function ContributingPage() {
             Open Source Community
           </span>
           <span className="text-xs text-neutral-400">·</span>
-          <span className="text-xs font-mono text-neutral-500">v1.0.0</span>
+          <span className="text-xs font-mono text-neutral-500">v2.0</span>
         </div>
 
         <h1 className="mt-3 text-3xl font-bold tracking-tight text-neutral-950 dark:text-white sm:text-4xl">

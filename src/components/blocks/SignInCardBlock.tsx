@@ -15,9 +15,10 @@ import {
   Fingerprint,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { SiriGlowEdge, SiriState } from "@/components/ui/SiriGlowEdge";
 import { FloatingLabelInput } from "@/components/ui/FloatingLabelInput";
 import { SpringPinInput } from "@/components/ui/SpringPinInput";
+
+export type AuthState = "idle" | "thinking" | "responding";
 
 export interface SignInCardBlockProps {
   /** Organization or product title */
@@ -41,7 +42,7 @@ export function SignInCardBlock({
 }: SignInCardBlockProps) {
   const [email, setEmail] = useState(defaultEmail);
   const [pin, setPin] = useState("482910");
-  const [authState, setAuthState] = useState<SiriState>("idle");
+  const [authState, setAuthState] = useState<AuthState>("idle");
   const [isSuccess, setIsSuccess] = useState(false);
   const [resending, setResending] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
@@ -94,14 +95,8 @@ export function SignInCardBlock({
       {/* Center authentication showcase container */}
       <div className="relative z-10 flex min-h-[460px] flex-col items-center justify-center">
         <div className="w-full max-w-lg">
-          <SiriGlowEdge
-            initialState={authState}
-            intensity={isSuccess ? 1.8 : 1.1}
-            glowWidth={16}
-            enableBreathing={!isSuccess}
-            className="w-full"
-          >
-            <div className="space-y-6">
+          <div className="relative rounded-3xl p-[1px] bg-gradient-to-b from-white/20 via-white/5 to-white/10 shadow-2xl">
+            <div className="rounded-3xl bg-neutral-900/95 p-6 sm:p-8 backdrop-blur-xl border border-white/5 space-y-6">
               {/* Card Header */}
               <div className="flex items-start justify-between border-b border-white/10 pb-4">
                 <div className="space-y-1">
@@ -149,108 +144,67 @@ export function SignInCardBlock({
                       type="button"
                       onClick={handleResend}
                       disabled={resendCooldown > 0 || resending}
-                      className="inline-flex items-center gap-1 text-[11px] text-cyan-400 transition hover:text-cyan-300 disabled:opacity-50"
+                      className="text-[11px] font-mono text-cyan-400 hover:text-cyan-300 transition-colors disabled:text-neutral-500 flex items-center gap-1"
                     >
-                      <RefreshCw
-                        className={cn("h-3 w-3", resending && "animate-spin")}
-                      />
-                      {resendCooldown > 0
-                        ? `Resend in ${resendCooldown}s`
-                        : "Resend Code"}
+                      <RefreshCw className={cn("h-3 w-3", resending && "animate-spin")} />
+                      <span>{resendCooldown > 0 ? `Resend in ${resendCooldown}s` : "Resend code"}</span>
                     </button>
                   </div>
-
-                  <div className="flex justify-center rounded-xl border border-white/5 bg-black/40 p-3 backdrop-blur-sm">
+                  <div className="flex justify-center py-2">
                     <SpringPinInput
                       length={6}
                       defaultValue={pin}
-                      onComplete={(code) => {
+                      onComplete={(code: string) => {
                         setPin(code);
-                        setAuthState("listening");
+                        handleSubmit();
                       }}
                       className="gap-2"
                     />
                   </div>
                 </div>
 
-                {/* Primary Submit Action */}
+                {/* Submit button */}
                 <button
                   type="submit"
                   disabled={!isEmailValid || !isPinComplete || authState === "thinking"}
                   className={cn(
-                    "group relative flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold transition-all shadow-lg",
+                    "w-full h-11 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-lg",
                     isSuccess
-                      ? "bg-emerald-600 text-white shadow-emerald-900/30"
-                      : "bg-white text-neutral-900 hover:bg-neutral-100 disabled:opacity-50 disabled:pointer-events-none shadow-white/10"
+                      ? "bg-emerald-500 text-white"
+                      : "bg-white text-neutral-950 hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   )}
                 >
-                  {authState === "thinking" ? (
-                    <span className="inline-flex items-center gap-2">
-                      <RefreshCw className="h-4 w-4 animate-spin text-neutral-900" />
-                      Verifying Signature...
-                    </span>
-                  ) : isSuccess ? (
-                    <span className="inline-flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-white" />
-                      Access Granted &bull; Redirecting...
-                    </span>
+                  {isSuccess ? (
+                    <>
+                      <CheckCircle2 className="h-4 w-4" />
+                      <span>Session Verified & Authenticated</span>
+                    </>
+                  ) : authState === "thinking" ? (
+                    <>
+                      <RefreshCw className="h-4 w-4 animate-spin" />
+                      <span>Verifying Biometric Passkey...</span>
+                    </>
                   ) : (
-                    <span className="inline-flex items-center gap-2">
-                      <Fingerprint className="h-4 w-4" />
-                      Complete Biometric Sign In
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </span>
+                    <>
+                      <span>Continue to Dashboard</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </>
                   )}
                 </button>
-
-                {/* Alternative Authentication Providers */}
-                <div className="relative my-3 flex items-center justify-center">
-                  <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-white/10" />
-                  </div>
-                  <span className="relative bg-[#0B0E17] px-3 text-[11px] uppercase tracking-wider text-neutral-400">
-                    Or Continue With
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setEmail("alex.mercer@github-auth.dev");
-                      setPin("994201");
-                    }}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 py-2 text-xs font-medium text-neutral-300 transition hover:bg-white/10 hover:text-white"
-                  >
-                    <Github className="h-3.5 w-3.5" />
-                    GitHub Enterprise
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setEmail("alex.mercer@okta-sso.com");
-                      setPin("331804");
-                    }}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 py-2 text-xs font-medium text-neutral-300 transition hover:bg-white/10 hover:text-white"
-                  >
-                    <KeyRound className="h-3.5 w-3.5" />
-                    Okta SAML SSO
-                  </button>
-                </div>
               </form>
 
-              {/* Trust Footer */}
-              <div className="flex items-center justify-between border-t border-white/10 pt-4 text-[11px] text-neutral-400">
-                <span className="inline-flex items-center gap-1">
-                  <Sparkles className="h-3 w-3 text-cyan-400" />
-                  FIDO2 WebAuthn Hardware Compatible
+              {/* Alternative Biometrics Footer */}
+              <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-neutral-400">
+                <span className="flex items-center gap-1">
+                  <Fingerprint className="h-3.5 w-3.5 text-neutral-400" />
+                  <span>Hardware FIDO2 Security Key enabled</span>
                 </span>
-                <span className="font-mono text-[10px] text-neutral-500">
-                  v2.4 TLS 1.3
-                </span>
+                <a href="#help" className="hover:text-white transition-colors">
+                  Need help?
+                </a>
               </div>
             </div>
-          </SiriGlowEdge>
+          </div>
         </div>
       </div>
     </div>

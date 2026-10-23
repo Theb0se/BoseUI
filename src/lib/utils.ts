@@ -38,10 +38,10 @@ export async function copyToClipboard(text: string): Promise<boolean> {
 
 export const SITE_CONFIG = {
   name: "BoseUI",
-  version: "1.0.0",
+  version: "2.0.0",
   tagline: "Kinetic React Components Engineered to Make Interfaces Feel Alive",
   description:
-    "140+ free, open-source animated React primitives built with Framer Motion, Tailwind CSS, and TypeScript. Install with one shadcn command and own the code.",
+    "Free, open-source animated React primitives built with Framer Motion, Tailwind CSS, and TypeScript. Install with one shadcn command and own the code.",
   url: "https://boseui.site",
   ogImage: "/OG.png",
   author: {

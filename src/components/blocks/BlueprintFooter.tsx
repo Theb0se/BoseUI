@@ -11,7 +11,7 @@ import {
   Twitter,
   ArrowUpRight,
 } from "lucide-react";
-import { KeycapChips } from "@/components/ui/KeycapChips";
+
 import { cn } from "@/lib/utils";
 
 export interface BlueprintFooterLink {
@@ -109,13 +109,10 @@ export function BlueprintFooter({
             <div className="text-xs font-mono text-neutral-400 pl-1 hidden sm:block">
               Quick Navigation
             </div>
-            <KeycapChips
-              keys={["⌘", "K"]}
-              size="sm"
-              variant="obsidian"
-              inline={true}
-              className="p-0 border-0 bg-transparent"
-            />
+            <div className="flex items-center gap-1">
+              <kbd className="px-1.5 py-0.5 rounded bg-neutral-800 border border-neutral-700 font-mono text-[11px] text-neutral-300">⌘</kbd>
+              <kbd className="px-1.5 py-0.5 rounded bg-neutral-800 border border-neutral-700 font-mono text-[11px] text-neutral-300">K</kbd>
+            </div>
           </div>
         </div>
 

@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, Bot, Wand2, Terminal, Code2, ArrowUpRight, Cpu } from "lucide-react";
-import { SiriGlowEdge, SiriState } from "@/components/ui/SiriGlowEdge";
-import { SlashCommandMenu } from "@/components/ui/SlashCommandMenu";
+import { Sparkles, Bot, Wand2, Terminal, Code2, ArrowUpRight, Cpu, Send, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface AiAssistantBlockProps {
@@ -24,15 +22,22 @@ export function AiAssistantBlock({
   tagline = "Summon generative reasoning, slash commands, and multi-modal canvas tools with physical edge feedback.",
   className,
 }: AiAssistantBlockProps) {
-  const [activeState, setActiveState] = useState<SiriState>("idle");
   const [activeQuery, setActiveQuery] = useState("");
+  const [isExecuting, setIsExecuting] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleSelectSuggestion = (query: string) => {
     setActiveQuery(query);
-    setActiveState("thinking");
+    setIsExecuting(true);
     setTimeout(() => {
-      setActiveState("responding");
+      setIsExecuting(false);
     }, 1200);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard?.writeText(activeQuery || "npx boseui@latest add");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -81,15 +86,9 @@ export function AiAssistantBlock({
         </div>
       </div>
 
-      {/* Main card stage wrapped in Siri Chromatic Aura */}
+      {/* Main card stage */}
       <div className="relative mx-auto max-w-4xl">
-        <SiriGlowEdge
-          initialState={activeState}
-          intensity={1.2}
-          glowWidth={16}
-          enableBreathing={true}
-          className="rounded-2xl"
-        >
+        <div className="relative rounded-2xl p-[1px] bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-cyan-500/30">
           <div className="relative bg-neutral-900/90 rounded-2xl border border-neutral-800/80 p-5 sm:p-7 backdrop-blur-xl">
             {/* Top Toolbar */}
             <div className="flex items-center justify-between border-b border-neutral-800 pb-4 mb-6">
@@ -108,18 +107,50 @@ export function AiAssistantBlock({
               <div className="flex items-center gap-2">
                 <span className="hidden sm:inline-flex items-center gap-1 rounded-md bg-neutral-800/80 px-2.5 py-1 text-[11px] font-mono text-neutral-400">
                   <Terminal className="h-3 w-3 text-cyan-400" />
-                  <span>Type / for quick actions</span>
+                  <span>Interactive Assistant Console</span>
                 </span>
               </div>
             </div>
 
-            {/* Embedded Slash Command Editor */}
-            <SlashCommandMenu
-              placeholder={activeQuery || "Type '/' for assistant commands or start writing..."}
-              className="border-0 bg-transparent p-0 shadow-none min-h-[380px]"
-            />
+            {/* Prompt Bar & Terminal Preview */}
+            <div className="min-h-[280px] flex flex-col justify-between gap-6">
+              <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-4 font-mono text-xs text-neutral-300 leading-relaxed">
+                <div className="text-neutral-500 mb-2">// Active execution stdout stream</div>
+                <div className="flex items-center gap-2 text-cyan-400">
+                  <span className="select-none">$</span>
+                  <span>{activeQuery || "boseui assistant --ready"}</span>
+                </div>
+                {isExecuting ? (
+                  <div className="mt-3 flex items-center gap-2 text-purple-400">
+                    <span className="h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
+                    <span>Analyzing AST design tokens and generating optimized code...</span>
+                  </div>
+                ) : (
+                  <div className="mt-3 text-neutral-400">
+                    ✔ Ready for next instruction. Select any prompt suggestion above or input command below.
+                  </div>
+                )}
+              </div>
+
+              <div className="flex items-center gap-2 rounded-xl border border-neutral-800 bg-neutral-950/80 p-2">
+                <input
+                  type="text"
+                  value={activeQuery}
+                  onChange={(e) => setActiveQuery(e.target.value)}
+                  placeholder="Type a command or design request..."
+                  className="flex-1 bg-transparent px-3 py-1.5 text-xs text-neutral-100 placeholder:text-neutral-500 focus:outline-none font-mono"
+                />
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  className="px-3 py-1.5 rounded-lg border border-neutral-700 bg-neutral-800 text-xs font-mono text-neutral-200 hover:text-white transition-colors"
+                >
+                  {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Send className="h-3.5 w-3.5" />}
+                </button>
+              </div>
+            </div>
           </div>
-        </SiriGlowEdge>
+        </div>
       </div>
     </div>
   );

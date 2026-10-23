@@ -34,7 +34,7 @@ const jsonLd = [
         "name": "What is BoseUI?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "BoseUI is an open-source, animation-first component library for modern React applications. It provides over 142 production-grade UI primitives built with Framer Motion and Tailwind CSS, designed to make interfaces feel alive with fluid spring mechanics."
+          "text": "BoseUI is an open-source, animation-first component library for modern React applications. It provides production-grade UI primitives built with Framer Motion and Tailwind CSS, designed to make interfaces feel alive with fluid spring mechanics."
         }
       },
       {

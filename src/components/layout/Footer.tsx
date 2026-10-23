@@ -165,6 +165,8 @@ export function Footer() {
             </a>
           </p>
           <div className="flex items-center gap-4 font-mono text-[11px]">
+            <span>BoseUI v2</span>
+            <span>·</span>
             <span>MIT License</span>
             <span>·</span>
             <span>Next.js · Tailwind · Framer Motion</span>

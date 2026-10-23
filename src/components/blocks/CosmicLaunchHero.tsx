@@ -1,15 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Star, Sparkles, ArrowRight, Terminal, Github } from "lucide-react";
+import { Star, Sparkles, ArrowRight, Terminal, Github, Copy, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { StarryNight } from "@/components/ui/StarryNight";
 import { ShootingStars } from "@/components/ui/ShootingStars";
 import { ShimmerText } from "@/components/ui/ShimmerText";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { CopyCodeBlock } from "@/components/ui/CopyCodeBlock";
-import { AvatarStackPresence } from "@/components/ui/AvatarStackPresence";
 
 export interface CosmicLaunchHeroProps {
   /** Main marketing headline */
@@ -28,51 +26,65 @@ export interface CosmicLaunchHeroProps {
 
 export function CosmicLaunchHero({
   headline = "Engineering the next frontier of kinetic user interfaces",
-  subheadline = "A production-grade design system and motion toolkit crafted with physics-based springs, GPU-accelerated shaders, and precision ergonomics.",
-  installCommand = "npx boseui add cosmic-launch",
-  developerCount = "12,000+",
+  subheadline = "Production-ready motion components, interactive devtools, and dynamic shaders built with Framer Motion, Tailwind CSS, and WebGL.",
+  installCommand = "npx boseui@latest init",
+  developerCount = "14,800+",
   rating = 5,
   className,
 }: CosmicLaunchHeroProps) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard?.writeText(installCommand);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div
       data-fullscreen-scroll
       className={cn(
-        "relative w-full min-h-[560px] overflow-hidden rounded-2xl border border-neutral-800/80 bg-[#070913] text-white flex flex-col justify-between shadow-2xl selection:bg-indigo-500/30",
+        "relative w-full min-h-[640px] overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 text-white shadow-2xl flex flex-col justify-between",
         className
       )}
     >
-      {/* Background Starfield & Meteor Canopy */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <StarryNight density={220} twinkle parallax={28} className="w-full h-full border-0 bg-transparent p-0 shadow-none">
+      {/* Background Starry Universe Canvas */}
+      <div className="absolute inset-0 pointer-events-none opacity-85">
+        <StarryNight
+          density={120}
+          twinkle={true}
+          className="h-full w-full rounded-none border-0"
+        >
           <div className="hidden" />
         </StarryNight>
-        <ShootingStars frequency={1.8} angle={32} color="#818CF8" maxConcurrent={4} className="w-full h-full border-0 bg-transparent p-0 shadow-none">
-          <div className="hidden" />
-        </ShootingStars>
-        {/* Ambient atmospheric gradients */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-80 bg-indigo-600/15 blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 right-10 w-96 h-64 bg-purple-600/10 blur-[100px] rounded-full pointer-events-none" />
       </div>
 
-      {/* Main Hero Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-12 md:py-16 lg:py-20 flex flex-col items-center text-center">
+      {/* Dynamic Shooting Stars Overlay */}
+      <div className="absolute inset-0 pointer-events-none">
+        <ShootingStars
+          color="#A855F7"
+          frequency={2}
+          angle={35}
+        />
+      </div>
+
+      {/* Main Hero Marketing Content */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-16 pb-12 max-w-5xl mx-auto my-auto">
         {/* Release Pill Badge */}
         <motion.div
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-950/40 backdrop-blur-md text-xs font-medium text-indigo-300 shadow-inner hover:border-indigo-400/50 transition-colors"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-800 bg-neutral-900/80 backdrop-blur-md text-xs font-mono text-neutral-300 shadow-inner mb-6"
         >
-          <Sparkles className="w-3.5 h-3.5 text-indigo-400 animate-pulse" />
-          <span className="font-semibold text-white">v2.4 Released</span>
-          <span className="text-neutral-400">•</span>
-          <span>Cosmic Canvas Architecture</span>
-          <ArrowRight className="w-3 h-3 text-indigo-300" />
+          <span className="flex h-2 w-2 rounded-full bg-purple-500 animate-pulse" />
+          <span>v2.4 Production Catalog Active</span>
+          <span className="text-neutral-600">|</span>
+          <span className="text-purple-400 font-semibold">100+ Kinetic Primitives</span>
         </motion.div>
 
-        {/* Shimmering Headline */}
-        <div className="mt-6 max-w-4xl mx-auto">
+        {/* Shimmer Specular Headline */}
+        <div className="max-w-4xl">
           <ShimmerText
             text={headline}
             palette="silver"
@@ -127,12 +139,21 @@ export function CosmicLaunchHero({
           transition={{ duration: 0.6, delay: 0.35, ease: "easeOut" }}
           className="mt-10 w-full max-w-xl mx-auto text-left"
         >
-          <CopyCodeBlock
-            code={installCommand}
-            title="Terminal Installation"
-            showPromptPrefix
-            className="bg-neutral-950/80 border-neutral-800 backdrop-blur-xl shadow-xl"
-          />
+          <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-950/80 backdrop-blur-xl p-3 px-4 shadow-xl font-mono text-xs text-neutral-200">
+            <div className="flex items-center gap-2.5">
+              <Terminal className="h-4 w-4 text-purple-400" />
+              <span className="text-neutral-500">$</span>
+              <span>{installCommand}</span>
+            </div>
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-neutral-800 bg-neutral-900 text-neutral-300 hover:text-white text-[11px] transition-colors"
+            >
+              {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+              <span>{copied ? "Copied" : "Copy"}</span>
+            </button>
+          </div>
         </motion.div>
       </div>
 
@@ -141,7 +162,17 @@ export function CosmicLaunchHero({
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Avatar presence stack */}
           <div className="flex items-center gap-3">
-            <AvatarStackPresence maxVisible={4} size="sm" />
+            <div className="flex -space-x-2 overflow-hidden">
+              {["#6366f1", "#a855f7", "#ec4899", "#3b82f6"].map((bg, idx) => (
+                <div
+                  key={idx}
+                  style={{ backgroundColor: bg }}
+                  className="inline-flex h-7 w-7 rounded-full ring-2 ring-neutral-900 items-center justify-center text-[10px] font-bold text-white uppercase"
+                >
+                  {String.fromCharCode(65 + idx)}
+                </div>
+              ))}
+            </div>
             <div className="text-left">
               <p className="text-xs font-semibold text-neutral-200">
                 Trusted by {developerCount} developers
@@ -167,11 +198,9 @@ export function CosmicLaunchHero({
                 />
               ))}
             </div>
-            <span className="font-semibold text-white">
-              {rating.toFixed(1)} / 5.0
-            </span>
+            <span className="font-semibold text-white">5.0</span>
             <span className="text-neutral-500">•</span>
-            <span className="text-neutral-400">4,800+ Verified Reviews</span>
+            <span className="text-neutral-400">SOC2 Type II Certified</span>
           </div>
         </div>
       </div>

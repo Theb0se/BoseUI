@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { HorizonLight } from "@/components/ui/HorizonLight";
-import { StickySubNav } from "@/components/ui/StickySubNav";
 import { ShimmerText } from "@/components/ui/ShimmerText";
 import { SplitButton, SplitButtonOption } from "@/components/ui/SplitButton";
 
@@ -119,19 +118,26 @@ export function DawnHero({
       )}
     >
       {/* Pinned SubNav Header with Live Breadcrumb Context */}
-      <div className="relative z-30 w-full border-b border-neutral-800/80 bg-neutral-950/80 backdrop-blur-xl">
-        <StickySubNav
-          productTitle={brandTitle}
-          priceLabel="v2.0 Beta"
-          ctaLabel="Explore Kit"
-          links={[
-            { id: "overview", label: "Overview" },
-            { id: "kinetics", label: "Kinetic Optics" },
-            { id: "specs", label: "Shader Specs" },
-            { id: "docs", label: "Documentation" },
-          ]}
-          className="border-none shadow-none"
-        />
+      <div className="relative z-30 w-full border-b border-neutral-800/80 bg-neutral-950/80 backdrop-blur-xl px-4 py-3 sm:px-6 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="font-semibold text-sm tracking-tight text-white">{brandTitle}</span>
+          <span className="rounded-full bg-orange-500/15 border border-orange-500/30 px-2 py-0.5 text-[11px] font-mono text-orange-400">
+            v2.0 Beta
+          </span>
+        </div>
+        <div className="hidden md:flex items-center gap-6 text-xs text-neutral-400 font-medium">
+          <span className="text-white hover:text-orange-400 transition-colors cursor-pointer">Overview</span>
+          <span className="hover:text-white transition-colors cursor-pointer">Kinetic Optics</span>
+          <span className="hover:text-white transition-colors cursor-pointer">Shader Specs</span>
+          <span className="hover:text-white transition-colors cursor-pointer">Documentation</span>
+        </div>
+        <button
+          type="button"
+          onClick={handlePrimaryClick}
+          className="rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 px-3 py-1.5 text-xs font-medium text-white transition-all shadow-sm"
+        >
+          Explore Kit
+        </button>
       </div>
 
       {/* Volumetric Horizon Light Backdrop */}

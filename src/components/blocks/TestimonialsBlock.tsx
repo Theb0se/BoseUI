@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -8,19 +8,10 @@ import {
   Quote,
   CheckCircle2,
   Building2,
-  Heart,
-  Flame,
-  Rocket,
-  ThumbsUp,
   MessageSquare,
   Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-  AutoplayStoryCarousel,
-  type StorySlide,
-} from "@/components/ui/AutoplayStoryCarousel";
-import { ReactionPicker } from "@/components/ui/ReactionPicker";
 
 export interface CustomerTestimonial {
   id: string;
@@ -36,7 +27,6 @@ export interface CustomerTestimonial {
     emoji: string;
     count: number;
     reactedByMe: boolean;
-    users: string[];
   }[];
 }
 
@@ -48,14 +38,14 @@ const CUSTOMER_TESTIMONIALS: CustomerTestimonial[] = [
     company: "Aether Cloud",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
     quote:
-      "Replacing our custom motion curves with Pulse UI cut interaction jank by 94%. Our design team and engineers finally share the exact same Hooke's Law physics vocabulary.",
+      "Replacing our custom motion curves with Bose UI cut interaction jank by 94%. Our design team and engineers finally share the exact same Hooke's Law physics vocabulary.",
     rating: 5,
     verified: true,
     metrics: { label: "Design System Velocity", value: "+340%" },
     initialReactions: [
-      { emoji: "🚀", count: 48, reactedByMe: true, users: ["Elena", "Marcus", "Sarah"] },
-      { emoji: "🔥", count: 32, reactedByMe: false, users: ["Devin", "Alex"] },
-      { emoji: "❤️", count: 19, reactedByMe: false, users: ["Chris"] },
+      { emoji: "🚀", count: 48, reactedByMe: true },
+      { emoji: "🔥", count: 32, reactedByMe: false },
+      { emoji: "❤️", count: 19, reactedByMe: false },
     ],
   },
   {
@@ -70,9 +60,9 @@ const CUSTOMER_TESTIMONIALS: CustomerTestimonial[] = [
     verified: true,
     metrics: { label: "Time to Production", value: "2 Days" },
     initialReactions: [
-      { emoji: "🔥", count: 57, reactedByMe: true, users: ["Marcus", "Elena"] },
-      { emoji: "🎉", count: 24, reactedByMe: false, users: ["Kavita"] },
-      { emoji: "❤️", count: 15, reactedByMe: false, users: ["Leo"] },
+      { emoji: "🔥", count: 57, reactedByMe: true },
+      { emoji: "🎉", count: 24, reactedByMe: false },
+      { emoji: "❤️", count: 15, reactedByMe: false },
     ],
   },
   {
@@ -87,23 +77,20 @@ const CUSTOMER_TESTIMONIALS: CustomerTestimonial[] = [
     verified: true,
     metrics: { label: "Checkout Conversion", value: "+18.2%" },
     initialReactions: [
-      { emoji: "❤️", count: 62, reactedByMe: true, users: ["Sophia", "Dave"] },
-      { emoji: "🚀", count: 41, reactedByMe: false, users: ["Maya"] },
-      { emoji: "🔥", count: 29, reactedByMe: false, users: ["Ken"] },
+      { emoji: "❤️", count: 62, reactedByMe: true },
+      { emoji: "🚀", count: 41, reactedByMe: false },
+      { emoji: "🔥", count: 29, reactedByMe: false },
     ],
   },
 ];
 
-const STORY_SLIDES: StorySlide[] = [
+const STORY_SLIDES = [
   {
     id: "story-1",
     tag: "CASE STUDY · FINTECH",
     title: "NovaPay scaled to 45M transactions with 0 frame drops",
     subtitle:
       "Discover how NovaPay utilized our animated ticker numbers and bento blocks to build real-time banking telemetry that delights millions.",
-    accentColor: "#3b82f6",
-    gradient: "from-blue-600/30 to-indigo-900/40",
-    badge: "99.99% UPTIME",
     stats: [
       { label: "Daily Transactions", value: "45M+" },
       { label: "Frame Budget Latency", value: "< 7.8ms" },
@@ -116,9 +103,6 @@ const STORY_SLIDES: StorySlide[] = [
     title: "Aether Cloud reduced design system debt by 70%",
     subtitle:
       "A complete walkthrough of migrating legacy UI kits to pure TypeScript spring physics primitives with zero CSS bundle footprint.",
-    accentColor: "#8b5cf6",
-    gradient: "from-purple-600/30 to-pink-900/40",
-    badge: "0 KB BUNDLE",
     stats: [
       { label: "Code Repositories", value: "24 Monorepos" },
       { label: "Deployment Speed", value: "3.2x Faster" },
@@ -131,9 +115,6 @@ const STORY_SLIDES: StorySlide[] = [
     title: "LinearFlow launched their 2026 overhaul in 48 hours",
     subtitle:
       "Empowered designers and engineers to speak the same declarative physics parameters without tedious back-and-forth reviews.",
-    accentColor: "#10b981",
-    gradient: "from-emerald-600/30 to-teal-900/40",
-    badge: "RAPID DELIVERY",
     stats: [
       { label: "Components Replaced", value: "48 Primitives" },
       { label: "Lighthouse Score", value: "100/100" },
@@ -159,8 +140,38 @@ export function TestimonialsBlock({
   className,
 }: TestimonialsBlockProps) {
   const [activeReviewIndex, setActiveReviewIndex] = useState(0);
+  const [activeStoryIndex, setActiveStoryIndex] = useState(0);
+  const [reactions, setReactions] = useState(
+    CUSTOMER_TESTIMONIALS.map((t) => [...t.initialReactions])
+  );
 
-  const activeReview = CUSTOMER_TESTIMONIALS[activeReviewIndex] ?? CUSTOMER_TESTIMONIALS[0];
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveStoryIndex((prev) => (prev + 1) % STORY_SLIDES.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const activeReview = CUSTOMER_TESTIMONIALS[activeReviewIndex];
+  const activeStory = STORY_SLIDES[activeStoryIndex];
+
+  const handleToggleReaction = (reviewIdx: number, emojiIdx: number) => {
+    setReactions((prev) => {
+      const copy = [...prev];
+      const reviewReactions = [...copy[reviewIdx]];
+      const item = { ...reviewReactions[emojiIdx] };
+      if (item.reactedByMe) {
+        item.count -= 1;
+        item.reactedByMe = false;
+      } else {
+        item.count += 1;
+        item.reactedByMe = true;
+      }
+      reviewReactions[emojiIdx] = item;
+      copy[reviewIdx] = reviewReactions;
+      return copy;
+    });
+  };
 
   return (
     <div
@@ -217,31 +228,62 @@ export function TestimonialsBlock({
         </div>
       </div>
 
-      {/* Main Grid: Story Carousel + Interactive Review Card with ReactionPicker */}
+      {/* Main Grid: Story Carousel + Customer Review Card */}
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Column: Autoplay Story Carousel */}
+          {/* Left Column: Featured Enterprise Stories */}
           <div className="lg:col-span-6 flex flex-col justify-center">
-            <div className="rounded-3xl border border-neutral-800 bg-neutral-900/40 p-2 backdrop-blur-xl shadow-xl">
-              <div className="px-4 py-2 border-b border-neutral-800 flex items-center justify-between text-xs font-mono text-neutral-400">
-                <span className="flex items-center gap-1.5 text-blue-400">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  FEATURED_ENTERPRISE_STORIES
-                </span>
-                <span className="text-neutral-500">AUTOPLAY_ACTIVE</span>
+            <div className="rounded-3xl border border-neutral-800 bg-neutral-900/40 p-6 backdrop-blur-xl shadow-xl flex flex-col justify-between min-h-[380px]">
+              <div>
+                <div className="pb-4 border-b border-neutral-800 flex items-center justify-between text-xs font-mono text-neutral-400">
+                  <span className="flex items-center gap-1.5 text-blue-400">
+                    <Sparkles className="h-3.5 w-3.5" />
+                    FEATURED_ENTERPRISE_STORIES
+                  </span>
+                  <div className="flex gap-1.5">
+                    {STORY_SLIDES.map((s, idx) => (
+                      <button
+                        key={s.id}
+                        type="button"
+                        onClick={() => setActiveStoryIndex(idx)}
+                        className={cn(
+                          "h-1.5 rounded-full transition-all",
+                          idx === activeStoryIndex ? "w-6 bg-blue-500" : "w-1.5 bg-neutral-700 hover:bg-neutral-500"
+                        )}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-5">
+                  <span className="text-xs font-mono text-cyan-400 uppercase tracking-wider">
+                    {activeStory.tag}
+                  </span>
+                  <h3 className="mt-2 text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug">
+                    {activeStory.title}
+                  </h3>
+                  <p className="mt-3 text-sm text-neutral-400 leading-relaxed">
+                    {activeStory.subtitle}
+                  </p>
+                </div>
               </div>
-              <AutoplayStoryCarousel
-                slides={STORY_SLIDES}
-                duration={5500}
-                showHeader={false}
-                showControls={false}
-                className="w-full min-h-0 border-0 bg-transparent shadow-none p-2"
-              />
+
+              <div className="mt-8 pt-5 border-t border-neutral-800/80 flex items-center justify-between">
+                <div className="flex items-center gap-6">
+                  {activeStory.stats.map((st, i) => (
+                    <div key={i}>
+                      <div className="text-[11px] font-mono text-neutral-500">{st.label}</div>
+                      <div className="text-base font-bold font-mono text-white">{st.value}</div>
+                    </div>
+                  ))}
+                </div>
+                <span className="text-xs font-mono text-neutral-500">{activeStory.date}</span>
+              </div>
             </div>
           </div>
 
-          {/* Right Column: Customer Testimonial Card with Reaction Picker */}
+          {/* Right Column: Customer Testimonial Card with Reactions */}
           <div className="lg:col-span-6 flex flex-col gap-4">
             
             {/* Review Switcher Tabs */}
@@ -310,7 +352,7 @@ export function TestimonialsBlock({
                 </div>
               </div>
 
-              {/* Interactive Reaction Picker Component */}
+              {/* Interactive Reaction Pills */}
               <div className="mt-6 pt-5 border-t border-neutral-800/70">
                 <div className="mb-2 flex items-center justify-between text-xs text-neutral-400">
                   <span className="flex items-center gap-1.5 font-mono text-[11px] text-neutral-500">
@@ -319,12 +361,24 @@ export function TestimonialsBlock({
                   </span>
                   <span className="text-[11px] text-neutral-500">Click emoji to react</span>
                 </div>
-                <ReactionPicker
-                  key={`reaction-${activeReview.id}`}
-                  initialReactions={activeReview.initialReactions}
-                  inline={true}
-                  className="mt-2"
-                />
+                <div className="flex items-center gap-2 mt-2">
+                  {reactions[activeReviewIndex].map((r, emojiIdx) => (
+                    <button
+                      key={r.emoji}
+                      type="button"
+                      onClick={() => handleToggleReaction(activeReviewIndex, emojiIdx)}
+                      className={cn(
+                        "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all",
+                        r.reactedByMe
+                          ? "border border-rose-500/40 bg-rose-500/15 text-rose-300 shadow-sm"
+                          : "border border-neutral-800 bg-neutral-900/60 text-neutral-400 hover:text-white hover:border-neutral-700"
+                      )}
+                    >
+                      <span>{r.emoji}</span>
+                      <span className="font-mono text-[11px]">{r.count}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -335,3 +389,5 @@ export function TestimonialsBlock({
     </div>
   );
 }
+
+export default TestimonialsBlock;
