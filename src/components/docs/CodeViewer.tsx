@@ -34,17 +34,17 @@ export function CodeViewer({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50 dark:border-[#222222] dark:bg-[#050505]",
+        "overflow-hidden rounded-2xl border border-neutral-200/90 bg-neutral-50/50 shadow-2xs dark:border-neutral-800 dark:bg-[#050505]",
         className
       )}
     >
-      <div className="flex items-center justify-between border-b border-neutral-200 bg-white px-4 py-2.5 dark:border-[#1F1F1F] dark:bg-[#0A0A0A]">
+      <div className="flex items-center justify-between border-b border-neutral-200/80 bg-white px-4 py-2.5 dark:border-neutral-800 dark:bg-[#0A0A0A]">
         <div className="flex items-center gap-2">
           <FileCode2 className="h-4 w-4 text-neutral-500 dark:text-neutral-400" />
-          <span className="font-mono text-xs font-medium text-black dark:text-white">
+          <span className="font-mono text-xs font-semibold text-neutral-950 dark:text-white">
             {filename}
           </span>
-          <span className="rounded border border-neutral-200 bg-neutral-100 px-1.5 py-0.5 font-mono text-[10px] uppercase text-neutral-500 dark:border-[#262626] dark:bg-[#141414] dark:text-neutral-400">
+          <span className="rounded border border-neutral-200 bg-neutral-100 px-1.5 py-0.5 font-mono text-[10px] uppercase text-neutral-500 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400">
             {language}
           </span>
         </div>
@@ -52,12 +52,13 @@ export function CodeViewer({
         <button
           type="button"
           onClick={handleCopy}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-neutral-100 px-2.5 py-1 font-mono text-xs text-neutral-700 transition-colors hover:border-black hover:bg-black hover:text-white dark:border-[#262626] dark:bg-[#141414] dark:text-neutral-300 dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
+          aria-label="Copy code"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-neutral-50 px-2.5 py-1 font-mono text-xs font-medium text-neutral-700 transition-colors hover:border-neutral-900 hover:bg-neutral-900 hover:text-white dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
         >
           {copied ? (
             <>
-              <Check className="h-3.5 w-3.5" />
-              <span>Copied</span>
+              <Check className="h-3.5 w-3.5 text-emerald-500" />
+              <span className="text-emerald-500">Copied</span>
             </>
           ) : (
             <>
@@ -77,9 +78,9 @@ export function CodeViewer({
             {lines.map((line, idx) => (
               <tr
                 key={idx}
-                className="hover:bg-neutral-200/50 dark:hover:bg-[#111111]"
+                className="hover:bg-neutral-200/40 dark:hover:bg-neutral-900/40"
               >
-                <td className="w-9 select-none pr-4 text-right font-mono text-[11px] text-neutral-400 dark:text-neutral-600">
+                <td className="w-10 select-none pr-4 text-right font-mono text-[11px] tabular-nums text-neutral-400 dark:text-neutral-600">
                   {idx + 1}
                 </td>
                 <td className="whitespace-pre text-neutral-800 dark:text-neutral-200">

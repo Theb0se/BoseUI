@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Flame, Activity, Sliders, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface SolarFlareProps {
@@ -26,9 +25,9 @@ function hexToNormalizedRgb(hex: string): [number, number, number] {
   const full =
     cleaned.length === 3
       ? cleaned
-          .split("")
-          .map((c) => c + c)
-          .join("")
+        .split("")
+        .map((c) => c + c)
+        .join("")
       : cleaned.padEnd(6, "0").slice(0, 6);
   const num = parseInt(full, 16);
   if (Number.isNaN(num)) return [1.0, 0.33, 0.0];
@@ -235,7 +234,7 @@ void main() {
 
     // Fine radial coronal helmet streamers extending into deep space
     float streamerNoise = fbm(vec2(angle * 16.0, distFromLimb * 1.8 - u_time * 0.2));
-    float rays = pow(streamerNoise, 1.6) * exp(-distFromLimb * 3.6) * 0.55 * u_eruption;
+    float rays = pow(streamerNoise, 0.6) * exp(-distFromLimb * 3.6) * 0.55 * u_eruption;
 
     vec3 coronaGlow = u_flareColor * (falloff * 0.88 + prominence * falloff * 2.85 + rays);
     coronaGlow += u_coreColor * (innerChromosphereRim * 1.15 + prominence * exp(-distFromLimb * 13.0) * 1.45);
@@ -244,7 +243,7 @@ void main() {
   }
 
   // HDR ACES-inspired filmic tone mapping & anti-banding dither
-  col = (col * (2.51 * col + 0.03)) / (col * (2.43 * col + 0.59) + 0.14);
+  col = (col * (2.1 * col + 0.03)) / (col * (2.3 * col + 0.29) + 0.04);
   col = pow(clamp(col, 0.0, 1.0), vec3(0.92));
   col += (hash21(gl_FragCoord.xy + fract(u_time)) - 0.5) / 255.0;
 
@@ -252,29 +251,7 @@ void main() {
 }
 `;
 
-const SOLAR_PRESETS = [
-  {
-    name: "G-Type Photosphere",
-    coreColor: "#FFF7CC",
-    flareColor: "#FF5500",
-    turbulence: 1.0,
-    eruptionIntensity: 1.0,
-  },
-  {
-    name: "Blue Hypergiant",
-    coreColor: "#E0F2FE",
-    flareColor: "#0284C7",
-    turbulence: 1.35,
-    eruptionIntensity: 1.4,
-  },
-  {
-    name: "Red Magnetar",
-    coreColor: "#FECDD3",
-    flareColor: "#E11D48",
-    turbulence: 1.5,
-    eruptionIntensity: 1.65,
-  },
-] as const;
+
 
 export function SolarFlare({
   coreColor = "#FFF7CC",

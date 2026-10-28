@@ -15,8 +15,10 @@ import {
   Monitor,
   Tablet,
   Smartphone,
-  Expand,
   Sparkles,
+  Grid3X3,
+  CircleDot,
+  Square,
 } from "lucide-react";
 import { ComponentPreview } from "@/components/docs/preview";
 import { CodeViewer } from "@/components/docs/CodeViewer";
@@ -29,109 +31,15 @@ export interface ComponentPreviewStageProps {
   filePath: string;
 }
 
-/* ─── Toolbar icon-button ─── */
-function ToolbarButton({
-  children,
-  className,
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  return (
-    <motion.button
-      whileHover={{ scale: 1.04 }}
-      whileTap={{ scale: 0.97 }}
-      transition={{ type: "spring", stiffness: 400, damping: 20 }}
-      className={cn(
-        "inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 font-mono text-xs font-medium transition-colors",
-        "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-400 hover:text-neutral-950",
-        "dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400 dark:hover:border-neutral-600 dark:hover:text-white",
-        className
-      )}
-      {...(props as React.ComponentProps<typeof motion.button>)}
-    >
-      {children}
-    </motion.button>
-  );
-}
+type TabId = "preview" | "usage" | "code";
+type BackgroundPattern = "dots" | "grid" | "clean";
+type ViewportSize = "desktop" | "tablet" | "mobile";
 
-/* ─── Tab item with animated indicator ─── */
 const TAB_META = {
   preview: { icon: Eye, label: "Preview" },
   usage: { icon: Terminal, label: "Usage" },
   code: { icon: Code2, label: "Code" },
 } as const;
-
-type TabId = "preview" | "usage" | "code";
-
-function TabButton({
-  id,
-  activeTab,
-  onClick,
-}: {
-  id: TabId;
-  activeTab: TabId;
-  onClick: () => void;
-}) {
-  const { icon: Icon, label } = TAB_META[id];
-  const isActive = activeTab === id;
-
-  return (
-    <button
-      type="button"
-      role="tab"
-      aria-selected={isActive}
-      onClick={onClick}
-      className={cn(
-        "relative z-10 inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors",
-        isActive
-          ? "text-neutral-950 dark:text-white"
-          : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
-      )}
-    >
-      {isActive && (
-        <motion.span
-          layoutId="stage-tab-pill"
-          className="absolute inset-0 rounded-lg bg-white shadow-sm dark:bg-neutral-800"
-          transition={{ type: "spring", stiffness: 380, damping: 28 }}
-        />
-      )}
-      <span className="relative z-10 flex items-center gap-1.5">
-        <Icon className="h-3.5 w-3.5" />
-        <span>{label}</span>
-      </span>
-    </button>
-  );
-}
-
-/* ─── Panel transition variants ─── */
-const panelVariants = {
-  initial: { opacity: 0, y: 6 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -4 },
-};
-
-/* ─── Viewport Switcher (used inside fullscreen) ─── */
-const viewportOptions = [
-  {
-    id: "full",
-    label: "Full Width",
-    icon: <Expand className="h-3.5 w-3.5" />,
-  },
-  {
-    id: "centered",
-    label: "Default Size",
-    icon: <Monitor className="h-3.5 w-3.5" />,
-  },
-  {
-    id: "tablet",
-    label: "Tablet (768px)",
-    icon: <Tablet className="h-3.5 w-3.5" />,
-  },
-  {
-    id: "mobile",
-    label: "Mobile (390px)",
-    icon: <Smartphone className="h-3.5 w-3.5" />,
-  },
-] as const;
 
 export function ComponentPreviewStage({
   slug,
@@ -142,21 +50,22 @@ export function ComponentPreviewStage({
   const [activeTab, setActiveTab] = useState<TabId>("preview");
   const [replayKey, setReplayKey] = useState(0);
   const [copiedSource, setCopiedSource] = useState(false);
+  const [copiedAiPrompt, setCopiedAiPrompt] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [viewportSize, setViewportSize] = useState<
-    "full" | "centered" | "tablet" | "mobile"
-  >("full");
+  const [viewportSize, setViewportSize] = useState<ViewportSize>("desktop");
+  const [bgPattern, setBgPattern] = useState<BackgroundPattern>("dots");
   const [mounted, setMounted] = useState(false);
+  const [isRotating, setIsRotating] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleExitFullscreen = useCallback(() => {
     setIsFullscreen(false);
     if (typeof document !== "undefined") {
       document.body.style.overflow = "";
     }
-  }, []);
-
-  useEffect(() => {
-    setMounted(true);
   }, []);
 
   // Lock body scroll and listen for Escape when in fullscreen mode
@@ -177,17 +86,6 @@ export function ComponentPreviewStage({
     };
   }, [isFullscreen, handleExitFullscreen]);
 
-  // Safety cleanup: always restore body overflow on unmount
-  useEffect(() => {
-    return () => {
-      if (typeof document !== "undefined") {
-        document.body.style.overflow = "";
-      }
-    };
-  }, []);
-
-  const [copiedAiPrompt, setCopiedAiPrompt] = useState(false);
-
   const handleQuickCopy = async () => {
     const targetCode =
       activeTab === "usage" && usageCode ? usageCode : sourceCode;
@@ -207,356 +105,470 @@ export function ComponentPreviewStage({
     }
   };
 
-  /* ─── Which tabs to show ─── */
+  const handleReset = () => {
+    setIsRotating(true);
+    setReplayKey((k) => k + 1);
+    setTimeout(() => setIsRotating(false), 450);
+  };
+
   const tabs: TabId[] = usageCode
     ? ["preview", "usage", "code"]
     : ["preview", "code"];
 
+  const renderStageCanvas = (isFs = false) => (
+    <div
+      key={`stage-canvas-${replayKey}-${viewportSize}-${bgPattern}`}
+      className={cn(
+        "relative flex min-h-[400px] w-full items-center justify-center overflow-hidden p-6 sm:p-12 transition-all duration-300",
+        isFs ? "min-h-[calc(100vh-8rem)] py-8" : "sm:min-h-[460px]",
+        bgPattern === "clean" && "bg-neutral-50/50 dark:bg-[#060606]"
+      )}
+    >
+      {/* Background pattern texture */}
+      {bgPattern === "dots" && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-dot-matrix opacity-60 [background-size:20px_20px] [mask-image:radial-gradient(ellipse_at_center,black_70%,transparent_100%)]"
+        />
+      )}
+      {bgPattern === "grid" && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-grid-pattern opacity-60 [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_70%,transparent_100%)]"
+        />
+      )}
+
+      {/* Responsive Viewport Container */}
+      <div
+        className={cn(
+          "relative z-10 flex w-full items-center justify-center transition-all duration-300 ease-out",
+          viewportSize === "desktop" && "max-w-full",
+          viewportSize === "tablet" &&
+            "max-w-[768px] rounded-3xl border border-dashed border-neutral-300 bg-white/90 p-8 shadow-sm backdrop-blur-xs dark:border-neutral-800 dark:bg-black/90",
+          viewportSize === "mobile" &&
+            "max-w-[390px] rounded-3xl border border-dashed border-neutral-300 bg-white/90 p-6 shadow-sm backdrop-blur-xs dark:border-neutral-800 dark:bg-black/90"
+        )}
+      >
+        <ComponentPreview
+          slug={slug}
+          className={viewportSize === "desktop" ? "max-w-none" : undefined}
+        />
+      </div>
+
+      {/* Subtle responsive indicator badge when scaled down */}
+      {viewportSize !== "desktop" && (
+        <div className="pointer-events-none absolute bottom-3 right-3 rounded-md border border-neutral-200 bg-white/90 px-2 py-0.5 font-mono text-[10px] text-neutral-500 shadow-2xs backdrop-blur-xs dark:border-neutral-800 dark:bg-neutral-900/90 dark:text-neutral-400">
+          {viewportSize === "tablet" ? "Tablet · 768px" : "Mobile · 390px"}
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <>
-      <div className="group/stage overflow-hidden rounded-2xl border border-neutral-200/80 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-shadow hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)] dark:border-neutral-800/80 dark:bg-[#0A0A0A] dark:shadow-none dark:hover:shadow-[0_2px_16px_rgba(255,255,255,0.03)]">
-        {/* ── Unified Top Toolbar ── */}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-neutral-200/80 px-3.5 py-2.5 dark:border-neutral-800/80">
-          {/* Left Tabs: Preview | Usage | Code */}
+      <div className="group/stage overflow-hidden rounded-2xl border border-neutral-200/90 bg-white shadow-2xs transition-all hover:border-neutral-300 dark:border-neutral-800 dark:bg-[#0A0A0A] dark:hover:border-neutral-700">
+        {/* ── Precision Chrome Toolbar ── */}
+        <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-neutral-200/80 bg-neutral-50/70 px-3.5 py-2.5 dark:border-neutral-800 dark:bg-[#0C0C0C]">
+          {/* Left: Tab Switcher (Preview | Usage | Code) */}
           <div
             role="tablist"
             aria-label="Component view mode"
-            className="inline-flex items-center gap-0.5 rounded-xl bg-neutral-100/90 p-1 dark:bg-neutral-900/80"
+            className="inline-flex items-center gap-0.5 rounded-xl border border-neutral-200/80 bg-neutral-100/90 p-1 dark:border-neutral-800 dark:bg-neutral-900/80"
           >
-            {tabs.map((tabId) => (
-              <TabButton
-                key={tabId}
-                id={tabId}
-                activeTab={activeTab}
-                onClick={() => setActiveTab(tabId)}
-              />
-            ))}
+            {tabs.map((tabId) => {
+              const { icon: Icon, label } = TAB_META[tabId];
+              const isActive = activeTab === tabId;
+
+              return (
+                <button
+                  key={tabId}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setActiveTab(tabId)}
+                  className={cn(
+                    "relative z-10 inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors",
+                    isActive
+                      ? "text-neutral-950 dark:text-white"
+                      : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+                  )}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="stage-tab-indicator"
+                      className="absolute inset-0 rounded-lg bg-white shadow-2xs dark:bg-neutral-800"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-1.5">
+                    <Icon className="h-3.5 w-3.5" />
+                    <span>{label}</span>
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Right Actions */}
-          <div className="flex items-center gap-1.5">
-            {/* Copy button */}
-            <motion.button
-              type="button"
-              onClick={handleQuickCopy}
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className={cn(
-                "inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 font-mono text-xs font-medium transition-all duration-200",
-                copiedSource
-                  ? "border-emerald-500 bg-emerald-500 text-white dark:border-emerald-400 dark:bg-emerald-400 dark:text-black"
-                  : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-400 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-300 dark:hover:border-neutral-600 dark:hover:text-white"
-              )}
+          {/* Center: Viewport Switcher (Inline Preview Mode) */}
+          {activeTab === "preview" && (
+            <div
+              role="group"
+              aria-label="Preview viewport"
+              className="hidden items-center gap-0.5 rounded-xl border border-neutral-200/80 bg-white p-0.5 shadow-2xs dark:border-neutral-800 dark:bg-neutral-950 md:inline-flex"
             >
-              <AnimatePresence mode="wait" initial={false}>
-                {copiedSource ? (
-                  <motion.span
-                    key="copied"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.15 }}
-                    className="flex items-center gap-1.5"
-                  >
-                    <Check className="h-3.5 w-3.5" />
-                    <span>Copied!</span>
-                  </motion.span>
-                ) : (
-                  <motion.span
-                    key="copy"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.15 }}
-                    className="flex items-center gap-1.5"
-                  >
-                    <Copy className="h-3.5 w-3.5" />
-                    <span>
-                      {activeTab === "usage" ? "Copy Usage" : "Copy Code"}
-                    </span>
-                  </motion.span>
+              <button
+                type="button"
+                onClick={() => setViewportSize("desktop")}
+                title="Desktop (Full Width)"
+                aria-pressed={viewportSize === "desktop"}
+                className={cn(
+                  "rounded-lg p-1.5 transition-colors",
+                  viewportSize === "desktop"
+                    ? "bg-neutral-100 text-neutral-950 dark:bg-neutral-800 dark:text-white"
+                    : "text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
                 )}
-              </AnimatePresence>
-            </motion.button>
+              >
+                <Monitor className="h-3.5 w-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewportSize("tablet")}
+                title="Tablet View (768px)"
+                aria-pressed={viewportSize === "tablet"}
+                className={cn(
+                  "rounded-lg p-1.5 transition-colors",
+                  viewportSize === "tablet"
+                    ? "bg-neutral-100 text-neutral-950 dark:bg-neutral-800 dark:text-white"
+                    : "text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
+                )}
+              >
+                <Tablet className="h-3.5 w-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewportSize("mobile")}
+                title="Mobile View (390px)"
+                aria-pressed={viewportSize === "mobile"}
+                className={cn(
+                  "rounded-lg p-1.5 transition-colors",
+                  viewportSize === "mobile"
+                    ? "bg-neutral-100 text-neutral-950 dark:bg-neutral-800 dark:text-white"
+                    : "text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
+                )}
+              >
+                <Smartphone className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          )}
 
-            {/* Copy Prompt for AI (Cursor, Claude, v0) */}
-            <motion.button
+          {/* Right Toolbar Actions */}
+          <div className="flex items-center gap-1.5">
+            {activeTab === "preview" && (
+              <>
+                {/* Background Pattern Selector */}
+                <div className="hidden sm:inline-flex items-center gap-0.5 rounded-lg border border-neutral-200/80 bg-white p-0.5 dark:border-neutral-800 dark:bg-neutral-950">
+                  <button
+                    type="button"
+                    onClick={() => setBgPattern("dots")}
+                    title="Dot Matrix Background"
+                    className={cn(
+                      "rounded p-1 text-xs transition-colors",
+                      bgPattern === "dots"
+                        ? "bg-neutral-100 text-neutral-950 dark:bg-neutral-800 dark:text-white"
+                        : "text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
+                    )}
+                  >
+                    <CircleDot className="h-3 w-3" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBgPattern("grid")}
+                    title="Grid Pattern Background"
+                    className={cn(
+                      "rounded p-1 text-xs transition-colors",
+                      bgPattern === "grid"
+                        ? "bg-neutral-100 text-neutral-950 dark:bg-neutral-800 dark:text-white"
+                        : "text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
+                    )}
+                  >
+                    <Grid3X3 className="h-3 w-3" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBgPattern("clean")}
+                    title="Clean Solid Background"
+                    className={cn(
+                      "rounded p-1 text-xs transition-colors",
+                      bgPattern === "clean"
+                        ? "bg-neutral-100 text-neutral-950 dark:bg-neutral-800 dark:text-white"
+                        : "text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
+                    )}
+                  >
+                    <Square className="h-3 w-3" />
+                  </button>
+                </div>
+
+                {/* Reset / Replay Animation */}
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  title="Replay / Reset component animation"
+                  aria-label="Replay component animation"
+                  className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-2.5 font-mono text-xs font-medium text-neutral-600 shadow-2xs transition-colors hover:border-neutral-400 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400 dark:hover:border-neutral-600 dark:hover:text-white"
+                >
+                  <RotateCcw
+                    className={cn(
+                      "h-3.5 w-3.5 transition-transform duration-500",
+                      isRotating && "-rotate-180"
+                    )}
+                  />
+                  <span className="hidden sm:inline">Reset</span>
+                </button>
+
+                {/* Fullscreen Trigger */}
+                <button
+                  type="button"
+                  onClick={() => setIsFullscreen(true)}
+                  title="Open full screen preview stage"
+                  aria-label="Open full screen preview stage"
+                  className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-2.5 font-mono text-xs font-medium text-neutral-600 shadow-2xs transition-colors hover:border-neutral-400 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400 dark:hover:border-neutral-600 dark:hover:text-white"
+                >
+                  <Maximize2 className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">Fullscreen</span>
+                </button>
+              </>
+            )}
+
+            {/* Copy Prompt for AI Tools */}
+            <button
               type="button"
               onClick={handleCopyAiPrompt}
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              title="Copy prompt formatted for Cursor, v0, and Claude"
+              title="Copy formatted prompt for Cursor, v0, and Claude"
+              aria-label="Copy prompt for AI"
               className={cn(
-                "hidden sm:inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 font-mono text-xs font-medium transition-all duration-200",
+                "hidden sm:inline-flex h-8 items-center gap-1.5 rounded-lg border px-2.5 font-mono text-xs font-medium shadow-2xs transition-colors",
                 copiedAiPrompt
-                  ? "border-emerald-500 bg-emerald-500 text-white dark:border-emerald-400 dark:bg-emerald-400 dark:text-black"
-                  : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-400 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-300 dark:hover:border-neutral-600 dark:hover:text-white"
+                  ? "border-emerald-600 bg-emerald-50 text-emerald-700 dark:border-emerald-500 dark:bg-emerald-950/60 dark:text-emerald-300"
+                  : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-400 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400 dark:hover:border-neutral-600 dark:hover:text-white"
               )}
             >
               {copiedAiPrompt ? (
                 <>
-                  <Check className="h-3.5 w-3.5" />
-                  <span>Prompt Copied!</span>
+                  <Check className="h-3.5 w-3.5 text-emerald-500" />
+                  <span>Prompt Copied</span>
                 </>
               ) : (
                 <>
                   <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-                  <span>Copy Prompt</span>
+                  <span>AI Prompt</span>
                 </>
               )}
-            </motion.button>
+            </button>
 
-            {activeTab === "preview" && (
-              <motion.div
-                initial={{ opacity: 0, x: 8 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="flex items-center gap-1.5"
-              >
-                <ToolbarButton
-                  onClick={() => setReplayKey((k) => k + 1)}
-                  title="Reset component state"
-                  aria-label="Reset component state"
-                >
-                  <RotateCcw className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">Reset</span>
-                </ToolbarButton>
-
-                <ToolbarButton
-                  onClick={() => setIsFullscreen(true)}
-                  title="Open full screen preview"
-                  aria-label="Open full screen preview"
-                >
-                  <Maximize2 className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">Full Screen</span>
-                </ToolbarButton>
-              </motion.div>
-            )}
+            {/* Quick Copy Code / Usage */}
+            <button
+              type="button"
+              onClick={handleQuickCopy}
+              aria-label={activeTab === "usage" ? "Copy usage code" : "Copy source code"}
+              className={cn(
+                "inline-flex h-8 items-center gap-1.5 rounded-lg border px-2.5 font-mono text-xs font-medium shadow-2xs transition-colors",
+                copiedSource
+                  ? "border-emerald-600 bg-emerald-50 text-emerald-700 dark:border-emerald-500 dark:bg-emerald-950/60 dark:text-emerald-300"
+                  : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-900 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:border-white dark:hover:text-white"
+              )}
+            >
+              {copiedSource ? (
+                <>
+                  <Check className="h-3.5 w-3.5 text-emerald-500" />
+                  <span>Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="h-3.5 w-3.5" />
+                  <span>{activeTab === "usage" ? "Copy Usage" : "Copy Code"}</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
 
-        {/* ── Stage Body with panel transitions ── */}
+        {/* ── Stage Body Panels ── */}
         <AnimatePresence mode="wait" initial={false}>
           {activeTab === "preview" ? (
             <motion.div
-              key="preview-panel"
-              variants={panelVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="relative flex min-h-[360px] w-full items-center justify-center overflow-hidden p-6 sm:p-12"
+              key="preview-tab"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.16 }}
             >
-              {/* Subtle dot-grid pattern behind the preview */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 bg-dot-matrix opacity-50 [background-size:18px_18px] [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)]"
-              />
-
-              <div
-                key={replayKey}
-                className="relative z-10 flex w-full items-center justify-center"
-              >
-                {!isFullscreen ? (
-                  <ComponentPreview slug={slug} />
-                ) : (
-                  <p className="font-mono text-xs text-neutral-500">
-                    Viewing in Full Screen mode...
-                  </p>
-                )}
-              </div>
+              {renderStageCanvas(false)}
             </motion.div>
           ) : activeTab === "usage" && usageCode ? (
             <motion.div
-              key="usage-panel"
-              variants={panelVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="p-2"
+              key="usage-tab"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.16 }}
+              className="p-3 sm:p-4"
             >
               <CodeViewer
                 code={usageCode}
                 filename="example.tsx"
                 language="tsx"
-                maxHeight="440px"
-                className="border-0"
+                maxHeight="460px"
               />
             </motion.div>
           ) : (
             <motion.div
-              key="code-panel"
-              variants={panelVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="p-2"
+              key="code-tab"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.16 }}
+              className="p-3 sm:p-4"
             >
               <CodeViewer
                 code={sourceCode}
                 filename={filePath}
                 language="tsx"
-                maxHeight="540px"
-                className="border-0"
+                maxHeight="520px"
               />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* ── Full Screen Preview Portal ── */}
+      {/* ── Fullscreen Preview Modal Portal ── */}
       {mounted &&
         isFullscreen &&
         createPortal(
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label="Full screen component preview"
+            aria-label="Fullscreen component preview stage"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.15 }}
-            className="fixed inset-0 z-[9990] flex h-screen w-screen flex-col bg-white dark:bg-[#050505]"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className="fixed inset-0 z-[9990] flex h-screen w-screen flex-col bg-white dark:bg-[#060606]"
           >
-                {/* Full Screen Top Control Bar */}
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.08, duration: 0.2 }}
-                  className="relative z-30 flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-neutral-200/80 bg-white/95 px-4 py-3 backdrop-blur-xl dark:border-neutral-800/80 dark:bg-[#0A0A0A]/95 sm:px-6"
+            {/* Fullscreen Header Control Bar */}
+            <div className="relative z-30 flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-neutral-200/80 bg-white/95 px-4 py-3 backdrop-blur-xl dark:border-neutral-800 dark:bg-[#0A0A0A]/95 sm:px-6">
+              {/* File details */}
+              <div className="flex items-center gap-2.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </span>
+                <span className="font-mono text-xs font-semibold text-neutral-900 dark:text-white">
+                  {filePath}
+                </span>
+              </div>
+
+              {/* Viewport Width Controls */}
+              <div
+                role="group"
+                aria-label="Responsive preview sizing"
+                className="hidden items-center gap-1 rounded-xl border border-neutral-200 bg-neutral-100 p-1 dark:border-neutral-800 dark:bg-neutral-900 sm:inline-flex"
+              >
+                <button
+                  type="button"
+                  onClick={() => setViewportSize("desktop")}
+                  className={cn(
+                    "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-colors",
+                    viewportSize === "desktop"
+                      ? "bg-white text-neutral-950 shadow-2xs dark:bg-neutral-950 dark:text-white"
+                      : "text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
+                  )}
                 >
-                  {/* Left: File Path */}
-                  <div className="flex items-center gap-2.5">
-                    <span className="relative flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-neutral-900/40 dark:bg-white/40" />
-                      <span className="relative inline-flex h-2 w-2 rounded-full bg-neutral-900 dark:bg-white" />
-                    </span>
-                    <span className="font-mono text-xs font-medium text-neutral-900 dark:text-white">
-                      {filePath}
-                    </span>
-                  </div>
+                  <Monitor className="h-3.5 w-3.5" />
+                  <span>Desktop</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewportSize("tablet")}
+                  className={cn(
+                    "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-colors",
+                    viewportSize === "tablet"
+                      ? "bg-white text-neutral-950 shadow-2xs dark:bg-neutral-950 dark:text-white"
+                      : "text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
+                  )}
+                >
+                  <Tablet className="h-3.5 w-3.5" />
+                  <span>Tablet (768px)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewportSize("mobile")}
+                  className={cn(
+                    "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-colors",
+                    viewportSize === "mobile"
+                      ? "bg-white text-neutral-950 shadow-2xs dark:bg-neutral-950 dark:text-white"
+                      : "text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
+                  )}
+                >
+                  <Smartphone className="h-3.5 w-3.5" />
+                  <span>Mobile (390px)</span>
+                </button>
+              </div>
 
-                  {/* Center: Responsive Viewport Width Switcher */}
-                  <div
-                    role="group"
-                    aria-label="Viewport size"
-                    className="hidden items-center gap-0.5 rounded-xl border border-neutral-200/80 bg-neutral-100/80 p-1 dark:border-neutral-800/80 dark:bg-neutral-900/80 md:inline-flex"
-                  >
-                    {viewportOptions.map((vp) => (
-                      <button
-                        key={vp.id}
-                        type="button"
-                        onClick={() => setViewportSize(vp.id)}
-                        className={cn(
-                          "relative inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-colors",
-                          viewportSize === vp.id
-                            ? "text-neutral-950 dark:text-white"
-                            : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
-                        )}
-                      >
-                        {viewportSize === vp.id && (
-                          <motion.span
-                            layoutId="viewport-pill"
-                            className="absolute inset-0 rounded-lg bg-white shadow-sm dark:bg-neutral-800"
-                            transition={{
-                              type: "spring",
-                              stiffness: 380,
-                              damping: 28,
-                            }}
-                          />
-                        )}
-                        <span className="relative z-10 flex items-center gap-1.5">
-                          {vp.icon}
-                          <span>{vp.label}</span>
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Right: Reset + Copy + Exit Full Screen */}
-                  <div className="flex items-center gap-1.5">
-                    <ToolbarButton
-                      onClick={() => setReplayKey((k) => k + 1)}
-                    >
-                      <RotateCcw className="h-3.5 w-3.5" />
-                      <span>Reset</span>
-                    </ToolbarButton>
-
-                    <ToolbarButton onClick={handleQuickCopy}>
-                      {copiedSource ? (
-                        <>
-                          <Check className="h-3.5 w-3.5" />
-                          <span>Copied!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="h-3.5 w-3.5" />
-                          <span className="hidden sm:inline">Copy Code</span>
-                        </>
-                      )}
-                    </ToolbarButton>
-
-                    <motion.button
-                      type="button"
-                      onClick={handleExitFullscreen}
-                      whileHover={{ scale: 1.04 }}
-                      whileTap={{ scale: 0.97 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 20,
-                      }}
-                      className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg bg-neutral-900 px-3 font-mono text-xs font-semibold text-white transition-colors hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
-                    >
-                      <Minimize2 className="h-3.5 w-3.5" />
-                      <span>Exit</span>
-                      <kbd className="ml-0.5 hidden rounded bg-white/20 px-1 py-0.5 text-[10px] dark:bg-black/15 sm:inline-block">
-                        ESC
-                      </kbd>
-                    </motion.button>
-                  </div>
-                </motion.div>
-
-                {/* Full Screen Interactive Stage */}
-                <div className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-8">
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none fixed inset-0 top-14 bg-dot-matrix [background-size:22px_22px] [mask-image:radial-gradient(ellipse_at_center,black_75%,transparent_100%)]"
+              {/* Right Controls */}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 font-mono text-xs font-medium text-neutral-700 shadow-2xs transition-colors hover:border-neutral-900 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:border-white dark:hover:text-white"
+                >
+                  <RotateCcw
+                    className={cn(
+                      "h-3.5 w-3.5 transition-transform duration-500",
+                      isRotating && "-rotate-180"
+                    )}
                   />
+                  <span>Reset</span>
+                </button>
 
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.97 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
-                    className="relative z-10 flex min-h-full w-full flex-col items-center justify-start py-4 sm:py-8"
-                  >
-                    <div
-                      key={`fs-${replayKey}-${viewportSize}`}
-                      className={cn(
-                        "relative w-full transition-all duration-300 ease-out",
-                        viewportSize === "full" &&
-                          "fullscreen-stage-expand max-w-[1400px]",
-                        viewportSize === "centered" && "max-w-4xl",
-                        viewportSize === "tablet" &&
-                          "fullscreen-stage-expand max-w-[768px] rounded-3xl border border-dashed border-neutral-300 bg-white/80 p-8 shadow-sm backdrop-blur-sm dark:border-neutral-800 dark:bg-black/80",
-                        viewportSize === "mobile" &&
-                          "fullscreen-stage-expand max-w-[390px] rounded-3xl border border-dashed border-neutral-300 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-neutral-800 dark:bg-black/80"
-                      )}
-                    >
-                      <ComponentPreview
-                        slug={slug}
-                        className={
-                          viewportSize === "full" ? "max-w-none" : undefined
-                        }
-                      />
-                    </div>
-                  </motion.div>
-                </div>
-              </motion.div>,
-              document.body
-            )}
+                <button
+                  type="button"
+                  onClick={handleQuickCopy}
+                  className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 font-mono text-xs font-medium text-neutral-700 shadow-2xs transition-colors hover:border-neutral-900 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:border-white dark:hover:text-white"
+                >
+                  {copiedSource ? (
+                    <>
+                      <Check className="h-3.5 w-3.5 text-emerald-500" />
+                      <span>Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-3.5 w-3.5" />
+                      <span>Copy Code</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleExitFullscreen}
+                  className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-neutral-950 px-3.5 font-mono text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
+                >
+                  <Minimize2 className="h-3.5 w-3.5" />
+                  <span>Exit</span>
+                  <kbd className="hidden rounded bg-white/20 px-1 py-0.5 text-[9px] dark:bg-black/15 sm:inline-block">
+                    ESC
+                  </kbd>
+                </button>
+              </div>
+            </div>
+
+            {/* Fullscreen Interactive Canvas */}
+            <div className="relative flex-1 overflow-y-auto overscroll-contain">
+              {renderStageCanvas(true)}
+            </div>
+          </motion.div>,
+          document.body
+        )}
     </>
   );
 }

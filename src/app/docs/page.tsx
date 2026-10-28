@@ -39,9 +39,9 @@ export const metadata: Metadata = {
 };
 
 const SHADCN_INSTALL_SNIPPET = `# Install any BoseUI component directly via the official shadcn CLI:
-npx shadcn@latest add "${SITE_CONFIG.url}/r/drawer.json"
-npx shadcn@latest add "${SITE_CONFIG.url}/r/autocomplete.json"
-npx shadcn@latest add "${SITE_CONFIG.url}/r/toast-stack.json"`;
+npx shadcn@latest add "${SITE_CONFIG.url}/r/magnetic-button.json"
+npx shadcn@latest add "${SITE_CONFIG.url}/r/spotlight-card.json"
+npx shadcn@latest add "${SITE_CONFIG.url}/r/elastic-dock.json"`;
 
 const TWO_FILE_WORKFLOW_CODE = `# 1. Create a new component + metadata pair in src/components/ui/
 npm run component:new TiltCard
@@ -64,7 +64,7 @@ export default function DocsPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-8 lg:py-12">
       {/* Header */}
-      <div className="border-b border-neutral-200 pb-8 dark:border-neutral-900">
+      <div className="border-b border-neutral-200/80 pb-8 dark:border-neutral-800">
         <h1 className="text-3xl font-bold tracking-tight text-neutral-950 dark:text-white sm:text-4xl">
           Documentation
         </h1>
@@ -94,11 +94,9 @@ export default function DocsPage() {
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-neutral-900 text-white dark:bg-white dark:text-black">
               <Terminal className="h-4 w-4" />
             </div>
-            <div>
-              <h2 className="text-base font-semibold text-neutral-950 dark:text-white">
-                1. Install with CLI
-              </h2>
-            </div>
+            <h2 className="text-base font-semibold text-neutral-950 dark:text-white">
+              1. Install with CLI
+            </h2>
           </div>
           <p className="text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
             Run the command below in your React or Next.js project to download the component and its dependencies automatically:
@@ -122,7 +120,7 @@ export default function DocsPage() {
             </h2>
           </div>
           <p className="text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
-            If you prefer copying code manually instead of using the CLI, add this <code className="font-mono">cn()</code> helper for merging Tailwind classes:
+            If you prefer copying code manually instead of using the CLI, add this <code className="font-mono text-neutral-800 dark:text-neutral-200">cn()</code> helper for merging Tailwind classes safely:
           </p>
 
           <CodeViewer
@@ -143,7 +141,7 @@ export default function DocsPage() {
             </h2>
           </div>
           <p className="text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
-            Every component consists of two files in <code className="font-mono">src/components/ui/</code>: the component (<code className="font-mono">.tsx</code>) and its metadata (<code className="font-mono">.meta.ts</code>). Read our dedicated{" "}
+            Every component consists of two files in <code className="font-mono text-neutral-800 dark:text-neutral-200">src/components/ui/</code>: the component (<code className="font-mono text-neutral-800 dark:text-neutral-200">.tsx</code>) and its metadata (<code className="font-mono text-neutral-800 dark:text-neutral-200">.meta.ts</code>). Read our dedicated{" "}
             <Link
               href="/docs/contributing"
               className="font-medium text-neutral-950 underline underline-offset-4 dark:text-white"
@@ -161,7 +159,7 @@ export default function DocsPage() {
         </section>
 
         {/* Bottom CTA */}
-        <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-neutral-200 bg-neutral-50/70 p-6 dark:border-neutral-800 dark:bg-[#0A0A0A]">
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-neutral-200/90 bg-neutral-50/70 p-6 shadow-2xs dark:border-neutral-800 dark:bg-[#0A0A0A]">
           <div>
             <h3 className="text-sm font-semibold text-neutral-950 dark:text-white">
               Ready to explore?
@@ -172,7 +170,7 @@ export default function DocsPage() {
           </div>
           <Link
             href="/components"
-            className="inline-flex items-center gap-2 rounded-xl bg-neutral-900 px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
+            className="inline-flex items-center gap-2 rounded-xl bg-neutral-900 px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200 shadow-2xs"
           >
             <span>Browse Components</span>
             <ArrowRight className="h-4 w-4" />

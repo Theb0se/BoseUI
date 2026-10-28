@@ -33,7 +33,7 @@ Our latest research on frontend engineering and UI/UX:
 - [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
 - [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
 
-## Available Kinetic Components (109)
+## Available Kinetic Components (113)
 
 ### AI Voice Orb (`AIVoiceOrb`)
 - **Slug**: `ai-voice-orb`
@@ -739,6 +739,90 @@ export function Example() {
 
 ---
 
+### Cylinder Carousel (`CylinderCarousel`)
+- **Slug**: `cylinder-carousel`
+- **Category**: Cards
+- **Tagline**: 3D cylinder carousel with tactile pan physics and dynamic depth blur.
+- **Description**: Interactive 3D cylindrical carousel with real-time radial perspective transforms, inertia pan physics, depth blur, and active card path animations.
+- **Docs URL**: https://boseui.site/components/cylinder-carousel
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/cylinder-carousel.json`
+- **Registry Manifest**: https://boseui.site/r/cylinder-carousel.json
+- **Key Features**:
+  - Trigonometric 3D radial arrangement calculating exact cylinder radius from card width and gap.
+  - Dynamic depth blur, saturation, opacity, and specular sheen based on angular distance from stage center.
+  - Spring-damped inertia panning with velocity projection and tap-to-advance edge navigation.
+  - Strictly prop-driven architecture: pass custom cards, content, and gradients directly via props.
+- **Accessibility**:
+  - Full keyboard navigation with Left and Right arrow keys to rotate cards.
+  - Accessible role='group' and aria-roledescription='slide' with descriptive labels on cards.
+  - Respects prefers-reduced-motion by bypassing spring physics and instantly snapping to the selected card.
+- **Props**:
+  - `cards` (CylinderCardItem[], default: []): Array of card objects with titles, badges, backgrounds, and content passed via props.
+  - `cardWidth` (number, default: 280): Width of each card on the cylinder in pixels.
+  - `cardHeight` (number, default: 360): Height of each card on the cylinder in pixels.
+  - `gap` (number, default: 70): Circumferential spacing between neighboring cards in pixels.
+  - `perspective` (number, default: 1400): CSS 3D perspective distance in pixels controlling depth curvature.
+  - `initialIndex` (number, default: 0): Initial zero-based index of the active card facing front.
+  - `springStiffness` (number, default: 120): Spring stiffness coefficient governing rotational snap responsiveness.
+  - `damping` (number, default: 20): Spring damping coefficient governing angular oscillation decay.
+  - `mass` (number, default: 0.9): Virtual mass factor applied to the carousel inertia simulation.
+  - `showControls` (boolean, default: true): Whether to render navigation chevrons and pagination dots.
+  - `showDots` (boolean, default: true): Whether to render the progress dot indicators between chevrons.
+- **Usage Example**:
+```tsx
+import {
+  CylinderCarousel,
+  DEFAULT_CYLINDER_BACKGROUNDS,
+  type CylinderCardItem,
+} from "@/components/ui/cylinder-carousel";
+
+const customCards: CylinderCardItem[] = [
+  {
+    id: "physics",
+    title: "Kinetic Physics",
+    pill: "120 FPS",
+    bg: DEFAULT_CYLINDER_BACKGROUNDS[0],
+    content: ({ active }) => (
+      <div className="flex h-full flex-col items-center justify-center text-white">
+        <p className="text-5xl font-bold">120Hz</p>
+        <p className="mt-2 text-xs text-white/80">Hooke's Law Momentum</p>
+      </div>
+    ),
+  },
+  {
+    id: "components",
+    title: "Catalog",
+    pill: "v2.0",
+    bg: DEFAULT_CYLINDER_BACKGROUNDS[1],
+    content: () => (
+      <div className="flex h-full flex-col items-center justify-center text-white">
+        <p className="text-6xl font-bold">113+</p>
+        <p className="mt-2 text-xs text-white/80">Kinetic Primitives</p>
+      </div>
+    ),
+  },
+  {
+    id: "a11y",
+    title: "Inclusive",
+    pill: "WCAG AA",
+    bg: DEFAULT_CYLINDER_BACKGROUNDS[2],
+    dark: true,
+    content: () => (
+      <div className="flex h-full flex-col items-center justify-center text-neutral-900">
+        <p className="text-3xl font-bold">A11y First</p>
+        <p className="mt-2 text-xs text-neutral-600">Keyboard & Screen-Reader Ready</p>
+      </div>
+    ),
+  },
+];
+
+export function Example() {
+  return <CylinderCarousel cards={customCards} />;
+}
+```
+
+---
+
 ### Digital Radar (`DigitalRadar`)
 - **Slug**: `digital-radar`
 - **Category**: Backgrounds
@@ -774,6 +858,59 @@ export function Example() {
       blipCount={8}
       rangeRings={4}
       showTelemetry
+    />
+  );
+}
+```
+
+---
+
+### Dot Text Hero (`DotTextHero`)
+- **Slug**: `dot-text-hero`
+- **Category**: Text
+- **Tagline**: Canvas dot-matrix typography with real-time cursor repulsion and spring physics.
+- **Description**: Interactive headline hero featuring HTML5 canvas text rasterization into hexagonal-packed dots with cursor repulsion, spring-back physics, and twinkling.
+- **Docs URL**: https://boseui.site/components/dot-text-hero
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/dot-text-hero.json`
+- **Registry Manifest**: https://boseui.site/r/dot-text-hero.json
+- **Key Features**:
+  - Offscreen canvas text rasterization dynamically packed into high-density hexagonal dot fields.
+  - Real-time inverse-square mouse repulsion with Hooke's Law spring restoration and velocity damping.
+  - Staggered entrance delays and subtle twinkle color cycling for a living, breathing headline.
+  - Dual-mode API: use as a complete turnkey hero section or embed the standalone DotTextCanvas anywhere.
+- **Accessibility**:
+  - Provides hidden semantic h1 heading with the full text content for screen readers while marking the canvas aria-hidden.
+  - Fully respects prefers-reduced-motion by bypassing entrance delays and disabling physics repulsion and twinkling.
+  - Includes keyboard-navigable links and semantic button actions with clear focus indicators.
+- **Props**:
+  - `lines` (string[], default: ["Cosign", "Awards"]): Array of headline text lines rasterized into the interactive dot matrix.
+  - `colors` (string[], default: ["#ffffff", "#e5e5e5", "#bdbdbd", "#8a8a8a", "#5c5c5c"]): Color palette randomly assigned to dots and cycled during twinkling.
+  - `dotSize` (number, default: 14): Maximum dot diameter in CSS pixels, automatically clamped for small screens.
+  - `repelRadius` (number, default: 80): Cursor proximity radius in pixels where repulsion physics begins.
+  - `repelStrength` (number, default: 5): Peak repulsion velocity force applied to dots near the cursor.
+  - `springStiffness` (number, default: 0.08): Hooke's Law spring return factor restoring dots to their home anchors.
+  - `damping` (number, default: 0.82): Velocity friction damping coefficient preventing endless oscillation.
+  - `twinkleInterval` (number, default: 80): Interval in milliseconds between random dot re-colorings. 0 disables twinkling.
+  - `brandName` (string, default: "cosign"): Brand title rendered in the top navigation bar.
+  - `badgeText` (ReactNode, default: "Cosigning is open"): Status badge text displayed with an optional glowing pulse indicator.
+  - `description` (ReactNode, default: ...): Supporting descriptive text rendered beneath the dot matrix headline.
+  - `primaryCta` (DotTextHeroCta, default: { label: "Nominate someone", href: "#nominate" }): Primary action button configuration with label, href, or onClick handler.
+  - `secondaryCta` (DotTextHeroCta, default: { label: "Cosign now", href: "#cosign" }): Secondary outline button configuration with label, href, or onClick handler.
+  - `showNav` (boolean, default: true): Whether to render the top navigation bar with brand, links, and action button.
+- **Usage Example**:
+```tsx
+import { DotTextHero } from "@/components/ui/dot-text-hero";
+
+export function HeroExample() {
+  return (
+    <DotTextHero
+      lines={["KINETIC", "AWARDS"]}
+      brandName="pulse"
+      brandTag="2026 Edition"
+      badgeText="Submissions are open"
+      description="Honoring modern interfaces engineered with tactile spring physics and kinetic craft."
+      primaryCta={{ label: "Submit Project", href: "#submit" }}
+      secondaryCta={{ label: "Explore Nominees", href: "#nominees" }}
     />
   );
 }
@@ -1100,6 +1237,84 @@ export function Example() {
 
 ---
 
+### Expandable Cards (`ExpandableCards`)
+- **Slug**: `expandable-cards`
+- **Category**: Cards
+- **Tagline**: Horizontal accordion UI feature showcase with spring flex expansions.
+- **Description**: Interactive horizontal accordion showcase cards highlighting UI library features and architectural pillars with spring flex-grow expansions, gradient backdrops, and animated quotes.
+- **Docs URL**: https://boseui.site/components/expandable-cards
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/expandable-cards.json`
+- **Registry Manifest**: https://boseui.site/r/expandable-cards.json
+- **Key Features**:
+  - Spring-driven flex-grow animation smoothly expanding the active card while compacting siblings.
+  - Responsive layout: transitions gracefully from a horizontal accordion on desktop to a vertical stack on mobile.
+  - Fully dynamic prop API: logos, brand gradients, quotes, titles, and actions are passed directly as props.
+  - Accessible keyboard navigation with tab focus, Enter/Space expansion, and reduced motion fallbacks.
+- **Accessibility**:
+  - Each card implements role='button', tabIndex={0}, and dynamic aria-expanded state.
+  - Keyboard activation supported via Enter and Space keys.
+  - Respects prefers-reduced-motion to switch states instantly without spring oscillations.
+- **Props**:
+  - `stories` (ExpandableCardItem[]): Array of card items containing id, name, tagline, quote, author, role, initials, href, ctaText, bg, border, and logo (ReactNode or Component).
+  - `items` (ExpandableCardItem[]): Alternative alias prop for stories.
+  - `defaultActiveId` (number | string, default: 1): ID of the card that should be expanded by default on initial render.
+  - `title` (React.ReactNode): Custom headline element rendered at the top left of the section.
+  - `subtitle` (React.ReactNode): Descriptive eyebrow subtitle text rendered above the main headline.
+  - `headerAction` (React.ReactNode): Custom top-right element or link to override the default explore action.
+  - `moreStoriesText` (string): Label for the link in the header linking to the component catalog.
+  - `moreStoriesHref` (string): Destination URL for the header action.
+  - `className` (string): Optional Tailwind CSS class overrides applied to the outer section container.
+- **Usage Example**:
+```tsx
+import { ExpandableCards, type ExpandableCardItem } from "@/components/ui/ExpandableCards";
+import { Sparkles, Terminal, Shield, Zap } from "lucide-react";
+
+const customStories: ExpandableCardItem[] = [
+  {
+    id: 1,
+    name: "Kinetic Physics",
+    tagline: "Spring-mass-damping equations tuned for real-time 120Hz tactility.",
+    logo: <Sparkles className="h-7 w-7 text-white" />,
+    quote: [
+      "Motion in BoseUI isn't a cosmetic afterthought — it's tactile communication.",
+      "Every interaction preserves physical velocity and momentum.",
+    ],
+    author: "Alex Rivera",
+    role: "Design Technologist",
+    href: "/components/kinetic-slider",
+    bg: "bg-gradient-to-b from-rose-500 via-pink-600 to-orange-500",
+  },
+  {
+    id: 2,
+    name: "Source Ownership",
+    tagline: "Clean TypeScript and Tailwind CSS living directly in your repository.",
+    logo: <Terminal className="h-7 w-7 text-white" />,
+    quote: [
+      "No mysterious node_modules dependencies or locked-in runtimes.",
+      "Run one CLI command, own the raw code directly.",
+    ],
+    author: "Elena Vance",
+    role: "Design Systems Architect",
+    href: "/docs",
+    bg: "bg-gradient-to-b from-[#0e1726] to-[#050914]",
+  },
+];
+
+export function Example() {
+  return (
+    <div className="w-full max-w-6xl mx-auto p-4">
+      <ExpandableCards
+        stories={customStories}
+        title="Custom Design Architecture"
+        subtitle="Feature Pillars"
+      />
+    </div>
+  );
+}
+```
+
+---
+
 ### Falling Petals (`FallingPetals`)
 - **Slug**: `falling-petals`
 - **Category**: Backgrounds
@@ -1380,6 +1595,56 @@ export function Example() {
   return (
     <div className="w-full">
       <GlowBorderCard defaultRadius={280} defaultIntensity={0.5} />
+    </div>
+  );
+}
+```
+
+---
+
+### Gooey Input (`GooeyInput`)
+- **Slug**: `gooey-input`
+- **Category**: Inputs
+- **Tagline**: Liquid morphing search input with an SVG gooey detachment effect.
+- **Description**: Liquid search input that dynamically detaches a viscous gooey bubble containing the search icon using an SVG feColorMatrix filter.
+- **Docs URL**: https://boseui.site/components/gooey-input
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/gooey-input.json`
+- **Registry Manifest**: https://boseui.site/r/gooey-input.json
+- **Key Features**:
+  - SVG `feGaussianBlur` and `feColorMatrix` liquid viscous bridge that separates as the bar expands.
+  - Spring-driven expansion with Framer Motion shared layout animation on the search icon.
+  - Automatic input auto-focus and search text reset on collapse.
+  - Fully customizable collapsed/expanded widths, offsets, and classNames.
+  - Supports both controlled and uncontrolled search input values.
+- **Accessibility**:
+  - Uses native `type='search'` input with `enterKeyHint='search'` for mobile virtual keyboards.
+  - Keyboard accessible trigger button with high-contrast visible focus rings.
+  - Hides decorative filter SVG with `aria-hidden='true'`.
+  - Smooth collapse on blur when the search query is empty.
+- **Props**:
+  - `placeholder` (string, default: "Type to search..."): Placeholder text displayed inside the search input.
+  - `collapsedWidth` (number, default: 115): Collapsed trigger pill width in pixels.
+  - `expandedWidth` (number, default: 200): Expanded search input width in pixels.
+  - `expandedOffset` (number, default: 50): Horizontal offset in pixels to separate the detached gooey bubble.
+  - `gooeyBlur` (number, default: 5): Gaussian blur standard deviation for the liquid gooey SVG filter.
+  - `value` (string): Controlled value for the search query.
+  - `defaultValue` (string, default: ""): Initial search query in uncontrolled mode.
+  - `onValueChange` ((value: string) => void): Callback fired whenever the search text changes.
+  - `onOpenChange` ((open: boolean) => void): Callback fired when the input expands or collapses.
+  - `disabled` (boolean, default: false): Whether the input and trigger are disabled.
+  - `className` (string): Optional custom CSS class for the root wrapper.
+  - `classNames` (GooeyInputClassNames): Granular class names for root, filterWrap, buttonRow, trigger, input, and bubble.
+- **Usage Example**:
+```tsx
+import { GooeyInput } from "@/components/ui/GooeyInput";
+
+export function Example() {
+  return (
+    <div className="flex min-h-[200px] w-full items-center justify-center p-8">
+      <GooeyInput
+        placeholder="Type to search..."
+        onValueChange={(val) => console.log("Search query:", val)}
+      />
     </div>
   );
 }

@@ -25,7 +25,9 @@ import { CloudsDrift } from "@/components/ui/CloudsDrift";
 import { CommandMenu } from "@/components/ui/CommandMenu";
 import { ConstellationMeshField } from "@/components/ui/ConstellationMeshField";
 import { CursorFollower } from "@/components/ui/CursorFollower";
+import { CylinderCarousel } from "@/components/ui/CylinderCarousel";
 import { DigitalRadar } from "@/components/ui/DigitalRadar";
+import { DotTextHero } from "@/components/ui/DotTextHero";
 import { Drawer } from "@/components/ui/Drawer";
 import { DynamicIslandToast } from "@/components/ui/DynamicIslandToast";
 import { ElasticDock } from "@/components/ui/ElasticDock";
@@ -34,6 +36,7 @@ import { ElasticSwipeSlider } from "@/components/ui/ElasticSwipeSlider";
 import { ElasticTagInput } from "@/components/ui/ElasticTagInput";
 import { ElasticWaveText } from "@/components/ui/ElasticWaveText";
 import { ExpandableBentoCard } from "@/components/ui/ExpandableBentoCard";
+import { ExpandableCards } from "@/components/ui/ExpandableCards";
 import { FallingPetals } from "@/components/ui/FallingPetals";
 import { FeatureCard } from "@/components/ui/FeatureCard";
 import { FileTree } from "@/components/ui/FileTree";
@@ -41,6 +44,7 @@ import { FloatingCompassNav } from "@/components/ui/FloatingCompassNav";
 import { FloatingLabelInput } from "@/components/ui/FloatingLabelInput";
 import { GalaxyNebula } from "@/components/ui/GalaxyNebula";
 import { GlowBorderCard } from "@/components/ui/GlowBorderCard";
+import { GooeyInput } from "@/components/ui/GooeyInput";
 import { GravityWellPortal } from "@/components/ui/GravityWellPortal";
 import { GridHorizon } from "@/components/ui/GridHorizon";
 import { HeartBurstButton } from "@/components/ui/HeartBurstButton";
@@ -136,7 +140,9 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "command-menu": createComponentDemo("command-menu", CommandMenu),
   "constellation-mesh-field": createComponentDemo("constellation-mesh-field", ConstellationMeshField),
   "cursor-follower": createComponentDemo("cursor-follower", CursorFollower),
+  "cylinder-carousel": createComponentDemo("cylinder-carousel", CylinderCarousel),
   "digital-radar": createComponentDemo("digital-radar", DigitalRadar),
+  "dot-text-hero": createComponentDemo("dot-text-hero", DotTextHero),
   "drawer": createComponentDemo("drawer", Drawer),
   "dynamic-island-toast": createComponentDemo("dynamic-island-toast", DynamicIslandToast),
   "elastic-dock": createComponentDemo("elastic-dock", ElasticDock),
@@ -145,6 +151,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "elastic-tag-input": createComponentDemo("elastic-tag-input", ElasticTagInput),
   "elastic-wave-text": createComponentDemo("elastic-wave-text", ElasticWaveText),
   "expandable-bento-card": createComponentDemo("expandable-bento-card", ExpandableBentoCard),
+  "expandable-cards": createComponentDemo("expandable-cards", ExpandableCards),
   "falling-petals": createComponentDemo("falling-petals", FallingPetals),
   "feature-card": createComponentDemo("feature-card", FeatureCard),
   "file-tree": createComponentDemo("file-tree", FileTree),
@@ -152,6 +159,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "floating-label-input": createComponentDemo("floating-label-input", FloatingLabelInput),
   "galaxy-nebula": createComponentDemo("galaxy-nebula", GalaxyNebula),
   "glow-border-card": createComponentDemo("glow-border-card", GlowBorderCard),
+  "gooey-input": createComponentDemo("gooey-input", GooeyInput),
   "gravity-well-portal": createComponentDemo("gravity-well-portal", GravityWellPortal),
   "grid-horizon": createComponentDemo("grid-horizon", GridHorizon),
   "heart-burst-button": createComponentDemo("heart-burst-button", HeartBurstButton),

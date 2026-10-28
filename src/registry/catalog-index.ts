@@ -436,6 +436,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "cylinder-carousel",
+    "slug": "cylinder-carousel",
+    "componentName": "CylinderCarousel",
+    "title": "Cylinder Carousel",
+    "description": "Interactive 3D cylindrical carousel with real-time radial perspective transforms, inertia pan physics, depth blur, and active card path animations.",
+    "tagline": "3D cylinder carousel with tactile pan physics and dynamic depth blur.",
+    "category": "Cards",
+    "badges": [
+      "3D Cylinder",
+      "Pan Physics",
+      "Depth Blur",
+      "Spring Inertia"
+    ],
+    "createdAt": "2026-10-28",
+    "featured": true,
+    "keywords": [
+      "cylinder carousel",
+      "3d carousel react",
+      "framer motion 3d",
+      "cylindrical card slider",
+      "pan gesture carousel",
+      "rotational 3d cards"
+    ]
+  },
+  {
     "id": "digital-radar",
     "slug": "digital-radar",
     "componentName": "DigitalRadar",
@@ -456,6 +481,32 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "tactical hud background",
       "sonar sweep",
       "telemetry canvas"
+    ]
+  },
+  {
+    "id": "dot-text-hero",
+    "slug": "dot-text-hero",
+    "componentName": "DotTextHero",
+    "title": "Dot Text Hero",
+    "description": "Interactive headline hero featuring HTML5 canvas text rasterization into hexagonal-packed dots with cursor repulsion, spring-back physics, and twinkling.",
+    "tagline": "Canvas dot-matrix typography with real-time cursor repulsion and spring physics.",
+    "category": "Text",
+    "badges": [
+      "Interactive Canvas",
+      "Hooke's Law",
+      "A11y Ready",
+      "High DPI"
+    ],
+    "createdAt": "2026-10-28",
+    "featured": true,
+    "keywords": [
+      "dot text hero",
+      "canvas particle text",
+      "hexagonal dot grid",
+      "cursor repulsion typography",
+      "dot matrix headline",
+      "framer motion hero",
+      "cosign awards hero"
     ]
   },
   {
@@ -644,6 +695,33 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "expandable-cards",
+    "slug": "expandable-cards",
+    "componentName": "ExpandableCards",
+    "title": "Expandable Cards",
+    "description": "Interactive horizontal accordion showcase cards highlighting UI library features and architectural pillars with spring flex-grow expansions, gradient backdrops, and animated quotes.",
+    "tagline": "Horizontal accordion UI feature showcase with spring flex expansions.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "Interactive",
+      "Spring Physics",
+      "Accordion"
+    ],
+    "createdAt": "2026-10-28",
+    "featured": true,
+    "keywords": [
+      "expandable cards",
+      "story cards",
+      "horizontal accordion",
+      "ui library showcase",
+      "feature showcase cards",
+      "framer motion cards",
+      "interactive cards",
+      "flex grow cards"
+    ]
+  },
+  {
     "id": "falling-petals",
     "slug": "falling-petals",
     "componentName": "FallingPetals",
@@ -809,6 +887,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "radial gradient border",
       "neon border card",
       "feature card grid"
+    ]
+  },
+  {
+    "id": "gooey-input",
+    "slug": "gooey-input",
+    "componentName": "GooeyInput",
+    "title": "Gooey Input",
+    "description": "Liquid search input that dynamically detaches a viscous gooey bubble containing the search icon using an SVG feColorMatrix filter.",
+    "tagline": "Liquid morphing search input with an SVG gooey detachment effect.",
+    "category": "Inputs",
+    "badges": [
+      "New",
+      "Gooey",
+      "SVG Filter",
+      "Spring Motion"
+    ],
+    "createdAt": "2026-10-23",
+    "featured": true,
+    "keywords": [
+      "gooey input",
+      "liquid search input",
+      "svg gooey filter",
+      "metaball input",
+      "framer motion search",
+      "spring search bar"
     ]
   },
   {

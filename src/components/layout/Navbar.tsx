@@ -78,28 +78,28 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
+        "sticky top-0 z-50 w-full transition-all duration-200",
         "border-b backdrop-blur-xl supports-[backdrop-filter]:backdrop-blur-xl",
         scrolled
-          ? "border-neutral-200/90 bg-white/85 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:border-neutral-800/90 dark:bg-black/85 dark:shadow-[0_4px_24px_-4px_rgba(0,0,0,0.4)]"
-          : "border-neutral-200/60 bg-white/65 dark:border-neutral-800/60 dark:bg-black/65"
+          ? "border-neutral-200/90 bg-white/85 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.04)] dark:border-neutral-800/90 dark:bg-black/85 dark:shadow-[0_4px_24px_-4px_rgba(0,0,0,0.4)]"
+          : "border-neutral-200/60 bg-white/70 dark:border-neutral-800/60 dark:bg-black/70"
       )}
     >
-      <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-2 px-3 sm:h-16 sm:gap-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-3 px-4 sm:h-16 sm:px-6 lg:px-8">
         {/* Left: Brand logo + Desktop Nav */}
-        <div className="flex min-w-0 items-center gap-2 sm:gap-4 md:gap-6">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-5 md:gap-6">
           <Link
             href="/"
             aria-label="BoseUI Home"
             className={cn(
-              "group flex shrink-0 items-center gap-2 rounded-lg py-1 transition-transform active:scale-95",
+              "group flex shrink-0 items-center gap-2.5 rounded-lg py-1 transition-transform active:scale-98",
               focusRing
             )}
           >
-            <div className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-b from-neutral-100 to-neutral-200/70 p-1 shadow-sm ring-1 ring-neutral-900/5 transition-all duration-300 group-hover:scale-105 group-hover:shadow group-hover:ring-neutral-900/10 dark:from-neutral-900 dark:to-neutral-950 dark:ring-white/10 dark:group-hover:ring-white/20">
+            <div className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-b from-neutral-100 to-neutral-200/70 p-1 shadow-xs ring-1 ring-neutral-900/5 transition-all duration-200 group-hover:scale-105 group-hover:shadow-sm dark:from-neutral-900 dark:to-neutral-950 dark:ring-white/10">
               <Image
                 src="/boseui-logo.png"
-                alt="BoseUI - Kinetic React Components"
+                alt="BoseUI Logo"
                 width={26}
                 height={26}
                 priority
@@ -108,10 +108,10 @@ export function Navbar() {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-[15px] font-semibold tracking-tight text-neutral-950 dark:text-white sm:text-base">
-                Bose<span className="text-neutral-400 dark:text-neutral-500 font-normal">UI</span>
+                Bose<span className="font-normal text-neutral-400 dark:text-neutral-500">UI</span>
               </span>
-              <span className="hidden items-center gap-1 rounded-full border border-neutral-200/80 bg-neutral-100/80 px-1.5 py-0.5 font-mono text-[10px] font-medium text-neutral-500 transition-colors group-hover:border-neutral-300 dark:border-neutral-800/80 dark:bg-neutral-900/80 dark:text-neutral-400 dark:group-hover:border-neutral-700 md:inline-flex">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="hidden items-center gap-1 rounded-full border border-neutral-200 bg-neutral-100 px-1.5 py-0.5 font-mono text-[10px] font-medium text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 md:inline-flex">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                 v2
               </span>
             </div>
@@ -123,7 +123,7 @@ export function Navbar() {
           {/* Desktop Nav Links */}
           <nav
             aria-label="Main navigation"
-            className="hidden items-center gap-0.5 rounded-xl p-0.5 md:flex"
+            className="hidden items-center gap-1 md:flex"
             onMouseLeave={() => setHoveredNav(null)}
           >
             {NAV_LINKS.map((link) => {
@@ -138,7 +138,7 @@ export function Navbar() {
                   aria-current={isActive ? "page" : undefined}
                   onMouseEnter={() => setHoveredNav(link.href)}
                   className={cn(
-                    "relative rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
+                    "relative rounded-lg px-3 py-1.5 text-xs font-medium transition-colors sm:text-sm",
                     focusRing,
                     isActive
                       ? "text-neutral-950 font-semibold dark:text-white"
@@ -151,10 +151,10 @@ export function Navbar() {
                       layoutId="navbar-active-indicator"
                       transition={{
                         type: "spring",
-                        stiffness: 380,
-                        damping: 30,
+                        stiffness: 400,
+                        damping: 32,
                       }}
-                      className="absolute inset-0 rounded-lg bg-neutral-900/5 shadow-[inset_0_1px_1px_rgba(0,0,0,0.04)] ring-1 ring-neutral-900/10 dark:bg-white/10 dark:ring-white/15"
+                      className="absolute inset-0 rounded-lg bg-neutral-900/5 ring-1 ring-neutral-900/10 dark:bg-white/10 dark:ring-white/15"
                     />
                   )}
 
@@ -167,7 +167,7 @@ export function Navbar() {
                         stiffness: 400,
                         damping: 35,
                       }}
-                      className="absolute inset-0 rounded-lg bg-neutral-100/70 dark:bg-neutral-900/60 -z-10"
+                      className="absolute inset-0 rounded-lg bg-neutral-100/80 -z-10 dark:bg-neutral-900/60"
                     />
                   )}
 
@@ -181,35 +181,47 @@ export function Navbar() {
         {/* Right: Omnibar Search + Actions + Mobile Menu Toggle */}
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           {/* Omnibar Search Trigger Button */}
-          <motion.button
-            whileTap={{ scale: 0.98 }}
+          <button
             type="button"
             onClick={openPalette}
             aria-label="Search components and docs"
             className={cn(
-              "group relative flex h-9 items-center justify-between gap-2 rounded-lg px-2 text-sm transition-all sm:w-52 sm:px-2.5 md:w-60 lg:w-64",
-              "border border-neutral-200/90 bg-neutral-50/80 text-neutral-500 shadow-sm hover:border-neutral-300 hover:bg-neutral-100/80 hover:text-neutral-900",
+              "group relative flex h-9 items-center justify-between gap-2.5 rounded-lg px-2.5 text-xs transition-colors sm:w-52 md:w-60 lg:w-64",
+              "border border-neutral-200/90 bg-neutral-50/80 text-neutral-500 shadow-2xs hover:border-neutral-300 hover:bg-neutral-100/80 hover:text-neutral-900",
               "dark:border-neutral-800/90 dark:bg-neutral-950/70 dark:text-neutral-400 dark:hover:border-neutral-700 dark:hover:bg-neutral-900/80 dark:hover:text-white",
               focusRing
             )}
           >
             <div className="flex items-center gap-2">
-              <Search className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110 group-hover:text-neutral-900 dark:group-hover:text-white" />
-              <span className="hidden text-xs sm:inline-block">Search components...</span>
+              <Search className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover:scale-105 group-hover:text-neutral-900 dark:group-hover:text-white" />
+              <span className="hidden sm:inline-block">Search components...</span>
+              <span className="inline-block sm:hidden">Search...</span>
             </div>
 
-            <kbd className="hidden rounded-md border border-neutral-200 bg-white px-1.5 py-0.5 font-mono text-[10px] font-medium text-neutral-500 shadow-[0_1px_1px_rgba(0,0,0,0.05)] transition-colors group-hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 dark:group-hover:border-neutral-700 sm:inline-block">
+            <kbd className="hidden rounded border border-neutral-200 bg-white px-1.5 py-0.5 font-mono text-[10px] font-medium text-neutral-500 shadow-2xs dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 sm:inline-block">
               {shortcut}
             </kbd>
-          </motion.button>
+          </button>
 
-          {/* Hairline Divider (Desktop) */}
-          <div className="hidden h-4 w-px bg-neutral-200 dark:bg-neutral-800 sm:block" aria-hidden="true" />
+          {/* GitHub Repo Button (Desktop) */}
+          <a
+            href={SITE_CONFIG.author.repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub repository"
+            title="View BoseUI on GitHub"
+            className={cn(
+              "hidden h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors sm:flex",
+              "border border-neutral-200/90 bg-neutral-50/80 text-neutral-600 hover:border-neutral-300 hover:bg-neutral-100 hover:text-neutral-950",
+              "dark:border-neutral-800/90 dark:bg-neutral-950/70 dark:text-neutral-400 dark:hover:border-neutral-700 dark:hover:bg-neutral-900 dark:hover:text-white",
+              focusRing
+            )}
+          >
+            <Github className="h-4 w-4" />
+          </a>
 
           {/* Theme Toggle Button */}
-          <motion.button
-            whileTap={{ scale: 0.92 }}
-            whileHover={{ scale: 1.05 }}
+          <button
             type="button"
             onClick={toggleTheme}
             aria-label={`Switch to ${nextTheme} mode`}
@@ -224,10 +236,10 @@ export function Navbar() {
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={theme}
-                initial={{ opacity: 0, rotate: -45, scale: 0.6 }}
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                exit={{ opacity: 0, rotate: 45, scale: 0.6 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+                initial={{ opacity: 0, scale: 0.7 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.7 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
                 className="flex items-center justify-center"
               >
                 {theme === "dark" ? (
@@ -237,30 +249,10 @@ export function Navbar() {
                 )}
               </motion.div>
             </AnimatePresence>
-          </motion.button>
-
-          {/* GitHub Repo Button (Desktop) */}
-          {/* <motion.a
-            whileTap={{ scale: 0.92 }}
-            whileHover={{ scale: 1.05 }}
-            href={SITE_CONFIG.author.repo}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub repository"
-            title="View BoseUI on GitHub"
-            className={cn(
-              "hidden h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors sm:flex",
-              "border border-neutral-200/90 bg-neutral-50/80 text-neutral-600 hover:border-neutral-300 hover:bg-neutral-100 hover:text-neutral-950",
-              "dark:border-neutral-800/90 dark:bg-neutral-950/70 dark:text-neutral-400 dark:hover:border-neutral-700 dark:hover:bg-neutral-900 dark:hover:text-white",
-              focusRing
-            )}
-          >
-            <Github className="h-4 w-4" />
-          </motion.a> */}
+          </button>
 
           {/* Mobile Menu Toggle Button */}
-          <motion.button
-            whileTap={{ scale: 0.92 }}
+          <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
@@ -277,7 +269,7 @@ export function Navbar() {
             ) : (
               <Menu className="h-4 w-4" />
             )}
-          </motion.button>
+          </button>
         </div>
       </div>
 
@@ -288,7 +280,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden border-b border-neutral-200 bg-white/95 px-4 pb-6 pt-3 shadow-xl backdrop-blur-2xl dark:border-neutral-800 dark:bg-black/95 md:hidden"
           >
             <nav className="flex flex-col gap-1">
@@ -305,7 +297,7 @@ export function Navbar() {
                     className={cn(
                       "flex items-center justify-between rounded-xl px-3.5 py-3 text-sm font-medium transition-colors",
                       isActive
-                        ? "bg-black text-white font-semibold dark:bg-white dark:text-black shadow-sm"
+                        ? "bg-neutral-950 text-white font-semibold dark:bg-white dark:text-black shadow-xs"
                         : "text-neutral-700 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-neutral-900"
                     )}
                   >
@@ -320,7 +312,7 @@ export function Navbar() {
 
               <div className="my-2 h-px bg-neutral-200 dark:bg-neutral-800" />
 
-              {/* Mobile GitHub & Search Actions & Theme Switcher */}
+              {/* Mobile Actions: Search, Theme, GitHub */}
               <div className="flex flex-col gap-2 pt-1">
                 <button
                   type="button"
@@ -334,7 +326,7 @@ export function Navbar() {
                     <Search className="h-3.5 w-3.5" />
                     <span>Search components...</span>
                   </div>
-                  <kbd className="rounded border border-neutral-200 bg-white px-1.5 py-0.5 font-mono text-[10px] text-neutral-500 shadow-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400">
+                  <kbd className="rounded border border-neutral-200 bg-white px-1.5 py-0.5 font-mono text-[10px] text-neutral-500 shadow-xs dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400">
                     {shortcut}
                   </kbd>
                 </button>
@@ -358,7 +350,7 @@ export function Navbar() {
                     )}
                   </button>
 
-                  {/* <a
+                  <a
                     href={SITE_CONFIG.author.repo}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -366,7 +358,7 @@ export function Navbar() {
                   >
                     <Github className="h-4 w-4" />
                     <span>GitHub</span>
-                  </a> */}
+                  </a>
                 </div>
               </div>
             </nav>

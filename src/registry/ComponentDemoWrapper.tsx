@@ -138,6 +138,19 @@ export function createComponentDemo(
           </div>
         );
 
+      case "gooey-input":
+        return (
+          <div className="flex min-h-[160px] w-full flex-col items-center justify-center gap-4 p-8">
+            <Component
+              placeholder="Search primitives..."
+              className={className}
+            />
+            <span className="text-xs text-neutral-400 font-mono">
+              Click to trigger liquid gooey separation
+            </span>
+          </div>
+        );
+
       default:
         return <Component className={className} />;
     }

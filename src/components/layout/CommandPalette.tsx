@@ -71,6 +71,8 @@ export function CommandPaletteProvider({
   const router = useRouter();
   const { theme, toggleTheme } = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
+  const listContainerRef = useRef<HTMLDivElement>(null);
+  const selectedItemRef = useRef<HTMLButtonElement | null>(null);
 
   const openPalette = useCallback(() => {
     setQuery("");
@@ -109,7 +111,7 @@ export function CommandPaletteProvider({
 
   useEffect(() => {
     if (isOpen) {
-      const timer = setTimeout(() => inputRef.current?.focus(), 20);
+      const timer = setTimeout(() => inputRef.current?.focus(), 25);
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
@@ -130,13 +132,13 @@ export function CommandPaletteProvider({
     }));
 
     const cliItems: CommandActionItem[] = CATALOG_INDEX.map((comp) => {
-      const cliCommand = `npx shadcn@latest add ${SITE_CONFIG.url}/r/${comp.slug}.json`;
+      const cliCommand = `npx shadcn@latest add "${SITE_CONFIG.url}/r/${comp.slug}.json"`;
       return {
         id: `cli-${comp.slug}`,
         group: "CLI Registry",
-        title: `Copy CLI: ${comp.slug}`,
+        title: `Copy CLI: ${comp.title}`,
         subtitle: cliCommand,
-        badge: "Copy CLI",
+        badge: "CLI",
         icon: <Terminal className="h-4 w-4" />,
         keywords: `cli install npx shadcn ${comp.slug} ${comp.title}`,
         onSelect: async () => {
@@ -145,7 +147,7 @@ export function CommandPaletteProvider({
           setTimeout(() => {
             setCopiedId(null);
             closePalette();
-          }, 650);
+          }, 600);
         },
       };
     });
@@ -155,10 +157,10 @@ export function CommandPaletteProvider({
         id: "nav-theme",
         group: "Navigation",
         title: `Switch to ${theme === "dark" ? "Light" : "Dark"} Mode`,
-        subtitle: "Toggle between high-contrast Light and Dark monochrome themes",
+        subtitle: "Toggle between high-contrast Light and Dark themes",
         badge: "Theme",
         icon: <SunMoon className="h-4 w-4" />,
-        keywords: "theme light dark mode toggle appearance",
+        keywords: "theme light dark mode toggle appearance color",
         onSelect: () => {
           toggleTheme();
           closePalette();
@@ -167,10 +169,10 @@ export function CommandPaletteProvider({
       {
         id: "nav-home",
         group: "Navigation",
-        title: "Home — BoseUI",
-        subtitle: "Landing page & interactive Bento playground",
+        title: "Home",
+        subtitle: "BoseUI landing showcase and kinetic playground",
         icon: <Home className="h-4 w-4" />,
-        keywords: "home landing hero bento",
+        keywords: "home landing hero bento showcase",
         onSelect: () => {
           router.push("/");
           closePalette();
@@ -180,9 +182,9 @@ export function CommandPaletteProvider({
         id: "nav-components",
         group: "Navigation",
         title: "Components Directory",
-        subtitle: "Browse all kinetic React components",
+        subtitle: "Browse all kinetic React components and category filters",
         icon: <Layers className="h-4 w-4" />,
-        keywords: "components directory catalog browse grid",
+        keywords: "components directory catalog browse grid table primitives",
         onSelect: () => {
           router.push("/components");
           closePalette();
@@ -192,9 +194,9 @@ export function CommandPaletteProvider({
         id: "nav-docs",
         group: "Navigation",
         title: "Documentation",
-        subtitle: "Getting started & CLI installation guide",
+        subtitle: "Getting started, CLI usage, and architecture overview",
         icon: <BookOpen className="h-4 w-4" />,
-        keywords: "docs documentation guide install cli architecture sync",
+        keywords: "docs documentation guide install cli architecture",
         onSelect: () => {
           router.push("/docs");
           closePalette();
@@ -204,10 +206,10 @@ export function CommandPaletteProvider({
         id: "nav-contributing",
         group: "Navigation",
         title: "Contributing Guide",
-        subtitle: "How to build and contribute components to BoseUI",
+        subtitle: "How to scaffold, build, and submit components to BoseUI",
         badge: "Guide",
         icon: <HeartHandshake className="h-4 w-4" />,
-        keywords: "contribute contributing guide architecture component new pull request github open source",
+        keywords: "contribute contributing guide component new pull request github open source",
         onSelect: () => {
           router.push("/docs/contributing");
           closePalette();
@@ -236,14 +238,14 @@ export function CommandPaletteProvider({
       {
         id: "creator-github",
         group: "Creator",
-        title: "GitHub — @Theb0se",
-        subtitle: SITE_CONFIG.author.github,
+        title: "GitHub — @Theb0se/bose-ui",
+        subtitle: SITE_CONFIG.author.repo,
         badge: "External",
         icon: <ExternalLink className="h-4 w-4" />,
         keywords: "github source code repo rishabh bose theb0se",
         onSelect: () => {
           window.open(
-            SITE_CONFIG.author.github,
+            SITE_CONFIG.author.repo,
             "_blank",
             "noopener,noreferrer"
           );
@@ -270,6 +272,16 @@ export function CommandPaletteProvider({
     setSelectedIndex(0);
   }, [query]);
 
+  // Keep selected item visible in list
+  useEffect(() => {
+    if (selectedItemRef.current) {
+      selectedItemRef.current.scrollIntoView({
+        block: "nearest",
+        behavior: "smooth",
+      });
+    }
+  }, [selectedIndex]);
+
   const handleListKeyDown = (e: React.KeyboardEvent) => {
     if (filteredActions.length === 0) return;
 
@@ -295,52 +307,55 @@ export function CommandPaletteProvider({
 
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-[12vh]">
+          <div className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-[10vh] sm:pt-[12vh]">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.14 }}
+              transition={{ duration: 0.15 }}
               onClick={closePalette}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm dark:bg-black/80"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm dark:bg-black/80"
             />
 
             <motion.div
               role="dialog"
               aria-modal="true"
               aria-label="BoseUI Command Palette"
-              initial={{ opacity: 0, scale: 0.96, y: -10 }}
+              initial={{ opacity: 0, scale: 0.98, y: -8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: -10 }}
-              transition={{ type: "spring", stiffness: 420, damping: 30 }}
+              exit={{ opacity: 0, scale: 0.98, y: -8 }}
+              transition={{ duration: 0.16, ease: "easeOut" }}
               onKeyDown={handleListKeyDown}
-              className="relative z-10 w-full max-w-xl overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl dark:border-[#262626] dark:bg-[#0A0A0A]"
+              className="relative z-10 w-full max-w-xl overflow-hidden rounded-2xl border border-neutral-200/90 bg-white shadow-2xl dark:border-neutral-800 dark:bg-[#0A0A0A]"
             >
-              <div className="flex items-center gap-3 border-b border-neutral-200 px-4 py-3.5 dark:border-[#1F1F1F]">
-                <Search className="h-4 w-4 shrink-0 text-black dark:text-white" />
+              <div className="flex items-center gap-3 border-b border-neutral-200 px-4 py-3.5 dark:border-neutral-800">
+                <Search className="h-4 w-4 shrink-0 text-neutral-500 dark:text-neutral-400" />
                 <input
                   ref={inputRef}
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search components, CLI commands, or theme..."
-                  className="w-full bg-transparent text-sm text-black placeholder-neutral-400 focus:outline-none dark:text-white dark:placeholder-neutral-500"
+                  placeholder="Type a command or search components..."
+                  className="w-full bg-transparent text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none dark:text-white dark:placeholder:text-neutral-500"
                 />
                 <button
                   type="button"
                   onClick={closePalette}
-                  className="rounded border border-neutral-200 bg-neutral-100 px-2 py-0.5 font-mono text-[10px] text-neutral-500 hover:border-black hover:text-black dark:border-[#262626] dark:bg-[#141414] dark:text-neutral-400 dark:hover:border-white dark:hover:text-white"
+                  className="rounded border border-neutral-200 bg-neutral-100 px-2 py-0.5 font-mono text-[10px] text-neutral-500 hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:border-neutral-600 dark:hover:text-white"
                 >
                   ESC
                 </button>
               </div>
 
-              <div className="max-h-[370px] overflow-y-auto p-2">
+              <div
+                ref={listContainerRef}
+                className="max-h-[380px] overflow-y-auto p-2"
+              >
                 {filteredActions.length === 0 ? (
                   <div className="py-12 text-center">
                     <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                      No results found for{" "}
-                      <span className="font-mono text-black dark:text-white">
+                      No matching actions found for{" "}
+                      <span className="font-mono text-neutral-900 dark:text-white">
                         &ldquo;{query}&rdquo;
                       </span>
                     </p>
@@ -354,21 +369,22 @@ export function CommandPaletteProvider({
                       return (
                         <button
                           key={item.id}
+                          ref={isSelected ? selectedItemRef : undefined}
                           type="button"
                           onMouseEnter={() => setSelectedIndex(idx)}
                           onClick={item.onSelect}
-                          className={`flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-left transition-colors ${
+                          className={`flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-left transition-colors ${
                             isSelected
-                              ? "bg-neutral-100 text-black dark:bg-[#181818] dark:text-white"
-                              : "text-neutral-600 hover:bg-neutral-50 dark:text-neutral-400 dark:hover:bg-[#121212]"
+                              ? "bg-neutral-100 text-neutral-950 dark:bg-neutral-900 dark:text-white"
+                              : "text-neutral-600 hover:bg-neutral-50 dark:text-neutral-400 dark:hover:bg-neutral-900/50"
                           }`}
                         >
                           <div className="flex min-w-0 items-center gap-3">
                             <div
-                              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border ${
+                              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border transition-colors ${
                                 isSelected
-                                  ? "border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
-                                  : "border-neutral-200 bg-white text-black dark:border-[#262626] dark:bg-black dark:text-white"
+                                  ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-950"
+                                  : "border-neutral-200 bg-neutral-50 text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300"
                               }`}
                             >
                               {isCopied ? (
@@ -379,14 +395,14 @@ export function CommandPaletteProvider({
                             </div>
                             <div className="min-w-0">
                               <div className="flex items-center gap-2">
-                                <span className="truncate text-sm font-medium text-black dark:text-white">
+                                <span className="truncate text-xs font-semibold text-neutral-950 dark:text-white sm:text-sm">
                                   {item.title}
                                 </span>
                                 <span className="font-mono text-[10px] text-neutral-400 dark:text-neutral-500">
                                   {item.group}
                                 </span>
                               </div>
-                              <p className="truncate text-xs text-neutral-500">
+                              <p className="truncate text-xs text-neutral-500 dark:text-neutral-400">
                                 {item.subtitle}
                               </p>
                             </div>
@@ -394,14 +410,14 @@ export function CommandPaletteProvider({
 
                           <div className="flex shrink-0 items-center gap-2">
                             {item.badge && (
-                              <span className="rounded border border-neutral-200 bg-white px-2 py-0.5 font-mono text-[10px] text-neutral-500 dark:border-[#262626] dark:bg-black dark:text-neutral-400">
+                              <span className="rounded border border-neutral-200 bg-white px-2 py-0.5 font-mono text-[10px] text-neutral-500 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400">
                                 {isCopied ? "COPIED" : item.badge}
                               </span>
                             )}
                             <CornerDownLeft
                               className={`h-3.5 w-3.5 transition-opacity ${
                                 isSelected
-                                  ? "text-black opacity-100 dark:text-white"
+                                  ? "text-neutral-900 opacity-100 dark:text-white"
                                   : "opacity-0"
                               }`}
                             />
@@ -413,13 +429,13 @@ export function CommandPaletteProvider({
                 )}
               </div>
 
-              <div className="flex items-center justify-between border-t border-neutral-200 bg-neutral-50 px-4 py-2.5 text-[11px] text-neutral-500 dark:border-[#1F1F1F] dark:bg-black">
-                <div className="flex items-center gap-3 font-mono">
+              <div className="flex items-center justify-between border-t border-neutral-200 bg-neutral-50 px-4 py-2 text-[11px] text-neutral-500 dark:border-neutral-800 dark:bg-neutral-950">
+                <div className="flex items-center gap-3 font-mono text-[10px] sm:text-[11px]">
                   <span>↑↓ Navigate</span>
                   <span>↵ Select</span>
                   <span>ESC Close</span>
                 </div>
-                <span className="font-mono text-[10px]">BoseUI</span>
+                <span className="font-mono text-[10px] text-neutral-400">BoseUI v2</span>
               </div>
             </motion.div>
           </div>

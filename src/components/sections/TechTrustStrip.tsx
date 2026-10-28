@@ -2,13 +2,11 @@
 
 import React from "react";
 import {
-  Sparkles,
   Zap,
   Code2,
   Terminal,
   ShieldCheck,
   Cpu,
-  Layers,
   Heart,
 } from "lucide-react";
 
@@ -16,7 +14,7 @@ const TRUST_POINTS = [
   {
     icon: Zap,
     label: "Framer Motion 11",
-    detail: "Physics-tuned springs & gestural physics",
+    detail: "Physics-tuned springs & gestural mechanics",
   },
   {
     icon: Terminal,
@@ -47,7 +45,7 @@ const TRUST_POINTS = [
 
 export function TechTrustStrip() {
   return (
-    <section className="border-b border-neutral-200 bg-neutral-50/50 py-6 dark:border-[#1A1A1A] dark:bg-[#070707]">
+    <section className="border-b border-neutral-200/80 bg-neutral-50/50 py-6 dark:border-neutral-800 dark:bg-[#070707]">
       <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
           {TRUST_POINTS.map((item) => {

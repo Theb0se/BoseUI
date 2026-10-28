@@ -22,7 +22,7 @@ const CLI_COMMANDS: Record<PkgManager, string> = {
 
 const REGISTRY_ARTIFACTS = [
   { label: "Registry JSON", path: "/registry.json" },
-  { label: "LLM Docs", path: "/llms.txt" },
+  { label: "LLM Index", path: "/llms.txt" },
   { label: "Sitemap", path: "/sitemap.xml" },
 ];
 
@@ -41,8 +41,8 @@ export function HowItWorks() {
   const steps = [
     {
       step: "01",
-      tag: "STEP 1",
-      title: "Install in One Command",
+      tag: "INSTALLATION",
+      title: "One-Command Install",
       icon: Terminal,
       description:
         "Add any component directly into your React or Next.js project using your preferred package manager with zero runtime lock-in.",
@@ -51,7 +51,7 @@ export function HowItWorks() {
     },
     {
       step: "02",
-      tag: "STEP 2",
+      tag: "OWNERSHIP",
       title: "You Own the Code",
       icon: Feather,
       description:
@@ -61,7 +61,7 @@ export function HowItWorks() {
     },
     {
       step: "03",
-      tag: "STEP 3",
+      tag: "PIPELINE",
       title: "Deterministic Sync Pipeline",
       icon: FileCode2,
       description:
@@ -72,15 +72,12 @@ export function HowItWorks() {
   ];
 
   return (
-    <section className="border-b border-neutral-200 bg-white dark:border-[#1A1A1A] dark:bg-black">
-      <div className="mx-auto max-w-[1280px] border-x border-neutral-200 dark:border-[#1A1A1A]">
+    <section className="border-b border-neutral-200/80 bg-white dark:border-neutral-800 dark:bg-black">
+      <div className="mx-auto max-w-[1280px] border-x border-neutral-200/80 dark:border-neutral-800">
         {/* Section Header */}
-        <div className="flex flex-col justify-between gap-6 border-b border-neutral-200 px-5 py-14 dark:border-[#1A1A1A] sm:flex-row sm:items-end sm:px-8 sm:py-16">
+        <div className="flex flex-col justify-between gap-6 border-b border-neutral-200/80 px-5 py-14 dark:border-neutral-800 sm:flex-row sm:items-end sm:px-8 sm:py-16">
           <div>
-            <div className="font-mono text-[11px] uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
-              // HOW IT WORKS
-            </div>
-            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.035em] text-black dark:text-white sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-neutral-950 dark:text-white sm:text-4xl">
               Simple to install. Easy to edit.
             </h2>
             <p className="mt-2.5 max-w-xl text-sm leading-relaxed text-neutral-600 dark:text-neutral-400 sm:text-base">
@@ -94,7 +91,7 @@ export function HowItWorks() {
               <Link
                 key={artifact.path}
                 href={artifact.path}
-                className="inline-flex items-center gap-1 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-1.5 font-mono text-[11px] text-neutral-600 transition-colors hover:border-black hover:text-black dark:border-[#262626] dark:bg-[#0A0A0A] dark:text-neutral-400 dark:hover:border-white dark:hover:text-white"
+                className="inline-flex items-center gap-1 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-1.5 font-mono text-[11px] text-neutral-600 transition-colors hover:border-neutral-900 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:border-white dark:hover:text-white"
               >
                 <span>{artifact.path}</span>
                 <ArrowUpRight className="h-3 w-3" />
@@ -113,26 +110,21 @@ export function HowItWorks() {
                 key={card.step}
                 className={`flex flex-col justify-between gap-8 p-6 sm:p-8 ${
                   idx !== steps.length - 1
-                    ? "border-b border-neutral-200 dark:border-[#1A1A1A] md:border-b-0 md:border-r"
+                    ? "border-b border-neutral-200/80 dark:border-neutral-800 md:border-b-0 md:border-r"
                     : ""
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-50 text-black dark:border-[#262626] dark:bg-[#0C0C0C] dark:text-white">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-neutral-200/80 bg-neutral-50 text-neutral-950 dark:border-neutral-800 dark:bg-neutral-900 dark:text-white">
                       <Icon className="h-4 w-4" />
                     </div>
-                    <div className="flex items-center gap-2 font-mono text-[11px]">
-                      <span className="text-neutral-400 dark:text-neutral-600">
-                        /{card.step}
-                      </span>
-                      <span className="tracking-wider text-neutral-500">
-                        {card.tag}
-                      </span>
-                    </div>
+                    <span className="rounded bg-neutral-100 px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-neutral-600 dark:bg-neutral-900 dark:text-neutral-400">
+                      {card.tag}
+                    </span>
                   </div>
 
-                  <h3 className="mt-6 text-lg font-semibold tracking-tight text-black dark:text-white">
+                  <h3 className="mt-5 text-lg font-semibold tracking-tight text-neutral-950 dark:text-white">
                     {card.title}
                   </h3>
                   <p className="mt-2 text-xs leading-relaxed text-neutral-600 dark:text-neutral-400 sm:text-sm">
@@ -150,8 +142,8 @@ export function HowItWorks() {
                           onClick={() => setPkg(p)}
                           className={`rounded px-2 py-0.5 font-mono text-[10px] font-medium transition-colors ${
                             pkg === p
-                              ? "bg-black text-white dark:bg-white dark:text-black"
-                              : "text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white"
+                              ? "bg-neutral-950 text-white dark:bg-white dark:text-black font-semibold"
+                              : "text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
                           }`}
                         >
                           {p}
@@ -160,16 +152,16 @@ export function HowItWorks() {
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between gap-2 rounded-xl border border-neutral-200 bg-neutral-50 px-3.5 py-2.5 font-mono text-[11px] text-neutral-800 dark:border-[#222222] dark:bg-[#080808] dark:text-neutral-300">
+                  <div className="flex items-center justify-between gap-2 rounded-xl border border-neutral-200 bg-neutral-50 px-3.5 py-2.5 font-mono text-[11px] text-neutral-800 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300">
                     <span className="truncate">{card.code}</span>
                     <button
                       type="button"
                       onClick={() => handleCopy(card.code, idx)}
                       aria-label={`Copy ${card.title} snippet`}
-                      className="shrink-0 cursor-pointer rounded-md p-1 text-neutral-400 transition-colors hover:bg-neutral-200/70 hover:text-black dark:hover:bg-[#1A1A1A] dark:hover:text-white"
+                      className="shrink-0 cursor-pointer rounded-md p-1 text-neutral-400 transition-colors hover:bg-neutral-200/70 hover:text-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-white"
                     >
                       {isCopied ? (
-                        <Check className="h-3.5 w-3.5 text-black dark:text-white" />
+                        <Check className="h-3.5 w-3.5 text-emerald-500" />
                       ) : (
                         <Copy className="h-3.5 w-3.5" />
                       )}

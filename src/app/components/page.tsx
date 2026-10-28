@@ -6,11 +6,8 @@ import {
   Search,
   ArrowUpRight,
   Check,
-  Copy,
   Terminal,
-  LayoutGrid,
   List,
-  Layers,
   X,
   Sparkles,
   ArrowUpDown,
@@ -19,71 +16,14 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import { PULSE_COMPONENTS } from "@/registry/generated-catalog";
-import { COMPONENT_DEMOS } from "@/registry/generated-demos";
 import {
   COMPONENT_CATEGORIES,
   type ComponentCategory,
-  type PulseComponentCatalogEntry,
 } from "@/types/component";
 import { isBlock } from "@/lib/blocks";
 import { cn, copyToClipboard } from "@/lib/utils";
 
 type SortOption = "featured" | "name-asc" | "newest" | "props-desc";
-
-
-function LazyDemoStage({
-  Demo,
-  title,
-}: {
-  Demo?: React.ComponentType;
-  title: string;
-}) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    // Pre-mount when within 300px of viewport to prevent jank while avoiding running animation loops simultaneously
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          setHasEnteredViewport(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "300px" }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={containerRef}
-      className="relative flex min-h-[250px] w-full items-center justify-center p-6"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-2 overflow-hidden rounded-xl bg-neutral-50/70 bg-dot-matrix [background-size:18px_18px] dark:bg-[#050505]"
-      />
-      <div className="relative z-10 flex w-full items-center justify-center">
-        {hasEnteredViewport && Demo ? (
-          <Demo />
-        ) : (
-          <div className="flex h-32 w-full flex-col items-center justify-center gap-2 font-mono text-xs text-neutral-400">
-            <span className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white/80 px-3 py-1 shadow-2xs backdrop-blur-xs dark:border-neutral-800 dark:bg-neutral-900/80">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Scroll to preview {title}</span>
-            </span>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
 
 export default function ComponentsDirectoryPage() {
   const [selectedCategory, setSelectedCategory] = useState<
@@ -102,7 +42,7 @@ export default function ComponentsDirectoryPage() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
-        (e.key === "/" || (e.key === "k" && (e.metaKey || e.ctrlKey))) &&
+        e.key === "/" &&
         document.activeElement?.tagName !== "INPUT" &&
         document.activeElement?.tagName !== "TEXTAREA"
       ) {
@@ -114,12 +54,12 @@ export default function ComponentsDirectoryPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Filter out composite blocks (which belong on /blocks) while keeping all kinetic primitives and atmospheric backgrounds
+  // Filter out composite blocks while keeping all kinetic primitives
   const uiComponents = useMemo(() => {
     return PULSE_COMPONENTS.filter((comp) => !isBlock(comp.slug));
   }, []);
 
-  // Visible categories for UI components (including Backgrounds)
+  // Visible categories for UI components
   const availableCategories = useMemo(() => {
     return COMPONENT_CATEGORIES.filter((cat) =>
       uiComponents.some((comp) => comp.category === cat)
@@ -184,15 +124,10 @@ export default function ComponentsDirectoryPage() {
     []
   );
 
-  const featuredCount = useMemo(
-    () => uiComponents.filter((c) => c.featured).length,
-    [uiComponents]
-  );
-
   return (
     <div className="mx-auto max-w-[1240px] px-4 py-8 sm:px-6 lg:py-12">
       {/* Page Header */}
-      <div className="flex flex-col justify-between gap-6 pb-4 dark:border-neutral-800 lg:flex-row lg:items-end">
+      <div className="flex flex-col justify-between gap-6 pb-6 dark:border-neutral-800 lg:flex-row lg:items-end">
         <div>
           {/* Top Metric Badges */}
           <div className="flex flex-wrap items-center gap-2">
@@ -202,7 +137,7 @@ export default function ComponentsDirectoryPage() {
             </span>
 
             <span className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 font-mono text-[11px] text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400">
-              <span>React 19 & Next.js 15</span>
+              <span>{uiComponents.length} Primitives</span>
             </span>
 
             <span className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 font-mono text-[11px] text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400">
@@ -222,7 +157,8 @@ export default function ComponentsDirectoryPage() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center  border-b border-neutral-200 pb-8">
+      {/* Control Bar: Search + Sort + View */}
+      <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center border-b border-neutral-200/80 pb-6 dark:border-neutral-800">
         {/* Search Input with Keyboard Shortcut */}
         <div className="relative w-full sm:w-72">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
@@ -233,7 +169,7 @@ export default function ComponentsDirectoryPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search components or badges..."
             aria-label="Search components"
-            className="h-10 w-full rounded-xl border border-neutral-200 bg-white pl-10 pr-14 text-xs text-neutral-900 placeholder:text-neutral-400 transition-colors focus:border-neutral-900 focus:outline-hidden dark:border-neutral-800 dark:bg-neutral-950 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-white"
+            className="h-10 w-full rounded-xl border border-neutral-200 bg-white pl-10 pr-14 text-xs text-neutral-900 placeholder:text-neutral-400 transition-colors focus:border-neutral-900 focus:outline-none dark:border-neutral-800 dark:bg-neutral-950 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-white"
           />
           {searchQuery ? (
             <button
@@ -260,7 +196,7 @@ export default function ComponentsDirectoryPage() {
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as SortOption)}
             aria-label="Sort components"
-            className="h-10 appearance-none rounded-xl border border-neutral-200 bg-white pl-3.5 pr-8 text-xs font-medium text-neutral-700 transition-colors hover:border-neutral-300 focus:border-neutral-900 focus:outline-hidden dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-300 dark:hover:border-neutral-700 dark:focus:border-white"
+            className="h-10 appearance-none rounded-xl border border-neutral-200 bg-white pl-3.5 pr-8 text-xs font-medium text-neutral-700 transition-colors hover:border-neutral-300 focus:border-neutral-900 focus:outline-none dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-300 dark:hover:border-neutral-700 dark:focus:border-white"
           >
             <option value="featured">Featured First</option>
             <option value="name-asc">Alphabetical (A-Z)</option>
@@ -319,11 +255,11 @@ export default function ComponentsDirectoryPage() {
             className={cn(
               "rounded-xl border px-3 py-1.5 text-xs font-medium transition-colors",
               selectedCategory === "All"
-                ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-black"
+                ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-black font-semibold"
                 : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400 dark:hover:border-neutral-700 dark:hover:text-white"
             )}
           >
-            All
+            All ({uiComponents.length})
           </button>
 
           {/* Featured */}
@@ -333,7 +269,7 @@ export default function ComponentsDirectoryPage() {
             className={cn(
               "inline-flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-medium transition-colors",
               selectedCategory === "Featured"
-                ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-black"
+                ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-black font-semibold"
                 : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400 dark:hover:border-neutral-700 dark:hover:text-white"
             )}
           >
@@ -341,7 +277,7 @@ export default function ComponentsDirectoryPage() {
             <span>Featured</span>
           </button>
 
-          {/* Atomic UI Category Chips (Backgrounds excluded) */}
+          {/* Category Chips */}
           {availableCategories.map((category) => {
             const count = uiComponents.filter(
               (c) => c.category === category
@@ -357,7 +293,7 @@ export default function ComponentsDirectoryPage() {
                 className={cn(
                   "rounded-xl border px-3 py-1.5 text-xs font-medium transition-colors",
                   isSelected
-                    ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-black"
+                    ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-black font-semibold"
                     : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400 dark:hover:border-neutral-700 dark:hover:text-white"
                 )}
               >
@@ -371,8 +307,8 @@ export default function ComponentsDirectoryPage() {
       {/* Main Results Showcase */}
       {filteredComponents.length === 0 ? (
         /* Empty State */
-        <div className="mt-12 flex min-h-[320px] flex-col items-center justify-center rounded-3xl border border-dashed border-neutral-300 bg-neutral-50/50 p-10 text-center dark:border-neutral-800 dark:bg-neutral-950/50">
-          <SlidersHorizontal className="h-9 w-9 text-neutral-400 dark:text-neutral-600" />
+        <div className="mt-12 flex min-h-[300px] flex-col items-center justify-center rounded-3xl border border-dashed border-neutral-300 bg-neutral-50/50 p-10 text-center dark:border-neutral-800 dark:bg-neutral-950/50">
+          <SlidersHorizontal className="h-8 w-8 text-neutral-400 dark:text-neutral-600" />
           <h2 className="mt-3.5 text-base font-semibold text-neutral-900 dark:text-white">
             No components found matching &ldquo;{searchQuery}&rdquo;
           </h2>
@@ -403,13 +339,13 @@ export default function ComponentsDirectoryPage() {
             return (
               <div
                 key={comp.slug}
-                className="group flex flex-col justify-between rounded-2xl border border-neutral-200 bg-white p-5 transition-all hover:border-neutral-400 hover:shadow-sm dark:border-neutral-800 dark:bg-[#0A0A0A] dark:hover:border-neutral-700"
+                className="group flex flex-col justify-between rounded-2xl border border-neutral-200/90 bg-white p-5 transition-all hover:border-neutral-400 hover:shadow-2xs dark:border-neutral-800 dark:bg-[#0A0A0A] dark:hover:border-neutral-700"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2">
                     <Link
                       href={`/components/${comp.slug}`}
-                      className="text-sm font-semibold text-neutral-950 hover:underline dark:text-white"
+                      className="text-sm font-semibold text-neutral-950 transition-colors hover:underline dark:text-white"
                     >
                       {comp.title}
                     </Link>
@@ -476,15 +412,15 @@ export default function ComponentsDirectoryPage() {
         </div>
       ) : viewMode === "table" ? (
         /* High-Density Index Table View */
-        <div className="mt-8 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xs dark:border-neutral-800 dark:bg-[#0A0A0A]">
+        <div className="mt-8 overflow-hidden rounded-2xl border border-neutral-200/90 bg-white shadow-2xs dark:border-neutral-800 dark:bg-[#0A0A0A]">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-neutral-200 bg-neutral-50/70 font-mono text-[11px] text-neutral-500 dark:border-neutral-800 dark:bg-neutral-900/50 dark:text-neutral-400">
+              <thead className="border-b border-neutral-200/80 bg-neutral-50/70 font-mono text-[11px] text-neutral-500 dark:border-neutral-800 dark:bg-neutral-900/50 dark:text-neutral-400">
                 <tr>
                   <th className="px-5 py-3 font-medium">Component</th>
                   <th className="px-4 py-3 font-medium">Category</th>
                   <th className="hidden px-4 py-3 font-medium md:table-cell">
-                    Badges & Tech
+                    Badges &amp; Tech
                   </th>
                   <th className="hidden px-4 py-3 font-medium sm:table-cell">
                     Props
@@ -570,9 +506,7 @@ export default function ComponentsDirectoryPage() {
             </table>
           </div>
         </div>
-      ) : (
-        null
-      )}
+      ) : null}
     </div>
   );
 }

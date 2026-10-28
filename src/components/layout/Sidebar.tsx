@@ -11,6 +11,7 @@ import {
   PanelLeftOpen,
   Search,
   X,
+  Sparkles,
 } from "lucide-react";
 import { PULSE_COMPONENTS } from "@/registry/generated-catalog";
 import { cn } from "@/lib/utils";
@@ -31,7 +32,7 @@ export function Sidebar() {
     }
   }, [pathname]);
 
-  // Alphabetically sorted components list (A to Z, no category or letter grouping)
+  // Alphabetically sorted components list (A to Z)
   const components = useMemo(() => {
     const q = filter.trim().toLowerCase();
     const list = q
@@ -42,7 +43,6 @@ export function Sidebar() {
         )
       : PULSE_COMPONENTS;
 
-    // Strict alphabetical sort by title (A to Z)
     return [...list].sort((a, b) =>
       a.title.localeCompare(b.title, undefined, { sensitivity: "base" })
     );
@@ -57,9 +57,9 @@ export function Sidebar() {
           type="text"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          placeholder="Jump to component..."
+          placeholder="Filter components..."
           aria-label="Filter components"
-          className="h-9 w-full rounded-lg border border-neutral-200 bg-neutral-50/80 pl-8 pr-7 text-xs text-neutral-900 placeholder:text-neutral-400 transition-colors focus:border-neutral-900 focus:bg-white focus:outline-none dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-neutral-300 dark:focus:bg-neutral-950"
+          className="h-9 w-full rounded-xl border border-neutral-200 bg-neutral-50/80 pl-8 pr-7 text-xs text-neutral-900 placeholder:text-neutral-400 transition-colors focus:border-neutral-900 focus:bg-white focus:outline-none dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-neutral-300 dark:focus:bg-neutral-950"
         />
         {filter && (
           <button
@@ -77,23 +77,38 @@ export function Sidebar() {
         {/* Section 1: Overview */}
         {!filter && (
           <div>
-            <div className="mb-1.5 px-2.5 text-[11px] font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-              Getting Started
+            <div className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+              Overview
             </div>
             <ul className="space-y-0.5">
+              <li>
+                <Link
+                  href="/components"
+                  onClick={() => setMobileOpen(false)}
+                  className={cn(
+                    "flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors",
+                    pathname === "/components"
+                      ? "bg-neutral-950 font-semibold text-white dark:bg-white dark:text-black shadow-2xs"
+                      : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-white"
+                  )}
+                >
+                  <Layers className="h-3.5 w-3.5 shrink-0" />
+                  <span>Components Directory</span>
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/docs"
                   onClick={() => setMobileOpen(false)}
                   className={cn(
-                    "flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium transition-colors",
+                    "flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors",
                     pathname === "/docs"
-                      ? "bg-neutral-900 text-white dark:bg-white dark:text-black"
+                      ? "bg-neutral-950 font-semibold text-white dark:bg-white dark:text-black shadow-2xs"
                       : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-white"
                   )}
                 >
                   <BookOpen className="h-3.5 w-3.5 shrink-0" />
-                  <span>Introduction &amp; CLI</span>
+                  <span>Documentation &amp; CLI</span>
                 </Link>
               </li>
               <li>
@@ -101,9 +116,9 @@ export function Sidebar() {
                   href="/docs/contributing"
                   onClick={() => setMobileOpen(false)}
                   className={cn(
-                    "flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium transition-colors",
+                    "flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors",
                     pathname === "/docs/contributing"
-                      ? "bg-neutral-900 text-white dark:bg-white dark:text-black"
+                      ? "bg-neutral-950 font-semibold text-white dark:bg-white dark:text-black shadow-2xs"
                       : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-white"
                   )}
                 >
@@ -111,30 +126,16 @@ export function Sidebar() {
                   <span>Contributing Guide</span>
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/components"
-                  onClick={() => setMobileOpen(false)}
-                  className={cn(
-                    "flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium transition-colors",
-                    pathname === "/components"
-                      ? "bg-neutral-900 text-white dark:bg-white dark:text-black"
-                      : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-white"
-                  )}
-                >
-                  <Layers className="h-3.5 w-3.5 shrink-0" />
-                  <span>All Components</span>
-                </Link>
-              </li>
             </ul>
           </div>
         )}
 
         {/* Section 2: Alphabetically Sorted Components */}
-        <div className="space-y-2 pb-16">
-          <div className="mb-1.5 px-2.5">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-              Components
+        <div className="space-y-1.5 pb-16">
+          <div className="flex items-center justify-between px-2 text-[11px] font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+            <span>Primitives</span>
+            <span className="font-mono text-[10px] text-neutral-400">
+              {components.length}
             </span>
           </div>
 
@@ -147,7 +148,7 @@ export function Sidebar() {
               {components.map((comp) => {
                 const href = `/components/${comp.slug}`;
                 const isActive = pathname.toLowerCase() === href.toLowerCase();
-                const isNew = comp.badges?.includes("New");
+                const isFeatured = comp.featured;
 
                 return (
                   <li key={comp.slug}>
@@ -156,16 +157,16 @@ export function Sidebar() {
                       href={href}
                       onClick={() => setMobileOpen(false)}
                       className={cn(
-                        "group flex items-center justify-between rounded-lg px-2.5 py-1.5 text-[13px] transition-colors",
+                        "group flex items-center justify-between rounded-lg px-2.5 py-1.5 text-xs transition-colors",
                         isActive
-                          ? "bg-neutral-900 font-medium text-white dark:bg-white dark:text-black"
+                          ? "bg-neutral-950 font-semibold text-white dark:bg-white dark:text-black shadow-2xs"
                           : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-900/80 dark:hover:text-white"
                       )}
                     >
                       <span className="truncate">{comp.title}</span>
-                      {isNew && !isActive && (
-                        <span className="ml-1.5 shrink-0 rounded-full border border-neutral-300 bg-neutral-100 px-1.5 py-0.2 font-mono text-[9px] font-medium text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400">
-                          New
+                      {isFeatured && !isActive && (
+                        <span className="ml-1.5 shrink-0 text-amber-500 opacity-75 group-hover:opacity-100">
+                          <Sparkles className="h-2.5 w-2.5" />
                         </span>
                       )}
                     </Link>
@@ -182,11 +183,11 @@ export function Sidebar() {
   return (
     <>
       {/* Mobile Sidebar Toggle Bar */}
-      <div className="sticky top-14 z-30 flex items-center justify-between border-b border-neutral-200 bg-white/95 px-4 py-2.5 backdrop-blur-md dark:border-neutral-900 dark:bg-black/95 lg:hidden">
+      <div className="sticky top-14 z-30 flex items-center justify-between border-b border-neutral-200 bg-white/95 px-4 py-2.5 backdrop-blur-md dark:border-neutral-800 dark:bg-black/95 lg:hidden">
         <button
           type="button"
           onClick={() => setMobileOpen((o) => !o)}
-          className="inline-flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-xs font-medium text-neutral-900 dark:border-neutral-800 dark:bg-neutral-950 dark:text-white"
+          className="inline-flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-xs font-medium text-neutral-900 shadow-2xs dark:border-neutral-800 dark:bg-neutral-900 dark:text-white"
         >
           {mobileOpen ? (
             <PanelLeftClose className="h-3.5 w-3.5" />
@@ -197,7 +198,7 @@ export function Sidebar() {
         </button>
 
         <span className="font-mono text-[11px] text-neutral-500">
-          BoseUI v2
+          127+ Primitives
         </span>
       </div>
 
@@ -206,16 +207,16 @@ export function Sidebar() {
         <div className="fixed inset-0 z-40 lg:hidden">
           <div
             onClick={() => setMobileOpen(false)}
-            className="fixed inset-0 bg-black/50 backdrop-blur-xs"
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs"
           />
-          <aside className="fixed bottom-0 left-0 top-14 z-50 w-64 overflow-y-auto border-r border-neutral-200 bg-white dark:border-neutral-900 dark:bg-black">
+          <aside className="fixed bottom-0 left-0 top-14 z-50 w-72 overflow-y-auto border-r border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black">
             {sidebarContent}
           </aside>
         </div>
       )}
 
       {/* Desktop Sticky Sidebar */}
-      <aside className="hidden w-64 shrink-0 border-r border-neutral-200 bg-white dark:border-neutral-900 dark:bg-black lg:block">
+      <aside className="hidden w-64 shrink-0 border-r border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black lg:block">
         <div className="sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto">
           {sidebarContent}
         </div>

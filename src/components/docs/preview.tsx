@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { COMPONENT_DEMOS } from "@/registry/generated-demos";
 import { BLOCK_COMPONENTS } from "@/components/blocks/registry";
@@ -26,6 +27,8 @@ import { RainOnGlass } from "@/components/ui/RainOnGlass";
 import { GalaxyNebula } from "@/components/ui/GalaxyNebula";
 import { ParticleNetwork } from "@/components/ui/ParticleNetwork";
 import { MorphingBlob } from "@/components/ui/MorphingBlob";
+import { DotTextHero } from "@/components/ui/DotTextHero";
+import { CylinderCarousel, type CylinderCardItem } from "@/components/ui/CylinderCarousel";
 
 // Stripe, Apple, DevTools, Consumer & Fintech components
 import { TiltCreditCard3D } from "@/components/ui/TiltCreditCard3D";
@@ -70,6 +73,7 @@ import { AccordionStackCards } from "@/components/ui/AccordionStackCards";
 import { AnimatedTabs } from "@/components/ui/AnimatedTabs";
 import { LiquidPillTabs } from "@/components/ui/LiquidPillTabs";
 import { ExpandableBentoCard } from "@/components/ui/ExpandableBentoCard";
+import { ExpandableCards, type ExpandableCardItem } from "@/components/ui/ExpandableCards";
 import { ParallaxTiltCard } from "@/components/ui/ParallaxTiltCard";
 import { HolographicFlipCard } from "@/components/ui/HolographicFlipCard";
 import { PeelRevealCard } from "@/components/ui/PeelRevealCard";
@@ -797,6 +801,232 @@ export function ComponentPreview({
       return (
         <div className="relative h-[480px] w-full overflow-y-auto rounded-2xl border border-neutral-800 bg-neutral-950">
           <StickyPages pages={demoPages} pageHeight="380px" />
+        </div>
+      );
+    }
+
+    case "expandable-cards": {
+      const demoStories: ExpandableCardItem[] = [
+        {
+          id: 1,
+          name: "Kinetic Physics",
+          tagline: "Spring-mass-damping equations tuned for real-time 120Hz tactility.",
+          logo: <Sparkles className="h-6 w-6 text-white" />,
+          quote: [
+            "Motion isn't a cosmetic afterthought — it's tactile communication.",
+            "Every interaction preserves physical velocity and momentum.",
+          ],
+          author: "Alex Rivera",
+          role: "Design Technologist",
+          href: "/components/kinetic-slider",
+          bg: "bg-gradient-to-b from-rose-500 via-pink-600 to-orange-500",
+          border: "border-rose-400/20",
+        },
+        {
+          id: 2,
+          name: "Source Ownership",
+          tagline: "Clean TypeScript & Tailwind CSS living directly in your repository.",
+          logo: <Zap className="h-6 w-6 text-white" />,
+          quote: [
+            "No bloated dependencies or mysterious stylesheet overrides.",
+            "Run one command, own the raw code directly.",
+          ],
+          author: "Elena Vance",
+          role: "Design Systems Lead",
+          href: "/docs",
+          bg: "bg-gradient-to-b from-[#0e1726] to-[#050914]",
+          border: "border-indigo-500/20",
+        },
+        {
+          id: 3,
+          name: "Accessibility First",
+          tagline: "Strict WCAG AA standards with automatic reduced motion fallbacks.",
+          logo: <ShieldCheck className="h-6 w-6 text-white" />,
+          quote: [
+            "High-performance motion shouldn't compromise universal accessibility.",
+            "Full keyboard loops and assistive screen reader cues.",
+          ],
+          author: "Sophia Dubois",
+          role: "Accessibility Lead",
+          href: "/docs/contributing",
+          bg: "bg-gradient-to-b from-neutral-800 to-neutral-950",
+          border: "border-white/10",
+        },
+      ];
+
+      return (
+        <div className="w-full max-w-5xl mx-auto p-2 sm:p-4">
+          <ExpandableCards
+            className={className}
+            stories={demoStories}
+            title="How Leading Teams Build"
+            subtitle="Design Engineering"
+            moreStoriesText="Explore all components"
+            moreStoriesHref="/components"
+          />
+        </div>
+      );
+    }
+
+    case "dot-text-hero":
+      return (
+        <div className="w-full overflow-hidden rounded-2xl border border-neutral-800 bg-[#080808]">
+          <DotTextHero className={className} />
+        </div>
+      );
+
+    case "cylinder-carousel": {
+      const demoCylinderCards: CylinderCardItem[] = [
+        {
+          id: "kinetic-physics",
+          title: "Kinetic Physics",
+          pill: "120 FPS",
+          bg: "radial-gradient(circle at 50% 55%, #17a2c8 0%, #6cc9a3 38%, #d5e59a 62%, #fbd3b6 88%)",
+          content: ({ active }) => (
+            <div className="relative flex h-full flex-col items-center justify-center text-white">
+              <p className="text-5xl font-medium tracking-tight">120Hz</p>
+              <p className="mt-1 text-[11px] text-white/80">Hooke's Law Springs</p>
+              <svg viewBox="0 0 280 120" className="mt-6 w-full" aria-hidden="true">
+                <motion.path
+                  key={active ? "on" : "off"}
+                  d="M0 84 L70 84 L90 96 L112 92 L122 74 L128 54 L140 54 L146 38 L158 34 L164 26"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth={2}
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  initial={active ? { pathLength: 0 } : false}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.2, ease: "easeOut", delay: 0.15 }}
+                />
+                <motion.path
+                  key={active ? "on-dash" : "off-dash"}
+                  d="M164 26 C182 26 192 46 212 58 L240 76"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth={2}
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  strokeDasharray="3 4"
+                  initial={active ? { pathLength: 0 } : false}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.2, ease: "easeOut", delay: 0.9 }}
+                />
+                <circle cx="164" cy="26" r="5" fill="white" />
+              </svg>
+              <p className="absolute inset-x-6 bottom-9 text-center text-[10px] leading-relaxed text-white/75">
+                Velocity conservation:<br />
+                Fluid gestures with zero stutter.
+              </p>
+            </div>
+          ),
+        },
+        {
+          id: "components",
+          title: "Library Catalog",
+          pill: "v2.0",
+          bg: "linear-gradient(160deg, #6d6cf5 0%, #c15cf0 45%, #f06bd0 100%)",
+          content: () => (
+            <div className="flex h-full flex-col">
+              <div className="flex flex-1 items-center justify-center text-white">
+                <p className="text-6xl font-medium tracking-tight">113+</p>
+              </div>
+              <div className="m-3 flex h-24 items-center justify-between rounded-3xl bg-white/90 px-5 text-neutral-800">
+                <div>
+                  <p className="text-xs font-medium">Kinetic Primitives</p>
+                  <p className="text-[10px] text-neutral-500">Accessible & Copy-Paste</p>
+                </div>
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-900 text-white font-semibold">
+                  +
+                </span>
+              </div>
+            </div>
+          ),
+        },
+        {
+          id: "accessibility",
+          title: "Accessibility",
+          pill: "WCAG AA",
+          bg: "linear-gradient(180deg, #f7f8fa 0%, #eef0f4 100%)",
+          dark: true,
+          content: () => (
+            <div className="flex h-full flex-col">
+              <div className="relative flex flex-1 items-center justify-center">
+                <div className="h-36 w-36 rounded-full bg-[radial-gradient(circle,#4f8cff_0%,#f58fb5_45%,rgba(255,255,255,0)_72%)] blur-md" />
+              </div>
+              <div className="m-3 rounded-3xl bg-white p-5 text-neutral-800 shadow-sm">
+                <p className="text-xs font-medium">Inclusive By Default</p>
+                <p className="text-xs text-neutral-500">Arrow keys & reduced-motion.</p>
+              </div>
+            </div>
+          ),
+        },
+        {
+          id: "source-ownership",
+          title: "Source Ownership",
+          pill: "CLI Ready",
+          bg: "linear-gradient(165deg, #3ccfb4 0%, #6fd6e8 55%, #b6e7f7 100%)",
+          content: ({ active }) => (
+            <div className="flex h-full flex-col items-center justify-center text-white">
+              <svg viewBox="0 0 120 120" className="h-40 w-40 -rotate-90" aria-hidden="true">
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="50"
+                  fill="none"
+                  stroke="white"
+                  strokeOpacity={0.3}
+                  strokeWidth={8}
+                />
+                <motion.circle
+                  key={active ? "on" : "off"}
+                  cx="60"
+                  cy="60"
+                  r="50"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth={8}
+                  strokeLinecap="round"
+                  initial={active ? { pathLength: 0 } : false}
+                  animate={{ pathLength: 0.88 }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                />
+              </svg>
+              <p className="absolute text-4xl font-medium">100%</p>
+              <p className="mt-4 text-[11px] text-white/80">Code in your repo</p>
+            </div>
+          ),
+        },
+        {
+          id: "zero-bloat",
+          title: "Zero Bloat",
+          pill: "Sub-ms",
+          bg: "linear-gradient(165deg, #ff9a5a 0%, #ff7a8a 55%, #f4a6d0 100%)",
+          content: ({ active }) => {
+            const bars = [38, 52, 44, 68, 60, 84, 96];
+            return (
+              <div className="flex h-full flex-col justify-end px-7 pb-14 text-white">
+                <p className="mb-6 text-4xl font-medium tracking-tight">&lt; 0.4ms</p>
+                <div className="flex h-32 items-end gap-2">
+                  {bars.map((b, i) => (
+                    <motion.div
+                      key={`${i}-${active}`}
+                      className="flex-1 rounded-full bg-white/85"
+                      initial={active ? { height: 0 } : false}
+                      animate={{ height: `${b}%` }}
+                      transition={{ duration: 0.7, delay: i * 0.06, ease: "easeOut" }}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          },
+        },
+      ];
+
+      return (
+        <div className="w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+          <CylinderCarousel cards={demoCylinderCards} className={className} />
         </div>
       );
     }
