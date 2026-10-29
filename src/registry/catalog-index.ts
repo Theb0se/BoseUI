@@ -79,6 +79,32 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "agent-status-badge",
+    "slug": "agent-status-badge",
+    "componentName": "AgentStatusBadge",
+    "title": "Agent Status Badge",
+    "description": "Dynamic AI agent status badge featuring an interactive 4x4 dot matrix indicator with distinct micro-animations for reading docs, analyzing, debugging, and success states.",
+    "tagline": "Interactive AI agent status badge with a 4x4 animated kinetic dot matrix.",
+    "category": "Motion",
+    "badges": [
+      "AI Agent",
+      "Interactive",
+      "Micro-Animations",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-10-30",
+    "featured": true,
+    "keywords": [
+      "agent status badge",
+      "ai agent badge",
+      "dot matrix status",
+      "4x4 dot grid animation",
+      "ai status indicator",
+      "framer motion badge",
+      "reading docs analyzing debugging success"
+    ]
+  },
+  {
     "id": "animated-tabs",
     "slug": "animated-tabs",
     "componentName": "AnimatedTabs",
@@ -890,6 +916,33 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "glyph-trail",
+    "slug": "glyph-trail",
+    "componentName": "GlyphTrail",
+    "title": "Glyph Trail",
+    "description": "Interactive monospace text matrix that scrambles characters into kinetic mathematical glyphs under cursor proximity, relaxing back with fluid color decay.",
+    "tagline": "Interactive monospace text matrix that scrambles into colored math glyphs on hover.",
+    "category": "Text",
+    "badges": [
+      "Interactive",
+      "Text Effect",
+      "Framer Motion",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-10-29",
+    "featured": true,
+    "keywords": [
+      "glyph trail",
+      "glyph-trail",
+      "matrix text scramble",
+      "math symbols cursor",
+      "corca glyph effect",
+      "kinetic monospace typography",
+      "proximity text scramble",
+      "framer motion text"
+    ]
+  },
+  {
     "id": "gooey-input",
     "slug": "gooey-input",
     "componentName": "GooeyInput",
@@ -1532,6 +1585,33 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "minimal-auth-card",
+    "slug": "minimal-auth-card",
+    "componentName": "MinimalAuthCard",
+    "title": "Minimal Auth Card",
+    "description": "Clean and minimal authentication card featuring animated Sign In and Sign Up tab switching, Google, Apple, and GitHub OAuth buttons, and password strength validation.",
+    "tagline": "Minimal authentication card with animated mode switching and Google, Apple, and GitHub OAuth.",
+    "category": "Inputs",
+    "badges": [
+      "Authentication",
+      "OAuth Ready",
+      "Framer Motion",
+      "Forms"
+    ],
+    "createdAt": "2026-10-30",
+    "featured": true,
+    "keywords": [
+      "minimal auth card",
+      "login signup component",
+      "google apple github oauth",
+      "authentication form",
+      "framer motion auth",
+      "password strength indicator",
+      "react login card",
+      "minimal login form"
+    ]
+  },
+  {
     "id": "modal-popup",
     "slug": "modal-popup",
     "componentName": "ModalPopup",
@@ -1766,6 +1846,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "permission-switch",
+    "slug": "permission-switch",
+    "componentName": "PermissionSwitch",
+    "title": "Permission Switch",
+    "description": "Tactile segmented control where the selected option expands to reveal its label while others collapse to icon-only, with a sliding pill and blur transitions.",
+    "tagline": "Adaptive segmented control with active label expansion and sliding pill indicator.",
+    "category": "Inputs",
+    "badges": [
+      "Segmented Control",
+      "Adaptive Width",
+      "A11y Radiogroup",
+      "Active Motion"
+    ],
+    "createdAt": "2026-10-29",
+    "featured": true,
+    "keywords": [
+      "permission switch",
+      "segmented control react",
+      "adaptive pill switch",
+      "expanding segmented tabs",
+      "framer motion toggle",
+      "radiogroup switch"
+    ]
+  },
+  {
     "id": "perspective-tilt-text",
     "slug": "perspective-tilt-text",
     "componentName": "PerspectiveTiltText",
@@ -1927,6 +2032,33 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "rainy window effect",
       "refractive rain animation",
       "weather background"
+    ]
+  },
+  {
+    "id": "reveal-card-grid",
+    "slug": "reveal-card-grid",
+    "componentName": "RevealCardGrid",
+    "title": "Reveal Card Grid",
+    "description": "Interactive feature card grid with dynamic circular ink reveals that expand from the pointer entry coordinates to display vivid marbled fluid textures.",
+    "tagline": "Interactive feature card grid with coordinate-tracked circular ink reveals.",
+    "category": "Cards",
+    "badges": [
+      "Interactive",
+      "Clip-Path",
+      "Fluid Marble",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-10-30",
+    "featured": true,
+    "keywords": [
+      "reveal card grid",
+      "reveal card",
+      "circular ink reveal",
+      "clip path hover animation",
+      "marbled fluid background",
+      "feature cards grid",
+      "pointer coordinate animation",
+      "framer motion cards"
     ]
   },
   {

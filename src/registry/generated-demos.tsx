@@ -10,6 +10,7 @@ import { createComponentDemo } from "@/registry/ComponentDemoWrapper";
 import { AIVoiceOrb } from "@/components/ui/AIVoiceOrb";
 import { Accordion } from "@/components/ui/Accordion";
 import { AccordionStackCards } from "@/components/ui/AccordionStackCards";
+import { AgentStatusBadge } from "@/components/ui/AgentStatusBadge";
 import { AnimatedTabs } from "@/components/ui/AnimatedTabs";
 import { AppleContextMenu } from "@/components/ui/AppleContextMenu";
 import { AppleSearchField } from "@/components/ui/AppleSearchField";
@@ -44,6 +45,7 @@ import { FloatingCompassNav } from "@/components/ui/FloatingCompassNav";
 import { FloatingLabelInput } from "@/components/ui/FloatingLabelInput";
 import { GalaxyNebula } from "@/components/ui/GalaxyNebula";
 import { GlowBorderCard } from "@/components/ui/GlowBorderCard";
+import { GlyphTrail } from "@/components/ui/GlyphTrail";
 import { GooeyInput } from "@/components/ui/GooeyInput";
 import { GravityWellPortal } from "@/components/ui/GravityWellPortal";
 import { GridHorizon } from "@/components/ui/GridHorizon";
@@ -71,6 +73,7 @@ import { MagneticPopoverMenu } from "@/components/ui/MagneticPopoverMenu";
 import { MagneticScatterText } from "@/components/ui/MagneticScatterText";
 import { MaskRevealSlideText } from "@/components/ui/MaskRevealSlideText";
 import { MatrixRain } from "@/components/ui/MatrixRain";
+import { MinimalAuthCard } from "@/components/ui/MinimalAuthCard";
 import { ModalPopup } from "@/components/ui/ModalPopup";
 import { MorphingActionButton } from "@/components/ui/MorphingActionButton";
 import { MorphingBlob } from "@/components/ui/MorphingBlob";
@@ -81,6 +84,7 @@ import { MultiSelectTagInput } from "@/components/ui/MultiSelectTagInput";
 import { ParallaxTiltCard } from "@/components/ui/ParallaxTiltCard";
 import { ParticleNetwork } from "@/components/ui/ParticleNetwork";
 import { PeelRevealCard } from "@/components/ui/PeelRevealCard";
+import { PermissionSwitch } from "@/components/ui/PermissionSwitch";
 import { PerspectiveTiltText } from "@/components/ui/PerspectiveTiltText";
 import { PickerWheel } from "@/components/ui/PickerWheel";
 import { PopoverCard } from "@/components/ui/PopoverCard";
@@ -88,6 +92,7 @@ import { PricingCalculator } from "@/components/ui/PricingCalculator";
 import { ProductCompareTable } from "@/components/ui/ProductCompareTable";
 import { RadialMenuOrb } from "@/components/ui/RadialMenuOrb";
 import { RainOnGlass } from "@/components/ui/RainOnGlass";
+import { RevealCardGrid } from "@/components/ui/RevealCardGrid";
 import { RippleBurstButton } from "@/components/ui/RippleBurstButton";
 import { RollingNumberTicker } from "@/components/ui/RollingNumberTicker";
 import { RotarySpringDial } from "@/components/ui/RotarySpringDial";
@@ -125,6 +130,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "ai-voice-orb": createComponentDemo("ai-voice-orb", AIVoiceOrb),
   "accordion": createComponentDemo("accordion", Accordion),
   "accordion-stack-cards": createComponentDemo("accordion-stack-cards", AccordionStackCards),
+  "agent-status-badge": createComponentDemo("agent-status-badge", AgentStatusBadge),
   "animated-tabs": createComponentDemo("animated-tabs", AnimatedTabs),
   "apple-context-menu": createComponentDemo("apple-context-menu", AppleContextMenu),
   "apple-search-field": createComponentDemo("apple-search-field", AppleSearchField),
@@ -159,6 +165,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "floating-label-input": createComponentDemo("floating-label-input", FloatingLabelInput),
   "galaxy-nebula": createComponentDemo("galaxy-nebula", GalaxyNebula),
   "glow-border-card": createComponentDemo("glow-border-card", GlowBorderCard),
+  "glyph-trail": createComponentDemo("glyph-trail", GlyphTrail),
   "gooey-input": createComponentDemo("gooey-input", GooeyInput),
   "gravity-well-portal": createComponentDemo("gravity-well-portal", GravityWellPortal),
   "grid-horizon": createComponentDemo("grid-horizon", GridHorizon),
@@ -186,6 +193,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "magnetic-scatter-text": createComponentDemo("magnetic-scatter-text", MagneticScatterText),
   "mask-reveal-slide-text": createComponentDemo("mask-reveal-slide-text", MaskRevealSlideText),
   "matrix-rain": createComponentDemo("matrix-rain", MatrixRain),
+  "minimal-auth-card": createComponentDemo("minimal-auth-card", MinimalAuthCard),
   "modal-popup": createComponentDemo("modal-popup", ModalPopup),
   "morphing-action-button": createComponentDemo("morphing-action-button", MorphingActionButton),
   "morphing-blob": createComponentDemo("morphing-blob", MorphingBlob),
@@ -196,6 +204,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "parallax-tilt-card": createComponentDemo("parallax-tilt-card", ParallaxTiltCard),
   "particle-network": createComponentDemo("particle-network", ParticleNetwork),
   "peel-reveal-card": createComponentDemo("peel-reveal-card", PeelRevealCard),
+  "permission-switch": createComponentDemo("permission-switch", PermissionSwitch),
   "perspective-tilt-text": createComponentDemo("perspective-tilt-text", PerspectiveTiltText),
   "picker-wheel": createComponentDemo("picker-wheel", PickerWheel),
   "popover-card": createComponentDemo("popover-card", PopoverCard),
@@ -203,6 +212,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "product-compare-table": createComponentDemo("product-compare-table", ProductCompareTable),
   "radial-menu-orb": createComponentDemo("radial-menu-orb", RadialMenuOrb),
   "rain-on-glass": createComponentDemo("rain-on-glass", RainOnGlass),
+  "reveal-card-grid": createComponentDemo("reveal-card-grid", RevealCardGrid),
   "ripple-burst-button": createComponentDemo("ripple-burst-button", RippleBurstButton),
   "rolling-number-ticker": createComponentDemo("rolling-number-ticker", RollingNumberTicker),
   "rotary-spring-dial": createComponentDemo("rotary-spring-dial", RotarySpringDial),

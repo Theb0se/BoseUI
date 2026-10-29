@@ -29,6 +29,17 @@ import { ParticleNetwork } from "@/components/ui/ParticleNetwork";
 import { MorphingBlob } from "@/components/ui/MorphingBlob";
 import { DotTextHero } from "@/components/ui/DotTextHero";
 import { CylinderCarousel, type CylinderCardItem } from "@/components/ui/CylinderCarousel";
+import { PermissionSwitch, type PermissionOption } from "@/components/ui/PermissionSwitch";
+import { GlyphTrail } from "@/components/ui/GlyphTrail";
+import {
+  AgentStatusBadge,
+  AGENT_STATUSES,
+  DEFAULT_STATUS_LABELS,
+  type AgentStatus,
+  type AgentBadgeSize,
+} from "@/components/ui/AgentStatusBadge";
+import { RevealCardGrid } from "@/components/ui/RevealCardGrid";
+import { MinimalAuthCard } from "@/components/ui/MinimalAuthCard";
 
 // Stripe, Apple, DevTools, Consumer & Fintech components
 import { TiltCreditCard3D } from "@/components/ui/TiltCreditCard3D";
@@ -117,6 +128,9 @@ import {
   Coins,
   ArrowRight,
   X,
+  CircleCheck,
+  Hand,
+  Ban,
 } from "lucide-react";
 import { HoverCursorShimmerText } from "../ui/HoverCursorShimmerText";
 
@@ -508,6 +522,145 @@ function SqlDataGridPreviewStage({ className }: { className?: string }) {
   return (
     <div className={cn("w-full max-w-3xl mx-auto p-4 flex flex-col items-center gap-4", className)}>
       <SqlDataGrid />
+    </div>
+  );
+}
+
+function PermissionSwitchPreviewStage({ className }: { className?: string }) {
+  const [val, setVal] = useState("allow");
+  const [slowMotion, setSlowMotion] = useState(true);
+
+  const customOptions: PermissionOption[] = [
+    { value: "allow", label: "Always allow", icon: CircleCheck },
+    { value: "ask", label: "Needs approval", icon: Hand },
+    { value: "deny", label: "Deny access", icon: Ban },
+  ];
+
+  return (
+    <div className={cn("w-full flex flex-col items-center justify-center gap-6 py-16 px-4", className)}>
+      <div className="flex flex-col items-center gap-4">
+        <PermissionSwitch
+          options={customOptions}
+          value={val}
+          onChange={setVal}
+          activeMotion={slowMotion}
+        />
+        <div className="text-xs text-neutral-500 font-mono mt-2">
+          Selected State:{" "}
+          <span className="rounded bg-neutral-200 dark:bg-neutral-800 px-2 py-0.5 text-neutral-900 dark:text-neutral-100 font-semibold">
+            {val}
+          </span>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3 rounded-full border border-neutral-200 dark:border-neutral-800 bg-white/70 dark:bg-neutral-900/70 px-4 py-2 backdrop-blur-sm">
+        <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-neutral-700 dark:text-neutral-300">
+          <input
+            type="checkbox"
+            checked={slowMotion}
+            onChange={(e) => setSlowMotion(e.target.checked)}
+            className="rounded border-neutral-300 text-blue-600 focus:ring-blue-500 dark:border-neutral-700 dark:bg-neutral-800"
+          />
+          <span>activeMotion (slow luxurious expansion)</span>
+        </label>
+      </div>
+    </div>
+  );
+}
+
+function GlyphTrailPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full overflow-hidden rounded-2xl border border-neutral-800 bg-black flex flex-col items-center justify-center p-6", className)}>
+      <GlyphTrail
+        lines={[
+          "stem docs logic",
+          "ideas natural input",
+          "text corca math",
+          "formulas notation",
+          "functions variables",
+          "collaborative editing",
+        ]}
+        highlight="corca"
+        radius={36}
+        lifeMs={1200}
+      />
+    </div>
+  );
+}
+
+function AgentStatusBadgePreviewStage({ className }: { className?: string }) {
+  const [status, setStatus] = useState<AgentStatus>("analyzing");
+  const [size, setSize] = useState<AgentBadgeSize>("md");
+
+  return (
+    <div className={cn("w-full flex flex-col items-center justify-center gap-8 py-12 px-4", className)}>
+      {/* Interactive Main Hero Badge */}
+      <div className="flex flex-col items-center gap-3">
+        <AgentStatusBadge
+          status={status}
+          size={size}
+          interactive
+          onStatusChange={setStatus}
+          className="shadow-lg"
+        />
+        <span className="text-[11px] font-mono text-neutral-400">
+          Click badge to cycle • Current: <span className="text-neutral-900 dark:text-neutral-100 font-semibold">{status}</span>
+        </span>
+      </div>
+
+      {/* Manual Status Buttons */}
+      <div className="flex flex-wrap items-center justify-center gap-2 rounded-full border border-neutral-200 dark:border-neutral-800 bg-neutral-100/60 dark:bg-neutral-900/60 p-1.5 backdrop-blur-sm">
+        {AGENT_STATUSES.map((s) => (
+          <button
+            key={s}
+            onClick={() => setStatus(s)}
+            className={cn(
+              "rounded-full px-3 py-1 text-xs font-medium transition-all",
+              status === s
+                ? "bg-white text-neutral-900 shadow-sm dark:bg-neutral-800 dark:text-neutral-100"
+                : "text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200"
+            )}
+          >
+            {DEFAULT_STATUS_LABELS[s]}
+          </button>
+        ))}
+      </div>
+
+      {/* Side-by-side showcase of all 4 states */}
+      <div className="flex flex-col items-center gap-3 w-full max-w-xl pt-4 border-t border-neutral-200 dark:border-neutral-800">
+        <p className="text-xs font-mono uppercase tracking-wider text-neutral-400">
+          All 4 Matrix Animations
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <AgentStatusBadge status="reading-docs" />
+          <AgentStatusBadge status="analyzing" />
+          <AgentStatusBadge status="debugging" />
+          <AgentStatusBadge status="success" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RevealCardGridPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full bg-[#fcfcfd] dark:bg-neutral-950 py-8 px-2 sm:px-4 rounded-2xl border border-neutral-200 dark:border-neutral-800", className)}>
+      <RevealCardGrid
+        title="Edge Infrastructure"
+        subtitle="Hover anywhere on any card to see fluid ink expand from the exact entry point."
+      />
+    </div>
+  );
+}
+
+function MinimalAuthCardPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full flex items-center justify-center py-10 px-4", className)}>
+      <MinimalAuthCard
+        brandName="BoseUI"
+        onSubmit={(data) => console.log("Auth submit:", data)}
+        onOAuthClick={(provider) => console.log("OAuth clicked:", provider)}
+      />
     </div>
   );
 }
@@ -1030,6 +1183,21 @@ export function ComponentPreview({
         </div>
       );
     }
+
+    case "permission-switch":
+      return <PermissionSwitchPreviewStage className={className} />;
+
+    case "glyph-trail":
+      return <GlyphTrailPreviewStage className={className} />;
+
+    case "agent-status-badge":
+      return <AgentStatusBadgePreviewStage className={className} />;
+
+    case "reveal-card-grid":
+      return <RevealCardGridPreviewStage className={className} />;
+
+    case "minimal-auth-card":
+      return <MinimalAuthCardPreviewStage className={className} />;
 
     // ── Consumer & Social ──
 

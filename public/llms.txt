@@ -33,7 +33,7 @@ Our latest research on frontend engineering and UI/UX:
 - [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
 - [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
 
-## Available Kinetic Components (113)
+## Available Kinetic Components (118)
 
 ### AI Voice Orb (`AIVoiceOrb`)
 - **Slug**: `ai-voice-orb`
@@ -133,6 +133,65 @@ import { AccordionStackCards } from "@/components/ui/accordion-stack-cards";
 export function Example() {
   return (
     <AccordionStackCards stiffness={300} damping={25} />
+  );
+}
+```
+
+---
+
+### Agent Status Badge (`AgentStatusBadge`)
+- **Slug**: `agent-status-badge`
+- **Category**: Motion
+- **Tagline**: Interactive AI agent status badge with a 4x4 animated kinetic dot matrix.
+- **Description**: Dynamic AI agent status badge featuring an interactive 4x4 dot matrix indicator with distinct micro-animations for reading docs, analyzing, debugging, and success states.
+- **Docs URL**: https://boseui.site/components/agent-status-badge
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/agent-status-badge.json`
+- **Registry Manifest**: https://boseui.site/r/agent-status-badge.json
+- **Key Features**:
+  - 4x4 animated dot matrix with dedicated kinetic signatures for reading docs (raster scan), analyzing (radial ripple), debugging (radar locator probe), and success (checkmark draw).
+  - Cohesive color-coded themes with subtle ambient glow and micro-borders for Sky, Violet, Amber, and Emerald statuses.
+  - Smooth text morphing with Framer Motion AnimatePresence transitions when status changes.
+  - Interactive cycle mode allowing users to click or press keyboard shortcuts to toggle through states.
+  - Standalone AgentDotGrid subcomponent exportable for custom embedding anywhere in AI dashboards.
+- **Accessibility**:
+  - Includes semantic aria-live='polite' and role='status' (or role='button' when interactive) for assistive technologies.
+  - Full keyboard navigation with Enter and Space key activation when interactive mode is enabled.
+  - Automatically respects prefers-reduced-motion by replacing continuous loops with static high-contrast dot patterns.
+- **Props**:
+  - `status` ("reading-docs" | "analyzing" | "debugging" | "success", default: "reading-docs"): Active AI workflow status controlling matrix animations, color theme, and text.
+  - `label` (ReactNode, default: undefined): Custom label text override replacing the default status message.
+  - `size` ("sm" | "md" | "lg", default: "md"): Size dimensions of the badge pill and 4x4 dot matrix.
+  - `variant` ("default" | "outline" | "ghost" | "glass", default: "default"): Visual appearance style for container background and borders.
+  - `glow` (boolean, default: true): Whether to project a subtle ambient glow matching the active status color.
+  - `showGrid` (boolean, default: true): Whether to render the animated 4x4 dot matrix to the left of the text.
+  - `interactive` (boolean, default: false): Enables click and keyboard interaction to cycle through agent statuses.
+  - `onStatusChange` ((status: AgentStatus) => void, default: undefined): Callback function fired whenever the status is changed via interaction.
+  - `className` (string, default: undefined): Additional Tailwind CSS classes merged into the root element.
+- **Usage Example**:
+```tsx
+import { useState } from "react";
+import { AgentStatusBadge, type AgentStatus } from "@/components/ui/agent-status-badge";
+
+export function AgentWorkflowDemo() {
+  const [status, setStatus] = useState<AgentStatus>("analyzing");
+
+  return (
+    <div className="flex flex-col items-center gap-6 p-8">
+      {/* Interactive cycling badge */}
+      <AgentStatusBadge
+        status={status}
+        interactive
+        onStatusChange={setStatus}
+      />
+
+      {/* Or display all four statuses side-by-side */}
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        <AgentStatusBadge status="reading-docs" />
+        <AgentStatusBadge status="analyzing" />
+        <AgentStatusBadge status="debugging" />
+        <AgentStatusBadge status="success" />
+      </div>
+    </div>
   );
 }
 ```
@@ -1602,6 +1661,56 @@ export function Example() {
 
 ---
 
+### Glyph Trail (`GlyphTrail`)
+- **Slug**: `glyph-trail`
+- **Category**: Text
+- **Tagline**: Interactive monospace text matrix that scrambles into colored math glyphs on hover.
+- **Description**: Interactive monospace text matrix that scrambles characters into kinetic mathematical glyphs under cursor proximity, relaxing back with fluid color decay.
+- **Docs URL**: https://boseui.site/components/glyph-trail
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/glyph-trail.json`
+- **Registry Manifest**: https://boseui.site/r/glyph-trail.json
+- **Key Features**:
+  - Dynamic pointer proximity field that detects character distance squared (r²) for optimal 60fps performance.
+  - Dual-phase decay engine: characters first scramble into mathematical glyphs, transition to original letters in color, and gracefully settle back to neutral.
+  - Per-character randomized palette accents with subtle outline boxing, bold weights, and italic styling.
+  - Zero layout shift monospace rasterization with ResizeObserver and FontFaceSet measurement caching.
+  - Configurable highlight keywords that remain locked and protected from scrambling.
+- **Accessibility**:
+  - Semantic role='img' and aria-label containing the full readable text lines for screen reader accessibility.
+  - Automatically honors prefers-reduced-motion by bypassing hover proximity scrambling.
+  - Maintains readable text contrast against dark backgrounds across all decay phases.
+- **Props**:
+  - `lines` (string[], default: DEFAULT_GLYPH_LINES): Monospace text lines centered and rendered in the interactive matrix.
+  - `highlight` (string, default: "corca"): Specific keyword that remains locked in crisp white and never scrambles.
+  - `glyphs` (string | string[], default: DEFAULT_GLYPHS): Character set of mathematical symbols and glyphs used for scramble animations.
+  - `radius` (number, default: 30): Influence radius in pixels around pointer coordinates where scrambling occurs.
+  - `lifeMs` (number, default: 1200): Average duration in milliseconds a scrambled glyph persists before settling back.
+  - `className` (string, default: undefined): Additional Tailwind CSS classes merged into the container element.
+- **Usage Example**:
+```tsx
+import { GlyphTrail } from "@/components/ui/glyph-trail";
+
+export function GlyphTrailDemo() {
+  return (
+    <GlyphTrail
+      lines={[
+        "stem docs logic",
+        "ideas natural input",
+        "text corca math",
+        "formulas notation",
+        "functions variables",
+        "collaborative editing",
+      ]}
+      highlight="corca"
+      radius={36}
+      lifeMs={1200}
+    />
+  );
+}
+```
+
+---
+
 ### Gooey Input (`GooeyInput`)
 - **Slug**: `gooey-input`
 - **Category**: Inputs
@@ -2694,6 +2803,61 @@ export function Example() {
 
 ---
 
+### Minimal Auth Card (`MinimalAuthCard`)
+- **Slug**: `minimal-auth-card`
+- **Category**: Inputs
+- **Tagline**: Minimal authentication card with animated mode switching and Google, Apple, and GitHub OAuth.
+- **Description**: Clean and minimal authentication card featuring animated Sign In and Sign Up tab switching, Google, Apple, and GitHub OAuth buttons, and password strength validation.
+- **Docs URL**: https://boseui.site/components/minimal-auth-card
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/minimal-auth-card.json`
+- **Registry Manifest**: https://boseui.site/r/minimal-auth-card.json
+- **Key Features**:
+  - Seamless animated segmented tab switching between Sign In and Sign Up modes with layoutId spring physics.
+  - Integrated OAuth buttons with official SVG logos for Google, Apple, and GitHub.
+  - Interactive password visibility toggling and real-time 4-stage password strength scoring.
+  - Accessible form validation with remember me and terms agreement controls.
+  - Complete dark and light theme support with subtle ambient lighting and micro-border styling.
+- **Accessibility**:
+  - Semantic form elements with associated labels and unique generated IDs.
+  - Full keyboard navigation and visible focus rings across inputs and action buttons.
+  - Honors prefers-reduced-motion by bypassing layout spring transitions during mode switches.
+- **Props**:
+  - `defaultMode` ("signin" | "signup", default: "signin"): Initial authentication mode shown when the card renders.
+  - `brandName` (string, default: "Pulse"): Product or organization name displayed in the card header.
+  - `tagline` (string, default: "Welcome back to your workspace"): Welcoming descriptive message beneath the brand header.
+  - `logo` (ReactNode, default: undefined): Custom logo or icon component rendered at the top of the card.
+  - `onSubmit` ((data: AuthFormData) => void, default: undefined): Callback fired with form values when authentication is submitted.
+  - `onOAuthClick` ((provider: OAuthProvider) => void, default: undefined): Callback fired when Google, Apple, or GitHub button is clicked.
+  - `onModeChange` ((mode: AuthMode) => void, default: undefined): Callback triggered whenever the user switches between Sign In and Sign Up.
+  - `onForgotPassword` (() => void, default: undefined): Callback triggered when the 'Forgot password?' link is clicked.
+  - `className` (string, default: undefined): Additional Tailwind CSS classes merged onto the card container.
+- **Usage Example**:
+```tsx
+import { MinimalAuthCard, type AuthFormData, type OAuthProvider } from "@/components/ui/minimal-auth-card";
+
+export function AuthDemo() {
+  const handleSubmit = (data: AuthFormData) => {
+    console.log("Auth submit:", data);
+  };
+
+  const handleOAuth = (provider: OAuthProvider) => {
+    console.log("OAuth clicked:", provider);
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-[600px] p-6 bg-neutral-50 dark:bg-neutral-950">
+      <MinimalAuthCard
+        brandName="Pulse"
+        onSubmit={handleSubmit}
+        onOAuthClick={handleOAuth}
+      />
+    </div>
+  );
+}
+```
+
+---
+
 ### Modal Popup (`ModalPopup`)
 - **Slug**: `modal-popup`
 - **Category**: Overlays
@@ -3120,6 +3284,60 @@ export function Example() {
 
 ---
 
+### Permission Switch (`PermissionSwitch`)
+- **Slug**: `permission-switch`
+- **Category**: Inputs
+- **Tagline**: Adaptive segmented control with active label expansion and sliding pill indicator.
+- **Description**: Tactile segmented control where the selected option expands to reveal its label while others collapse to icon-only, with a sliding pill and blur transitions.
+- **Docs URL**: https://boseui.site/components/permission-switch
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/permission-switch.json`
+- **Registry Manifest**: https://boseui.site/r/permission-switch.json
+- **Key Features**:
+  - Dynamically measures label dimensions on render to smoothly animate container width and pill translation.
+  - Active tab expands gracefully with blur and opacity crossfades while inactive tabs collapse to icons.
+  - Optional activeMotion prop enables a luxurious, slow-motion elastic expansion on selection change.
+  - Strictly prop-driven: pass custom labels, values, and Lucide icons directly through props.
+- **Accessibility**:
+  - Full WAI-ARIA radiogroup pattern with arrow key (ArrowLeft, ArrowRight, ArrowUp, ArrowDown), Home, and End navigation.
+  - Automatic tabIndex management focusing active option and maintaining clean keyboard focus outline rings.
+  - Respects prefers-reduced-motion by bypassing transition durations and updating layout instantly.
+- **Props**:
+  - `options` (PermissionOption[], default: DEFAULT_PERMISSION_OPTIONS): Array of selectable option items with value, label, and optional icon component.
+  - `value` (string, default: undefined): Controlled active option value.
+  - `defaultValue` (string, default: "allow"): Initial uncontrolled active option value.
+  - `onChange` ((value: string) => void, default: undefined): Callback triggered when the user selects a different option.
+  - `activeMotion` (boolean, default: false): If true, expands the active tab with a slower, cinematic expansion curve on selection.
+  - `slowDuration` (number, default: 780): Transition duration in milliseconds when activeMotion is enabled.
+  - `duration` (number, default: 460): Standard transition duration in milliseconds when activeMotion is false.
+  - `aria-label` (string, default: "Permission"): Accessible ARIA label describing the radiogroup purpose.
+- **Usage Example**:
+```tsx
+import { useState } from "react";
+import { PermissionSwitch, type PermissionOption } from "@/components/ui/permission-switch";
+import { ShieldAlert, ShieldCheck, ShieldOff } from "lucide-react";
+
+const customOptions: PermissionOption[] = [
+  { value: "grant", label: "Full Access", icon: ShieldCheck },
+  { value: "review", label: "Ask Approval", icon: ShieldAlert },
+  { value: "block", label: "Restricted", icon: ShieldOff },
+];
+
+export function Example() {
+  const [permission, setPermission] = useState("grant");
+
+  return (
+    <PermissionSwitch
+      options={customOptions}
+      value={permission}
+      onChange={setPermission}
+      activeMotion={true}
+    />
+  );
+}
+```
+
+---
+
 ### Perspective Tilt Text (`PerspectiveTiltText`)
 - **Slug**: `perspective-tilt-text`
 - **Category**: Text
@@ -3374,6 +3592,47 @@ export function Example() {
       speed={1}
       refraction={0.85}
     />
+  );
+}
+```
+
+---
+
+### Reveal Card Grid (`RevealCardGrid`)
+- **Slug**: `reveal-card-grid`
+- **Category**: Cards
+- **Tagline**: Interactive feature card grid with coordinate-tracked circular ink reveals.
+- **Description**: Interactive feature card grid with dynamic circular ink reveals that expand from the pointer entry coordinates to display vivid marbled fluid textures.
+- **Docs URL**: https://boseui.site/components/reveal-card-grid
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/reveal-card-grid.json`
+- **Registry Manifest**: https://boseui.site/r/reveal-card-grid.json
+- **Key Features**:
+  - Dynamic circular clip-path tracking exact pointer entry coordinates and expanding to corner radius (Math.hypot).
+  - Smooth directional retraction draining ink back toward the exact boundary point where the cursor leaves.
+  - Procedural SVG marbled liquid textures with feTurbulence fractal noise displacement across 6 color palettes.
+  - High-contrast text illumination cross-fading from muted grey to crisp white with dark gradient backing.
+  - Full keyboard accessibility expanding ink from card center on focus, and touch-tap toggling.
+- **Accessibility**:
+  - Semantic ul and li grid markup with h3 headings and descriptive aria-labels.
+  - Keyboard navigable with visible focus ring and center-origin animation triggers.
+  - Honors prefers-reduced-motion by replacing clip-path calculations with smooth 200ms opacity fades.
+- **Props**:
+  - `items` (RevealCardItem[], default: DEFAULT_REVEAL_ITEMS): Array of feature card data objects with titles, descriptions, icons, and accent colors.
+  - `title` (string, default: undefined): Optional section header title rendered above the card grid.
+  - `subtitle` (string, default: undefined): Optional section descriptive subtitle rendered beneath the header title.
+  - `className` (string, default: undefined): Additional Tailwind CSS classes merged onto the outer grid section.
+- **Usage Example**:
+```tsx
+import { RevealCardGrid } from "@/components/ui/reveal-card-grid";
+
+export function FeaturesDemo() {
+  return (
+    <div className="bg-[#fcfcfd] dark:bg-neutral-950 py-16">
+      <RevealCardGrid
+        title="Modern Infrastructure"
+        subtitle="Push to main and it's live worldwide before the kettle boils."
+      />
+    </div>
   );
 }
 ```
