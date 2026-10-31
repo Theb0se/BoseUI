@@ -39,7 +39,7 @@ const FAQ_DATA: FaqQuestion[] = [
     title: "How do I install Pulse UI components in existing projects?",
     subtitle: "CLI Scaffolding & Zero Lock-in",
     answer:
-      "Run `npx pulse-ui@latest init` to configure your Tailwind tokens and animation presets, then run `npx pulse-ui add <component>` to copy clean, un-minified TypeScript files directly into your project. You own 100% of the source code.",
+      "Run `npx shadcn@latest add https://boseui.site/r/<component>.json` to install any component directly into your project. You own 100% of the source code and can customize styling, physics, and behavior freely.",
     metric: "0kb External CSS",
   },
   {

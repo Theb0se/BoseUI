@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { CommandPaletteProvider } from "@/components/layout/CommandPalette";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SITE_CONFIG } from "@/lib/utils";
 
-const inter = Inter({
+const interTight = Inter_Tight({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
   fallback: [
+    "Inter Tight",
     "Inter",
     "-apple-system",
     "BlinkMacSystemFont",
@@ -111,7 +113,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${interTight.variable} ${jetbrainsMono.variable}`}
     >
       <head>
         <script
@@ -121,15 +123,17 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.className} ${inter.variable} ${jetbrainsMono.variable} min-h-screen bg-white font-sans text-black antialiased selection:bg-black selection:text-white dark:bg-black dark:text-white dark:selection:bg-white dark:selection:text-black`}
+        className={`${interTight.className} ${interTight.variable} ${jetbrainsMono.variable} min-h-screen bg-white font-sans text-neutral-950 antialiased selection:bg-neutral-950 selection:text-white dark:bg-black dark:text-neutral-100 dark:selection:bg-white dark:selection:text-black`}
       >
         <ThemeProvider>
           <CommandPaletteProvider>
-            <div className="relative flex min-h-screen flex-col">
-              <Navbar />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </div>
+            <SmoothScroll>
+              <div className="relative flex min-h-screen flex-col">
+                <Navbar />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </div>
+            </SmoothScroll>
           </CommandPaletteProvider>
         </ThemeProvider>
         <Analytics />

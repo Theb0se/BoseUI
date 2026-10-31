@@ -151,6 +151,121 @@ export function createComponentDemo(
           </div>
         );
 
+      case "animated-theme-toggler":
+        return (
+          <div className="flex flex-col items-center justify-center gap-4 py-8">
+            <Component variant="liquid-blob" glow size="lg" />
+            <span className="text-xs font-mono text-neutral-400">
+              Click to trigger liquid View Transition reveal
+            </span>
+          </div>
+        );
+
+      case "text-mask-grid":
+        return (
+          <div className="flex flex-col items-center justify-center w-full py-12 px-4 text-center">
+            <Component
+              text="BOSE"
+              fontWeight={900}
+              squareSize={4}
+              gridGap={5}
+              flickerChance={0.4}
+              maxOpacity={0.6}
+              className="w-full max-w-3xl"
+            />
+            <span className="mt-3 text-xs font-mono text-neutral-400">
+              Hover to trigger spring scale • Grid renders inside letterforms
+            </span>
+          </div>
+        );
+
+      case "flickering-grid":
+        return (
+          <div className="relative h-64 w-full max-w-lg overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+            <Component
+              squareSize={4}
+              gridGap={6}
+              flickerChance={0.3}
+              maxOpacity={0.4}
+              className="absolute inset-0 h-full w-full"
+            />
+          </div>
+        );
+
+      case "grid-card":
+        return (
+          <div className="w-full max-w-sm py-4">
+            <Component
+              icon={<Sparkles className="h-5 w-5 text-blue-500" />}
+              title="Adaptive Edge Compute"
+              description="Sub-millisecond compute primitives with dynamic canvas flickering and spring hover feedback."
+              href="#"
+            />
+          </div>
+        );
+
+      case "cta-banner":
+        return (
+          <div className="w-full max-w-3xl px-4 py-4">
+            <Component
+              heading="Ship beautiful interfaces faster"
+              subheading="Join 12,000+ engineers building with BoseUI every week."
+              placeholder="you@company.com"
+              buttonLabel="Join the waitlist"
+              accentColor="#6366f1"
+            />
+          </div>
+        );
+
+      case "pricing-banner":
+        return (
+          <div className="w-full bg-neutral-950 rounded-2xl py-8 px-2">
+            <Component
+              heading="Simple, transparent pricing"
+              subheading="Scale from zero to millions."
+              plans={[
+                {
+                  name: "Starter",
+                  description: "For individuals.",
+                  monthlyPrice: 0,
+                  yearlyPrice: 0,
+                  ctaLabel: "Start free",
+                  features: [
+                    { text: "5 components", included: true },
+                    { text: "Community support", included: true },
+                    { text: "Private projects", included: false },
+                  ],
+                },
+                {
+                  name: "Pro",
+                  description: "For teams.",
+                  monthlyPrice: 29,
+                  yearlyPrice: 23,
+                  ctaLabel: "Start trial",
+                  features: [
+                    { text: "Unlimited components", included: true },
+                    { text: "Priority support", included: true },
+                    { text: "Private projects", included: true },
+                  ],
+                },
+                {
+                  name: "Enterprise",
+                  description: "For large teams.",
+                  monthlyPrice: 99,
+                  yearlyPrice: 79,
+                  ctaLabel: "Contact sales",
+                  features: [
+                    { text: "Unlimited components", included: true },
+                    { text: "Priority support", included: true },
+                    { text: "Dedicated Slack", included: true },
+                  ],
+                },
+              ]}
+              accentColor="#6366f1"
+            />
+          </div>
+        );
+
       default:
         return <Component className={className} />;
     }

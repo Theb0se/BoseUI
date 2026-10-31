@@ -1,194 +1,71 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, Github, Linkedin, Globe } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/utils";
-import { CATALOG_INDEX } from "@/registry/catalog-index";
 
 export function Footer() {
   return (
-    <footer className="border-t border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black">
-      <div className="mx-auto max-w-[1280px] border-x border-neutral-200 px-5 py-14 dark:border-neutral-800 sm:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
-          {/* Brand Column */}
-          <div className="md:col-span-5">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2.5 text-sm font-semibold text-neutral-950 dark:text-white"
-            >
-              <Image
-                src="/boseui-logo.png"
-                alt="BoseUI Logo"
-                width={26}
-                height={26}
-                className="h-6 w-6 rounded-md object-contain dark:invert"
-              />
-              <span className="tracking-tight">
-                Bose<span className="font-normal text-neutral-400 dark:text-neutral-500">UI</span>
-              </span>
-            </Link>
-
-            <p className="mt-3.5 max-w-sm text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
-              {SITE_CONFIG.tagline}. Free, open-source, and ready to install with
-              a single{" "}
-              <code className="rounded border border-neutral-200 bg-neutral-100 px-1.5 py-0.5 font-mono text-[11px] text-neutral-900 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-200">
-                shadcn
-              </code>{" "}
-              command.
-            </p>
-
-            <div className="mt-5 flex items-center gap-2 font-mono text-[11px] text-neutral-500 dark:text-neutral-400">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              </span>
-              <span>All 127+ primitives production ready</span>
-            </div>
-          </div>
-
-          {/* Components Column */}
-          <div className="md:col-span-3">
-            <h3 className="font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-950 dark:text-white">
-              Components
-            </h3>
-            <ul className="mt-3.5 space-y-2 text-xs">
-              {CATALOG_INDEX.slice(0, 5).map((comp) => (
-                <li key={comp.slug}>
-                  <Link
-                    href={`/components/${comp.slug}`}
-                    className="text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
-                  >
-                    {comp.title}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link
-                  href="/components"
-                  className="inline-flex items-center gap-1 font-mono text-[11px] font-medium text-neutral-950 hover:underline dark:text-white"
-                >
-                  <span>All Components</span>
-                  <ArrowUpRight className="h-3 w-3" />
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Resources Column */}
-          <div className="md:col-span-2">
-            <h3 className="font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-950 dark:text-white">
-              Resources
-            </h3>
-            <ul className="mt-3.5 space-y-2 text-xs">
-              <li>
-                <Link
-                  href="/docs"
-                  className="text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
-                >
-                  Documentation
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/docs/contributing"
-                  className="text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
-                >
-                  Contributing
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/blog"
-                  className="text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
-                >
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/registry.json"
-                  className="font-mono text-[11px] text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
-                >
-                  registry.json
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/llms.txt"
-                  className="font-mono text-[11px] text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
-                >
-                  llms.txt
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Creator Attribution Column */}
-          <div className="md:col-span-2">
-            <h3 className="font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-950 dark:text-white">
-              Creator
-            </h3>
-            <ul className="mt-3.5 space-y-2 text-xs">
-              <li>
-                <a
-                  href={SITE_CONFIG.author.portfolio}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
-                >
-                  <Globe className="h-3.5 w-3.5" />
-                  <span>Portfolio</span>
-                  <ArrowUpRight className="h-3 w-3" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href={SITE_CONFIG.author.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
-                >
-                  <Github className="h-3.5 w-3.5" />
-                  <span>GitHub</span>
-                  <ArrowUpRight className="h-3 w-3" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href={SITE_CONFIG.author.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
-                >
-                  <Linkedin className="h-3.5 w-3.5" />
-                  <span>LinkedIn</span>
-                  <ArrowUpRight className="h-3 w-3" />
-                </a>
-              </li>
-            </ul>
-          </div>
+    <footer className="border-t border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black py-8">
+      <div className="mx-auto flex max-w-[1100px] flex-col items-start justify-between gap-4 px-4 text-xs text-neutral-500 dark:text-neutral-400 sm:flex-row sm:items-center sm:px-6">
+        {/* Left: Logo + short description */}
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Link
+            href="/"
+            className="flex items-center gap-2 font-semibold text-neutral-950 transition-colors hover:text-neutral-700 dark:text-white dark:hover:text-neutral-300"
+          >
+            <Image
+              src="/boseui-logo.png"
+              alt="BoseUI"
+              width={18}
+              height={18}
+              className="h-4 w-4 rounded object-contain dark:invert"
+            />
+            <span>BoseUI</span>
+          </Link>
+          <span className="text-neutral-300 dark:text-neutral-700">·</span>
+          <span>React components with spring animations.</span>
         </div>
 
-        {/* Bottom Signature Bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-neutral-200 pt-6 text-xs text-neutral-500 dark:border-neutral-800 sm:flex-row">
-          <p className="text-neutral-600 dark:text-neutral-400">
-            Crafted by{" "}
+        {/* Right: Links + Made by attribution */}
+        <div className="flex flex-wrap items-center gap-4">
+          <Link
+            href="/docs"
+            className="transition-colors hover:text-neutral-950 dark:hover:text-white"
+          >
+            Docs
+          </Link>
+          <a
+            href={SITE_CONFIG.author.repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-neutral-950 dark:hover:text-white"
+          >
+            GitHub
+          </a>
+          <Link
+            href="/registry.json"
+            className="font-mono text-[11px] transition-colors hover:text-neutral-950 dark:hover:text-white"
+          >
+            registry.json
+          </Link>
+          <Link
+            href="/llms.txt"
+            className="font-mono text-[11px] transition-colors hover:text-neutral-950 dark:hover:text-white"
+          >
+            llms.txt
+          </Link>
+          <span className="text-neutral-300 dark:text-neutral-700">·</span>
+          <span>
+            Made by{" "}
             <a
               href={SITE_CONFIG.author.portfolio}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-neutral-950 underline underline-offset-4 hover:text-neutral-600 dark:text-white dark:hover:text-neutral-300"
+              className="font-medium text-neutral-950 hover:underline dark:text-white"
             >
               Rishabh Bose
             </a>
-          </p>
-          <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] text-neutral-500">
-            <span>BoseUI v2</span>
-            <span>·</span>
-            <span>MIT License</span>
-            <span>·</span>
-            <span>Next.js · Tailwind · Framer Motion</span>
-          </div>
+          </span>
         </div>
       </div>
     </footer>

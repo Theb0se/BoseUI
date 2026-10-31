@@ -1,6 +1,6 @@
 # BoseUI — LLM & AI Assistant Documentation Index
 
-> Kinetic React Components Engineered to Make Interfaces Feel Alive
+> React components with spring animations
 > Crafted by Rishabh Bose (https://theb0se.vercel.app/)
 
 ## Overview
@@ -33,7 +33,7 @@ Our latest research on frontend engineering and UI/UX:
 - [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
 - [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
 
-## Available Kinetic Components (118)
+## Available Kinetic Components (124)
 
 ### AI Voice Orb (`AIVoiceOrb`)
 - **Slug**: `ai-voice-orb`
@@ -224,6 +224,59 @@ import { AnimatedTabs } from "@/components/ui/animated-tabs";
 
 export function Example() {
   return <AnimatedTabs />;
+}
+```
+
+---
+
+### Animated Theme Toggler (`AnimatedThemeToggler`)
+- **Slug**: `animated-theme-toggler`
+- **Category**: Buttons
+- **Tagline**: Ultra-smooth theme toggle featuring organic liquid blobs, rolling ocean waves, and viscous fluid transitions.
+- **Description**: Ultra-smooth theme toggler utilizing the modern View Transitions API with fluid liquid, wave, and organic curve reveal transitions, viscous Apple-inspired easing, tactile micro-ripples, and a kinetic morphing SVG Sun/Moon icon.
+- **Docs URL**: https://boseui.site/components/animated-theme-toggler
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/animated-theme-toggler.json`
+- **Registry Manifest**: https://boseui.site/r/animated-theme-toggler.json
+- **Key Features**:
+  - 12 organic liquid and wave transitions: Liquid Blob, Ocean Wave, Waterfall, Tide Sweep (Left/Right), Concentric Ripple, Liquid Droplet, Goo Melt, Aurora Wave, Bubble Burst, Whirlpool, and Fluid Curtain.
+  - Fluid multi-harmonic undulation: computes 36-40 polygon vertices with multi-step keyframes so waves undulate, roll, and crest naturally across the screen during the transition.
+  - Tactile button micro-physics: spring squish on tap (stiffness: 450, damping: 16) with an expanding internal liquid ink drop on click.
+  - Viscous fluid easing: defaults to cubic-bezier(0.22, 1, 0.36, 1) for natural fluid inertia and soft viscous deceleration.
+  - Kinetic Morphing Icon: pure SVG morphing transition with animated SVG mask crescent, 8 kinetic sun rays that pop with spring physics, and twinkling stars for night mode.
+  - Precision percentage coordinates: uses percentage-based clip-path calculations to prevent coordinate drift across fractional Windows display scaling (125%, 150%, 175%).
+  - Graceful degradation: detects document.startViewTransition and user's prefers-reduced-motion, falling back cleanly to instantaneous or subtle crossfade changes on unsupported browsers.
+- **Accessibility**:
+  - Semantically rendered as an accessible button with role='switch' and aria-checked attribute.
+  - Keyboard accessible with focus-visible rings and full Enter / Spacebar activation.
+  - Honors prefers-reduced-motion media query by bypassing screen-wide clip-path geometry sweeps.
+- **Props**:
+  - `variant` ("liquid-blob" | "ocean-wave" | "waterfall" | "tide-sweep" | "tide-sweep-left" | "concentric-ripple" | "liquid-droplet" | "goo-melt" | "aurora-wave" | "bubble-burst" | "fluid-curtain" | "whirlpool" | "circle", default: "liquid-blob"): Organic liquid, wave, or curved transition reveal pattern.
+  - `duration` (number, default: 520): Duration of the View Transition clip-path animation in milliseconds.
+  - `easing` (string, default: "cubic-bezier(0.22, 1, 0.36, 1)"): CSS timing function for the transition. Defaults to fluid viscous deceleration curve.
+  - `fromCenter` (boolean, default: false): When true, expands outward from the center of the viewport rather than from the button's click coordinates.
+  - `theme` ("light" | "dark", default: undefined): Controlled theme value when integrated with next-themes or state stores.
+  - `onThemeChange` ((theme: 'light' | 'dark') => void, default: undefined): Callback fired when the toggle completes state change.
+  - `size` ("sm" | "md" | "lg", default: "md"): Dimensions of the circular button and inner SVG icon.
+  - `glow` (boolean, default: true): Renders an ambient theme-colored halo glow behind the toggle button.
+  - `className` (string, default: undefined): Additional CSS classes merged via cn utility.
+- **Usage Example**:
+```tsx
+import { useTheme } from "next-themes";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+
+export function HeaderThemeButton() {
+  const { resolvedTheme, setTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+
+  return (
+    <AnimatedThemeToggler
+      variant="liquid-blob"
+      duration={520}
+      theme={isDark ? "dark" : "light"}
+      onThemeChange={(next) => setTheme(next)}
+      glow
+    />
+  );
 }
 ```
 
@@ -528,6 +581,66 @@ export function Example() {
       text="Crafting tactile interfaces engineered to feel alive."
       className="text-3xl font-bold tracking-tight"
     />
+  );
+}
+```
+
+---
+
+### CTA Banner (`CTABanner`)
+- **Slug**: `cta-banner`
+- **Category**: Cards
+- **Tagline**: Full-width email CTA with animated flickering grid, multi-state button, and form validation.
+- **Description**: Full-width call-to-action section with a self-contained flickering canvas grid background masked radially so the grid is denser at the edges and fades toward the center. Includes an email signup form with loading, success, and validation states animated via Framer Motion AnimatePresence.
+- **Docs URL**: https://boseui.site/components/cta-banner
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/cta-banner.json`
+- **Registry Manifest**: https://boseui.site/r/cta-banner.json
+- **Key Features**:
+  - Self-contained InternalGridCanvas — no external FlickeringGrid import; single file drop-in.
+  - Radial mask-image makes grid denser at edges and transparent at center so text stays readable.
+  - AnimatePresence button label swap: idle → loading spinner (animated rotate) → success checkmark (SVG pathLength).
+  - Input shake animation on validation failure using Framer Motion x keyframes.
+  - AnimatePresence height + opacity transition on inline error message.
+  - Slow floating glow blob using infinite repeating animate with ease-in-out y oscillation.
+  - Stagger entrance: badge, heading, subheading, form fade+rise with staggerChildren.
+  - Accessible: aria-invalid, aria-describedby, aria-live='polite', sr-only label, focus-visible rings.
+  - Respects prefers-reduced-motion; all animations bypass when enabled.
+- **Accessibility**:
+  - Email input has sr-only <label>, aria-invalid and aria-describedby linked to inline error.
+  - aria-live='polite' div announces success and error states to screen readers.
+  - Button aria-label updates to match current state (idle / loading / success).
+  - All interactive elements have clearly visible focus-visible rings.
+  - Decorative canvas and glow blob marked aria-hidden='true'.
+  - prefers-reduced-motion respected — all Framer Motion animations are bypassed.
+- **Props**:
+  - `heading` (string, default: undefined): Bold headline rendered inside the banner.
+  - `subheading` (string, default: undefined): Muted supporting copy rendered beneath the headline.
+  - `placeholder` (string, default: "Enter your email"): Placeholder text for the email input.
+  - `buttonLabel` (string, default: "Get started"): Label for the submit button in its idle state.
+  - `onSubmit` ((email: string) => Promise<void> | void, default: undefined): Async callback called with the validated email string on form submit.
+  - `accentColor` (string, default: "#6366f1"): CSS color used for the grid squares, glow blob, and submit button background.
+  - `className` (string, default: undefined): Additional Tailwind CSS classes merged into the outer container.
+- **Usage Example**:
+```tsx
+import { CTABanner } from "@/components/ui/CTABanner";
+
+export default function NewsletterSection() {
+  return (
+    <div className="mx-auto max-w-4xl px-4 py-16">
+      <CTABanner
+        heading="Ship beautiful interfaces faster"
+        subheading="Join 12,000+ engineers who build with BoseUI components every week."
+        placeholder="you@company.com"
+        buttonLabel="Join the waitlist"
+        accentColor="#6366f1"
+        onSubmit={async (email) => {
+          await fetch("/api/subscribe", {
+            method: "POST",
+            body: JSON.stringify({ email }),
+          });
+        }}
+      />
+    </div>
   );
 }
 ```
@@ -1507,6 +1620,52 @@ export function Example() {
 
 ---
 
+### Flickering Grid (`FlickeringGrid`)
+- **Slug**: `flickering-grid`
+- **Category**: Backgrounds
+- **Tagline**: High-performance canvas retro flickering square grid background.
+- **Description**: High-performance HTML5 canvas flickering retro grid background with device-pixel-ratio scaling, probabilistic opacity stepping, and automatic offscreen pausing via IntersectionObserver.
+- **Docs URL**: https://boseui.site/components/flickering-grid
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/flickering-grid.json`
+- **Registry Manifest**: https://boseui.site/r/flickering-grid.json
+- **Key Features**:
+  - GPU-accelerated HTML5 2D canvas rendering with subpixel device-pixel-ratio sharpness.
+  - Dynamic delta-time calibrated probabilistic flickering so frame rate fluctuations do not affect animation speed.
+  - Battery-friendly IntersectionObserver automatically halts requestAnimationFrame loops when scrolled out of view.
+  - Fast SSR-safe color parser with support for hex, rgb, and CSS color names.
+- **Accessibility**:
+  - Decorative canvas marked with pointer-events-none so it does not intercept user clicks.
+  - Gracefully respects viewport resizing without layout shifts.
+- **Props**:
+  - `squareSize` (number, default: 4): Dimension of each square cell in CSS pixels.
+  - `gridGap` (number, default: 6): Spacing between adjacent cells in CSS pixels.
+  - `flickerChance` (number, default: 0.3): Probability of a cell recalculating its opacity per second [0..1].
+  - `color` (string, default: "rgb(0, 0, 0)"): CSS color string for the rendered grid squares.
+  - `maxOpacity` (number, default: 0.3): Maximum opacity ceiling for the grid squares.
+  - `width` (number, default: undefined): Optional explicit fixed width override in pixels.
+  - `height` (number, default: undefined): Optional explicit fixed height override in pixels.
+  - `className` (string, default: undefined): Additional Tailwind CSS classes merged into the container.
+- **Usage Example**:
+```tsx
+import { FlickeringGrid } from "@/components/ui/flickering-grid";
+
+export function HeroBackground() {
+  return (
+    <div className="relative h-96 w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+      <FlickeringGrid
+        squareSize={4}
+        gridGap={6}
+        flickerChance={0.3}
+        color="#3b82f6"
+        maxOpacity={0.4}
+      />
+    </div>
+  );
+}
+```
+
+---
+
 ### Floating Compass Nav (`FloatingCompassNav`)
 - **Slug**: `floating-compass-nav`
 - **Category**: Navigation
@@ -1789,6 +1948,92 @@ import { GravityWellPortal } from "@/components/ui/gravity-well-portal";
 export function Example() {
   return (
     <GravityWellPortal pullRadius={180} pullStrength={0.55} />
+  );
+}
+```
+
+---
+
+### Grid Card (`GridCard`)
+- **Slug**: `grid-card`
+- **Category**: Cards
+- **Tagline**: Feature card with diagonal flickering grid corner accent and spring hover physics.
+- **Description**: Interactive feature card and section featuring a top-right flickering canvas grid corner accent with diagonal mask fading, spring hover physics, icon scale/rotation variants, and dynamic hover-accelerated flicker rates.
+- **Docs URL**: https://boseui.site/components/grid-card
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/grid-card.json`
+- **Registry Manifest**: https://boseui.site/r/grid-card.json
+- **Key Features**:
+  - Top-right diagonal corner accent powered by FlickeringGrid with linear-gradient alpha mask clipping.
+  - Interactive hover physics: on hover, flickerChance ramps up from 0.1 to 0.6 and maxOpacity increases from 0.15 to 0.4.
+  - Parent-child hover variant system: icon container scales to 1.1 with slight rotation while link arrow shifts 4px to the right.
+  - Responsive FeatureSection layout: 1 column on mobile, 2 on md, 3 on lg with staggerChildren entrance animations.
+  - Accessible link semantics: renders as an accessible interactive card when href is provided, complete with focus-visible rings.
+- **Accessibility**:
+  - Decorative canvas marked pointer-events-none and aria-hidden='true'.
+  - Keyboard accessible with focus-visible ring when href is supplied.
+  - Respects prefers-reduced-motion media query by bypassing spring transforms.
+- **Props**:
+  - `icon` (React.ReactNode, default: undefined): Icon element rendered in the soft-bordered top container.
+  - `title` (string, default: undefined): Main feature card title.
+  - `description` (string, default: undefined): Explanatory descriptive text.
+  - `href` (string, default: undefined): Optional target link destination rendering the card as an interactive link.
+  - `gridColor` (string, default: "currentColor"): Color string for the flickering grid corner squares.
+  - `squareSize` (number, default: 3): Dimension of each square cell in the flickering grid.
+  - `gridGap` (number, default: 5): Spacing between adjacent grid squares in pixels.
+  - `restFlickerChance` (number, default: 0.1): Flickering rate when card is at rest.
+  - `hoverFlickerChance` (number, default: 0.6): Flickering rate when card is hovered.
+  - `className` (string, default: undefined): Additional Tailwind CSS classes merged into the card.
+- **Usage Example**:
+```tsx
+import { GridCard, FeatureSection } from "@/components/ui/grid-card";
+import { Zap, Shield, Cpu, Sparkles, Layers, RefreshCw } from "lucide-react";
+
+export function FeaturesDemo() {
+  const sampleFeatures = [
+    {
+      icon: <Zap className="h-5 w-5 text-amber-500" />,
+      title: "Real-time Reactivity",
+      description: "Ultra-fast state synchronization with zero hydration latency across edge runtimes.",
+      href: "#",
+    },
+    {
+      icon: <Shield className="h-5 w-5 text-emerald-500" />,
+      title: "Zero-trust Security",
+      description: "End-to-end cryptographic token verification with hardware-backed encryption.",
+      href: "#",
+    },
+    {
+      icon: <Cpu className="h-5 w-5 text-blue-500" />,
+      title: "Compute at the Edge",
+      description: "Execute sub-millisecond serverless functions deployed to 300+ global data centers.",
+      href: "#",
+    },
+    {
+      icon: <Sparkles className="h-5 w-5 text-purple-500" />,
+      title: "Adaptive Physics",
+      description: "Spring dynamics calibrated to 120Hz display refresh rates for natural fluidity.",
+      href: "#",
+    },
+    {
+      icon: <Layers className="h-5 w-5 text-sky-500" />,
+      title: "Composability First",
+      description: "Modular primitives that combine effortlessly into complex application dashboards.",
+      href: "#",
+    },
+    {
+      icon: <RefreshCw className="h-5 w-5 text-indigo-500" />,
+      title: "Continuous Deployment",
+      description: "Automated git preview branches with instant rollbacks and deterministic builds.",
+      href: "#",
+    },
+  ];
+
+  return (
+    <FeatureSection
+      title="Everything you need to ship faster"
+      subtitle="Engineered for performance, tactile responsiveness, and developer ergonomics."
+      features={sampleFeatures}
+    />
   );
 }
 ```
@@ -4582,7 +4827,7 @@ export function Example() {
   - Pre-formatted monospace text retains natural screen-reader output.
 - **Props**:
   - `title` (string, default: "zsh — 80×24"): Terminal title in header.
-  - `command` (string, default: "npx boseui add magnetic-button"): Terminal input command.
+  - `command` (string, default: "npx shadcn@latest add https://boseui.site/r/magnetic-button.json"): Terminal input command.
   - `output` (string | string[]): Console output lines.
   - `copyable` (boolean, default: true): Enable copy command button.
   - `children` (React.ReactNode): Custom inner content.
@@ -4596,6 +4841,64 @@ export function Example() {
       command="npm run build"
       output={["Compiled successfully in 1.4s", "Ready for deployment."]}
     />
+  );
+}
+```
+
+---
+
+### Text Mask Grid (`TextMaskGrid`)
+- **Slug**: `text-mask-grid`
+- **Category**: Text
+- **Tagline**: Typographic headline revealed through an animated canvas flickering grid.
+- **Description**: Large kinetic typographic heading masked to a retro flickering canvas grid. The animated grid is only visible within the letterforms, powered by inline SVG viewBox mask data URIs, hardware GPU composite blending, and Framer Motion entrance physics.
+- **Docs URL**: https://boseui.site/components/text-mask-grid
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/text-mask-grid.json`
+- **Registry Manifest**: https://boseui.site/r/text-mask-grid.json
+- **Key Features**:
+  - Vector SVG mask data URI with scalable viewBox coordinate space for infinite sharpness at any screen resolution.
+  - Hardware-accelerated GPU masking: applies single-pass alpha composite blending over an active HTML5 2D canvas.
+  - Framer Motion entrance physics: smoothly transitions from blur(12px), scale 0.96, and opacity 0 with gentle 1.02 hover spring elasticity.
+  - Semantic accessibility: uses role='img' and aria-label so screen readers cleanly announce the word once without parsing canvas artifacts.
+  - Automatic CSS mask-image fallback: degrades gracefully to Tailwind's bg-clip-text gradient when mask-image is unsupported.
+  - Optional staggered letter entrance variant to reveal individual glyphs in sequence.
+- **Accessibility**:
+  - Includes role='img' and aria-label matching the text string for assistive technologies.
+  - Respects prefers-reduced-motion media query by bypassing viewport blur-in transitions.
+  - Non-interactive canvas marked pointer-events-none to prevent event hijacking.
+- **Props**:
+  - `text` (string, default: "Brand"): Text string revealed through the flickering grid letterforms.
+  - `fontSize` (string, default: "clamp(4rem, 18vw, 16rem)"): Responsive CSS font size string for the fallback heading.
+  - `fontWeight` (number | string, default: 800): Font weight of the letterforms in the SVG mask.
+  - `fontFamily` (string, default: "Inter Tight, system-ui, -apple-system, sans-serif"): Font family for the vector letterforms.
+  - `color` (string, default: "currentColor"): Color string for the flickering grid squares.
+  - `squareSize` (number, default: 4): Dimension of each square cell in CSS pixels.
+  - `gridGap` (number, default: 5): Spacing between adjacent cells in CSS pixels.
+  - `flickerChance` (number, default: 0.35): Probability of each square flickering per second [0..1].
+  - `maxOpacity` (number, default: 0.4): Maximum opacity ceiling for the grid squares.
+  - `stagger` (boolean, default: false): Enables staggered entrance animation for individual letters.
+  - `className` (string, default: undefined): Additional Tailwind CSS classes merged into container.
+- **Usage Example**:
+```tsx
+import { TextMaskGrid } from "@/components/ui/text-mask-grid";
+
+export function HeroHeading() {
+  return (
+    <div className="flex flex-col items-center justify-center py-20 px-4 text-center">
+      <TextMaskGrid
+        text="Acme"
+        fontWeight={900}
+        squareSize={4}
+        gridGap={5}
+        flickerChance={0.4}
+        maxOpacity={0.5}
+        color="#3b82f6"
+        className="w-full max-w-4xl"
+      />
+      <p className="mt-4 text-sm text-neutral-500 font-mono">
+        High-performance developer tools for the next generation of cloud computing.
+      </p>
+    </div>
   );
 }
 ```
@@ -4987,6 +5290,44 @@ export function Example() {
       color="#38BDF8"
       interactive
     />
+  );
+}
+```
+
+---
+
+### Weather Card (`WeatherCard`)
+- **Slug**: `weather-card`
+- **Category**: Cards
+- **Tagline**: Interactive dark weather card with smooth SVG area charts and sliding 8-day forecast highlights.
+- **Description**: Dark-themed weather card featuring interactive metric tabs, a custom Catmull-Rom smooth SVG area chart with hover cursor guides, and an 8-day forecast selector with sliding selection physics.
+- **Docs URL**: https://boseui.site/components/weather-card
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/weather-card.json`
+- **Registry Manifest**: https://boseui.site/r/weather-card.json
+- **Key Features**:
+  - Zero-dependency inline SVG area chart using Catmull-Rom monotone cubic splines with Sky-400 stroke and gradient fill.
+  - Dynamic cursor guide line and floating data tooltip tracking the nearest hourly interval with hover feedback.
+  - Animated metric tabs (Temperature, Precipitation, Wind) with sliding amber-400 layoutId indicator.
+  - Interactive 8-day forecast row with sliding frosted glass selection pill and AnimatePresence header transitions.
+  - Animated rolling temperature count-up effect supporting instantaneous °F and °C unit conversion.
+- **Accessibility**:
+  - Accessible tab list implementation with role='tablist' and role='tab' using aria-selected attributes.
+  - Dual unit toggle with role='group' and aria-pressed attributes for assistive technologies.
+  - Honors prefers-reduced-motion by replacing path length transitions and layout slides with smooth opacity cross-fades.
+- **Props**:
+  - `location` (string, default: "San Francisco, CA"): City and region label displayed in the header.
+  - `initialUnit` ("F" | "C", default: "F"): Initial temperature unit displayed on first mount.
+  - `daily` (DailyForecast[], default: DEFAULT_DAILY_FORECAST): Array of 8 daily forecasts containing high/low temperatures, conditions, and hourly data.
+  - `className` (string, default: undefined): Additional Tailwind CSS classes merged onto the outer card container.
+- **Usage Example**:
+```tsx
+import { WeatherCard } from "@/components/ui/weather-card";
+
+export function WeatherDemo() {
+  return (
+    <div className="flex items-center justify-center p-6 bg-black min-h-[500px]">
+      <WeatherCard location="San Francisco, CA" />
+    </div>
   );
 }
 ```

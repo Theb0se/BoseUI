@@ -280,7 +280,7 @@ export default async function ComponentDetailPage(context: {
 
           {/* Quick CLI 1-Click Install Bar */}
           <div className="mt-4 flex flex-wrap items-center gap-2.5 pt-1">
-            <QuickCliCopyButton cliCommand={`npx bose-ui add ${comp.slug}`} />
+            <QuickCliCopyButton slug={comp.slug} />
             <a
               href={`/r/${comp.slug}.json`}
               target="_blank"

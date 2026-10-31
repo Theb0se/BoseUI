@@ -49,7 +49,7 @@ export function Sidebar() {
   }, [filter]);
 
   const sidebarContent = (
-    <div className="flex h-full flex-col px-4 py-5">
+    <div className="flex min-h-full flex-col px-4 py-5">
       {/* Quick Sidebar Filter */}
       <div className="relative mb-5">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-neutral-400" />
@@ -209,15 +209,24 @@ export function Sidebar() {
             onClick={() => setMobileOpen(false)}
             className="fixed inset-0 bg-black/60 backdrop-blur-xs"
           />
-          <aside className="fixed bottom-0 left-0 top-14 z-50 w-72 overflow-y-auto border-r border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black">
+          <aside
+            data-lenis-prevent
+            className="fixed bottom-0 left-0 top-14 z-50 w-72 overflow-y-auto overscroll-contain border-r border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black"
+          >
             {sidebarContent}
           </aside>
         </div>
       )}
 
       {/* Desktop Sticky Sidebar */}
-      <aside className="hidden w-64 shrink-0 border-r border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black lg:block">
-        <div className="sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto">
+      <aside
+        data-lenis-prevent
+        className="hidden w-64 shrink-0 border-r border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black lg:block"
+      >
+        <div
+          data-lenis-prevent
+          className="sticky top-14 h-[calc(100dvh-3.5rem)] overflow-y-auto overscroll-contain"
+        >
           {sidebarContent}
         </div>
       </aside>

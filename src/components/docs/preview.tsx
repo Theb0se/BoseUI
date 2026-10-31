@@ -40,6 +40,12 @@ import {
 } from "@/components/ui/AgentStatusBadge";
 import { RevealCardGrid } from "@/components/ui/RevealCardGrid";
 import { MinimalAuthCard } from "@/components/ui/MinimalAuthCard";
+import { WeatherCard } from "@/components/ui/WeatherCard";
+import { AnimatedThemeToggler, type TransitionVariant } from "@/components/ui/AnimatedThemeToggler";
+import { TextMaskGrid } from "@/components/ui/TextMaskGrid";
+import { FlickeringGrid } from "@/components/ui/FlickeringGrid";
+import { GridCard, FeatureSection } from "@/components/ui/GridCard";
+import { CTABanner } from "@/components/ui/CTABanner";
 
 // Stripe, Apple, DevTools, Consumer & Fintech components
 import { TiltCreditCard3D } from "@/components/ui/TiltCreditCard3D";
@@ -131,6 +137,9 @@ import {
   CircleCheck,
   Hand,
   Ban,
+  Layers,
+  Cpu,
+  Shield,
 } from "lucide-react";
 import { HoverCursorShimmerText } from "../ui/HoverCursorShimmerText";
 
@@ -642,6 +651,419 @@ function AgentStatusBadgePreviewStage({ className }: { className?: string }) {
   );
 }
 
+const THEME_TOGGLER_VARIANTS: { id: TransitionVariant; label: string; group: "liquid" | "geometric" }[] = [
+  // Primary: Organic Liquids & Waves
+  { id: "liquid-blob", label: "Liquid Blob", group: "liquid" },
+  { id: "ocean-wave", label: "Ocean Wave", group: "liquid" },
+  { id: "waterfall", label: "Waterfall", group: "liquid" },
+  { id: "tide-sweep", label: "Tide Sweep", group: "liquid" },
+  { id: "tide-sweep-left", label: "Tide Sweep Left", group: "liquid" },
+  { id: "concentric-ripple", label: "Water Ripple", group: "liquid" },
+  { id: "liquid-droplet", label: "Liquid Droplet", group: "liquid" },
+  { id: "goo-melt", label: "Goo Melt", group: "liquid" },
+  { id: "aurora-wave", label: "Aurora S-Wave", group: "liquid" },
+  { id: "bubble-burst", label: "Bubble Burst", group: "liquid" },
+  { id: "whirlpool", label: "Whirlpool", group: "liquid" },
+  { id: "fluid-curtain", label: "Fluid Curtain", group: "liquid" },
+  { id: "circle", label: "Smooth Circle", group: "liquid" },
+  // Secondary: Geometric shapes
+  { id: "star", label: "Star", group: "geometric" },
+  { id: "diamond", label: "Diamond", group: "geometric" },
+  { id: "hexagon", label: "Hexagon", group: "geometric" },
+  { id: "aperture", label: "Aperture", group: "geometric" },
+  { id: "diagonal-slash", label: "Diagonal", group: "geometric" },
+];
+
+function AnimatedThemeTogglerPreviewStage({ className }: { className?: string }) {
+  const [activeTab, setActiveTab] = useState<"liquid" | "geometric">("liquid");
+  const [variant, setVariant] = useState<TransitionVariant>("liquid-blob");
+  const [duration, setDuration] = useState<number>(520);
+  const [fromCenter, setFromCenter] = useState<boolean>(false);
+  const [size, setSize] = useState<"sm" | "md" | "lg">("lg");
+
+  const filteredVariants = THEME_TOGGLER_VARIANTS.filter((v) => v.group === activeTab);
+
+  return (
+    <div className={cn("w-full flex flex-col items-center justify-center gap-8 py-12 px-4", className)}>
+      {/* Central Interactive Toggle */}
+      <div className="flex flex-col items-center gap-4">
+        <AnimatedThemeToggler
+          variant={variant}
+          duration={duration}
+          fromCenter={fromCenter}
+          size={size}
+          glow
+        />
+        <div className="text-center">
+          <p className="text-xs font-mono text-neutral-500">
+            Click icon to trigger{" "}
+            <span className="font-semibold text-neutral-900 dark:text-neutral-100">
+              {variant}
+            </span>{" "}
+            liquid reveal
+          </p>
+          <span className="text-[11px] text-neutral-400">
+            Multi-harmonic wave undulation with fluid deceleration
+          </span>
+        </div>
+      </div>
+
+      {/* Category Tabs: Liquid & Waves vs Geometric */}
+      <div className="flex flex-col items-center gap-3 max-w-xl w-full">
+        <div className="flex items-center gap-1 rounded-full border border-neutral-200 dark:border-neutral-800 bg-neutral-100/70 dark:bg-neutral-900/70 p-1">
+          <button
+            onClick={() => {
+              setActiveTab("liquid");
+              setVariant("liquid-blob");
+            }}
+            className={cn(
+              "rounded-full px-3.5 py-1 text-xs font-medium transition-all",
+              activeTab === "liquid"
+                ? "bg-white text-neutral-900 shadow-xs dark:bg-neutral-800 dark:text-neutral-100"
+                : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200"
+            )}
+          >
+            🌊 Liquids & Waves (13 styles)
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab("geometric");
+              setVariant("star");
+            }}
+            className={cn(
+              "rounded-full px-3.5 py-1 text-xs font-medium transition-all",
+              activeTab === "geometric"
+                ? "bg-white text-neutral-900 shadow-xs dark:bg-neutral-800 dark:text-neutral-100"
+                : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200"
+            )}
+          >
+            Shapes
+          </button>
+        </div>
+
+        {/* Variant Pills Filter */}
+        <div className="flex flex-wrap items-center justify-center gap-1.5 p-1.5 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-100/60 dark:bg-neutral-900/60 backdrop-blur-sm">
+          {filteredVariants.map((v) => (
+            <button
+              key={v.id}
+              onClick={() => setVariant(v.id)}
+              className={cn(
+                "rounded-lg px-2.5 py-1 text-xs font-medium transition-all",
+                variant === v.id
+                  ? "bg-white text-neutral-900 shadow-sm dark:bg-neutral-800 dark:text-neutral-100"
+                  : "text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200"
+              )}
+            >
+              {v.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Controls: Duration & Options */}
+      <div className="flex flex-wrap items-center justify-center gap-4 pt-4 border-t border-neutral-200 dark:border-neutral-800 text-xs">
+        <div className="flex items-center gap-2">
+          <span className="text-neutral-500 font-mono">Speed:</span>
+          {[
+            { label: "Fast (320ms)", val: 320 },
+            { label: "Fluid (480ms)", val: 480 },
+            { label: "Cinematic (720ms)", val: 720 },
+          ].map((d) => (
+            <button
+              key={d.val}
+              onClick={() => setDuration(d.val)}
+              className={cn(
+                "px-2.5 py-1 rounded-md text-xs font-mono transition-colors",
+                duration === d.val
+                  ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900"
+                  : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700"
+              )}
+            >
+              {d.label}
+            </button>
+          ))}
+        </div>
+
+        <button
+          onClick={() => setFromCenter((prev) => !prev)}
+          className={cn(
+            "px-2.5 py-1 rounded-md text-xs font-mono transition-colors border",
+            fromCenter
+              ? "border-blue-500 bg-blue-500/10 text-blue-600 dark:text-blue-400"
+              : "border-neutral-300 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400"
+          )}
+        >
+          {fromCenter ? "✓ Expand from Center" : "Expand from Button"}
+        </button>
+
+        <div className="flex items-center gap-1.5">
+          <span className="text-neutral-500 font-mono">Size:</span>
+          {(["sm", "md", "lg"] as const).map((s) => (
+            <button
+              key={s}
+              onClick={() => setSize(s)}
+              className={cn(
+                "px-2 py-0.5 rounded text-xs uppercase font-mono transition-colors",
+                size === s
+                  ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900"
+                  : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-400"
+              )}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TextMaskGridPreviewStage({ className }: { className?: string }) {
+  const [inputText, setInputText] = useState("Acme");
+  const [color, setColor] = useState("currentColor");
+  const [stagger, setStagger] = useState(false);
+  const [squareSize, setSquareSize] = useState(4);
+  const [flickerChance, setFlickerChance] = useState(0.4);
+
+  const PRESET_WORDS = ["Acme", "BoseUI", "Kinetic", "Vector", "Future"];
+
+  return (
+    <div className={cn("w-full flex flex-col items-center justify-center gap-8 py-12 px-4", className)}>
+      {/* Hero Showcase Stage */}
+      <div className="w-full flex flex-col items-center justify-center text-center">
+        <TextMaskGrid
+          text={inputText || "Acme"}
+          color={color}
+          stagger={stagger}
+          squareSize={squareSize}
+          gridGap={5}
+          flickerChance={flickerChance}
+          maxOpacity={0.55}
+          className="w-full max-w-4xl"
+        />
+        <p className="mt-3 text-sm text-neutral-500 font-mono tracking-tight max-w-md">
+          High-performance developer primitives for the modern responsive web.
+        </p>
+      </div>
+
+      {/* Interactive Controls */}
+      <div className="flex flex-col items-center gap-4 w-full max-w-xl pt-6 border-t border-neutral-200 dark:border-neutral-800">
+        {/* Preset Words */}
+        <div className="flex flex-wrap items-center justify-center gap-1.5">
+          <span className="text-xs font-mono text-neutral-400 mr-1">Sample Words:</span>
+          {PRESET_WORDS.map((w) => (
+            <button
+              key={w}
+              onClick={() => setInputText(w)}
+              className={cn(
+                "px-2.5 py-1 rounded-lg text-xs font-mono transition-all",
+                inputText === w
+                  ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-semibold"
+                  : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700"
+              )}
+            >
+              {w}
+            </button>
+          ))}
+        </div>
+
+        {/* Input & Toggles */}
+        <div className="flex flex-wrap items-center justify-center gap-3 text-xs">
+          <input
+            type="text"
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            placeholder="Type custom text..."
+            maxLength={12}
+            className="rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-1 font-mono text-xs text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
+
+          <button
+            onClick={() => setStagger((prev) => !prev)}
+            className={cn(
+              "px-3 py-1 rounded-lg font-mono text-xs transition-colors border",
+              stagger
+                ? "border-blue-500 bg-blue-500/10 text-blue-600 dark:text-blue-400"
+                : "border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400"
+            )}
+          >
+            {stagger ? "✓ Staggered Letters" : "Single SVG Mask"}
+          </button>
+        </div>
+
+        {/* Colors */}
+        <div className="flex items-center gap-2 text-xs font-mono">
+          <span className="text-neutral-400">Color:</span>
+          {[
+            { label: "Theme", val: "currentColor" },
+            { label: "Blue", val: "#3b82f6" },
+            { label: "Emerald", val: "#10b981" },
+            { label: "Amber", val: "#f59e0b" },
+            { label: "Rose", val: "#f43f5e" },
+          ].map((c) => (
+            <button
+              key={c.val}
+              onClick={() => setColor(c.val)}
+              className={cn(
+                "px-2 py-0.5 rounded text-xs transition-colors",
+                color === c.val
+                  ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-semibold"
+                  : "bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400"
+              )}
+            >
+              {c.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FlickeringGridPreviewStage({ className }: { className?: string }) {
+  const [squareSize, setSquareSize] = useState(4);
+  const [flickerChance, setFlickerChance] = useState(0.35);
+
+  return (
+    <div className={cn("w-full flex flex-col items-center justify-center gap-6 py-10 px-4", className)}>
+      <div className="relative h-72 w-full max-w-xl overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950">
+        <FlickeringGrid
+          squareSize={squareSize}
+          gridGap={6}
+          flickerChance={flickerChance}
+          maxOpacity={0.45}
+          className="absolute inset-0 h-full w-full"
+        />
+        <div className="relative z-10 flex h-full flex-col items-center justify-center text-center p-6 pointer-events-none">
+          <span className="rounded-full border border-neutral-300 dark:border-neutral-700 bg-white/80 dark:bg-neutral-900/80 px-3 py-1 font-mono text-xs backdrop-blur-sm">
+            Flickering Grid Canvas
+          </span>
+          <p className="mt-2 text-xs text-neutral-500 font-mono">
+            Device-pixel-ratio scaled • Battery-aware auto pause
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GridCardPreviewStage({ className }: { className?: string }) {
+  const sampleFeatures = [
+    {
+      icon: <Sparkles className="h-5 w-5 text-amber-500" />,
+      title: "Real-time Reactivity",
+      description: "Ultra-fast state synchronization with zero hydration latency across edge runtimes.",
+      href: "#",
+    },
+    {
+      icon: <Layers className="h-5 w-5 text-emerald-500" />,
+      title: "Zero-trust Security",
+      description: "End-to-end cryptographic token verification with hardware-backed encryption.",
+      href: "#",
+    },
+    {
+      icon: <Cpu className="h-5 w-5 text-blue-500" />,
+      title: "Compute at the Edge",
+      description: "Execute sub-millisecond serverless functions deployed to 300+ global data centers.",
+      href: "#",
+    },
+    {
+      icon: <Sparkles className="h-5 w-5 text-purple-500" />,
+      title: "Adaptive Physics",
+      description: "Spring dynamics calibrated to 120Hz display refresh rates for natural fluidity.",
+      href: "#",
+    },
+    {
+      icon: <Layers className="h-5 w-5 text-sky-500" />,
+      title: "Composability First",
+      description: "Modular primitives that combine effortlessly into complex application dashboards.",
+      href: "#",
+    },
+    {
+      icon: <ArrowRight className="h-5 w-5 text-indigo-500" />,
+      title: "Continuous Deployment",
+      description: "Automated git preview branches with instant rollbacks and deterministic builds.",
+      href: "#",
+    },
+  ];
+
+  return (
+    <div className={cn("w-full py-4", className)}>
+      <FeatureSection
+        title="Everything you need to ship faster"
+        subtitle="Hover cards to accelerate corner flickering grid rates from 0.1 to 0.6."
+        features={sampleFeatures}
+      />
+    </div>
+  );
+}
+
+/* ── CTABanner Preview ── */
+function CTABannerPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full px-4 py-8 bg-neutral-100 dark:bg-neutral-900 rounded-2xl", className)}>
+      <CTABanner
+        heading="Ship beautiful interfaces faster"
+        subheading="Join 12,000+ engineers building with BoseUI components every week."
+        placeholder="you@company.com"
+        buttonLabel="Join the waitlist"
+        accentColor="#6366f1"
+        onSubmit={async (email) => {
+          await new Promise((r) => setTimeout(r, 1400));
+          console.log("Subscribed:", email);
+        }}
+      />
+    </div>
+  );
+}
+
+/* ── PricingBanner Preview ── */
+const PRICING_PLANS = [
+  {
+    name: "Starter",
+    description: "For individuals and small projects.",
+    monthlyPrice: 0,
+    yearlyPrice: 0,
+    ctaLabel: "Start for free",
+    features: [
+      { text: "5 components", included: true },
+      { text: "Community support", included: true },
+      { text: "Private projects", included: false },
+      { text: "Custom domain", included: false },
+      { text: "Priority support", included: false },
+    ],
+  },
+  {
+    name: "Pro",
+    description: "For teams shipping production products.",
+    monthlyPrice: 29,
+    yearlyPrice: 23,
+    ctaLabel: "Start free trial",
+    features: [
+      { text: "Unlimited components", included: true },
+      { text: "Priority support", included: true },
+      { text: "Private projects", included: true },
+      { text: "Custom domain", included: true },
+      { text: "Dedicated Slack channel", included: false },
+    ],
+  },
+  {
+    name: "Enterprise",
+    description: "For large teams with advanced requirements.",
+    monthlyPrice: 99,
+    yearlyPrice: 79,
+    ctaLabel: "Contact sales",
+    features: [
+      { text: "Unlimited components", included: true },
+      { text: "Priority support", included: true },
+      { text: "Private projects", included: true },
+      { text: "Custom domain", included: true },
+      { text: "Dedicated Slack channel", included: true },
+    ],
+  },
+];
+
+
 function RevealCardGridPreviewStage({ className }: { className?: string }) {
   return (
     <div className={cn("w-full bg-[#fcfcfd] dark:bg-neutral-950 py-8 px-2 sm:px-4 rounded-2xl border border-neutral-200 dark:border-neutral-800", className)}>
@@ -661,6 +1083,14 @@ function MinimalAuthCardPreviewStage({ className }: { className?: string }) {
         onSubmit={(data) => console.log("Auth submit:", data)}
         onOAuthClick={(provider) => console.log("OAuth clicked:", provider)}
       />
+    </div>
+  );
+}
+
+function WeatherCardPreviewStage({ className }: { className?: string }) {
+  return (
+    <div className={cn("w-full flex items-center justify-center py-8 px-2 sm:px-4", className)}>
+      <WeatherCard location="San Francisco, CA" />
     </div>
   );
 }
@@ -1193,11 +1623,30 @@ export function ComponentPreview({
     case "agent-status-badge":
       return <AgentStatusBadgePreviewStage className={className} />;
 
+    case "animated-theme-toggler":
+      return <AnimatedThemeTogglerPreviewStage className={className} />;
+
+    case "text-mask-grid":
+      return <TextMaskGridPreviewStage className={className} />;
+
+    case "flickering-grid":
+      return <FlickeringGridPreviewStage className={className} />;
+
+    case "grid-card":
+      return <GridCardPreviewStage className={className} />;
+
+    case "cta-banner":
+      return <CTABannerPreviewStage className={className} />;
+
+
     case "reveal-card-grid":
       return <RevealCardGridPreviewStage className={className} />;
 
     case "minimal-auth-card":
       return <MinimalAuthCardPreviewStage className={className} />;
+
+    case "weather-card":
+      return <WeatherCardPreviewStage className={className} />;
 
     // ── Consumer & Social ──
 

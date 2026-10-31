@@ -2,594 +2,494 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
-  ArrowUpRight,
   Check,
-  Command,
   Copy,
-  Terminal,
   Sparkles,
-  Zap,
-  ShieldCheck,
-  Layers,
-  Cpu,
+  Sliders,
+  MousePointer,
+  Activity,
+  KeyRound,
 } from "lucide-react";
+import { copyToClipboard } from "@/lib/utils";
+
+// Real BoseUI components for the live interactive sandbox
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { MovingGridLines } from "@/components/ui/MovingGridLines";
-import { ShimmerText } from "@/components/ui/ShimmerText";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
-import { ElasticDock } from "@/components/ui/ElasticDock";
-import { DynamicIslandToast } from "@/components/ui/DynamicIslandToast";
-import { MorphingBlob } from "@/components/ui/MorphingBlob";
-import { TiltCreditCard3D } from "@/components/ui/TiltCreditCard3D";
-import { DotTextCanvas } from "@/components/ui/DotTextHero";
-import { CylinderCarousel, type CylinderCardItem } from "@/components/ui/CylinderCarousel";
-import { ExpandableCards, type ExpandableCardItem } from "@/components/ui/ExpandableCards";
-import { useCommandPalette } from "@/components/layout/CommandPalette";
-import { copyToClipboard, SITE_CONFIG } from "@/lib/utils";
+import { PermissionSwitch } from "@/components/ui/PermissionSwitch";
+import { AgentStatusBadge, type AgentStatus } from "@/components/ui/AgentStatusBadge";
+import { SpringPinInput } from "@/components/ui/SpringPinInput";
 
-interface ShowcaseTab {
-  slug: string;
-  label: string;
-  badge: string;
-  hint: string;
-}
+type PackageManager = "npm" | "pnpm" | "bun";
+type DemoTab = "button" | "switch" | "badge" | "pin";
 
-const SHOWCASE_TABS: ShowcaseTab[] = [
-  {
-    slug: "cylinder-carousel",
-    label: "3D Cylinder",
-    badge: "Radial 3D Stage",
-    hint: "Drag or tap cards to rotate through the 3D perspective cylinder",
-  },
-  {
-    slug: "dot-text-hero",
-    label: "Dot Matrix",
-    badge: "Canvas Physics",
-    hint: "Hover over the dot matrix to trigger inverse-square physics repulsion",
-  },
-  {
-    slug: "expandable-cards",
-    label: "Expandable",
-    badge: "Spring Layout",
-    hint: "Hover or click cards to trigger smooth flex layout spring expansion",
-  },
-  {
-    slug: "morphing-blob",
-    label: "Morphing Blob",
-    badge: "Catmull-Rom Spline",
-    hint: "Move pointer to attract and organically deform fluid spring nodes",
-  },
-  {
-    slug: "tilt-credit-card3-d",
-    label: "3D Metal Card",
-    badge: "Gyroscope 3D",
-    hint: "Move pointer around the titanium card to inspect specular depth",
-  },
-  {
-    slug: "elastic-dock",
-    label: "Elastic Dock",
-    badge: "macOS Magnification",
-    hint: "Hover across icons to trigger continuous Hooke's Law expansion",
-  },
+const INSTALL_COMMANDS: Record<PackageManager, string> = {
+  npm: "npx shadcn@latest add https://boseui.site/r/magnetic-button.json",
+  pnpm: "pnpm dlx shadcn@latest add https://boseui.site/r/magnetic-button.json",
+  bun: "bunx --bun shadcn@latest add https://boseui.site/r/magnetic-button.json",
+};
+
+const DEMO_TABS: { id: DemoTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  { id: "button", label: "Magnetic", icon: MousePointer },
+  { id: "switch", label: "Switch", icon: Sliders },
+  { id: "badge", label: "Agent", icon: Activity },
+  { id: "pin", label: "PIN", icon: KeyRound },
 ];
 
-const HERO_CYLINDER_CARDS: CylinderCardItem[] = [
-  {
-    id: "springs",
-    title: "120Hz Kinetic",
-    pill: "ProMotion",
-    bg: "radial-gradient(circle at 50% 55%, #17a2c8 0%, #6cc9a3 38%, #d5e59a 62%, #fbd3b6 88%)",
-    content: () => (
-      <div className="flex h-full flex-col items-center justify-center text-white p-4">
-        <p className="text-4xl font-bold tracking-tight">120 FPS</p>
-        <p className="mt-2 text-xs text-white/80">Hooke&apos;s Law Dynamics</p>
-      </div>
-    ),
-  },
-  {
-    id: "catalog",
-    title: "113+ Primitives",
-    pill: "v2.0",
-    bg: "linear-gradient(160deg, #6d6cf5 0%, #c15cf0 45%, #f06bd0 100%)",
-    content: () => (
-      <div className="flex h-full flex-col items-center justify-center text-white p-4">
-        <p className="text-4xl font-bold tracking-tight">113+ Primitives</p>
-        <p className="mt-2 text-xs text-white/80">Tailwind CSS &amp; TS</p>
-      </div>
-    ),
-  },
-  {
-    id: "a11y",
-    title: "Accessibility",
-    pill: "WCAG AA",
-    bg: "linear-gradient(180deg, #f7f8fa 0%, #eef0f4 100%)",
-    dark: true,
-    content: () => (
-      <div className="flex h-full flex-col items-center justify-center text-neutral-900 p-4">
-        <p className="text-3xl font-bold tracking-tight">A11y First</p>
-        <p className="mt-2 text-xs text-neutral-600">Reduced Motion &amp; ARIA</p>
-      </div>
-    ),
-  },
-  {
-    id: "cli",
-    title: "CLI Ready",
-    pill: "shadcn",
-    bg: "linear-gradient(165deg, #3ccfb4 0%, #6fd6e8 55%, #b6e7f7 100%)",
-    content: () => (
-      <div className="flex h-full flex-col items-center justify-center text-white p-4">
-        <p className="text-4xl font-bold tracking-tight">1-Click Install</p>
-        <p className="mt-2 text-xs text-white/80">Zero Runtime Lock-In</p>
-      </div>
-    ),
-  },
-];
-
-const HERO_EXPANDABLE_STORIES: ExpandableCardItem[] = [
-  {
-    id: 1,
-    name: "Tactile Motion",
-    tagline: "Hooke's Law physics preserved on every frame.",
-    logo: <Sparkles className="h-5 w-5 text-white" />,
-    quote: [
-      "Physical velocity and momentum preserved across touch and pointer interactions.",
-    ],
-    author: "Rishabh Bose",
-    role: "BoseUI Creator",
-    bg: "bg-gradient-to-b from-rose-500 via-pink-600 to-orange-500",
-  },
-  {
-    id: 2,
-    name: "Source Ownership",
-    tagline: "Clean TypeScript and Tailwind living directly in your repository.",
-    logo: <Zap className="h-5 w-5 text-white" />,
-    quote: [
-      "Zero obscure node_modules wrappers. Copy, paste, and customize freely.",
-    ],
-    author: "Design Systems",
-    role: "Engineering",
-    bg: "bg-gradient-to-b from-[#0e1726] to-[#050914]",
-  },
-  {
-    id: 3,
-    name: "Strict Accessibility",
-    tagline: "WCAG AA compliant with automatic reduced-motion fallbacks.",
-    logo: <ShieldCheck className="h-5 w-5 text-white" />,
-    quote: [
-      "Full keyboard focus loops and assistive screen reader support by default.",
-    ],
-    author: "A11y Standards",
-    role: "Inclusive UI",
-    bg: "bg-gradient-to-b from-neutral-800 to-neutral-950",
-  },
-];
-
-const SPECS = [
-  {
-    tag: "SPRING KINEMATICS",
-    title: "120Hz Fluid Physics",
-    text: "Engineered with Framer Motion spring-mass-damping equations so every interaction feels instantaneous and tactile.",
-  },
-  {
-    tag: "SOURCE OWNERSHIP",
-    title: "Zero Runtime Lock-In",
-    text: "Written in clean TypeScript and Tailwind CSS. The code lives directly in your project with zero external stylesheet bloat.",
-  },
-  {
-    tag: "REGISTRY READY",
-    title: "One-Command Install",
-    text: "Add any primitive with standard shadcn CLI tooling (npx, pnpm, bun) or copy-paste directly with automatic dependency wiring.",
-  },
-  {
-    tag: "PRODUCTION GRADE",
-    title: "Accessible & Responsive",
-    text: "Built with strict WCAG AA keyboard support, prefers-reduced-motion fallbacks, and seamless light/dark mode parity.",
-  },
-];
-
-type PackageManager = "npx" | "pnpm" | "bun";
-
-function Crosshair({ className = "" }: { className?: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`pointer-events-none absolute z-10 flex h-3 w-3 items-center justify-center text-neutral-300 dark:text-neutral-700 ${className}`}
-    >
-      <span className="absolute h-px w-3 bg-current" />
-      <span className="absolute h-3 w-px bg-current" />
-    </span>
-  );
-}
+const SPRING_PRESETS = [
+  { label: "Snappy", stiffness: 440, damping: 28 },
+  { label: "Bouncy", stiffness: 280, damping: 14 },
+  { label: "Smooth", stiffness: 180, damping: 22 },
+] as const;
 
 export function HeroSection() {
-  const [activeTab, setActiveTab] = useState<ShowcaseTab>(SHOWCASE_TABS[0]);
-  const [packageManager, setPackageManager] = useState<PackageManager>("npx");
+  const [pkg, setPkg] = useState<PackageManager>("npm");
   const [copied, setCopied] = useState(false);
-  const { openPalette } = useCommandPalette();
-  const reduceMotion = useReducedMotion();
+  const [activeDemo, setActiveDemo] = useState<DemoTab>("button");
+  const [badgeStatus, setBadgeStatus] = useState<AgentStatus>("analyzing");
+  const [stiffness, setStiffness] = useState(380);
+  const [damping, setDamping] = useState(24);
+  const [selectedPreset, setSelectedPreset] = useState<string>("Snappy");
+  const shouldReduceMotion = useReducedMotion();
 
-  const getCliCommand = (pkg: PackageManager, slug: string) => {
-    const url = `${SITE_CONFIG.url}/r/${slug}.json`;
-    if (pkg === "pnpm") return `pnpm dlx shadcn@latest add "${url}"`;
-    if (pkg === "bun") return `bunx --bun shadcn@latest add "${url}"`;
-    return `npx shadcn@latest add "${url}"`;
-  };
-
-  const cliCommand = getCliCommand(packageManager, activeTab.slug);
-
-  const handleCopyCli = async () => {
-    const ok = await copyToClipboard(cliCommand);
-    if (ok) {
+  const handleCopy = async () => {
+    const success = await copyToClipboard(INSTALL_COMMANDS[pkg]);
+    if (success) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
   };
 
-  const container: Variants = {
-    hidden: {},
-    show: { transition: { staggerChildren: reduceMotion ? 0 : 0.08 } },
+  const applyPreset = (p: (typeof SPRING_PRESETS)[number]) => {
+    setStiffness(p.stiffness);
+    setDamping(p.damping);
+    setSelectedPreset(p.label);
   };
 
-  const item: Variants = {
-    hidden: { opacity: 0, y: reduceMotion ? 0 : 14 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: reduceMotion ? 0 : 0.5,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
+  const scrollToRecentlyAdded = () => {
+    const el = document.getElementById("recently-added");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
-    <section className="relative overflow-hidden border-b border-neutral-200/80 bg-white dark:border-neutral-800 dark:bg-black">
-      {/* Background ambient lighting and dynamic moving grid */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <MovingGridLines
-          gridSize={64}
-          beamCount={5}
-          beamLength={200}
-          speed={0.6}
-          radialMask={true}
-          className="absolute inset-0 h-full w-full"
-        />
-        {/* Optimized subtle ambient bloom */}
-        <div className="absolute left-1/2 top-0 h-[380px] w-[720px] -translate-x-1/2 rounded-full bg-radial from-neutral-200/40 via-neutral-100/10 to-transparent dark:from-white/[0.06] dark:via-white/[0.01]" />
-      </div>
-
-      <div className="relative mx-auto max-w-[1340px] border-x border-neutral-200/80 dark:border-neutral-800">
-        <Crosshair className="-left-[6px] top-6" />
-        <Crosshair className="-right-[6px] top-6" />
-
-        {/* Top architectural telemetry header bar */}
-        <div className="flex items-center justify-between border-b border-neutral-200/80 px-4 py-2.5 font-mono text-[11px] text-neutral-500 dark:border-neutral-800 dark:text-neutral-400 sm:px-8">
-          <div className="flex items-center gap-2.5">
+    <section className="relative flex min-h-[calc(100dvh-3.5rem)] flex-col justify-between py-8 sm:py-12 lg:py-16">
+      {/* Top / Main Hero Content */}
+      <div className="my-auto grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
+        {/* Left Column: Direct Copy & Actions */}
+        <div className="lg:col-span-7">
+          {/* Subtle Eyebrow Pill */}
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 320, damping: 28 }}
+            className="mb-4 inline-flex items-center gap-2 rounded-full border border-neutral-200/90 bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-400"
+          >
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
             </span>
-            <span className="font-semibold uppercase tracking-widest text-neutral-900 dark:text-neutral-200">
-              BOSEUI v2
-            </span>
-          </div>
-
-          <div className="flex items-center gap-5">
-            <span className="hidden lg:inline text-neutral-500 dark:text-neutral-400">
-              FRAMER MOTION · TAILWIND CSS · TYPESCRIPT
-            </span>
-            <a
-              href={SITE_CONFIG.author.portfolio}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-neutral-700 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
-            >
-              <span>BY RISHABH BOSE</span>
-              <ArrowUpRight className="h-3 w-3" />
-            </a>
-          </div>
-        </div>
-
-        {/* Main Hero Header Stack */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="flex flex-col items-center px-4 pb-16 pt-12 text-center sm:px-8 sm:pb-20 sm:pt-16 lg:pt-20"
-        >
-          {/* Release Eyebrow Pill */}
-          <motion.div variants={item}>
-            <Link
-              href="/components"
-              className="group inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50/90 py-1 pl-1.5 pr-3.5 text-xs font-medium text-neutral-700 shadow-2xs backdrop-blur-md transition-all hover:border-neutral-900 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-900/80 dark:text-neutral-300 dark:hover:border-neutral-600 dark:hover:text-white"
-            >
-              <span className="flex items-center gap-1.5 rounded-full bg-neutral-900 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-white dark:bg-white dark:text-black">
-                <Sparkles className="h-2.5 w-2.5" />
-                NEW
-              </span>
-              <span>Physics-Based React Primitives · Free &amp; Open Source</span>
-              <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
-            </Link>
+            <span>Open-source React primitives</span>
           </motion.div>
 
-          {/* High-Impact Headline with Crisp Typography */}
+          {/* Headline (one line, plain) */}
           <motion.h1
-            variants={item}
-            className="mt-6 max-w-4xl text-balance text-4xl font-bold tracking-tight text-neutral-950 dark:text-white sm:text-6xl lg:text-[72px] sm:leading-[1.08]"
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 320, damping: 28, delay: 0.05 }}
+            className="text-4xl font-semibold tracking-[-0.03em] text-neutral-950 dark:text-white sm:text-5xl lg:text-[3.5rem] lg:leading-[1.08]"
           >
-            React components{" "}
-            <span className="text-neutral-500 dark:text-neutral-400 font-semibold">
-              engineered to make interfaces feel alive.
-            </span>
+            React components with <span className="text-neutral-600 dark:text-neutral-300">spring animations.</span>
           </motion.h1>
 
-          {/* Clear Value-Proposition Subtitle */}
+          {/* Subtext (one sentence) */}
           <motion.p
-            variants={item}
-            className="mt-5 max-w-2xl text-pretty text-base leading-relaxed text-neutral-600 dark:text-neutral-400 sm:text-lg"
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 320, damping: 28, delay: 0.12 }}
+            className="mt-4 max-w-xl text-base text-neutral-600 dark:text-neutral-400 sm:text-lg leading-relaxed font-normal"
           >
-            A curated design system of tactile micro-interactions, spring mechanics,
-            and WebGL background simulations. Copy-paste directly into your codebase with zero
-            runtime lock-in.
+            Copy-paste into your project. Built with Framer Motion, Tailwind and
+            TypeScript. Free and open source.
           </motion.p>
 
-          {/* Action CTAs */}
+          {/* Two Actions Only: [Browse components] & install chip */}
           <motion.div
-            variants={item}
-            className="mt-8 flex flex-wrap items-center justify-center gap-3"
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 320, damping: 28, delay: 0.18 }}
+            className="mt-8 flex flex-wrap items-center gap-3"
           >
-            <Link href="/components">
-              <MagneticButton variant="primary" size="lg" strength={0.3}>
-                <span>Explore Components</span>
-                <ArrowRight className="h-4 w-4" />
-              </MagneticButton>
-            </Link>
-
-            <Link href="/docs">
-              <MagneticButton variant="secondary" size="lg" strength={0.22}>
-                <span>Documentation &amp; CLI</span>
-              </MagneticButton>
-            </Link>
-
-            <button
-              type="button"
-              onClick={openPalette}
-              aria-label="Search components"
-              className="inline-flex h-[46px] cursor-pointer items-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 text-xs font-medium text-neutral-700 shadow-2xs transition-colors hover:border-neutral-900 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-900/70 dark:text-neutral-300 dark:hover:border-neutral-600 dark:hover:text-white"
+            {/* Primary Action Button */}
+            <motion.div
+              whileHover={shouldReduceMotion ? {} : { y: -1 }}
+              whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
             >
-              <Command className="h-3.5 w-3.5 text-neutral-400" />
-              <span>Search</span>
-              <kbd className="rounded border border-neutral-200 bg-neutral-100 px-1.5 py-0.5 font-mono text-[10px] text-neutral-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400">
-                ⌘K
-              </kbd>
-            </button>
+              <Link
+                href="/components"
+                className="group inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-neutral-950 px-5 text-xs sm:text-sm font-medium text-white transition-colors hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
+              >
+                <span>Browse components</span>
+                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5" />
+              </Link>
+            </motion.div>
+
+            {/* Install command as a copyable chip with sliding tab indicator */}
+            <div className="inline-flex h-10 items-center rounded-lg border border-neutral-200 bg-neutral-50/90 p-1 text-xs dark:border-neutral-800 dark:bg-neutral-950/90">
+              {/* Package manager toggle */}
+              <div className="relative flex items-center border-r border-neutral-200 pr-1 mr-1.5 dark:border-neutral-800">
+                {(["npm", "pnpm", "bun"] as const).map((pm) => (
+                  <button
+                    key={pm}
+                    type="button"
+                    onClick={() => setPkg(pm)}
+                    className={`relative rounded-md px-2.5 py-1 font-mono text-[11px] transition-colors z-10 ${pkg === pm
+                      ? "font-medium text-neutral-950 dark:text-white"
+                      : "text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
+                      }`}
+                  >
+                    {pkg === pm && (
+                      <motion.div
+                        layoutId="hero-pm-indicator"
+                        transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                        className="absolute inset-0 rounded-md bg-white shadow-2xs dark:bg-neutral-900 -z-10"
+                      />
+                    )}
+                    {pm}
+                  </button>
+                ))}
+              </div>
+
+              {/* Command text & animated copy button */}
+              <div className="flex items-center gap-2.5 pl-1 pr-1.5">
+                <code className="font-mono text-[11px] text-neutral-700 dark:text-neutral-300">
+                  {INSTALL_COMMANDS[pkg]}
+                </code>
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  aria-label={`Copy ${pkg} install command`}
+                  title="Copy to clipboard"
+                  className="relative inline-flex h-7 w-7 items-center justify-center rounded-md text-neutral-500 hover:bg-neutral-200/50 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-white transition-colors"
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    {copied ? (
+                      <motion.span
+                        key="check"
+                        initial={{ scale: 0.6, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.6, opacity: 0 }}
+                        transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                        className="flex items-center justify-center text-emerald-600 dark:text-emerald-400"
+                      >
+                        <Check className="h-3.5 w-3.5" />
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="copy"
+                        initial={{ scale: 0.6, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.6, opacity: 0 }}
+                        transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                        className="flex items-center justify-center"
+                      >
+                        <Copy className="h-3.5 w-3.5" />
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </button>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Studio Interactive Sandbox Stage */}
-          <motion.div variants={item} className="mt-12 w-full max-w-4xl">
-            <div className="overflow-hidden rounded-2xl border border-neutral-200/90 bg-white shadow-xl backdrop-blur-xl dark:border-neutral-800 dark:bg-[#070707] dark:shadow-[0_24px_60px_rgba(0,0,0,0.6)]">
-              {/* Studio Window Chrome Header */}
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-200/80 bg-neutral-50/70 px-4 py-2.5 dark:border-neutral-800/80 dark:bg-[#0A0A0A]">
-                {/* Window Dots & Tab Switcher */}
-                <div className="flex items-center gap-3">
-                  <div className="hidden sm:flex items-center gap-1.5 pr-2 border-r border-neutral-200 dark:border-neutral-800">
-                    <span className="h-2.5 w-2.5 rounded-full bg-neutral-300 dark:bg-neutral-700" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-neutral-300 dark:bg-neutral-700" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-neutral-300 dark:bg-neutral-700" />
-                  </div>
+          {/* Small text line below */}
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.24, duration: 0.4 }}
+            className="mt-5 flex items-center gap-3 text-xs text-neutral-500 dark:text-neutral-500"
+          >
+            <span>Open-source </span>
+            <span>·</span>
+            <span>MIT license</span>
+            <span>·</span>
+            <span>Next.js ready</span>
+          </motion.div>
+        </div>
 
-                  <div className="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
-                    {SHOWCASE_TABS.map((tab) => {
-                      const isActive = activeTab.slug === tab.slug;
-                      return (
-                        <button
-                          key={tab.slug}
-                          type="button"
-                          onClick={() => setActiveTab(tab)}
-                          className={`cursor-pointer whitespace-nowrap rounded-lg px-2.5 py-1 text-xs font-medium transition-all ${isActive
-                            ? "bg-neutral-900 text-white shadow-2xs dark:bg-white dark:text-black font-semibold"
-                            : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
-                            }`}
-                        >
-                          {tab.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Status Telemetry Pill */}
-                <div className="hidden md:flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] font-medium text-emerald-600 dark:text-emerald-400">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    {activeTab.badge}
+        {/* Right Column: Live Interactive Spring Sandbox */}
+        <motion.div
+          initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", stiffness: 280, damping: 26, delay: 0.15 }}
+          className="lg:col-span-5"
+        >
+          <div className="rounded-2xl border border-neutral-200/90 bg-neutral-100/60 p-1.5 shadow-sm dark:border-neutral-800 dark:bg-neutral-900/40">
+            <div className="rounded-xl border border-neutral-200/90 bg-white dark:border-neutral-800 dark:bg-neutral-950 overflow-hidden">
+              {/* Top Header: window controls, lab title & segmented tabs */}
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-neutral-200/80 bg-neutral-50/80 px-4 py-3 dark:border-neutral-800 dark:bg-neutral-900/60">
+                <div className="flex items-center gap-2.5">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
+                  </span>
+                  <span className="font-mono text-xs font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+                    spring.lab
+                  </span>
+                  <span className="rounded bg-neutral-200/70 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400">
+                    Interactive
                   </span>
                 </div>
-              </div>
 
-              {/* Dynamic Interactive Playground Arena */}
-              <div className="relative flex min-h-[300px] sm:min-h-[340px] items-center justify-center p-6 sm:p-10 bg-dot-matrix [background-size:20px_20px] bg-neutral-50/40 dark:bg-[#030303] overflow-hidden">
-                {activeTab.slug === "cylinder-carousel" && (
-                  <div className="w-full flex flex-col items-center justify-center py-2">
-                    <CylinderCarousel
-                      cards={HERO_CYLINDER_CARDS}
-                      cardWidth={240}
-                      cardHeight={290}
-                      gap={36}
-                      className="min-h-[360px] py-2 bg-transparent dark:bg-transparent"
-                    />
-                    <span className="font-mono text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-                      {activeTab.hint}
-                    </span>
-                  </div>
-                )}
-
-                {activeTab.slug === "dot-text-hero" && (
-                  <div className="w-full flex flex-col items-center justify-center py-4 max-w-lg">
-                    <DotTextCanvas
-                      lines={["KINETIC", "PHYSICS"]}
-                      dotSize={12}
-                      repelRadius={90}
-                      repelStrength={6}
-                      className="w-full"
-                    />
-                    <span className="mt-4 font-mono text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-                      {activeTab.hint}
-                    </span>
-                  </div>
-                )}
-
-                {activeTab.slug === "expandable-cards" && (
-                  <div className="w-full max-w-2xl py-2">
-                    <ExpandableCards
-                      stories={HERO_EXPANDABLE_STORIES}
-                      className="py-4 px-2 bg-transparent"
-                    />
-                    <div className="text-center mt-2">
-                      <span className="font-mono text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-                        {activeTab.hint}
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {activeTab.slug === "morphing-blob" && (
-                  <div className="relative flex flex-col items-center justify-center">
-                    <MorphingBlob
-                      width={380}
-                      height={320}
-                      baseRadius={110}
-                      variance={30}
-                      cursorFollow={true}
-                      colors={["#8B5CF6", "#06B6D4"]}
-                    />
-                    <div className="pointer-events-none absolute text-center">
-                      <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-                        {activeTab.hint}
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {activeTab.slug === "tilt-credit-card3-d" && (
-                  <div className="flex flex-col items-center justify-center py-4">
-                    <TiltCreditCard3D
-                      theme="titanium"
-                      cardHolder="RISHABH BOSE"
-                      cardNumber="4829 •••• •••• 9102"
-                      expiry="09/30"
-                    />
-                    <span className="mt-3 font-mono text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-                      {activeTab.hint}
-                    </span>
-                  </div>
-                )}
-
-                {activeTab.slug === "elastic-dock" && (
-                  <div className="flex flex-col items-center justify-center gap-4 py-4 w-full">
-                    <ElasticDock />
-                    <span className="font-mono text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-                      {activeTab.hint}
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              {/* Studio Command Bar & 1-Click CLI Install */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-neutral-200/80 bg-neutral-50/70 px-4 py-3 dark:border-neutral-800/80 dark:bg-[#070707]">
-                {/* CLI Package Manager Switcher & Snippet */}
-                <div className="flex items-center gap-2 overflow-hidden flex-1">
-                  <div className="flex rounded-lg bg-neutral-200/60 p-0.5 font-mono text-[11px] dark:bg-neutral-800/60">
-                    {(["npx", "pnpm", "bun"] as const).map((pkg) => (
+                {/* Tab Switcher */}
+                <div className="inline-flex items-center rounded-lg border border-neutral-200/80 bg-neutral-100/80 p-0.5 text-xs dark:border-neutral-800 dark:bg-neutral-900">
+                  {DEMO_TABS.map((tab) => {
+                    const isActive = activeDemo === tab.id;
+                    const Icon = tab.icon;
+                    return (
                       <button
-                        key={pkg}
+                        key={tab.id}
                         type="button"
-                        onClick={() => setPackageManager(pkg)}
-                        className={`rounded-md px-2 py-0.5 transition-colors ${packageManager === pkg
-                          ? "bg-white font-semibold text-black shadow-2xs dark:bg-neutral-700 dark:text-white"
-                          : "text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white"
+                        onClick={() => setActiveDemo(tab.id)}
+                        className={`relative flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors z-10 ${isActive
+                          ? "text-neutral-950 dark:text-white"
+                          : "text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
                           }`}
                       >
-                        {pkg}
+                        {isActive && (
+                          <motion.div
+                            layoutId="hero-demo-pill"
+                            transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                            className="absolute inset-0 rounded-md bg-white shadow-2xs dark:bg-neutral-800 -z-10"
+                          />
+                        )}
+                        <Icon className="h-3 w-3" />
+                        <span>{tab.label}</span>
                       </button>
-                    ))}
-                  </div>
+                    );
+                  })}
+                </div>
+              </div>
 
-                  <div className="flex items-center gap-2 overflow-hidden font-mono text-xs pl-1">
-                    <Terminal className="h-3.5 w-3.5 shrink-0 text-neutral-400" />
-                    <span className="select-all truncate text-neutral-800 dark:text-neutral-200">
-                      {cliCommand}
+              {/* Main Interactive Stage */}
+              <div className="relative flex min-h-[250px] flex-col items-center justify-center p-6 sm:p-8 bg-gradient-to-b from-white to-neutral-50/40 dark:from-neutral-950 dark:to-neutral-900/30">
+                {/* Subtle corner crosshairs for precision physics feel */}
+                <div className="pointer-events-none absolute left-3 top-3 font-mono text-[9px] text-neutral-300 dark:text-neutral-700 select-none">
+                  +
+                </div>
+                <div className="pointer-events-none absolute right-3 top-3 font-mono text-[9px] text-neutral-300 dark:text-neutral-700 select-none">
+                  +
+                </div>
+                <div className="pointer-events-none absolute left-3 bottom-3 font-mono text-[9px] text-neutral-300 dark:text-neutral-700 select-none">
+                  +
+                </div>
+                <div className="pointer-events-none absolute right-3 bottom-3 font-mono text-[9px] text-neutral-300 dark:text-neutral-700 select-none">
+                  +
+                </div>
+
+                <AnimatePresence mode="wait">
+                  {activeDemo === "button" && (
+                    <motion.div
+                      key="button"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.16 }}
+                      className="flex w-full flex-col items-center gap-4 text-center"
+                    >
+                      <div className="flex flex-wrap items-center justify-center gap-3">
+                        <MagneticButton
+                          variant="primary"
+                          size="md"
+                          strength={0.42}
+                          stiffness={stiffness}
+                          damping={damping}
+                        >
+                          <Sparkles className="h-4 w-4" />
+                          <span>Magnetic Pull</span>
+                        </MagneticButton>
+                        <MagneticButton
+                          variant="outline"
+                          size="md"
+                          strength={0.42}
+                          stiffness={stiffness}
+                          damping={damping}
+                        >
+                          <span>Snap Recoil</span>
+                        </MagneticButton>
+                      </div>
+                      <div className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200/60 bg-neutral-100/60 px-3 py-1 text-[11px] text-neutral-500 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-400">
+                        <MousePointer className="h-3 w-3 text-blue-500" />
+                        <span>Hover near buttons to inspect Hooke&apos;s Law attraction</span>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {activeDemo === "switch" && (
+                    <motion.div
+                      key="switch"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.16 }}
+                      className="flex w-full flex-col items-center gap-4 text-center"
+                    >
+                      <PermissionSwitch className="scale-100" />
+                      <div className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200/60 bg-neutral-100/60 px-3 py-1 text-[11px] text-neutral-500 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-400">
+                        <Sliders className="h-3 w-3 text-blue-500" />
+                        <span>Click segments to feel fluid layout projection springs</span>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {activeDemo === "badge" && (
+                    <motion.div
+                      key="badge"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.16 }}
+                      className="flex w-full flex-col items-center gap-3.5 text-center"
+                    >
+                      <AgentStatusBadge
+                        status={badgeStatus}
+                        interactive={true}
+                        onStatusChange={(s) => setBadgeStatus(s)}
+                        size="md"
+                      />
+                      <div className="flex flex-wrap items-center justify-center gap-1">
+                        {(["reading-docs", "analyzing", "debugging", "success"] as const).map(
+                          (s) => (
+                            <button
+                              key={s}
+                              type="button"
+                              onClick={() => setBadgeStatus(s)}
+                              className={`rounded px-2 py-0.5 font-mono text-[10px] transition-colors ${badgeStatus === s
+                                ? "bg-neutral-900 text-white font-medium dark:bg-white dark:text-neutral-900 shadow-2xs"
+                                : "bg-neutral-100 text-neutral-600 hover:text-neutral-950 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+                                }`}
+                            >
+                              {s}
+                            </button>
+                          )
+                        )}
+                      </div>
+                      <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
+                        Click badge or status chips to test 4x4 animated matrix signatures
+                      </p>
+                    </motion.div>
+                  )}
+
+                  {activeDemo === "pin" && (
+                    <motion.div
+                      key="pin"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.16 }}
+                      className="flex w-full flex-col items-center gap-4 text-center"
+                    >
+                      <SpringPinInput
+                        length={4}
+                        defaultValue="42"
+                        stiffness={stiffness}
+                        damping={damping}
+                      />
+                      <div className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200/60 bg-neutral-100/60 px-3 py-1 text-[11px] text-neutral-500 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-400">
+                        <KeyRound className="h-3 w-3 text-blue-500" />
+                        <span>Type digits to trigger keystroke slot bounce physics</span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Bottom Physics Telemetry HUD */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-neutral-200/80 bg-neutral-50/80 px-4 py-3 dark:border-neutral-800 dark:bg-neutral-900/60 text-xs">
+                {/* Presets */}
+                <div className="flex items-center gap-1.5">
+                  <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider mr-1">
+                    Preset:
+                  </span>
+                  {SPRING_PRESETS.map((p) => {
+                    const isSelected = selectedPreset === p.label;
+                    return (
+                      <button
+                        key={p.label}
+                        type="button"
+                        onClick={() => applyPreset(p)}
+                        className={`rounded px-2 py-0.5 font-mono text-[10px] font-medium transition-colors ${isSelected
+                          ? "bg-neutral-900 text-white dark:bg-white dark:text-black shadow-2xs"
+                          : "border border-neutral-200/80 bg-white text-neutral-600 hover:border-neutral-300 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400 dark:hover:border-neutral-700 dark:hover:text-white"
+                          }`}
+                      >
+                        {p.label}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Live Metrics & Slider */}
+                <div className="flex items-center gap-2.5 font-mono text-[11px] text-neutral-600 dark:text-neutral-400">
+                  <div className="flex items-center gap-1.5">
+                    <span>k:</span>
+                    <input
+                      type="range"
+                      min={140}
+                      max={600}
+                      step={20}
+                      value={stiffness}
+                      onChange={(e) => {
+                        setStiffness(Number(e.target.value));
+                        setSelectedPreset("custom");
+                      }}
+                      aria-label="Spring stiffness"
+                      className="h-1.5 w-16 sm:w-20 cursor-pointer accent-blue-600 dark:accent-blue-400"
+                    />
+                    <span className="w-8 text-right font-semibold text-neutral-900 dark:text-white">
+                      {stiffness}
                     </span>
                   </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex items-center justify-end gap-2 shrink-0">
-                  <Link
-                    href={`/components/${activeTab.slug}`}
-                    className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 font-mono text-[11px] font-medium text-neutral-600 transition-colors hover:text-black dark:text-neutral-400 dark:hover:text-white"
-                  >
-                    <span>Inspect Docs</span>
-                    <ArrowUpRight className="h-3 w-3" />
-                  </Link>
-
-                  <button
-                    type="button"
-                    onClick={handleCopyCli}
-                    aria-label="Copy CLI install command"
-                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-1.5 font-mono text-[11px] font-medium text-neutral-900 shadow-2xs transition-colors hover:border-black hover:bg-neutral-900 hover:text-white dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:hover:border-neutral-500 dark:hover:bg-neutral-700"
-                  >
-                    {copied ? (
-                      <>
-                        <Check className="h-3.5 w-3.5 text-emerald-500" />
-                        <span className="text-emerald-500">Copied</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-3.5 w-3.5" />
-                        <span>Copy CLI</span>
-                      </>
-                    )}
-                  </button>
+                  <span className="text-neutral-300 dark:text-neutral-700">|</span>
+                  <span className="text-[10px]">
+                    d: <strong className="text-neutral-900 dark:text-white">{damping}</strong>
+                  </span>
+                  <span className="text-neutral-300 dark:text-neutral-700">|</span>
+                  <span className="text-[10px] text-neutral-400">m: 0.6</span>
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </motion.div>
-
-        {/* Architectural 4-Column Feature Strip */}
-        <div className="relative grid grid-cols-1 border-t border-neutral-200/80 bg-neutral-50/50 dark:border-neutral-800 dark:bg-[#040404] sm:grid-cols-2 lg:grid-cols-4">
-          <Crosshair className="-left-[6px] -top-[6px]" />
-          <Crosshair className="-right-[6px] -top-[6px]" />
-
-          {SPECS.map((spec, idx) => (
-            <div
-              key={spec.title}
-              className={`group relative flex flex-col justify-between p-6 transition-colors hover:bg-white dark:hover:bg-[#080808] sm:p-8 ${idx !== SPECS.length - 1
-                ? "border-b border-neutral-200/80 dark:border-neutral-800 lg:border-b-0 lg:border-r"
-                : ""
-                } ${idx % 2 === 0 ? "sm:border-r" : ""}`}
-            >
-              <div>
-                <span className="rounded bg-neutral-200/60 px-1.5 py-0.5 font-mono text-[9px] font-semibold tracking-wider text-neutral-600 dark:bg-neutral-800/80 dark:text-neutral-400">
-                  {spec.tag}
-                </span>
-                <h2 className="mt-3 text-base font-semibold tracking-tight text-neutral-950 dark:text-white">
-                  {spec.title}
-                </h2>
-                <p className="mt-2 text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
-                  {spec.text}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
+
+      {/* Bottom: Minimalist Mouse Scroll Indicator */}
+      <motion.div
+        initial={shouldReduceMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.35, duration: 0.5 }}
+        className="flex justify-center pb-2 pt-6"
+      >
+        <button
+          type="button"
+          onClick={scrollToRecentlyAdded}
+          aria-label="Scroll to explore components"
+          className="group flex flex-col items-center gap-2 text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded p-1"
+        >
+          <span className="text-[11px] font-medium tracking-wide text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-950 dark:group-hover:text-white transition-colors">
+            Scroll to explore
+          </span>
+          <div className="h-5 w-3.5 rounded-full border border-neutral-300 dark:border-neutral-700 group-hover:border-neutral-600 dark:group-hover:border-neutral-400 transition-colors flex justify-center pt-1">
+            <motion.div
+              animate={shouldReduceMotion ? {} : { y: [0, 5, 0], opacity: [1, 0.2, 1] }}
+              transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+              className="h-1 w-1 rounded-full bg-neutral-500 dark:bg-neutral-400"
+            />
+          </div>
+        </button>
+      </motion.div>
     </section>
   );
 }
-
-export default HeroSection;

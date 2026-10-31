@@ -35,7 +35,9 @@ export function AiAssistantBlock({
   };
 
   const handleCopy = () => {
-    navigator.clipboard?.writeText(activeQuery || "npx boseui@latest add");
+    navigator.clipboard?.writeText(
+      activeQuery || "npx shadcn@latest add https://boseui.site/r/ai-voice-orb.json"
+    );
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };

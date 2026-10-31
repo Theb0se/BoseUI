@@ -38,7 +38,7 @@ export const TerminalWindowMockupMeta: PulseComponentMeta = {
     {
       name: "command",
       type: "string",
-      default: '"npx boseui add magnetic-button"',
+      default: '"npx shadcn@latest add https://boseui.site/r/magnetic-button.json"',
       description: "Terminal input command.",
     },
     {

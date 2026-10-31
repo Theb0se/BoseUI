@@ -128,6 +128,38 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "animated-theme-toggler",
+    "slug": "animated-theme-toggler",
+    "componentName": "AnimatedThemeToggler",
+    "title": "Animated Theme Toggler",
+    "description": "Ultra-smooth theme toggler utilizing the modern View Transitions API with fluid liquid, wave, and organic curve reveal transitions, viscous Apple-inspired easing, tactile micro-ripples, and a kinetic morphing SVG Sun/Moon icon.",
+    "tagline": "Ultra-smooth theme toggle featuring organic liquid blobs, rolling ocean waves, and viscous fluid transitions.",
+    "category": "Buttons",
+    "badges": [
+      "View Transitions API",
+      "Liquid Physics",
+      "Wave Transitions",
+      "Micro-Animations",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-10-30",
+    "featured": true,
+    "keywords": [
+      "animated theme toggler",
+      "theme toggle",
+      "view transitions api",
+      "liquid theme transition",
+      "wave transition",
+      "ocean wave dark mode",
+      "goo melt",
+      "fluid curtain",
+      "dark mode toggle",
+      "sun moon morph",
+      "framer motion icon",
+      "smooth theme switch"
+    ]
+  },
+  {
     "id": "apple-context-menu",
     "slug": "apple-context-menu",
     "componentName": "AppleContextMenu",
@@ -298,6 +330,35 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "optical blur",
       "editorial typography",
       "framer motion text"
+    ]
+  },
+  {
+    "id": "cta-banner",
+    "slug": "cta-banner",
+    "componentName": "CTABanner",
+    "title": "CTA Banner",
+    "description": "Full-width call-to-action section with a self-contained flickering canvas grid background masked radially so the grid is denser at the edges and fades toward the center. Includes an email signup form with loading, success, and validation states animated via Framer Motion AnimatePresence.",
+    "tagline": "Full-width email CTA with animated flickering grid, multi-state button, and form validation.",
+    "category": "Cards",
+    "badges": [
+      "Canvas",
+      "Framer Motion",
+      "Form",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-10-31",
+    "featured": true,
+    "keywords": [
+      "cta banner",
+      "call to action",
+      "email signup",
+      "flickering grid cta",
+      "framer motion form",
+      "newsletter signup",
+      "animated button states",
+      "loading state",
+      "success state",
+      "form validation"
     ]
   },
   {
@@ -821,6 +882,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "flickering-grid",
+    "slug": "flickering-grid",
+    "componentName": "FlickeringGrid",
+    "title": "Flickering Grid",
+    "description": "High-performance HTML5 canvas flickering retro grid background with device-pixel-ratio scaling, probabilistic opacity stepping, and automatic offscreen pausing via IntersectionObserver.",
+    "tagline": "High-performance canvas retro flickering square grid background.",
+    "category": "Backgrounds",
+    "badges": [
+      "Canvas",
+      "Performance",
+      "IntersectionObserver",
+      "DPR Aware"
+    ],
+    "createdAt": "2026-10-31",
+    "featured": false,
+    "keywords": [
+      "flickering grid",
+      "canvas grid",
+      "retro grid",
+      "matrix squares",
+      "flicker background",
+      "high performance canvas"
+    ]
+  },
+  {
     "id": "floating-compass-nav",
     "slug": "floating-compass-nav",
     "componentName": "FloatingCompassNav",
@@ -988,6 +1074,32 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "vector field animation",
       "framer motion physics",
       "repel attract nodes"
+    ]
+  },
+  {
+    "id": "grid-card",
+    "slug": "grid-card",
+    "componentName": "GridCard",
+    "title": "Grid Card",
+    "description": "Interactive feature card and section featuring a top-right flickering canvas grid corner accent with diagonal mask fading, spring hover physics, icon scale/rotation variants, and dynamic hover-accelerated flicker rates.",
+    "tagline": "Feature card with diagonal flickering grid corner accent and spring hover physics.",
+    "category": "Cards",
+    "badges": [
+      "Canvas",
+      "Framer Motion",
+      "Hover Variants",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-10-31",
+    "featured": true,
+    "keywords": [
+      "grid card",
+      "feature card",
+      "flickering grid card",
+      "feature section",
+      "framer motion card",
+      "corner accent grid",
+      "hover variants"
     ]
   },
   {
@@ -2603,6 +2715,33 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "text-mask-grid",
+    "slug": "text-mask-grid",
+    "componentName": "TextMaskGrid",
+    "title": "Text Mask Grid",
+    "description": "Large kinetic typographic heading masked to a retro flickering canvas grid. The animated grid is only visible within the letterforms, powered by inline SVG viewBox mask data URIs, hardware GPU composite blending, and Framer Motion entrance physics.",
+    "tagline": "Typographic headline revealed through an animated canvas flickering grid.",
+    "category": "Text",
+    "badges": [
+      "SVG Mask",
+      "Framer Motion",
+      "Canvas",
+      "A11y Ready",
+      "CSS Supports"
+    ],
+    "createdAt": "2026-10-31",
+    "featured": true,
+    "keywords": [
+      "text mask grid",
+      "svg mask text",
+      "canvas text mask",
+      "flickering grid headline",
+      "framer motion text",
+      "letterform mask",
+      "kinetic typography"
+    ]
+  },
+  {
     "id": "thunderstorm",
     "slug": "thunderstorm",
     "componentName": "Thunderstorm",
@@ -2816,6 +2955,33 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "2d wave equation",
       "rain drop ripples",
       "cursor wake effect"
+    ]
+  },
+  {
+    "id": "weather-card",
+    "slug": "weather-card",
+    "componentName": "WeatherCard",
+    "title": "Weather Card",
+    "description": "Dark-themed weather card featuring interactive metric tabs, a custom Catmull-Rom smooth SVG area chart with hover cursor guides, and an 8-day forecast selector with sliding selection physics.",
+    "tagline": "Interactive dark weather card with smooth SVG area charts and sliding 8-day forecast highlights.",
+    "category": "Cards",
+    "badges": [
+      "SVG Chart",
+      "Framer Motion",
+      "Weather",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-10-30",
+    "featured": true,
+    "keywords": [
+      "weather card",
+      "framer motion weather",
+      "svg area chart",
+      "weather forecast component",
+      "react weather card",
+      "catmull rom spline chart",
+      "8 day forecast",
+      "tailwind weather widget"
     ]
   }
 ];

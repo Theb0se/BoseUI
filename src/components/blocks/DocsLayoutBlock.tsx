@@ -43,9 +43,9 @@ const DOCS_TREE: FileTreeNode[] = [
 ];
 
 const CLI_COMMANDS: Record<string, string> = {
-  npx: "npx boseui@latest add cosmic-launch-hero",
-  pnpm: "pnpm dlx boseui@latest add cosmic-launch-hero",
-  bun: "bunx boseui@latest add cosmic-launch-hero",
+  npx: "npx shadcn@latest add https://boseui.site/r/cosmic-launch-hero.json",
+  pnpm: "pnpm dlx shadcn@latest add https://boseui.site/r/cosmic-launch-hero.json",
+  bun: "bunx --bun shadcn@latest add https://boseui.site/r/cosmic-launch-hero.json",
 };
 
 const USAGE_CODE = `import { CosmicLaunchHero } from "@/components/blocks/CosmicLaunchHero";

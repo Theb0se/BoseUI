@@ -349,7 +349,8 @@ export function CommandPaletteProvider({
 
               <div
                 ref={listContainerRef}
-                className="max-h-[380px] overflow-y-auto p-2"
+                data-lenis-prevent
+                className="max-h-[380px] overflow-y-auto overscroll-contain p-2"
               >
                 {filteredActions.length === 0 ? (
                   <div className="py-12 text-center">

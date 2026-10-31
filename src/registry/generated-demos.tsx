@@ -12,6 +12,7 @@ import { Accordion } from "@/components/ui/Accordion";
 import { AccordionStackCards } from "@/components/ui/AccordionStackCards";
 import { AgentStatusBadge } from "@/components/ui/AgentStatusBadge";
 import { AnimatedTabs } from "@/components/ui/AnimatedTabs";
+import { AnimatedThemeToggler } from "@/components/ui/AnimatedThemeToggler";
 import { AppleContextMenu } from "@/components/ui/AppleContextMenu";
 import { AppleSearchField } from "@/components/ui/AppleSearchField";
 import { AtmosphericFog } from "@/components/ui/AtmosphericFog";
@@ -19,6 +20,7 @@ import { AuroraBackground } from "@/components/ui/AuroraBackground";
 import { Autocomplete } from "@/components/ui/Autocomplete";
 import { BlackHole } from "@/components/ui/BlackHole";
 import { BlurFadeInText } from "@/components/ui/BlurFadeInText";
+import { CTABanner } from "@/components/ui/CTABanner";
 import { CarouselWithDots } from "@/components/ui/CarouselWithDots";
 import { ChromaticAberrationGlitchText } from "@/components/ui/ChromaticAberrationGlitchText";
 import { CipherScrambleText } from "@/components/ui/CipherScrambleText";
@@ -41,6 +43,7 @@ import { ExpandableCards } from "@/components/ui/ExpandableCards";
 import { FallingPetals } from "@/components/ui/FallingPetals";
 import { FeatureCard } from "@/components/ui/FeatureCard";
 import { FileTree } from "@/components/ui/FileTree";
+import { FlickeringGrid } from "@/components/ui/FlickeringGrid";
 import { FloatingCompassNav } from "@/components/ui/FloatingCompassNav";
 import { FloatingLabelInput } from "@/components/ui/FloatingLabelInput";
 import { GalaxyNebula } from "@/components/ui/GalaxyNebula";
@@ -48,6 +51,7 @@ import { GlowBorderCard } from "@/components/ui/GlowBorderCard";
 import { GlyphTrail } from "@/components/ui/GlyphTrail";
 import { GooeyInput } from "@/components/ui/GooeyInput";
 import { GravityWellPortal } from "@/components/ui/GravityWellPortal";
+import { GridCard } from "@/components/ui/GridCard";
 import { GridHorizon } from "@/components/ui/GridHorizon";
 import { HeartBurstButton } from "@/components/ui/HeartBurstButton";
 import { HoldToConfirmButton } from "@/components/ui/HoldToConfirmButton";
@@ -116,6 +120,7 @@ import { StickyPages } from "@/components/ui/StickyPages";
 import { StickyScrollStory } from "@/components/ui/StickyScrollStory";
 import { StoryCards } from "@/components/ui/StoryCards";
 import { TerminalWindowMockup } from "@/components/ui/TerminalWindowMockup";
+import { TextMaskGrid } from "@/components/ui/TextMaskGrid";
 import { Thunderstorm } from "@/components/ui/Thunderstorm";
 import { TiltCreditCard3D } from "@/components/ui/TiltCreditCard3D";
 import { ToastStack } from "@/components/ui/ToastStack";
@@ -125,6 +130,7 @@ import { UnderwaterCaustics } from "@/components/ui/UnderwaterCaustics";
 import { VariableProximityText } from "@/components/ui/VariableProximityText";
 import { WarpSpeed } from "@/components/ui/WarpSpeed";
 import { WaterRipples } from "@/components/ui/WaterRipples";
+import { WeatherCard } from "@/components/ui/WeatherCard";
 
 export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "ai-voice-orb": createComponentDemo("ai-voice-orb", AIVoiceOrb),
@@ -132,6 +138,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "accordion-stack-cards": createComponentDemo("accordion-stack-cards", AccordionStackCards),
   "agent-status-badge": createComponentDemo("agent-status-badge", AgentStatusBadge),
   "animated-tabs": createComponentDemo("animated-tabs", AnimatedTabs),
+  "animated-theme-toggler": createComponentDemo("animated-theme-toggler", AnimatedThemeToggler),
   "apple-context-menu": createComponentDemo("apple-context-menu", AppleContextMenu),
   "apple-search-field": createComponentDemo("apple-search-field", AppleSearchField),
   "atmospheric-fog": createComponentDemo("atmospheric-fog", AtmosphericFog),
@@ -139,6 +146,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "autocomplete": createComponentDemo("autocomplete", Autocomplete),
   "black-hole": createComponentDemo("black-hole", BlackHole),
   "blur-fade-in-text": createComponentDemo("blur-fade-in-text", BlurFadeInText),
+  "cta-banner": createComponentDemo("cta-banner", CTABanner),
   "carousel-with-dots": createComponentDemo("carousel-with-dots", CarouselWithDots),
   "chromatic-aberration-glitch-text": createComponentDemo("chromatic-aberration-glitch-text", ChromaticAberrationGlitchText),
   "cipher-scramble-text": createComponentDemo("cipher-scramble-text", CipherScrambleText),
@@ -161,6 +169,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "falling-petals": createComponentDemo("falling-petals", FallingPetals),
   "feature-card": createComponentDemo("feature-card", FeatureCard),
   "file-tree": createComponentDemo("file-tree", FileTree),
+  "flickering-grid": createComponentDemo("flickering-grid", FlickeringGrid),
   "floating-compass-nav": createComponentDemo("floating-compass-nav", FloatingCompassNav),
   "floating-label-input": createComponentDemo("floating-label-input", FloatingLabelInput),
   "galaxy-nebula": createComponentDemo("galaxy-nebula", GalaxyNebula),
@@ -168,6 +177,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "glyph-trail": createComponentDemo("glyph-trail", GlyphTrail),
   "gooey-input": createComponentDemo("gooey-input", GooeyInput),
   "gravity-well-portal": createComponentDemo("gravity-well-portal", GravityWellPortal),
+  "grid-card": createComponentDemo("grid-card", GridCard),
   "grid-horizon": createComponentDemo("grid-horizon", GridHorizon),
   "heart-burst-button": createComponentDemo("heart-burst-button", HeartBurstButton),
   "hold-to-confirm-button": createComponentDemo("hold-to-confirm-button", HoldToConfirmButton),
@@ -236,6 +246,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "sticky-scroll-story": createComponentDemo("sticky-scroll-story", StickyScrollStory),
   "story-cards": createComponentDemo("story-cards", StoryCards),
   "terminal-window-mockup": createComponentDemo("terminal-window-mockup", TerminalWindowMockup),
+  "text-mask-grid": createComponentDemo("text-mask-grid", TextMaskGrid),
   "thunderstorm": createComponentDemo("thunderstorm", Thunderstorm),
   "tilt-credit-card3-d": createComponentDemo("tilt-credit-card3-d", TiltCreditCard3D),
   "toast-stack": createComponentDemo("toast-stack", ToastStack),
@@ -245,4 +256,5 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "variable-proximity-text": createComponentDemo("variable-proximity-text", VariableProximityText),
   "warp-speed": createComponentDemo("warp-speed", WarpSpeed),
   "water-ripples": createComponentDemo("water-ripples", WaterRipples),
+  "weather-card": createComponentDemo("weather-card", WeatherCard),
 };

@@ -168,9 +168,9 @@ function hexToRgbNormalized(hex: string): [number, number, number] {
   const full =
     clean.length === 3
       ? clean
-          .split("")
-          .map((c) => c + c)
-          .join("")
+        .split("")
+        .map((c) => c + c)
+        .join("")
       : clean.padEnd(6, "0");
   const num = parseInt(full.slice(0, 6), 16);
   if (Number.isNaN(num)) return [1.0, 0.302, 0.11];

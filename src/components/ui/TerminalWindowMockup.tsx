@@ -21,7 +21,7 @@ export interface TerminalWindowMockupProps {
 
 export function TerminalWindowMockup({
   title = "zsh — 80×24",
-  command = "npx boseui add magnetic-button",
+  command = "npx shadcn@latest add https://boseui.site/r/magnetic-button.json",
   output = [
     "✔ Validating registry dependencies...",
     "✔ Downloading component src/components/ui/MagneticButton.tsx",

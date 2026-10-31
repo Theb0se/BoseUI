@@ -72,21 +72,33 @@ export function DawnHero({
   const cliOptions: SplitButtonOption[] = [
     {
       value: "npx",
-      label: "npx boseui add dawn-hero",
+      label: "npx shadcn@latest add https://boseui.site/r/dawn-hero.json",
       icon: <Terminal className="w-3.5 h-3.5 text-orange-400" />,
-      onSelect: () => handleSelectCli("npx", "npx boseui add dawn-hero"),
+      onSelect: () =>
+        handleSelectCli(
+          "npx",
+          "npx shadcn@latest add https://boseui.site/r/dawn-hero.json"
+        ),
     },
     {
       value: "pnpm",
-      label: "pnpm dlx boseui add dawn-hero",
+      label: "pnpm dlx shadcn@latest add https://boseui.site/r/dawn-hero.json",
       icon: <Terminal className="w-3.5 h-3.5 text-amber-400" />,
-      onSelect: () => handleSelectCli("pnpm", "pnpm dlx boseui add dawn-hero"),
+      onSelect: () =>
+        handleSelectCli(
+          "pnpm",
+          "pnpm dlx shadcn@latest add https://boseui.site/r/dawn-hero.json"
+        ),
     },
     {
       value: "bun",
-      label: "bunx boseui add dawn-hero",
+      label: "bunx --bun shadcn@latest add https://boseui.site/r/dawn-hero.json",
       icon: <Terminal className="w-3.5 h-3.5 text-yellow-400" />,
-      onSelect: () => handleSelectCli("bun", "bunx boseui add dawn-hero"),
+      onSelect: () =>
+        handleSelectCli(
+          "bun",
+          "bunx --bun shadcn@latest add https://boseui.site/r/dawn-hero.json"
+        ),
     },
   ];
 
@@ -100,10 +112,10 @@ export function DawnHero({
   const handlePrimaryClick = () => {
     const cmd =
       selectedCli === "bun"
-        ? "bunx boseui add dawn-hero"
+        ? "bunx --bun shadcn@latest add https://boseui.site/r/dawn-hero.json"
         : selectedCli === "pnpm"
-        ? "pnpm dlx boseui add dawn-hero"
-        : "npx boseui add dawn-hero";
+        ? "pnpm dlx shadcn@latest add https://boseui.site/r/dawn-hero.json"
+        : "npx shadcn@latest add https://boseui.site/r/dawn-hero.json";
     navigator.clipboard?.writeText(cmd);
     setCopiedNotification(`Copied: ${cmd}`);
     setTimeout(() => setCopiedNotification(null), 2500);

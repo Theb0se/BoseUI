@@ -39,9 +39,9 @@ export async function copyToClipboard(text: string): Promise<boolean> {
 export const SITE_CONFIG = {
   name: "BoseUI",
   version: "2.0.0",
-  tagline: "Kinetic React Components Engineered to Make Interfaces Feel Alive",
+  tagline: "React components with spring animations",
   description:
-    "Free, open-source animated React primitives built with Framer Motion, Tailwind CSS, and TypeScript. Install with one shadcn command and own the code.",
+    "React components with spring animations. Copy-paste into your project. Built with Framer Motion, Tailwind and TypeScript. Free and open source.",
   url: "https://boseui.site",
   ogImage: "/OG.png",
   author: {
@@ -49,7 +49,7 @@ export const SITE_CONFIG = {
     portfolio: "https://theb0se.vercel.app/",
     github: "https://github.com/Theb0se",
     linkedin: "https://www.linkedin.com/in/rishabhbose3107/",
-    repo: "https://github.com/Theb0se/bose-ui",
+    repo: "https://github.com/Theb0se/BoseUI",
   },
 } as const;
 

@@ -79,7 +79,7 @@ export function TypewriterCursorEffect({
   return (
     <span
       className={cn(
-        "inline-flex items-baseline font-mono font-medium tracking-tight",
+        "inline-flex items-baseline",
         className
       )}
     >
