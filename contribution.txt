@@ -28,3 +28,4 @@ Commit on apps**T12:00:00
 Commit on acrossT12:00:00
 Commit on healthcare,T12:00:00
 Commit on SaaS,T12:00:00
+Commit on hospitality,T12:00:00
