@@ -33,7 +33,7 @@ Our latest research on frontend engineering and UI/UX:
 - [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
 - [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
 
-## Available Kinetic Components (124)
+## Available Kinetic Components (104)
 
 ### AI Voice Orb (`AIVoiceOrb`)
 - **Slug**: `ai-voice-orb`
@@ -412,39 +412,50 @@ export default function AtmosphericFogDemo() {
 
 ---
 
-### Aurora (`AuroraBackground`)
-- **Slug**: `aurora-background`
-- **Category**: Backgrounds
-- **Tagline**: Screen-blended aurora blobs on offset keyframe loops.
-- **Description**: macOS-inspired northern lights background using 3 to 5 large 60px blurred color blobs with screen blend mode drifting on offset keyframe loops.
-- **Docs URL**: https://boseui.site/components/aurora-background
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/aurora-background.json`
-- **Registry Manifest**: https://boseui.site/r/aurora-background.json
+### Aura Mic (`AuraMic`)
+- **Slug**: `aura-mic`
+- **Category**: Motion
+- **Tagline**: A mic button with a monochrome, living aura
+- **Description**: A black and white microphone toggle that surrounds itself with a unique animated aura while listening. Six styles are included: halftone, moire, thread, ink, eclipse and ridgeline. Built with React, Tailwind CSS and Framer Motion.
+- **Docs URL**: https://boseui.site/components/aura-mic
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/aura-mic.json`
+- **Registry Manifest**: https://boseui.site/r/aura-mic.json
 - **Key Features**:
-  - Uses `filter: blur(60px)` and `mix-blend-mode: screen` across 4 offset radial color layers.
-  - Pure CSS keyframe drift with zero JavaScript per-frame overhead.
-  - Includes Borealis, Sonoma, and Polar color palette presets in the interactive preview.
+  - Six distinct monochrome aura animations: halftone, moire, thread, ink, eclipse and ridgeline
+  - Strictly black and white. Everything is drawn with currentColor, so it flips automatically between light and dark mode
+  - Outlined button when idle, inverted solid button when listening, so the state is clear without colour
+  - Vector SVG auras that stay sharp at any size
+  - Animated icon swap between Mic and MicOff
+  - Fades the aura in and out smoothly when listening starts or stops
 - **Accessibility**:
-  - Marks decorative aurora blob layers with `aria-hidden='true'`.
-  - Maintains high foreground text contrast over the dark `#04060E` base canvas.
-  - Preset selector buttons are keyboard focusable.
+  - Respects prefers-reduced-motion: the aura is skipped and only the button toggles
+  - Native button element with Enter and Space keyboard support
+  - Visible focus-visible outline in both light and dark mode
+  - aria-pressed and a dynamic aria-label ("Start listening" / "Stop listening") announce the state
+  - Aura graphics are marked aria-hidden so screen readers ignore the decoration
 - **Props**:
-  - `colors` (string[], default: ["#10B981", "#06B6D4", "#8B5CF6", "#3B82F6"]): Array of 3 to 5 hex or RGB color strings for the aurora blobs.
-  - `speed` (number, default: 1): Speed multiplier for the keyframe drift cycle.
-  - `intensity` (number, default: 0.75): Overall opacity intensity of the aurora layer (0.2 to 1).
-  - `children` (React.ReactNode): Optional foreground content rendered above the aurora.
-  - `className` (string): Additional Tailwind CSS classes for the container.
+  - `animation` ("halftone" | "moire" | "thread" | "ink" | "eclipse" | "ridgeline", default: "halftone"): Which aura animation plays while listening
+  - `size` (number, default: 76): Diameter of the mic button in pixels. The aura scales around it inside a 220px stage
+  - `onListeningChange` ((listening: boolean) => void, default: undefined): Called once each time the mic is toggled, with the new listening state
 - **Usage Example**:
 ```tsx
-import { AuroraBackground } from "@/components/ui/aurora-background";
+import { useState } from "react";
+import { AuraMic } from "@/components/ui/aura-mic";
 
-export function Example() {
+export function Demo() {
+  const [listening, setListening] = useState(false);
+
   return (
-    <AuroraBackground
-      colors={["#10B981", "#06B6D4", "#8B5CF6", "#3B82F6"]}
-      speed={1}
-      intensity={0.75}
-    />
+    <div className="flex flex-col items-center gap-4">
+      <AuraMic
+        animation="ink"
+        size={76}
+        onListeningChange={setListening}
+      />
+      <p className="text-sm text-zinc-500">
+        {listening ? "Listening..." : "Tap to speak"}
+      </p>
+    </div>
   );
 }
 ```
@@ -759,45 +770,6 @@ export function Example() {
 
 ---
 
-### Clouds Drift (`CloudsDrift`)
-- **Slug**: `clouds-drift`
-- **Category**: Backgrounds
-- **Tagline**: Multi-layer CSS cloud parallax with day, sunset, and night skies.
-- **Description**: Seamless multi-layer CSS cloud parallax background where far, mid, and near cloud formations drift horizontally at independent speeds.
-- **Docs URL**: https://boseui.site/components/clouds-drift
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/clouds-drift.json`
-- **Registry Manifest**: https://boseui.site/r/clouds-drift.json
-- **Key Features**:
-  - Three depth planes (far, mid, near) moving on independent `translate3d(-50%, 0, 0)` infinite loops.
-  - Supports `day`, `sunset`, and `night` atmospheric color palettes.
-  - Pure CSS hardware-accelerated transforms with zero JavaScript animation loop.
-- **Accessibility**:
-  - Marks decorative cloud layers with `aria-hidden='true'`.
-  - Interactive sky theme switcher buttons support keyboard focus.
-  - Maintains readable foreground contrast across all three sky presets.
-- **Props**:
-  - `speed` (number, default: 1): Horizontal drift speed multiplier.
-  - `opacity` (number, default: 0.85): Overall cloud opacity multiplier (0.2 to 1).
-  - `variant` ("day" | "sunset" | "night", default: "day"): Atmospheric sky palette.
-  - `children` (React.ReactNode): Optional foreground content rendered above the clouds.
-  - `className` (string): Additional Tailwind CSS classes for the container.
-- **Usage Example**:
-```tsx
-import { CloudsDrift } from "@/components/ui/clouds-drift";
-
-export function Example() {
-  return (
-    <CloudsDrift
-      variant="day"
-      speed={1}
-      opacity={0.85}
-    />
-  );
-}
-```
-
----
-
 ### Command Menu (`CommandMenu`)
 - **Slug**: `command-menu`
 - **Category**: Navigation
@@ -834,38 +806,6 @@ export function Example() {
       triggerLabel="Quick commands..."
       onSelect={(item) => console.log("Executed:", item.label)}
     />
-  );
-}
-```
-
----
-
-### Constellation Mesh Field (`ConstellationMeshField`)
-- **Slug**: `constellation-mesh-field`
-- **Category**: Backgrounds
-- **Tagline**: Interactive SVG constellation graph with pointer proximity edges.
-- **Description**: Interactive SVG vertex constellation surface that dynamically tethers proximity edges to the pointer with spring-scaled nodes.
-- **Docs URL**: https://boseui.site/components/constellation-mesh-field
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/constellation-mesh-field.json`
-- **Registry Manifest**: https://boseui.site/r/constellation-mesh-field.json
-- **Key Features**:
-  - Crisp vector SVG constellation lattice that scales cleanly to any container resolution.
-  - Real-time Euclidean distance culling that draws opacity-graded edges between the pointer and nearby vertices.
-  - Spring-inflated vertex radii when captured within the pointer's connection radius.
-- **Accessibility**:
-  - Decorative SVG graph layer is marked aria-hidden='true'.
-  - Disables dynamic edge tethering when prefers-reduced-motion is enabled.
-  - Maintains high foreground text contrast inside a translucent HUD card.
-- **Props**:
-  - `connectRadius` (number, default: 130): Maximum Euclidean distance in viewBox units to connect pointer edges.
-  - `children` (React.ReactNode): Optional foreground content rendered above the constellation mesh.
-- **Usage Example**:
-```tsx
-import { ConstellationMeshField } from "@/components/ui/constellation-mesh-field";
-
-export function Example() {
-  return (
-    <ConstellationMeshField connectRadius={130} />
   );
 }
 ```
@@ -990,48 +930,6 @@ const customCards: CylinderCardItem[] = [
 
 export function Example() {
   return <CylinderCarousel cards={customCards} />;
-}
-```
-
----
-
-### Digital Radar (`DigitalRadar`)
-- **Slug**: `digital-radar`
-- **Category**: Backgrounds
-- **Tagline**: Tactical polar radar sweep with phosphor target persistence.
-- **Description**: Tactical polar radar sweep background featuring concentric nautical range rings, degree azimuth ticks, a rotating phosphor conic beam, and target blips that illuminate with decaying afterglow on sweep contact.
-- **Docs URL**: https://boseui.site/components/digital-radar
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/digital-radar.json`
-- **Registry Manifest**: https://boseui.site/r/digital-radar.json
-- **Key Features**:
-  - Multi-slice phosphor conic sweep beam that triggers expanding target pings upon angular intersection.
-  - Precision azimuth degree ring, dashed diagonal crosshairs, and nautical mile range markers.
-  - Live interactive HUD controls for target count, telemetry callouts, phosphor color, and sweep velocity.
-- **Accessibility**:
-  - Marks the tactical radar <canvas> with aria-hidden='true' to keep screen reader navigation focused on semantic content.
-  - All interactive HUD controls include keyboard focus styles and descriptive accessible labels.
-- **Props**:
-  - `sweepSpeed` (number, default: 1.0): Angular velocity multiplier for the rotating radar beam.
-  - `blipCount` (number, default: 8): Number of tracked target contacts distributed across the polar grid.
-  - `color` (string, default: "#10B981"): Primary radar phosphor color in hex format.
-  - `rangeRings` (number, default: 4): Number of concentric range rings rendered from the radar origin.
-  - `showTelemetry` (boolean, default: true): Displays flight-level callouts, target IDs, and compass bearings.
-  - `children` (React.ReactNode): Optional foreground UI rendered above the radar canvas.
-  - `className` (string): Additional Tailwind CSS classes for the root container.
-- **Usage Example**:
-```tsx
-import { DigitalRadar } from "@/components/ui/DigitalRadar";
-
-export function Example() {
-  return (
-    <DigitalRadar
-      color="#10B981"
-      sweepSpeed={1.0}
-      blipCount={8}
-      rangeRings={4}
-      showTelemetry
-    />
-  );
 }
 ```
 
@@ -1217,40 +1115,6 @@ export function Example() {
     <div className="flex items-center justify-center py-8">
       <ElasticDock baseSize={46} magnifiedSize={68} distance={140} />
     </div>
-  );
-}
-```
-
----
-
-### Elastic Snap Sortable (`ElasticSnapSortable`)
-- **Slug**: `elastic-snap-sortable`
-- **Category**: Motion
-- **Tagline**: Spring-projected reorderable list with keyboard arrow sorting.
-- **Description**: Reorderable priority queue where list items swap positions with Hooke's Law layout spring projection and full keyboard arrow-key control.
-- **Docs URL**: https://boseui.site/components/elastic-snap-sortable
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/elastic-snap-sortable.json`
-- **Registry Manifest**: https://boseui.site/r/elastic-snap-sortable.json
-- **Key Features**:
-  - Automatic FLIP layout projection via Framer Motion layout prop when rows swap positions.
-  - Full keyboard reordering using ArrowUp and ArrowDown keys directly on focused list items.
-  - Tactile up/down stepper triggers for single-click touch and pointer sorting.
-- **Accessibility**:
-  - Implements role='list' and role='listitem' with live position announcements in aria-label.
-  - Supports ArrowUp and ArrowDown keyboard reordering without requiring pointer drag dexterity.
-  - Snaps reordered rows instantaneously when prefers-reduced-motion is enabled.
-- **Props**:
-  - `items` (SortableTaskItem[]): Initial array of task items containing id, title, and priority tag.
-  - `stiffness` (number, default: 380): Spring stiffness coefficient for row swap layout projection.
-  - `damping` (number, default: 26): Spring damping coefficient controlling row settle oscillation.
-  - `onReorder` ((items: ElasticSortableItem[]) => void): Callback fired when items are reordered via drag-and-drop
-- **Usage Example**:
-```tsx
-import { ElasticSnapSortable } from "@/components/ui/elastic-snap-sortable";
-
-export function Example() {
-  return (
-    <ElasticSnapSortable stiffness={380} damping={26} />
   );
 }
 ```
@@ -1487,94 +1351,57 @@ export function Example() {
 
 ---
 
-### Falling Petals (`FallingPetals`)
-- **Slug**: `falling-petals`
-- **Category**: Backgrounds
-- **Tagline**: 3D-projected sakura petals and autumn leaves drifting on the wind.
-- **Description**: Botanical particle background rendering organic Bezier cherry blossom petals, autumn maple leaves, and golden ginkgo foliage with 3D pitch/roll/yaw flutter and shared wind gusts.
-- **Docs URL**: https://boseui.site/components/falling-petals
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/falling-petals.json`
-- **Registry Manifest**: https://boseui.site/r/falling-petals.json
+### File Drop Zone (`FileDropZone`)
+- **Slug**: `file-drop-zone`
+- **Category**: Motion
+- **Tagline**: A folder that opens, fills up and confirms your upload
+- **Description**: An illustrated file upload card built around an animated folder. The folder opens when you drag a file over it, the paper sinks in as the upload progresses, and a green check pops on when it finishes.
+- **Docs URL**: https://boseui.site/components/file-drop-zone
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/file-drop-zone.json`
+- **Registry Manifest**: https://boseui.site/r/file-drop-zone.json
 - **Key Features**:
-  - Hand-crafted Bezier geometries for notched Sakura petals, Autumn Maple leaves, and Golden Ginkgo fans
-  - 3D-projected pitch, roll, and yaw rotation using dynamic Canvas 2D matrix transforms
-  - Harmonic horizontal sway combined with global wind gusts and pointer breeze impulse
-  - Depth-of-field scaling and alpha layering for natural parallax depth
+  - Five clear states: idle, dragging, uploading, done and error, each with its own folder animation and copy
+  - Folder flap lowers and the paper rises out when a file is dragged over the card
+  - Upload progress traces the card border while the paper sinks into the folder
+  - Success check badge that springs in and draws itself
+  - Drag and drop, click to browse, and keyboard activation all supported
+  - Works out of the box with a simulated upload, or pass onUpload to connect a real one
+  - Vector SVG folder that stays sharp at any size, with light and dark mode styles
 - **Accessibility**:
-  - Canvas element is non-interactive (pointer-events-none) so foreground content remains fully accessible
-  - HUD theme switchers and sliders support keyboard navigation
+  - Respects prefers-reduced-motion: transitions and the check animation become instant
+  - The card is a focusable role="button" that opens the file browser with Enter or Space
+  - Visible focus-visible ring on the card and on the sample files link
+  - Status text is announced politely to screen readers through aria-live
+  - aria-disabled is set while an upload is in progress, and drops are ignored
+  - Decorative folder and progress graphics are marked aria-hidden
 - **Props**:
-  - `variant` ("sakura" | "autumn" | "golden", default: "sakura"): Selects the botanical shape and color palette preset.
-  - `count` (number, default: 65): Number of falling petals or leaves rendered simultaneously.
-  - `windSpeed` (number, default: 1.0): Multiplier for horizontal wind drift and rolling gusts.
-  - `fallSpeed` (number, default: 1.0): Multiplier for vertical downward descent speed.
-  - `flutter` (number, default: 1.0): Intensity of 3D rotational pitch/roll/yaw tumbling and horizontal sway.
-  - `children` (React.ReactNode): Optional foreground content rendered above the petals canvas.
-  - `className` (string): Additional Tailwind CSS classes for the root container.
+  - `onUpload` ((files: File[], onProgress: (loadedBytes: number) => void, signal: AbortSignal) => Promise<void>, default: undefined): Performs the real upload. Call onProgress with bytes sent as it proceeds, resolve when done, or reject to show the error state. When omitted, a simulated upload runs instead
+  - `accept` (string, default: undefined): Passed to the native file input to filter the browse dialog, for example "image/*,.pdf"
+  - `multiple` (boolean, default: true): Allow more than one file per drop or selection. When false, only the first file is used
+  - `showSamples` (boolean, default: true): Shows the "or try sample files" link under the card, which runs a demo upload
+  - `resetAfter` (number, default: 2500): Milliseconds to stay on the success state before returning to idle. Use 0 to keep it
+  - `className` (string, default: ""): Optional Tailwind classes applied to the outer wrapper
 - **Usage Example**:
 ```tsx
-import { FallingPetals } from "@/components/ui/FallingPetals";
+import { useState } from "react";
+import { FileDropZone } from "@/components/ui/file-drop-zone";
 
-export default function FallingPetalsDemo() {
+export function Demo() {
+  const [log, setLog] = useState<string[]>([]);
+
   return (
-    <FallingPetals
-      variant="sakura"
-      count={65}
-      windSpeed={1.0}
-      fallSpeed={1.0}
-      flutter={1.0}
-    >
-      <div className="flex min-h-[520px] flex-col items-center justify-center p-8 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-white">
-          Spring Equinox
-        </h1>
-        <p className="mt-3 max-w-md text-pink-100/80">
-          Delicate cherry blossom petals carried across a twilight breeze.
-        </p>
-      </div>
-    </FallingPetals>
-  );
-}
-```
-
----
-
-### Feature Card (`FeatureCard`)
-- **Slug**: `feature-card`
-- **Category**: Cards
-- **Tagline**: Large rounded feature card with media preview and hover lift.
-- **Description**: Large rounded showcase card with an eyebrow badge, headline, concise copy, interactive media stage, and smooth spring hover lift.
-- **Docs URL**: https://boseui.site/components/feature-card
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/feature-card.json`
-- **Registry Manifest**: https://boseui.site/r/feature-card.json
-- **Key Features**:
-  - 28px rounded architectural container with spring-driven hover elevation (`y: -6`).
-  - Supports both vertical and horizontal layouts with a dedicated media preview well.
-  - Interactive default media telemetry bars that respond dynamically when the card is hovered.
-- **Accessibility**:
-  - Uses semantic `<article>` markup with high-contrast typography.
-  - Action button includes visible keyboard focus rings and active press feedback.
-  - Disables vertical lift animation when `prefers-reduced-motion` is enabled.
-- **Props**:
-  - `eyebrow` (string, default: "Apple Silicon Architecture"): Small uppercase label displayed above the headline.
-  - `title` (string, default: "Engineered for fluid 120Hz motion."): Primary headline inside the feature card.
-  - `description` (string): Concise supporting paragraph below the headline.
-  - `ctaLabel` (string, default: "Explore Architecture"): Text label for the call-to-action pill button.
-  - `onAction` (() => void): Callback fired when the CTA button is clicked.
-  - `media` (React.ReactNode): Custom visual or media node rendered inside the media stage.
-  - `layout` ("vertical" | "horizontal", default: "vertical"): Controls whether text and media stack vertically or sit side-by-side.
-  - `className` (string): Additional Tailwind CSS classes for the card.
-- **Usage Example**:
-```tsx
-import { FeatureCard } from "@/components/ui/feature-card";
-
-export function Example() {
-  return (
-    <FeatureCard
-      eyebrow="Performance"
-      title="Engineered for fluid 120Hz motion."
-      description="Every interaction responds with spring physics and zero layout shift."
-      ctaLabel="Learn More"
+    <FileDropZone
+      accept="image/*,.pdf"
+      onUpload={async (files, onProgress, signal) => {
+        const total = files.reduce((sum, f) => sum + f.size, 0);
+        // Replace with your real upload (fetch, XHR, S3, etc.)
+        for (let sent = 0; sent < total; sent += total / 20) {
+          if (signal.aborted) return;
+          await new Promise((r) => setTimeout(r, 100));
+          onProgress(Math.min(total, Math.round(sent)));
+        }
+        setLog((prev) => [...prev, ...files.map((f) => f.name)]);
+      }}
     />
   );
 }
@@ -1666,39 +1493,6 @@ export function HeroBackground() {
 
 ---
 
-### Floating Compass Nav (`FloatingCompassNav`)
-- **Slug**: `floating-compass-nav`
-- **Category**: Navigation
-- **Tagline**: Four-quadrant corner-snapping floating navigation pod.
-- **Description**: Viewport-anchored floating navigation pod that snaps elastically across four corner quadrants (NW, NE, SW, SE) via spring layout projection.
-- **Docs URL**: https://boseui.site/components/floating-compass-nav
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/floating-compass-nav.json`
-- **Registry Manifest**: https://boseui.site/r/floating-compass-nav.json
-- **Key Features**:
-  - Four-corner magnetic quadrant snapping (NW, NE, SW, SE) powered by Framer Motion layout projection.
-  - On-pod directional quadrant buttons plus dashed corner anchor targets.
-  - Configurable Hooke's Law stiffness and damping for travel trajectory.
-- **Accessibility**:
-  - Every corner anchor target and directional button includes a descriptive aria-label.
-  - Fully operable via Tab and Enter/Space keys without requiring drag gestures.
-  - Snaps instantaneously across quadrants when prefers-reduced-motion is active.
-- **Props**:
-  - `defaultQuadrant` ("NW" | "NE" | "SW" | "SE", default: "SE"): Initial corner quadrant where the navigation pod is anchored.
-  - `stiffness` (number, default: 300): Spring stiffness coefficient for cross-viewport corner snapping.
-  - `damping` (number, default: 24): Spring damping coefficient controlling corner arrival bounce.
-- **Usage Example**:
-```tsx
-import { FloatingCompassNav } from "@/components/ui/floating-compass-nav";
-
-export function Example() {
-  return (
-    <FloatingCompassNav defaultQuadrant="SE" stiffness={300} damping={24} />
-  );
-}
-```
-
----
-
 ### Text Field with Floating Label (`FloatingLabelInput`)
 - **Slug**: `floating-label-input`
 - **Category**: Inputs
@@ -1783,38 +1577,60 @@ export function Example() {
 
 ---
 
-### Glow Border Card (`GlowBorderCard`)
-- **Slug**: `glow-border-card`
-- **Category**: Cards
-- **Tagline**: High-gloss cards with cursor-following radial gradient borders and reactive sheen overlays.
-- **Description**: High-gloss feature cards with thin glowing gradient borders and interactive face overlays that dynamically illuminate and follow cursor coordinates using radial gradient masking.
-- **Docs URL**: https://boseui.site/components/glow-border-card
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/glow-border-card.json`
-- **Registry Manifest**: https://boseui.site/r/glow-border-card.json
+### Glide Dock (`GlideDock`)
+- **Slug**: `glide-dock`
+- **Category**: Motion
+- **Tagline**: Floating navigation with a natural glide
+- **Description**: A floating, animated navigation dock for React that intelligently hides while scrolling down and reappears when scrolling up. Features smooth spring animations, active item indicators, and a sleek glassmorphism design powered by Framer Motion and Tailwind CSS.
+- **Docs URL**: https://boseui.site/components/glide-dock
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/glide-dock.json`
+- **Registry Manifest**: https://boseui.site/r/glide-dock.json
 - **Key Features**:
-  - Real-time pointer tracking calculating coordinates directly to illuminate 1px border edges.
-  - Integrated face sheen overlay providing a subtle tactile glass refraction beneath the cursor.
-  - Customizable theme presets: Stripe Indigo/Cyan, Electric Violet, Emerald Glow, and Golden Amber.
-  - Smooth CSS hover lift transformation with layout stability and zero reflow.
-  - Interactive stage controls to tweak glow radii, intensity, palette themes, and elevation.
+  - Automatically hides when scrolling down and reappears when scrolling up
+  - Remains visible when the page is near the top
+  - Smooth spring-based entrance and exit animations using Framer Motion
+  - Animated active navigation indicator with shared layout transitions
+  - Responsive navigation labels that adapt to smaller screens
+  - Modern glassmorphism design with backdrop blur and subtle borders
+  - Customizable navigation items with icons and click handlers
+  - Fixed floating positioning at the bottom center of the viewport
 - **Accessibility**:
-  - Retains visible 1px borders in high-contrast modes for users with vision accommodations.
-  - Fully keyboard accessible with standard focus outlines and tab navigation.
-  - Subtle animation that respects prefers-reduced-motion without disorienting flickers.
+  - Uses semantic nav and button elements for accessible navigation
+  - Provides native keyboard interaction through button elements
+  - Supports descriptive navigation labels alongside icons on larger screens
 - **Props**:
-  - `defaultRadius` (number, default: 280): Radius in pixels of the illuminated radial gradient circle around the pointer.
-  - `defaultIntensity` (number, default: 0.5): Opacity coefficient for the illuminated face sheen overlay (0.2 to 1.0).
-  - `className` (string): Optional CSS classes to apply to the root container.
+  - `items` (GlideDockItem[], default: defaultItems): Array of navigation items, each containing a name, Lucide React icon component, and onClick handler.
+  - `className` (string, default: ""): Optional Tailwind CSS classes for customizing the floating navigation container.
 - **Usage Example**:
 ```tsx
-import { GlowBorderCard } from "@/components/ui/GlowBorderCard";
+import GlideDock, { type GlideDockItem } from "@/components/ui/GlideDock";
+import { Home, Search, LayoutGrid, User } from "lucide-react";
 
-export function Example() {
-  return (
-    <div className="w-full">
-      <GlowBorderCard defaultRadius={280} defaultIntensity={0.5} />
-    </div>
-  );
+const items: GlideDockItem[] = [
+  {
+    name: "Home",
+    icon: Home,
+    onClick: () => console.log("Home clicked"),
+  },
+  {
+    name: "Explore",
+    icon: Search,
+    onClick: () => console.log("Explore clicked"),
+  },
+  {
+    name: "Projects",
+    icon: LayoutGrid,
+    onClick: () => console.log("Projects clicked"),
+  },
+  {
+    name: "Profile",
+    icon: User,
+    onClick: () => console.log("Profile clicked"),
+  },
+];
+
+export function Demo() {
+  return <GlideDock items={items} />;
 }
 ```
 
@@ -1914,40 +1730,6 @@ export function Example() {
         onValueChange={(val) => console.log("Search query:", val)}
       />
     </div>
-  );
-}
-```
-
----
-
-### Gravity Well Portal (`GravityWellPortal`)
-- **Slug**: `gravity-well-portal`
-- **Category**: Motion
-- **Tagline**: Multi-node gravitational attraction and repulsion spring field.
-- **Description**: Multi-node gravitational field stage where spring-tethered telemetry badges warp toward or repel from the pointer with polarity inversion.
-- **Docs URL**: https://boseui.site/components/gravity-well-portal
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/gravity-well-portal.json`
-- **Registry Manifest**: https://boseui.site/r/gravity-well-portal.json
-- **Key Features**:
-  - Simultaneous 2D vector field attraction and repulsion across 6 spring-tethered telemetry nodes.
-  - Click or keyboard toggle to invert field polarity between gravitational pull and radial repulsion.
-  - Zero React state re-renders during pointer movement via Framer Motion useTransform.
-- **Accessibility**:
-  - Provides a keyboard-focusable polarity toggle button announcing Attract and Repel states.
-  - Marks decorative orbital rings and floating telemetry badges with aria-hidden='true'.
-  - Locks all orbital nodes at their anchor coordinates when prefers-reduced-motion is enabled.
-- **Props**:
-  - `pullRadius` (number, default: 180): Gravitational influence radius in pixels around the cursor.
-  - `pullStrength` (number, default: 0.55): Peak attraction or repulsion displacement factor (0.1 to 0.9).
-  - `stiffness` (number, default: 240): Hooke's Law spring stiffness coefficient for node tethers.
-  - `damping` (number, default: 20): Spring damping coefficient controlling node oscillation decay.
-- **Usage Example**:
-```tsx
-import { GravityWellPortal } from "@/components/ui/gravity-well-portal";
-
-export function Example() {
-  return (
-    <GravityWellPortal pullRadius={180} pullStrength={0.55} />
   );
 }
 ```
@@ -2300,84 +2082,6 @@ export default function HeroSection() {
 
 ---
 
-### Hover Cursor Shimmer Text (`HoverCursorShimmerText`)
-- **Slug**: `hover-cursor-shimmer-text`
-- **Category**: Text
-- **Tagline**: Localized text shimmer effect following pointer coordinates.
-- **Description**: Text typography that shimmers strictly at the cursor's hover position using a hardware-accelerated dynamic radial mask beam.
-- **Docs URL**: https://boseui.site/components/hover-cursor-shimmer-text
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/hover-cursor-shimmer-text.json`
-- **Registry Manifest**: https://boseui.site/r/hover-cursor-shimmer-text.json
-- **Key Features**:
-  - Illuminates only the specific portion of the sentence or headline being hovered.
-  - Hardware-accelerated CSS radial gradient mask tracking relative pointer coordinates.
-  - High-specular text shadow glow that follows mouse movements in real time.
-  - Dual-layer structure preserving base typography contrast and screen-reader accessibility.
-- **Accessibility**:
-  - Base text retains standard readable contrast in light and dark mode.
-  - The shimmer overlay is hidden from screen readers via aria-hidden='true' to avoid duplicate pronunciation.
-- **Props**:
-  - `text` (string): Text content to render with cursor-guided shimmer.
-  - `radius` (number, default: 100): Diameter radius in pixels of the active shimmer beam.
-  - `shimmerColor` (string, default: "#ffffff"): Illuminated highlight color.
-  - `glowColor` (string, default: "rgba(255, 255, 255, 0.45)"): Ambient specular glow color around the cursor.
-  - `as` ("span" | "h1" | "h2" | "h3" | "h4" | "p" | "div", default: "span"): Semantic HTML element type.
-- **Usage Example**:
-```tsx
-import { HoverCursorShimmerText } from "@/components/ui/hover-cursor-shimmer-text";
-
-export function Example() {
-  return (
-    <h2 className="text-4xl font-bold">
-      <HoverCursorShimmerText
-        text="Move your cursor across this text to reveal the localized shimmer."
-        radius={120}
-      />
-    </h2>
-  );
-}
-```
-
----
-
-### Hover Reveal Feature Grid (`HoverRevealFeatureGrid`)
-- **Slug**: `hover-reveal-feature-grid`
-- **Category**: Cards
-- **Tagline**: Linear-style bento feature grid with radial spotlight mask and secondary hover reveal.
-- **Description**: Linear-inspired bento feature grid where hovering any tile casts an interactive radial spotlight mask across card borders, smoothly reveals secondary deep feature specifications, and highlights contextual interactive badges.
-- **Docs URL**: https://boseui.site/components/hover-reveal-feature-grid
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/hover-reveal-feature-grid.json`
-- **Registry Manifest**: https://boseui.site/r/hover-reveal-feature-grid.json
-- **Key Features**:
-  - Continuous mouse-tracking radial spotlight mask illuminating adjacent borders across the grid mesh.
-  - Spring-animated progressive reveal: hover expands secondary architecture metrics and interactive badges.
-  - Responsive asymmetric Bento layout with hero feature anchor and companion cards.
-  - Customizable spotlight colors: Linear Indigo, Emerald Matrix, Cyber Violet, and Sunset Amber.
-  - Interactive radius slider and spotlight intensity controls in the live demo stage.
-- **Accessibility**:
-  - Hidden content is conditionally announced to screen readers or made accessible via keyboard focus.
-  - Each bento tile is keyboard focusable with high contrast focus indicators.
-  - Supports prefers-reduced-motion by disabling spotlight translation and instant-showing specs on focus.
-- **Props**:
-  - `spotlightColor` ("indigo" | "emerald" | "violet" | "amber", default: "indigo"): Color hue of the radial spotlight cursor mask.
-  - `spotlightRadius` (number, default: 350): Radius in pixels of the illuminated spotlight cone.
-  - `className` (string): Optional custom classes applied to the root container.
-- **Usage Example**:
-```tsx
-import { HoverRevealFeatureGrid } from "@/components/ui/HoverRevealFeatureGrid";
-
-export function Example() {
-  return (
-    <HoverRevealFeatureGrid
-      spotlightColor="indigo"
-      spotlightRadius={350}
-    />
-  );
-}
-```
-
----
-
 ### Interactive API Endpoint Bar (`InteractiveApiEndpointBar`)
 - **Slug**: `interactive-api-endpoint-bar`
 - **Category**: Cards
@@ -2496,43 +2200,6 @@ export function Example() {
 
 ---
 
-### Kinetic Drawer Sheet (`KineticDrawerSheet`)
-- **Slug**: `kinetic-drawer-sheet`
-- **Category**: Overlays
-- **Tagline**: Multi-detent bottom gesture sheet with rubber-band over-drag.
-- **Description**: Bottom gesture sheet featuring Peek and Full spring detents, velocity-projected flick transitions, and rubber-band over-drag.
-- **Docs URL**: https://boseui.site/components/kinetic-drawer-sheet
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/kinetic-drawer-sheet.json`
-- **Registry Manifest**: https://boseui.site/r/kinetic-drawer-sheet.json
-- **Key Features**:
-  - Two-stage detent snapping (Peek and Full) responsive to vertical pan velocity and displacement.
-  - Rubber-band drag elasticity at the top boundary.
-  - Explicit button detent switcher for non-gesture pointer and keyboard accessibility.
-- **Accessibility**:
-  - Implements role='dialog' and aria-modal='true' with Escape key dismissal.
-  - Includes a dedicated Expand/Peek button so keyboard users can switch detents without dragging.
-  - Disables vertical drag physics when prefers-reduced-motion is enabled.
-- **Props**:
-  - `triggerLabel` (string, default: "Open Gesture Drawer"): Text rendered inside the drawer trigger button.
-  - `title` (string, default: "Multi-Detent Spring Sheet"): Heading title displayed inside the drawer sheet.
-  - `stiffness` (number, default: 320): Hooke's Law spring stiffness for sheet entry and detent transitions.
-  - `damping` (number, default: 28): Spring damping coefficient controlling sheet settle.
-- **Usage Example**:
-```tsx
-import { KineticDrawerSheet } from "@/components/ui/kinetic-drawer-sheet";
-
-export function Example() {
-  return (
-    <KineticDrawerSheet
-      triggerLabel="Open Gesture Drawer"
-      title="Multi-Detent Spring Sheet"
-    />
-  );
-}
-```
-
----
-
 ### Kinetic Rolling Counter (`KineticRollingCounter`)
 - **Slug**: `kinetic-rolling-counter`
 - **Category**: Text
@@ -2561,52 +2228,6 @@ import { KineticRollingCounter } from "@/components/ui/kinetic-rolling-counter";
 export function Example() {
   return (
     <KineticRollingCounter defaultValue={1248} step={17} stiffness={340} damping={26} />
-  );
-}
-```
-
----
-
-### Kinetic Slider (`KineticSlider`)
-- **Slug**: `kinetic-slider`
-- **Category**: Inputs
-- **Tagline**: Velocity-tilted HUD badge and rubber-band boundary over-drag.
-- **Description**: Elastic range slider featuring velocity-reactive tooltip inertia, logarithmic rubber-band boundary over-drag, and full keyboard accessibility.
-- **Docs URL**: https://boseui.site/components/kinetic-slider
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/kinetic-slider.json`
-- **Registry Manifest**: https://boseui.site/r/kinetic-slider.json
-- **Key Features**:
-  - Real-time drag velocity tracking via Framer Motion useVelocity to tilt the floating value badge.
-  - Logarithmic rubber-band resistance when dragging past min or max boundaries.
-  - Tactile thumb squash-and-stretch and dynamic rail thickening on pointer capture.
-- **Accessibility**:
-  - Implements full WAI-ARIA role='slider' with aria-valuemin, aria-valuemax, aria-valuenow, and aria-valuetext.
-  - Supports ArrowLeft/Right/Up/Down, PageUp/PageDown (10x step), and Home/End keyboard increments.
-  - Disables velocity rotation and rubber-band displacement when prefers-reduced-motion is enabled.
-- **Props**:
-  - `label` (string, default: "Spring Tension"): Accessible label rendered above the slider rail.
-  - `defaultValue` (number, default: 64): Initial numeric value for uncontrolled usage.
-  - `min` (number, default: 0): Minimum allowed slider value.
-  - `max` (number, default: 100): Maximum allowed slider value.
-  - `step` (number, default: 1): Numeric increment step size.
-  - `unit` (string, default: "%"): Unit suffix displayed next to the numeric value.
-  - `value` (number): Controlled numeric value for the slider
-  - `stiffness` (number): Spring tension for kinetic dragging physics
-  - `damping` (number): Spring damping coefficient
-  - `onChange` ((val: number) => void): Callback fired when slider value changes
-- **Usage Example**:
-```tsx
-import { KineticSlider } from "@/components/ui/kinetic-slider";
-
-export function Example() {
-  return (
-    <KineticSlider
-      label="Spring Stiffness"
-      defaultValue={72}
-      min={0}
-      max={100}
-      unit="%"
-    />
   );
 }
 ```
@@ -2681,54 +2302,6 @@ export function Example() {
       completedLabel="Deployment Triggered"
       threshold={0.78}
     />
-  );
-}
-```
-
----
-
-### Liquid Glass Card (`LiquidGlassCard`)
-- **Slug**: `liquid-glass-card`
-- **Category**: Cards
-- **Tagline**: Apple-inspired frosted glass card with 3D cursor tilt and chromatic refraction.
-- **Description**: Ultra-premium translucent frosted glass card featuring dynamic specular highlight cursor tracking, 3D perspective tilt, chromatic edge refraction, double-layer backdrop blur, and tactile click feedback.
-- **Docs URL**: https://boseui.site/components/liquid-glass-card
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/liquid-glass-card.json`
-- **Registry Manifest**: https://boseui.site/r/liquid-glass-card.json
-- **Key Features**:
-  - Continuous 3D perspective tilt reacting to cursor coordinates with spring smoothing.
-  - Dynamic radial specular glare tracking cursor light source across card surface.
-  - Chromatic prismatic refraction along card perimeter borders.
-  - Double-layer backdrop blur creating rich depth over ambient saturated backdrops.
-  - Tactile spring click compression and customizable frost density and tilt sensitivity.
-- **Accessibility**:
-  - Retains high contrast content legibility across bright and dark backgrounds.
-  - Suppresses aggressive 3D perspective tilts when `prefers-reduced-motion` is active.
-  - Accessible focus outlines when keyboard navigated.
-- **Props**:
-  - `title` (string, default: "Apple Card Titanium"): Default headline or card title.
-  - `subtitle` (string, default: "Mastercard • 7492 • World Elite"): Secondary descriptive text or card subtext.
-  - `blurStrength` (number, default: 24): Backdrop blur radius in pixels.
-  - `tiltFactor` (number, default: 1.0): Multiplier determining sensitivity of 3D tilt response.
-  - `chromaticEdge` (boolean, default: true): Whether to render chromatic rainbow refraction along card borders.
-  - `children` (React.ReactNode): Custom content rendered inside the frosted glass card container.
-  - `className` (string): Additional Tailwind CSS classes for the root container.
-- **Usage Example**:
-```tsx
-import { LiquidGlassCard } from "@/components/ui/LiquidGlassCard";
-
-export function Example() {
-  return (
-    <LiquidGlassCard
-      title="Titanium Card"
-      tiltFactor={1.2}
-      chromaticEdge={true}
-    >
-      <div className="p-4">
-        <h3 className="text-lg font-bold text-white">Apple Card</h3>
-        <p className="text-xs text-white/80">3% Daily Cash Back</p>
-      </div>
-    </LiquidGlassCard>
   );
 }
 ```
@@ -3185,56 +2758,6 @@ export function Example() {
       loadingLabel="Compiling..."
       successLabel="Published v2.4"
     />
-  );
-}
-```
-
----
-
-### Morphing Blob (`MorphingBlob`)
-- **Slug**: `morphing-blob`
-- **Category**: Backgrounds
-- **Tagline**: Organic fluid SVG blob driven by Catmull-Rom splines and spring dynamics.
-- **Description**: Organic fluid morphing SVG blob driven by Catmull-Rom cubic spline interpolation, Hooke's Law spring physics per node, and smooth real-time cursor attraction.
-- **Docs URL**: https://boseui.site/components/morphing-blob
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/morphing-blob.json`
-- **Registry Manifest**: https://boseui.site/r/morphing-blob.json
-- **Key Features**:
-  - Continuous Catmull-Rom cubic bezier closed loop path computation.
-  - Hooke's Law spring-mass-damping physics simulation per radial node.
-  - Real-time cursor parallax offset with smooth damping and viewport scaling.
-  - Accessible automatic fallback for prefers-reduced-motion environments.
-- **Accessibility**:
-  - Marks ambient SVG canvas with aria-hidden='true' and role='presentation'.
-  - Automatically bypasses frame animation loops if prefers-reduced-motion is detected.
-- **Props**:
-  - `width` (number, default: 400): Width of the SVG viewBox in pixels.
-  - `height` (number, default: 400): Height of the SVG viewBox in pixels.
-  - `points` (number, default: 8): Number of radial anchor nodes forming the organic perimeter.
-  - `baseRadius` (number, default: 120): Resting base radius of the blob from center in pixels.
-  - `variance` (number, default: 28): Maximum radial fluctuation delta applied to node targets.
-  - `speed` (number, default: 0.7): Frequency of retargeting cycles for organic movement.
-  - `stiffness` (number, default: 45): Spring stiffness constant pulling nodes toward their targets.
-  - `damping` (number, default: 9): Velocity damping factor preventing wild oscillations.
-  - `cursorFollow` (boolean, default: true): Enable smooth attraction toward the pointer location.
-  - `cursorStrength` (number, default: 0.35): Offset multiplier applied to the blob center relative to pointer position.
-  - `cursorSmoothness` (number, default: 0.08): Lerp interpolation speed for cursor tracking.
-  - `colors` ([string, string], default: ['#7C3AED', '#06B6D4']): Two-stop linear gradient hex colors filling the blob.
-- **Usage Example**:
-```tsx
-import { MorphingBlob } from "@/components/ui/MorphingBlob";
-
-export function Example() {
-  return (
-    <div className="relative flex h-96 w-full items-center justify-center overflow-hidden rounded-2xl bg-neutral-950">
-      <MorphingBlob
-        width={420}
-        height={420}
-        baseRadius={130}
-        variance={32}
-        colors={["#8B5CF6", "#3B82F6"]}
-      />
-    </div>
   );
 }
 ```
@@ -3699,43 +3222,6 @@ export function Example() {
 
 ---
 
-### Pricing Calculator (`PricingCalculator`)
-- **Slug**: `pricing-calculator`
-- **Category**: Cards
-- **Tagline**: Interactive tiered pricing calculator with volume slider, currency converter, and plan tier match.
-- **Description**: Interactive Stripe-style pricing calculator featuring an API usage volume slider, automatic plan tier recommendation highlights, multi-currency conversion, and an annual billing toggle with 20% discount.
-- **Docs URL**: https://boseui.site/components/pricing-calculator
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/pricing-calculator.json`
-- **Registry Manifest**: https://boseui.site/r/pricing-calculator.json
-- **Key Features**:
-  - Interactive transaction / API usage slider scaling continuously from 10k to 5M+ requests.
-  - Real-time cost ticker recalculating tier-based volume discounts and monthly vs. annual billing.
-  - Automatic active plan highlighting (Starter, Growth, Scale, Enterprise) matched to current traffic volume.
-  - Multi-currency conversion support (USD, EUR, GBP) with localized currency symbols.
-  - Preset volume jump shortcuts for rapid instant plan exploration.
-- **Accessibility**:
-  - Native accessible range input with full ARIA value min, max, and now attributes.
-  - High-contrast plan selection indicators and visible focus styles.
-  - Screen reader readable price announcements and currency indicators.
-- **Props**:
-  - `defaultVolume` (number, default: 150000): Initial monthly requests/operations volume for the slider.
-  - `defaultAnnual` (boolean, default: true): Whether annual billing mode (with 20% discount) is enabled initially.
-  - `className` (string): Optional CSS classes to apply to the root container.
-- **Usage Example**:
-```tsx
-import { PricingCalculator } from "@/components/ui/PricingCalculator";
-
-export function Example() {
-  return (
-    <div className="w-full">
-      <PricingCalculator defaultVolume={150000} defaultAnnual={true} />
-    </div>
-  );
-}
-```
-
----
-
 ### Product Compare Table (`ProductCompareTable`)
 - **Slug**: `product-compare-table`
 - **Category**: Cards
@@ -3961,52 +3447,6 @@ export function Example() {
 
 ---
 
-### Rotary Spring Dial (`RotarySpringDial`)
-- **Slug**: `rotary-spring-dial`
-- **Category**: Inputs
-- **Tagline**: 270° studio rotary knob with spring-damped rotor physics.
-- **Description**: Synthesizer-inspired tactile rotary knob with a 270-degree spring-damped rotor, vertical drag scrubbing, and keyboard arrow control.
-- **Docs URL**: https://boseui.site/components/rotary-spring-dial
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/rotary-spring-dial.json`
-- **Registry Manifest**: https://boseui.site/r/rotary-spring-dial.json
-- **Key Features**:
-  - Maps numeric values across a -135° to +135° (270° total) rotary arc driven by Hooke's Law angular springs.
-  - Precision vertical pointer-capture drag scrubbing standard in pro audio and 3D software.
-  - Full keyboard arrow-key and Home/End accessibility.
-- **Accessibility**:
-  - Implements role='slider' with aria-valuemin, aria-valuemax, aria-valuenow, and aria-valuetext.
-  - Supports ArrowUp/ArrowRight to increment, ArrowDown/ArrowLeft to decrement, and Home/End keys.
-  - Rotates instantaneously without spring overshoot when prefers-reduced-motion is enabled.
-- **Props**:
-  - `label` (string, default: "Damping Ratio"): Parameter name displayed above the rotary dial.
-  - `defaultValue` (number, default: 65): Initial numeric value between min and max.
-  - `min` (number, default: 0): Minimum dial value corresponding to -135 degrees.
-  - `max` (number, default: 100): Maximum dial value corresponding to +135 degrees.
-  - `step` (number, default: 5): Step increment per detent tick.
-  - `unit` (string, default: "%"): Unit suffix appended to the digital readout.
-  - `stiffness` (number): Spring stiffness for dial rotation snapping
-  - `damping` (number): Spring damping coefficient
-  - `onChange` ((val: number) => void): Callback fired when dial angle value changes
-- **Usage Example**:
-```tsx
-import { RotarySpringDial } from "@/components/ui/rotary-spring-dial";
-
-export function Example() {
-  return (
-    <RotarySpringDial
-      label="Damping Ratio"
-      defaultValue={65}
-      min={0}
-      max={100}
-      step={5}
-      unit="%"
-    />
-  );
-}
-```
-
----
-
 ### Scrubbable Number Input (`ScrubbableNumberInput`)
 - **Slug**: `scrubbable-number-input`
 - **Category**: Inputs
@@ -4046,48 +3486,6 @@ export function Example() {
       max={600}
       step={5}
       unit="N/m"
-    />
-  );
-}
-```
-
----
-
-### Shimmer Text (`ShimmerText`)
-- **Slug**: `shimmer-text`
-- **Category**: Text
-- **Tagline**: Linear-style metallic gradient headline with an animated high-gloss beam.
-- **Description**: Linear-inspired metallic gradient typography with a high-gloss light beam that sweeps across headlines continuously or upon hover interaction.
-- **Docs URL**: https://boseui.site/components/shimmer-text
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/shimmer-text.json`
-- **Registry Manifest**: https://boseui.site/r/shimmer-text.json
-- **Key Features**:
-  - High-gloss specular light beam swept across typography via background-clip or mask reflection.
-  - Multiple metallic palettes: Platinum Silver, Liquid Gold, Cyber Neon Violet, and Emerald Matrix.
-  - Customizable shimmer duration, sweep angle, text size, and interactive hover-trigger mode.
-  - Live text editing in the demo stage to test any custom title or marketing headline.
-- **Accessibility**:
-  - Text remains fully selectable and readable by standard screen readers via genuine DOM heading elements.
-  - Provides a pause/play toggle and disables animations automatically when prefers-reduced-motion is active.
-  - Ensures high contrast ratio against dark backgrounds even at the peak of the reflection sweep.
-- **Props**:
-  - `text` (string, default: "Issue tracking engineered for high-velocity software teams."): Headline copy to render with metallic shimmer finish.
-  - `palette` ("silver" | "gold" | "violet" | "emerald", default: "silver"): Metallic color tone preset for the gradient foundation and reflection beam.
-  - `duration` (number, default: 3): Sweep cycle duration in seconds.
-  - `intensity` (number, default: 115): Intensity of the shimmer effect.
-  - `hoverOnly` (boolean, default: false): When true, shimmer beam sweeps only when hovered or focused.
-  - `className` (string): Optional custom classes applied to the root container.
-- **Usage Example**:
-```tsx
-import { ShimmerText } from "@/components/ui/ShimmerText";
-
-export function Example() {
-  return (
-    <ShimmerText
-      text="Issue tracking engineered for high-velocity software teams."
-      palette="silver"
-      duration={3}
-      angle={115}
     />
   );
 }
@@ -4423,45 +3821,6 @@ export function Example() {
 
 ---
 
-### Spring Dropdown Chevron (`SpringDropdownChevron`)
-- **Slug**: `spring-dropdown-chevron`
-- **Category**: Navigation
-- **Tagline**: Disclosure chevron trigger with hover tension and rotational inertia.
-- **Description**: Disclosure chevron trigger with hover tension anticipation, smooth rotational inertia, and spring overshoot.
-- **Docs URL**: https://boseui.site/components/spring-dropdown-chevron
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/spring-dropdown-chevron.json`
-- **Registry Manifest**: https://boseui.site/r/spring-dropdown-chevron.json
-- **Key Features**:
-  - 15° hover tension tilt that anticipates user interaction before clicking.
-  - Full 180° spring rotational trajectory with natural overshoot.
-  - Dual controlled and uncontrolled states.
-  - Full keyboard navigation and aria-expanded semantics.
-- **Accessibility**:
-  - Semantically bound to aria-expanded.
-  - Keyboard triggered via Enter or Space.
-  - Prefe-reduced-motion switches to simple linear orientation.
-- **Props**:
-  - `isOpen` (boolean): Controlled open state.
-  - `defaultOpen` (boolean, default: false): Initial state in uncontrolled mode.
-  - `onToggle` ((isOpen: boolean) => void): Callback fired when disclosure changes.
-  - `label` (string): Optional label placed before the chevron.
-  - `size` ("sm" | "md" | "lg", default: "md"): Size preset.
-- **Usage Example**:
-```tsx
-import { SpringDropdownChevron } from "@/components/ui/spring-dropdown-chevron";
-
-export function Example() {
-  return (
-    <SpringDropdownChevron
-      label="View Advanced Settings"
-      onToggle={(open) => console.log("State:", open)}
-    />
-  );
-}
-```
-
----
-
 ### Spring Pin Input (`SpringPinInput`)
 - **Slug**: `spring-pin-input`
 - **Category**: Inputs
@@ -4569,162 +3928,6 @@ export function Example() {
       twinkle
       parallax={24}
     />
-  );
-}
-```
-
----
-
-### Stepper Wizard (`Stepper`)
-- **Slug**: `stepper`
-- **Category**: Navigation
-- **Tagline**: Multi-step progress wizard with spring connector and step transitions.
-- **Description**: Multi-step onboarding and checkout progress wizard with spring-animated connector bars, clickable step indicators, and directional panel transitions.
-- **Docs URL**: https://boseui.site/components/stepper
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/stepper.json`
-- **Registry Manifest**: https://boseui.site/r/stepper.json
-- **Key Features**:
-  - Spring-animated progress bar connecting step nodes with checkmark completion states.
-  - Directional slide transitions when moving forward or backward between steps.
-  - Supports both controlled (`activeStep`, `onStepChange`) and uncontrolled (`defaultStep`) usage.
-- **Accessibility**:
-  - Marks the active step button with aria-current='step'.
-  - Keyboard-focusable step indicators and navigation buttons.
-  - Respects prefers-reduced-motion for step transitions and progress fills.
-- **Props**:
-  - `steps` (StepItem[]): Array of step objects ({ id, title, description, detail }).
-  - `activeStep` (number): Controlled active step index (0-based).
-  - `defaultStep` (number, default: 0): Initial active step index for uncontrolled mode.
-  - `onStepChange` ((stepIndex: number) => void): Callback fired whenever the active step changes.
-  - `onComplete` (() => void): Callback fired when the user completes the final step.
-  - `allowStepClick` (boolean, default: true): Allows users to jump directly to a step by clicking its node.
-  - `className` (string): Additional Tailwind CSS classes for the outer wizard container.
-- **Usage Example**:
-```tsx
-import { Stepper } from "@/components/ui/stepper";
-
-export function Example() {
-  return (
-    <Stepper
-      onStepChange={(step) => console.log("Active step:", step)}
-      onComplete={() => console.log("Wizard completed!")}
-    />
-  );
-}
-```
-
----
-
-### Stepper & Slider (`StepperSliderControl`)
-- **Slug**: `stepper-slider-control`
-- **Category**: Inputs
-- **Tagline**: Minimal (− / +) stepper synced with a thin-track slider.
-- **Description**: Synchronized precision control pairing a thin-track slider and large round thumb with a tactile (− / +) segmented stepper pill.
-- **Docs URL**: https://boseui.site/components/stepper-slider-control
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/stepper-slider-control.json`
-- **Registry Manifest**: https://boseui.site/r/stepper-slider-control.json
-- **Key Features**:
-  - Thin 6px slider track paired with a prominent 24px circular thumb that scales on pointer drag.
-  - Segmented (− | +) pill stepper for exact incremental adjustments.
-  - Supports both controlled (`value`, `onChange`) and uncontrolled (`defaultValue`) modes.
-- **Accessibility**:
-  - Exposes WAI-ARIA `role='slider'` with `aria-valuemin`, `aria-valuemax`, and `aria-valuenow`.
-  - Supports `ArrowLeft`, `ArrowRight`, `ArrowUp`, `ArrowDown`, `Home`, and `End` keys.
-  - Stepper buttons include descriptive `aria-label` attributes and disabled boundary states.
-- **Props**:
-  - `label` (string, default: "Display Brightness"): Label displayed above the slider track.
-  - `value` (number): Controlled numeric value.
-  - `defaultValue` (number, default: 65): Initial value for uncontrolled mode.
-  - `min` (number, default: 0): Minimum allowed value.
-  - `max` (number, default: 100): Maximum allowed value.
-  - `step` (number, default: 5): Step increment for both slider snapping and (− / +) buttons.
-  - `unit` (string, default: "%"): Unit suffix displayed next to the numeric value.
-  - `onChange` ((value: number) => void): Callback fired when the value changes.
-  - `disabled` (boolean, default: false): Disables both slider and stepper buttons.
-  - `className` (string): Additional Tailwind CSS classes for the outer card.
-- **Usage Example**:
-```tsx
-import { StepperSliderControl } from "@/components/ui/stepper-slider-control";
-
-export function Example() {
-  return (
-    <StepperSliderControl
-      label="Display Brightness"
-      defaultValue={65}
-      min={0}
-      max={100}
-      step={5}
-      unit="%"
-    />
-  );
-}
-```
-
----
-
-### Sticky Pages (`StickyPages`)
-- **Slug**: `sticky-pages`
-- **Category**: Cards
-- **Tagline**: Apple-style sticky stacking cards that scale and dim on scroll.
-- **Description**: Apple-style sticky stacking full-viewport pages with progressive scale shrinking, cumulative dimming overlays, smooth scroll transitions, and subtle top elevation borders.
-- **Docs URL**: https://boseui.site/components/sticky-pages
-- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/sticky-pages.json`
-- **Registry Manifest**: https://boseui.site/r/sticky-pages.json
-- **Key Features**:
-  - CSS position sticky stacking with progressive top offsets and dynamic viewport tracking.
-  - Hardware-accelerated scale reduction calculated per covered layer using requestAnimationFrame.
-  - Graduated dark dimming backdrop overlays reflecting exact layer overlap depths.
-  - Dual-mode support: structured pages array configuration or declarative nested JSX children.
-- **Accessibility**:
-  - Retains native document scroll ergonomics with predictable touch, trackpad, and keyboard behavior.
-  - Uses accessible high-contrast text ratios across stacked panels with readable typography hierarchies.
-  - Leaves child elements interactive and focusable when not fully covered.
-- **Props**:
-  - `pages` (StickyPageItem[]): Structured array of page objects with id, title, subtitle, description, badge, and background styles.
-  - `pageHeight` (string, default: "100vh"): Height specification of each sticky page or card section.
-  - `topOffset` (number, default: 0): Distance in pixels from viewport top where each page locks sticky.
-  - `stackOffset` (number, default: 0): Progressive pixel gap preserved between stacked page headers.
-  - `rounded` (boolean, default: true): Apply rounded top corners (rounded-t-[2rem]) to stacked pages.
-  - `shadow` (boolean, default: true): Apply top drop shadow when pages overlap previous layers.
-  - `border` (boolean, default: true): Render subtle top highlight border on stacked cards.
-  - `scaleStep` (number, default: 0.05): Scale percentage delta by which each successive covering page shrinks lower layers.
-  - `dim` (boolean, default: true): Gradually darken covered layers as they are occluded by subsequent pages.
-- **Usage Example**:
-```tsx
-import { StickyPages } from "@/components/ui/StickyPages";
-
-const demoPages = [
-  {
-    id: 1,
-    badge: "Foundation",
-    subtitle: "Architecture",
-    title: "Engineered for Velocity",
-    description: "Atomic primitives sculpted for instant responsiveness and tactile micro-interactions.",
-    bg: "bg-slate-950",
-  },
-  {
-    id: 2,
-    badge: "Motion",
-    subtitle: "Fluid Physics",
-    title: "Organic Interpolation",
-    description: "Every curve uses spring stiffness and mass damping modeled after real-world kinematics.",
-    bg: "bg-violet-950",
-  },
-  {
-    id: 3,
-    badge: "Production",
-    subtitle: "Enterprise",
-    title: "Production Ready",
-    description: "Zero external dependencies beyond standard peer primitives. Copy, paste, and deploy.",
-    bg: "bg-zinc-950",
-  },
-];
-
-export function Example() {
-  return (
-    <div className="w-full">
-      <StickyPages pages={demoPages} pageHeight="80vh" />
-    </div>
   );
 }
 ```

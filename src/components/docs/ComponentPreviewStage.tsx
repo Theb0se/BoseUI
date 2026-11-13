@@ -144,9 +144,9 @@ export function ComponentPreviewStage({
           "relative z-10 flex w-full items-center justify-center transition-all duration-300 ease-out",
           viewportSize === "desktop" && "max-w-full",
           viewportSize === "tablet" &&
-            "max-w-[768px] rounded-3xl border border-dashed border-neutral-300 bg-white/90 p-8 shadow-sm backdrop-blur-xs dark:border-neutral-800 dark:bg-black/90",
+          "max-w-[768px] rounded-3xl border border-dashed border-neutral-300 bg-white/90 p-8 shadow-sm backdrop-blur-xs dark:border-neutral-800 dark:bg-black/90",
           viewportSize === "mobile" &&
-            "max-w-[390px] rounded-3xl border border-dashed border-neutral-300 bg-white/90 p-6 shadow-sm backdrop-blur-xs dark:border-neutral-800 dark:bg-black/90"
+          "max-w-[390px] rounded-3xl border border-dashed border-neutral-300 bg-white/90 p-6 shadow-sm backdrop-blur-xs dark:border-neutral-800 dark:bg-black/90"
         )}
       >
         <ComponentPreview

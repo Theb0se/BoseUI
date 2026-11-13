@@ -320,7 +320,7 @@ export function TestimonialsBlock({
 
               {/* Quote Copy */}
               <p className="mt-5 text-base sm:text-lg text-neutral-200 font-normal leading-relaxed italic">
-                "{activeReview.quote}"
+                &ldquo;{activeReview.quote}&rdquo;
               </p>
 
               {/* Author Info */}

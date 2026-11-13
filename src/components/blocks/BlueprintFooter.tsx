@@ -135,7 +135,7 @@ export function BlueprintFooter({
               </span>
 
               <h4 className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-semibold mb-5 flex items-center gap-2">
-                <span className="text-[10px] text-cyan-400">0{idx + 1} //</span>
+                <span className="text-[10px] text-cyan-400">0{idx + 1} {"//"}</span>
                 <span>{col.title}</span>
               </h4>
 

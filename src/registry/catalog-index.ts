@@ -234,27 +234,22 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "aurora-background",
-    "slug": "aurora-background",
-    "componentName": "AuroraBackground",
-    "title": "Aurora",
-    "description": "macOS-inspired northern lights background using 3 to 5 large 60px blurred color blobs with screen blend mode drifting on offset keyframe loops.",
-    "tagline": "Screen-blended aurora blobs on offset keyframe loops.",
-    "category": "Backgrounds",
+    "id": "aura-mic",
+    "slug": "aura-mic",
+    "componentName": "AuraMic",
+    "title": "Aura Mic",
+    "description": "A black and white microphone toggle that surrounds itself with a unique animated aura while listening. Six styles are included: halftone, moire, thread, ink, eclipse and ridgeline. Built with React, Tailwind CSS and Framer Motion.",
+    "tagline": "A mic button with a monochrome, living aura",
+    "category": "Motion",
     "badges": [
-      "New",
-      "CSS Only",
-      "macOS Look"
+      "Motion",
+      "Tailwind",
+      "Interactive",
+      "SVG"
     ],
-    "createdAt": "2026-10-08",
-    "featured": true,
-    "keywords": [
-      "aurora background",
-      "northern lights css",
-      "macos wallpaper gradient",
-      "blurred blobs background",
-      "screen blend mode"
-    ]
+    "createdAt": "2026-11-03T09:07:41.127Z",
+    "featured": false,
+    "keywords": []
   },
   {
     "id": "autocomplete",
@@ -431,29 +426,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "clouds-drift",
-    "slug": "clouds-drift",
-    "componentName": "CloudsDrift",
-    "title": "Clouds Drift",
-    "description": "Seamless multi-layer CSS cloud parallax background where far, mid, and near cloud formations drift horizontally at independent speeds.",
-    "tagline": "Multi-layer CSS cloud parallax with day, sunset, and night skies.",
-    "category": "Backgrounds",
-    "badges": [
-      "New",
-      "CSS Parallax",
-      "Atmosphere"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": false,
-    "keywords": [
-      "clouds drift background",
-      "parallax clouds css",
-      "moving sky clouds",
-      "weather hero background",
-      "infinite cloud loop"
-    ]
-  },
-  {
     "id": "command-menu",
     "slug": "command-menu",
     "componentName": "CommandMenu",
@@ -474,29 +446,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "cmd k",
       "spotlight search",
       "keyboard launcher"
-    ]
-  },
-  {
-    "id": "constellation-mesh-field",
-    "slug": "constellation-mesh-field",
-    "componentName": "ConstellationMeshField",
-    "title": "Constellation Mesh Field",
-    "description": "Interactive SVG vertex constellation surface that dynamically tethers proximity edges to the pointer with spring-scaled nodes.",
-    "tagline": "Interactive SVG constellation graph with pointer proximity edges.",
-    "category": "Backgrounds",
-    "badges": [
-      "New",
-      "SVG Graph",
-      "Proximity Mesh"
-    ],
-    "createdAt": "2026-10-07",
-    "featured": false,
-    "keywords": [
-      "constellation mesh field",
-      "particle network background",
-      "connected nodes svg",
-      "framer motion background",
-      "interactive graph surface"
     ]
   },
   {
@@ -545,29 +494,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "cylindrical card slider",
       "pan gesture carousel",
       "rotational 3d cards"
-    ]
-  },
-  {
-    "id": "digital-radar",
-    "slug": "digital-radar",
-    "componentName": "DigitalRadar",
-    "title": "Digital Radar",
-    "description": "Tactical polar radar sweep background featuring concentric nautical range rings, degree azimuth ticks, a rotating phosphor conic beam, and target blips that illuminate with decaying afterglow on sweep contact.",
-    "tagline": "Tactical polar radar sweep with phosphor target persistence.",
-    "category": "Backgrounds",
-    "badges": [
-      "Canvas 2D",
-      "Tactical HUD",
-      "Interactive"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": false,
-    "keywords": [
-      "digital radar",
-      "polar radar sweep",
-      "tactical hud background",
-      "sonar sweep",
-      "telemetry canvas"
     ]
   },
   {
@@ -664,29 +590,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "magnifying toolbar",
       "framer motion navigation",
       "spring dock"
-    ]
-  },
-  {
-    "id": "elastic-snap-sortable",
-    "slug": "elastic-snap-sortable",
-    "componentName": "ElasticSnapSortable",
-    "title": "Elastic Snap Sortable",
-    "description": "Reorderable priority queue where list items swap positions with Hooke's Law layout spring projection and full keyboard arrow-key control.",
-    "tagline": "Spring-projected reorderable list with keyboard arrow sorting.",
-    "category": "Motion",
-    "badges": [
-      "New",
-      "Layout Reorder",
-      "Keyboard Sort"
-    ],
-    "createdAt": "2026-10-07",
-    "featured": false,
-    "keywords": [
-      "elastic snap sortable",
-      "animated sortable list",
-      "reorderable list framer motion",
-      "priority queue ui",
-      "layout projection list"
     ]
   },
   {
@@ -809,54 +712,22 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "falling-petals",
-    "slug": "falling-petals",
-    "componentName": "FallingPetals",
-    "title": "Falling Petals",
-    "description": "Botanical particle background rendering organic Bezier cherry blossom petals, autumn maple leaves, and golden ginkgo foliage with 3D pitch/roll/yaw flutter and shared wind gusts.",
-    "tagline": "3D-projected sakura petals and autumn leaves drifting on the wind.",
-    "category": "Backgrounds",
+    "id": "file-drop-zone",
+    "slug": "file-drop-zone",
+    "componentName": "FileDropZone",
+    "title": "File Drop Zone",
+    "description": "An illustrated file upload card built around an animated folder. The folder opens when you drag a file over it, the paper sinks in as the upload progresses, and a green check pops on when it finishes.",
+    "tagline": "A folder that opens, fills up and confirms your upload",
+    "category": "Motion",
     "badges": [
-      "Canvas 2D",
-      "Nature",
-      "Botanical",
-      "Particles"
+      "Motion",
+      "Tailwind",
+      "Interactive",
+      "SVG"
     ],
-    "createdAt": "2026-10-08",
+    "createdAt": "2026-11-03T09:20:38.546Z",
     "featured": false,
-    "keywords": [
-      "sakura",
-      "cherry blossoms",
-      "petals",
-      "autumn leaves",
-      "ginkgo",
-      "wind",
-      "nature",
-      "canvas"
-    ]
-  },
-  {
-    "id": "feature-card",
-    "slug": "feature-card",
-    "componentName": "FeatureCard",
-    "title": "Feature Card",
-    "description": "Large rounded showcase card with an eyebrow badge, headline, concise copy, interactive media stage, and smooth spring hover lift.",
-    "tagline": "Large rounded feature card with media preview and hover lift.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "Showcase UI",
-      "Hover Lift"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": true,
-    "keywords": [
-      "feature card",
-      "apple feature card",
-      "bento card",
-      "media card",
-      "hover lift card"
-    ]
+    "keywords": []
   },
   {
     "id": "file-tree",
@@ -907,29 +778,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "floating-compass-nav",
-    "slug": "floating-compass-nav",
-    "componentName": "FloatingCompassNav",
-    "title": "Floating Compass Nav",
-    "description": "Viewport-anchored floating navigation pod that snaps elastically across four corner quadrants (NW, NE, SW, SE) via spring layout projection.",
-    "tagline": "Four-quadrant corner-snapping floating navigation pod.",
-    "category": "Navigation",
-    "badges": [
-      "New",
-      "Corner Snap",
-      "Layout Spring"
-    ],
-    "createdAt": "2026-10-07",
-    "featured": false,
-    "keywords": [
-      "floating compass nav",
-      "corner snap pip",
-      "picture in picture nav",
-      "framer motion layout snap",
-      "floating toolbar react"
-    ]
-  },
-  {
     "id": "floating-label-input",
     "slug": "floating-label-input",
     "componentName": "FloatingLabelInput",
@@ -976,30 +824,21 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "glow-border-card",
-    "slug": "glow-border-card",
-    "componentName": "GlowBorderCard",
-    "title": "Glow Border Card",
-    "description": "High-gloss feature cards with thin glowing gradient borders and interactive face overlays that dynamically illuminate and follow cursor coordinates using radial gradient masking.",
-    "tagline": "High-gloss cards with cursor-following radial gradient borders and reactive sheen overlays.",
-    "category": "Cards",
+    "id": "glide-dock",
+    "slug": "glide-dock",
+    "componentName": "GlideDock",
+    "title": "Glide Dock",
+    "description": "A floating, animated navigation dock for React that intelligently hides while scrolling down and reappears when scrolling up. Features smooth spring animations, active item indicators, and a sleek glassmorphism design powered by Framer Motion and Tailwind CSS.",
+    "tagline": "Floating navigation with a natural glide",
+    "category": "Motion",
     "badges": [
-      "Stripe",
-      "Glow Card",
-      "Pointer Tracking",
-      "Cards",
-      "Masking"
+      "Motion",
+      "Navigation",
+      "Interactive"
     ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "glow border card",
-      "stripe card glow",
-      "cursor tracking border",
-      "radial gradient border",
-      "neon border card",
-      "feature card grid"
-    ]
+    "createdAt": "2026-11-03T08:24:28.944Z",
+    "featured": false,
+    "keywords": []
   },
   {
     "id": "glyph-trail",
@@ -1051,29 +890,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "metaball input",
       "framer motion search",
       "spring search bar"
-    ]
-  },
-  {
-    "id": "gravity-well-portal",
-    "slug": "gravity-well-portal",
-    "componentName": "GravityWellPortal",
-    "title": "Gravity Well Portal",
-    "description": "Multi-node gravitational field stage where spring-tethered telemetry badges warp toward or repel from the pointer with polarity inversion.",
-    "tagline": "Multi-node gravitational attraction and repulsion spring field.",
-    "category": "Motion",
-    "badges": [
-      "New",
-      "Vector Field",
-      "Zero Re-renders"
-    ],
-    "createdAt": "2026-10-07",
-    "featured": true,
-    "keywords": [
-      "gravity well portal",
-      "magnetic particle field",
-      "vector field animation",
-      "framer motion physics",
-      "repel attract nodes"
     ]
   },
   {
@@ -1250,54 +1066,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "hover-cursor-shimmer-text",
-    "slug": "hover-cursor-shimmer-text",
-    "componentName": "HoverCursorShimmerText",
-    "title": "Hover Cursor Shimmer Text",
-    "description": "Text typography that shimmers strictly at the cursor's hover position using a hardware-accelerated dynamic radial mask beam.",
-    "tagline": "Localized text shimmer effect following pointer coordinates.",
-    "category": "Text",
-    "badges": [
-      "New",
-      "Micro-interaction",
-      "Typography"
-    ],
-    "createdAt": "2026-10-12",
-    "featured": true,
-    "keywords": [
-      "hover shimmer text",
-      "cursor shimmer text",
-      "text hover effect",
-      "radial mask text",
-      "localized shimmer"
-    ]
-  },
-  {
-    "id": "hover-reveal-feature-grid",
-    "slug": "hover-reveal-feature-grid",
-    "componentName": "HoverRevealFeatureGrid",
-    "title": "Hover Reveal Feature Grid",
-    "description": "Linear-inspired bento feature grid where hovering any tile casts an interactive radial spotlight mask across card borders, smoothly reveals secondary deep feature specifications, and highlights contextual interactive badges.",
-    "tagline": "Linear-style bento feature grid with radial spotlight mask and secondary hover reveal.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "Linear Style",
-      "Bento Grid",
-      "Spotlight Mask"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "hover reveal feature grid",
-      "linear bento grid",
-      "radial spotlight mask",
-      "bento features",
-      "feature cards",
-      "spotlight borders"
-    ]
-  },
-  {
     "id": "interactive-api-endpoint-bar",
     "slug": "interactive-api-endpoint-bar",
     "componentName": "InteractiveApiEndpointBar",
@@ -1369,29 +1137,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "kinetic-drawer-sheet",
-    "slug": "kinetic-drawer-sheet",
-    "componentName": "KineticDrawerSheet",
-    "title": "Kinetic Drawer Sheet",
-    "description": "Bottom gesture sheet featuring Peek and Full spring detents, velocity-projected flick transitions, and rubber-band over-drag.",
-    "tagline": "Multi-detent bottom gesture sheet with rubber-band over-drag.",
-    "category": "Overlays",
-    "badges": [
-      "New",
-      "Detent Snap",
-      "Gesture Sheet"
-    ],
-    "createdAt": "2026-10-07",
-    "featured": false,
-    "keywords": [
-      "kinetic drawer sheet",
-      "bottom sheet react",
-      "ios drawer detent",
-      "framer motion bottom sheet",
-      "gesture modal"
-    ]
-  },
-  {
     "id": "kinetic-rolling-counter",
     "slug": "kinetic-rolling-counter",
     "componentName": "KineticRollingCounter",
@@ -1412,29 +1157,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "slot machine counter react",
       "framer motion number counter",
       "rolling digits ui"
-    ]
-  },
-  {
-    "id": "kinetic-slider",
-    "slug": "kinetic-slider",
-    "componentName": "KineticSlider",
-    "title": "Kinetic Slider",
-    "description": "Elastic range slider featuring velocity-reactive tooltip inertia, logarithmic rubber-band boundary over-drag, and full keyboard accessibility.",
-    "tagline": "Velocity-tilted HUD badge and rubber-band boundary over-drag.",
-    "category": "Inputs",
-    "badges": [
-      "New",
-      "Velocity Physics",
-      "WAI-ARIA"
-    ],
-    "createdAt": "2026-10-07",
-    "featured": true,
-    "keywords": [
-      "kinetic slider",
-      "elastic range input",
-      "framer motion slider",
-      "velocity tooltip",
-      "rubber band slider"
     ]
   },
   {
@@ -1481,34 +1203,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "slide to unlock react",
       "framer motion swipe button",
       "safety switch ui"
-    ]
-  },
-  {
-    "id": "liquid-glass-card",
-    "slug": "liquid-glass-card",
-    "componentName": "LiquidGlassCard",
-    "title": "Liquid Glass Card",
-    "description": "Ultra-premium translucent frosted glass card featuring dynamic specular highlight cursor tracking, 3D perspective tilt, chromatic edge refraction, double-layer backdrop blur, and tactile click feedback.",
-    "tagline": "Apple-inspired frosted glass card with 3D cursor tilt and chromatic refraction.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "Liquid Glass",
-      "3D Tilt",
-      "Specular Highlight",
-      "visionOS"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "liquid glass card",
-      "frosted glass",
-      "glassmorphism",
-      "apple card",
-      "specular highlight",
-      "3d tilt card",
-      "chromatic refraction",
-      "visionos glass"
     ]
   },
   {
@@ -1771,31 +1465,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "morphing-blob",
-    "slug": "morphing-blob",
-    "componentName": "MorphingBlob",
-    "title": "Morphing Blob",
-    "description": "Organic fluid morphing SVG blob driven by Catmull-Rom cubic spline interpolation, Hooke's Law spring physics per node, and smooth real-time cursor attraction.",
-    "tagline": "Organic fluid SVG blob driven by Catmull-Rom splines and spring dynamics.",
-    "category": "Backgrounds",
-    "badges": [
-      "New",
-      "Interactive",
-      "Spring Physics",
-      "SVG"
-    ],
-    "createdAt": "2026-10-23",
-    "featured": true,
-    "keywords": [
-      "morphing blob",
-      "fluid blob svg",
-      "catmull rom spline",
-      "spring physics blob",
-      "cursor follow blob",
-      "liquid gradient blob"
-    ]
-  },
-  {
     "id": "morphing-dialog",
     "slug": "morphing-dialog",
     "componentName": "MorphingDialog",
@@ -2052,32 +1721,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "pricing-calculator",
-    "slug": "pricing-calculator",
-    "componentName": "PricingCalculator",
-    "title": "Pricing Calculator",
-    "description": "Interactive Stripe-style pricing calculator featuring an API usage volume slider, automatic plan tier recommendation highlights, multi-currency conversion, and an annual billing toggle with 20% discount.",
-    "tagline": "Interactive tiered pricing calculator with volume slider, currency converter, and plan tier match.",
-    "category": "Cards",
-    "badges": [
-      "Stripe",
-      "Pricing",
-      "Calculator",
-      "Interactive",
-      "Data Display"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "pricing calculator",
-      "stripe pricing",
-      "tiered volume pricing",
-      "usage slider",
-      "annual discount toggle",
-      "saas pricing plan"
-    ]
-  },
-  {
     "id": "product-compare-table",
     "slug": "product-compare-table",
     "componentName": "ProductCompareTable",
@@ -2223,29 +1866,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "rotary-spring-dial",
-    "slug": "rotary-spring-dial",
-    "componentName": "RotarySpringDial",
-    "title": "Rotary Spring Dial",
-    "description": "Synthesizer-inspired tactile rotary knob with a 270-degree spring-damped rotor, vertical drag scrubbing, and keyboard arrow control.",
-    "tagline": "270° studio rotary knob with spring-damped rotor physics.",
-    "category": "Inputs",
-    "badges": [
-      "New",
-      "Rotary Knob",
-      "WAI-ARIA"
-    ],
-    "createdAt": "2026-10-07",
-    "featured": true,
-    "keywords": [
-      "rotary spring dial",
-      "audio knob react",
-      "synthesizer dial ui",
-      "framer motion rotary knob",
-      "tactile dial input"
-    ]
-  },
-  {
     "id": "scrubbable-number-input",
     "slug": "scrubbable-number-input",
     "componentName": "ScrubbableNumberInput",
@@ -2266,31 +1886,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "drag to scrub input",
       "kinetic spinbutton",
       "framer motion input"
-    ]
-  },
-  {
-    "id": "shimmer-text",
-    "slug": "shimmer-text",
-    "componentName": "ShimmerText",
-    "title": "Shimmer Text",
-    "description": "Linear-inspired metallic gradient typography with a high-gloss light beam that sweeps across headlines continuously or upon hover interaction.",
-    "tagline": "Linear-style metallic gradient headline with an animated high-gloss beam.",
-    "category": "Text",
-    "badges": [
-      "New",
-      "Metallic",
-      "Linear Style",
-      "GPU Accelerated"
-    ],
-    "createdAt": "2026-10-09",
-    "featured": true,
-    "keywords": [
-      "shimmer text",
-      "linear typography",
-      "metallic text",
-      "gradient shine",
-      "gloss text",
-      "text beam"
     ]
   },
   {
@@ -2475,29 +2070,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
-    "id": "spring-dropdown-chevron",
-    "slug": "spring-dropdown-chevron",
-    "componentName": "SpringDropdownChevron",
-    "title": "Spring Dropdown Chevron",
-    "description": "Disclosure chevron trigger with hover tension anticipation, smooth rotational inertia, and spring overshoot.",
-    "tagline": "Disclosure chevron trigger with hover tension and rotational inertia.",
-    "category": "Navigation",
-    "badges": [
-      "New",
-      "Micro-interaction",
-      "Disclosure UI"
-    ],
-    "createdAt": "2026-10-10",
-    "featured": false,
-    "keywords": [
-      "dropdown chevron",
-      "accordion arrow",
-      "disclosure icon",
-      "spring rotation",
-      "framer motion chevron"
-    ]
-  },
-  {
     "id": "spring-pin-input",
     "slug": "spring-pin-input",
     "componentName": "SpringPinInput",
@@ -2566,78 +2138,6 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "parallax starfield",
       "space background",
       "night sky animation"
-    ]
-  },
-  {
-    "id": "stepper",
-    "slug": "stepper",
-    "componentName": "Stepper",
-    "title": "Stepper Wizard",
-    "description": "Multi-step onboarding and checkout progress wizard with spring-animated connector bars, clickable step indicators, and directional panel transitions.",
-    "tagline": "Multi-step progress wizard with spring connector and step transitions.",
-    "category": "Navigation",
-    "badges": [
-      "New",
-      "Onboarding UX",
-      "Spring Progress"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": true,
-    "keywords": [
-      "stepper",
-      "multi step wizard",
-      "onboarding progress",
-      "checkout steps",
-      "progress indicator"
-    ]
-  },
-  {
-    "id": "stepper-slider-control",
-    "slug": "stepper-slider-control",
-    "componentName": "StepperSliderControl",
-    "title": "Stepper & Slider",
-    "description": "Synchronized precision control pairing a thin-track slider and large round thumb with a tactile (− / +) segmented stepper pill.",
-    "tagline": "Minimal (− / +) stepper synced with a thin-track slider.",
-    "category": "Inputs",
-    "badges": [
-      "New",
-      "Tactile Control",
-      "Synced Input"
-    ],
-    "createdAt": "2026-10-08",
-    "featured": false,
-    "keywords": [
-      "stepper and slider",
-      "ios stepper",
-      "thin track slider",
-      "numeric stepper",
-      "range slider"
-    ]
-  },
-  {
-    "id": "sticky-pages",
-    "slug": "sticky-pages",
-    "componentName": "StickyPages",
-    "title": "Sticky Pages",
-    "description": "Apple-style sticky stacking full-viewport pages with progressive scale shrinking, cumulative dimming overlays, smooth scroll transitions, and subtle top elevation borders.",
-    "tagline": "Apple-style sticky stacking cards that scale and dim on scroll.",
-    "category": "Cards",
-    "badges": [
-      "New",
-      "Interactive",
-      "Scroll Physics",
-      "Layout"
-    ],
-    "createdAt": "2026-10-23",
-    "featured": true,
-    "keywords": [
-      "sticky pages",
-      "stacking cards",
-      "sticky scroll",
-      "scroll shrink cards",
-      "apple sticky cards",
-      "viewport cards",
-      "stacking sections"
     ]
   },
   {

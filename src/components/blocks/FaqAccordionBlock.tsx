@@ -285,7 +285,7 @@ export function FaqAccordionBlock({
           <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-12 text-center">
             <Search className="mx-auto h-8 w-8 text-neutral-600" />
             <p className="mt-3 text-sm text-neutral-400">
-              No matching questions found for "{searchQuery}".
+              No matching questions found for &quot;{searchQuery}&quot;.
             </p>
             <button
               type="button"

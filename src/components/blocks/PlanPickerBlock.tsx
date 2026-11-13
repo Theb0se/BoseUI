@@ -17,7 +17,7 @@ import {
   Sliders,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { HoverRevealFeatureGrid } from "@/components/ui/HoverRevealFeatureGrid";
+import { RevealCardGrid } from "@/components/ui/RevealCardGrid";
 
 export interface PlanPickerBlockProps {
   /** Optional title override */
@@ -326,9 +326,8 @@ export function PlanPickerBlock({
               transition={{ duration: 0.35, ease: "easeInOut" }}
               className="w-full mt-6 overflow-hidden"
             >
-              <HoverRevealFeatureGrid
-                spotlightColor="indigo"
-                spotlightRadius={380}
+              <RevealCardGrid
+                className="w-full"
               />
             </motion.div>
           )}

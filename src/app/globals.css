@@ -2,106 +2,216 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   BoseUI Design Token System — CSS Custom Properties
+   Single source of truth: src/lib/tokens.ts
+   Edit tokens.ts → update these vars → Tailwind picks them up.
+   ============================================================ */
+
 :root {
   color-scheme: light;
-  --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* ── Fonts ──────────────────────────────────────── */
+  --font-inter:          "Inter Tight", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-jetbrains-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  --background: 0 0% 100%;
-  --foreground: 0 0% 9%;
-  --border: 0 0% 89.8%;
-  --ring: 0 0% 9%;
-  --dot-color: rgba(0, 0, 0, 0.08);
+
+  /* ── Semantic Colors (light) ────────────────────── */
+  --background:          0 0% 100%;
+  --background-subtle:   0 0% 97%;
+  --surface:             0 0% 100%;
+  --surface-raised:      0 0% 97%;
+  --surface-overlay:     0 0% 100%;
+  --foreground:          0 0% 9%;
+  --foreground-muted:    0 0% 50%;
+  --foreground-subtle:   0 0% 63%;
+  --border:              0 0% 89.8%;
+  --border-strong:       0 0% 80%;
+  --ring:                0 0% 9%;
+  --accent:              221 83% 53%;
+  --accent-foreground:   0 0% 100%;
+  --accent-muted:        214 100% 97%;
+
+  /* ── Dot / Grid pattern colors ──────────────────── */
+  --dot-color:  rgba(0, 0, 0, 0.08);
   --grid-color: rgba(0, 0, 0, 0.04);
+
+  /* ── Border Radius ──────────────────────────────── */
+  --radius-sm:   0.25rem;
+  --radius:      0.375rem;
+  --radius-md:   0.5rem;
+  --radius-lg:   0.75rem;
+  --radius-xl:   1rem;
+  --radius-2xl:  1.25rem;
+  --radius-3xl:  1.5rem;
+  --radius-full: 9999px;
+
+  /* ── Shadow ─────────────────────────────────────── */
+  --shadow-xs:   0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm:   0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.08);
+  --shadow-md:   0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.08);
+  --shadow-lg:   0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+  --shadow-xl:   0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl:  0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+  /* ── Motion / Transition Durations ─────────────── */
+  --duration-instant: 80ms;
+  --duration-fast:    150ms;
+  --duration-normal:  250ms;
+  --duration-slow:    400ms;
+  --duration-slower:  600ms;
+  --duration-lazy:    900ms;
+
+  /* ── Easing Curves ──────────────────────────────── */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);   /* expo ease-out — spring feel */
+  --ease-apple:  cubic-bezier(0.25, 0.1, 0.25, 1); /* system default             */
+  --ease-out:    cubic-bezier(0, 0, 0.2, 1);
+  --ease-in:     cubic-bezier(0.4, 0, 1, 1);
+  --ease-inout:  cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Z-Index Scale ──────────────────────────────── */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-overlay: 20;
+  --z-sticky:  30;
+  --z-drawer:  40;
+  --z-modal:   50;
+  --z-popover: 60;
+  --z-toast:   70;
+  --z-tooltip: 80;
 }
 
+/* ── Dark mode overrides ──────────────────────────── */
 html.dark {
   color-scheme: dark;
-  --background: 0 0% 5%;
-  --foreground: 0 0% 98%;
-  --border: 0 0% 14.9%;
-  --ring: 0 0% 83.1%;
-  --dot-color: rgba(255, 255, 255, 0.09);
+
+  --background:         0 0% 5%;
+  --background-subtle:  0 0% 7%;
+  --surface:            0 0% 8%;
+  --surface-raised:     0 0% 11%;
+  --surface-overlay:    0 0% 13%;
+  --foreground:         0 0% 98%;
+  --foreground-muted:   0 0% 63%;
+  --foreground-subtle:  0 0% 38%;
+  --border:             0 0% 14.9%;
+  --border-strong:      0 0% 25%;
+  --ring:               0 0% 83.1%;
+  --accent:             217 91% 60%;
+  --accent-foreground:  0 0% 100%;
+  --accent-muted:       226 57% 21%;
+
+  --dot-color:  rgba(255, 255, 255, 0.09);
   --grid-color: rgba(255, 255, 255, 0.035);
+
+  --shadow-xs:  0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-sm:  0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --shadow-md:  0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg:  0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+  --shadow-xl:  0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.5);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.8);
 }
+
+/* ============================================================
+   BASE LAYER
+   ============================================================ */
 
 html {
   scroll-behavior: smooth;
-  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-inter);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-inter);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  transition:
+    background-color var(--duration-normal) var(--ease-spring),
+    color            var(--duration-normal) var(--ease-spring);
 }
 
-code,
-kbd,
-samp,
-pre,
-.font-mono {
-  font-family: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+code, kbd, samp, pre, .font-mono {
+  font-family: var(--font-jetbrains-mono) !important;
 }
 
-/* Crisp selection styling */
+/* ── Selection ───────────────────────────────────── */
 ::selection {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: hsl(var(--foreground));
+  color: hsl(var(--background));
 }
 
-html.dark ::selection {
-  background-color: #ffffff;
-  color: #000000;
+/* ── Focus ring (global default) ─────────────────── */
+:focus-visible {
+  outline: 2px solid hsl(var(--accent));
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
-/* Adaptive monochrome backgrounds */
+/* ============================================================
+   UTILITY LAYER — Pattern Backgrounds
+   ============================================================ */
+
 .bg-dot-matrix {
   background-image: radial-gradient(var(--dot-color) 1.25px, transparent 1.25px);
+  background-size: 20px 20px;
 }
 
 .bg-grid-pattern {
-  background-image: linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+  background-image:
+    linear-gradient(to right,  var(--grid-color) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
-/* Full screen component stage expansion overrides */
+/* ── Surface utilities ───────────────────────────── */
+.bg-surface         { background-color: hsl(var(--surface)); }
+.bg-surface-raised  { background-color: hsl(var(--surface-raised)); }
+.bg-surface-overlay { background-color: hsl(var(--surface-overlay)); }
+
+/* ── Text utilities ──────────────────────────────── */
+.text-muted   { color: hsl(var(--foreground-muted)); }
+.text-subtle  { color: hsl(var(--foreground-subtle)); }
+.text-accent  { color: hsl(var(--accent)); }
+
+/* ── Border utilities ────────────────────────────── */
+.border-token       { border-color: hsl(var(--border)); }
+.border-token-strong{ border-color: hsl(var(--border-strong)); }
+
+/* ── Transition utility classes ──────────────────── */
+.transition-spring {
+  transition-timing-function: var(--ease-spring);
+  transition-duration: var(--duration-normal);
+}
+.transition-instant { transition-duration: var(--duration-instant); transition-timing-function: var(--ease-spring); }
+.transition-fast    { transition-duration: var(--duration-fast);    transition-timing-function: var(--ease-spring); }
+.transition-slow    { transition-duration: var(--duration-slow);    transition-timing-function: var(--ease-spring); }
+
+/* ============================================================
+   COMPONENT LAYER
+   ============================================================ */
+
+/* Full-screen stage override (component playground) */
 .fullscreen-stage-expand > .w-full {
   max-width: 100% !important;
   width: 100% !important;
 }
-
 .fullscreen-stage-expand [data-fullscreen-scroll] {
   min-height: calc(100vh - 9rem) !important;
   height: auto !important;
   max-height: none !important;
 }
 
-/* Minimal sleek scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
+/* ── Scrollbar ───────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
   background: rgba(150, 150, 150, 0.25);
-  border-radius: 9999px;
-  transition: background-color 0.2s ease;
+  border-radius: var(--radius-full);
+  transition: background-color var(--duration-fast) var(--ease-spring);
 }
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(150, 150, 150, 0.45);
-}
-
-html.dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-html.dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.28);
-}
+::-webkit-scrollbar-thumb:hover { background: rgba(150, 150, 150, 0.45); }
+html.dark ::-webkit-scrollbar-thumb       { background: rgba(255, 255, 255, 0.15); }
+html.dark ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.28); }

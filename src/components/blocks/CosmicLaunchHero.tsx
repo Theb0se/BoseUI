@@ -6,7 +6,6 @@ import { Star, Sparkles, ArrowRight, Terminal, Github, Copy, Check } from "lucid
 import { cn } from "@/lib/utils";
 import { StarryNight } from "@/components/ui/StarryNight";
 import { ShootingStars } from "@/components/ui/ShootingStars";
-import { ShimmerText } from "@/components/ui/ShimmerText";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 
 export interface CosmicLaunchHeroProps {
@@ -85,13 +84,14 @@ export function CosmicLaunchHero({
 
         {/* Shimmer Specular Headline */}
         <div className="max-w-4xl">
-          <ShimmerText
-            text={headline}
-            palette="silver"
-            duration={3.2}
-            angle={115}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.12]"
-          />
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.12] bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent"
+          >
+            {headline}
+          </motion.h1>
         </div>
 
         {/* Subtitle Description */}

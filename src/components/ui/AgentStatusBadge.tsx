@@ -293,7 +293,7 @@ export function AgentStatusBadge({
     useState<AgentStatus>("reading-docs");
 
   const currentStatus = controlledStatus ?? internalStatus;
-  const config = STATUS_CONFIG[currentStatus];
+  const config = STATUS_CONFIG[currentStatus] ?? STATUS_CONFIG["reading-docs"];
 
   // Cycling interaction
   const handleCycle = useCallback(() => {

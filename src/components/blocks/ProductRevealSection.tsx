@@ -9,7 +9,7 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { LiquidGlassCard } from "@/components/ui/LiquidGlassCard";
+import { TiltCreditCard3D } from "@/components/ui/TiltCreditCard3D";
 
 export interface ColorFinish {
   id: string;
@@ -221,14 +221,15 @@ export function ProductRevealSection({
             </div>
           </div>
         ) : (
-          /* Alternative Tab: Liquid Glass Specular Card Showcase */
+          /* Alternative Tab: Titanium Specular Card Showcase */
           <div className="flex flex-col items-center justify-center py-6">
-            <LiquidGlassCard
-              title="Titanium Apple Card"
-              subtitle="Mastercard • World Elite • 7492"
-              tiltFactor={1.2}
-              chromaticEdge
-              className="max-w-4xl"
+            <TiltCreditCard3D
+              cardHolder="Titanium Apple Card"
+              cardNumber="5412 •••• •••• 7492"
+              expiry="12/29"
+              cvv="884"
+              theme="titanium"
+              className="max-w-md"
             />
           </div>
         )}

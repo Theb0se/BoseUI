@@ -17,7 +17,6 @@ import { cn } from "@/lib/utils";
 import { ExpandableBentoCard } from "@/components/ui/ExpandableBentoCard";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { ParallaxTiltCard } from "@/components/ui/ParallaxTiltCard";
-import { FeatureCard } from "@/components/ui/FeatureCard";
 
 export interface FeatureBentoBlockProps {
   /** Eyebrow badge over section heading */
@@ -210,13 +209,25 @@ export function FeatureBentoBlock({
                 </span>
                 <span>PRODUCTION_READY</span>
               </div>
-              <FeatureCard
-                eyebrow="Zero-Overhead Primitive"
-                title="Machined for uncompromising production velocity."
-                description="Engineered without bulky runtime wrappers. Copy the pure TypeScript component into your repository and retain full ownership of styles and animation constants."
-                ctaLabel="Inspect Source"
-                layout="horizontal"
-                media={
+              <div className="relative flex flex-col sm:flex-row items-center gap-6 rounded-2xl border border-neutral-800 bg-neutral-950/90 p-6 shadow-xl w-full">
+                <div className="flex-1 space-y-3">
+                  <span className="font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">
+                    Zero-Overhead Primitive
+                  </span>
+                  <h3 className="text-xl font-bold tracking-tight text-white">
+                    Machined for uncompromising production velocity.
+                  </h3>
+                  <p className="text-sm text-neutral-400 leading-relaxed">
+                    Engineered without bulky runtime wrappers. Copy the pure TypeScript component into your repository and retain full ownership of styles and animation constants.
+                  </p>
+                  <div className="pt-2">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300">
+                      <span>Inspect Source</span>
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </span>
+                  </div>
+                </div>
+                <div className="w-full sm:w-auto shrink-0">
                   <div className="flex h-full w-full items-center justify-center rounded-2xl bg-neutral-900/80 border border-neutral-800 p-6">
                     <div className="flex flex-col items-center text-center gap-2">
                       <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
@@ -226,9 +237,8 @@ export function FeatureBentoBlock({
                       <span className="text-[11px] text-neutral-500">Pure Tailwind + Motion</span>
                     </div>
                   </div>
-                }
-                className="max-w-none w-full border-neutral-800 bg-neutral-950/90 text-neutral-100 shadow-xl"
-              />
+                </div>
+              </div>
             </div>
           </div>
 

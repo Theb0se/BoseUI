@@ -33,7 +33,7 @@
 
 **BoseUI** is an open-source, animation-first component library and design system for modern React applications. Built for developers and product designers who demand tactile feedback, fluid spring mechanics, and micro-interactions that elevate standard UI into unforgettable software.
 
-- 🚀 **127+ Production-Grade Primitives**: Buttons, cards, docks, menus, text effects, inputs, and WebGL / Canvas physics simulations.
+- 🚀 **104+ Production-Grade Primitives**: Buttons, cards, docks, menus, text effects, inputs, and WebGL / Canvas physics simulations.
 - 🧩 **26 Pre-Engineered Application Blocks**: Curated heroes, pricing calculators, feature bentos, command docks, and authentication shells.
 - ⚡ **Zero Runtime Lock-In**: Copy-paste individual components or install via the native `shadcn` CLI directly into your project.
 - 🎯 **Strictly Typed & Accessible**: 100% TypeScript coverage with `useReducedMotion()` fallbacks and WCAG-compliant contrast.
@@ -162,6 +162,8 @@ Visit `http://localhost:3000` to preview the component library locally.
 | `npm run dev` | Starts the Next.js local development server with Turbopack / HMR |
 | `npm run build` | Runs full registry sync, SEO generation, typecheck, and Next.js static build |
 | `npm run typecheck` | Runs strict TypeScript verification (`tsc --noEmit`) |
+| `npm run lint` | Runs Next.js ESLint verification rules |
+| `npm test` | Runs Vitest unit and component smoke test suite |
 | `npm run sync` | Runs registry generator, SEO generator, registry validator, and SEO audit |
 | `npm run component:new <Name>` | Scaffolds a new UI primitive, meta configuration, and registers it |
 | `npm run registry:generate` | Compiles raw `.tsx` primitives into public shadcn JSON manifests |

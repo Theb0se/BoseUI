@@ -117,7 +117,7 @@ export function AiAssistantBlock({
             {/* Prompt Bar & Terminal Preview */}
             <div className="min-h-[280px] flex flex-col justify-between gap-6">
               <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-4 font-mono text-xs text-neutral-300 leading-relaxed">
-                <div className="text-neutral-500 mb-2">// Active execution stdout stream</div>
+                <div className="text-neutral-500 mb-2">{"// Active execution stdout stream"}</div>
                 <div className="flex items-center gap-2 text-cyan-400">
                   <span className="select-none">$</span>
                   <span>{activeQuery || "boseui assistant --ready"}</span>

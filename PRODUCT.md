@@ -13,7 +13,7 @@ Situation & Job: They need tactile feedback, fluid spring mechanics, and micro-i
 
 ## Product Purpose
 
-BoseUI is an open-source, animation-first component library and design system for modern React applications. It provides 127+ production-grade primitives and 26 pre-engineered application blocks engineered with kinetic physics, spring mechanics, and WebGL/canvas simulations to make interfaces feel alive and tactile. Success means developers can easily discover, preview, copy, or CLI-install modular, zero-runtime-lock-in components directly into their codebases.
+BoseUI is an open-source, animation-first component library and design system for modern React applications. It provides 104+ production-grade primitives and 26 pre-engineered application blocks engineered with kinetic physics, spring mechanics, and WebGL/canvas simulations to make interfaces feel alive and tactile. Success means developers can easily discover, preview, copy, or CLI-install modular, zero-runtime-lock-in components directly into their codebases.
 
 ## Positioning
 
@@ -27,7 +27,7 @@ Unlike traditional static component libraries or heavy monolithic animated packa
 
 ## Capabilities and Constraints
 
-- **Capabilities**: 127+ interactive UI primitives across 9 functional categories (Buttons, Cards & Bentos, Navigation & Docks, Inputs & Forms, Fintech & Metrics, Typography & Text, Cosmic & Simulations, Water & Nature, DevTools & Blueprints); 26 composite application blocks; centralized preview harnesses via `src/components/docs/preview.tsx`; automated shadcn-compatible JSON registry builder.
+- **Capabilities**: 104+ interactive UI primitives across 9 functional categories (Buttons, Cards & Bentos, Navigation & Docks, Inputs & Forms, Fintech & Metrics, Typography & Text, Cosmic & Simulations, Water & Nature, DevTools & Blueprints); 26 composite application blocks; centralized preview harnesses via `src/components/docs/preview.tsx`; automated shadcn-compatible JSON registry builder.
 - **Constraints**: React 18 / Next.js 14 App Router, TypeScript strict typing, Tailwind CSS styling, Framer Motion animation engine; zero external CSS runtime requirements.
 - **Terminology**: Primitives (individual UI elements), Blocks (composed sections/pages), Kinetic (physics-based, spring-driven movement), Registry (shadcn-compatible JSON manifests).
 

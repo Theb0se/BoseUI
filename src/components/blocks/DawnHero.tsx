@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { HorizonLight } from "@/components/ui/HorizonLight";
-import { ShimmerText } from "@/components/ui/ShimmerText";
 import { SplitButton, SplitButtonOption } from "@/components/ui/SplitButton";
 
 export interface DawnHeroMetric {
@@ -187,13 +186,14 @@ export function DawnHero({
 
         {/* Shimmering Headline */}
         <div className="mt-6 max-w-3xl mx-auto">
-          <ShimmerText
-            text={headline}
-            palette="gold"
-            duration={3.5}
-            angle={120}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.14]"
-          />
+          <motion.h1
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.14] bg-gradient-to-r from-amber-100 via-amber-200 to-amber-500 bg-clip-text text-transparent"
+          >
+            {headline}
+          </motion.h1>
         </div>
 
         {/* Narrative Description */}

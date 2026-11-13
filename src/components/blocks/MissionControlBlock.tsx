@@ -10,7 +10,6 @@ import {
   Zap,
   CheckCircle2,
 } from "lucide-react";
-import { DigitalRadar } from "@/components/ui/DigitalRadar";
 import { RollingNumberTicker } from "@/components/ui/RollingNumberTicker";
 import { cn } from "@/lib/utils";
 
@@ -80,17 +79,54 @@ export function MissionControlBlock({
       {/* Center Radar Scope & Telemetry Viewport */}
       <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 items-center mb-8">
         {/* Radar Viewport */}
-        <div className="lg:col-span-8 overflow-hidden rounded-2xl border border-neutral-800 bg-black/60 shadow-inner">
-          <DigitalRadar
-            color={radarColor}
-            sweepSpeed={1.0}
-            blipCount={12}
-            rangeRings={4}
-            showTelemetry={true}
-            className="min-h-[440px] rounded-none border-0"
-          >
-            <div className="hidden" />
-          </DigitalRadar>
+        <div className="lg:col-span-8 overflow-hidden rounded-2xl border border-neutral-800 bg-black/60 shadow-inner relative min-h-[440px] flex items-center justify-center">
+          {/* Concentric Range Rings */}
+          {[1, 2, 3, 4].map((ring) => (
+            <div
+              key={ring}
+              style={{
+                width: `${ring * 22}%`,
+                height: `${ring * 22}%`,
+                borderColor: `${radarColor}30`,
+              }}
+              className="absolute rounded-full border border-dashed transition-colors duration-500 pointer-events-none"
+            />
+          ))}
+          {/* Crosshairs */}
+          <div style={{ backgroundColor: `${radarColor}25` }} className="absolute h-full w-px pointer-events-none" />
+          <div style={{ backgroundColor: `${radarColor}25` }} className="absolute w-full h-px pointer-events-none" />
+          {/* Rotating Radar Sweep */}
+          <div
+            style={{
+              background: `conic-gradient(from 0deg, transparent 0deg, ${radarColor}35 55deg, transparent 56deg)`,
+            }}
+            className="absolute inset-0 rounded-2xl animate-spin [animation-duration:4s] [animation-timing-function:linear] pointer-events-none"
+          />
+          {/* Blips */}
+          <div
+            style={{ backgroundColor: radarColor, boxShadow: `0 0 10px ${radarColor}` }}
+            className="absolute top-[32%] left-[45%] h-2 w-2 rounded-full animate-ping [animation-duration:2s]"
+          />
+          <div
+            style={{ backgroundColor: radarColor, boxShadow: `0 0 10px ${radarColor}` }}
+            className="absolute top-[60%] left-[68%] h-2 w-2 rounded-full animate-pulse"
+          />
+          <div
+            style={{ backgroundColor: radarColor, boxShadow: `0 0 10px ${radarColor}` }}
+            className="absolute top-[40%] left-[72%] h-1.5 w-1.5 rounded-full"
+          />
+          <div
+            style={{ backgroundColor: radarColor, boxShadow: `0 0 10px ${radarColor}` }}
+            className="absolute top-[70%] left-[30%] h-2 w-2 rounded-full animate-ping [animation-duration:3s]"
+          />
+          {/* Telemetry Overlay */}
+          <div className="absolute top-4 left-4 font-mono text-[11px] text-neutral-400 space-y-0.5 pointer-events-none">
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ backgroundColor: radarColor }} />
+              <span className="text-white font-semibold">RADAR_SCOPE // 360° ACTIVE</span>
+            </div>
+            <div className="text-neutral-500">BEARING: 042° // RANGE: 400KM // 12 BLIPS</div>
+          </div>
         </div>
 
         {/* Tactical Status Cards */}

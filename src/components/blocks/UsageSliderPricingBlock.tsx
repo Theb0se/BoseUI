@@ -15,9 +15,7 @@ import {
   Info,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { KineticSlider } from "@/components/ui/KineticSlider";
 import { ScrubbableNumberInput } from "@/components/ui/ScrubbableNumberInput";
-import { StepperSliderControl } from "@/components/ui/StepperSliderControl";
 
 export interface UsageSliderPricingBlockProps {
   /** Initial request volume. Default: 500000 */
@@ -101,7 +99,7 @@ export function UsageSliderPricingBlock({
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 my-8 items-stretch">
         {/* Left column: 3 interactive sliders / scrubbers */}
         <div className="lg:col-span-7 flex flex-col justify-between space-y-6 rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white/70 dark:bg-neutral-900/40 backdrop-blur-md p-6 sm:p-8">
-          {/* 1. KineticSlider for Request Invocations */}
+          {/* 1. Invocations Control */}
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
               <span className="flex items-center gap-1.5">
@@ -112,16 +110,20 @@ export function UsageSliderPricingBlock({
                 ${REQUEST_RATE_PER_100K} per 100K ops
               </span>
             </div>
-            <KineticSlider
-              label="Monthly Invocations"
-              min={100_000}
-              max={5_000_000}
-              step={50_000}
-              unit="reqs"
-              value={requests}
-              onChange={(val: number) => setRequests(val)}
-              className="pt-1"
-            />
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="text-xs text-neutral-600 dark:text-neutral-400">
+                Adjust expected API calls per billing cycle.
+              </div>
+              <ScrubbableNumberInput
+                label="Invocations"
+                min={100_000}
+                max={5_000_000}
+                step={50_000}
+                unit="reqs"
+                value={requests}
+                onChange={(val: number) => setRequests(val)}
+              />
+            </div>
           </div>
 
           {/* 2. ScrubbableNumberInput for Seats */}
@@ -151,7 +153,7 @@ export function UsageSliderPricingBlock({
             </div>
           </div>
 
-          {/* 3. StepperSliderControl for GPU Nodes */}
+          {/* 3. Compute Control for GPU Nodes */}
           <div className="space-y-2 border-t border-neutral-200/80 dark:border-neutral-800/80 pt-5">
             <div className="flex items-center justify-between text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
               <span className="flex items-center gap-1.5">
@@ -162,15 +164,20 @@ export function UsageSliderPricingBlock({
                 ${GPU_RATE}/GPU/mo
               </span>
             </div>
-            <StepperSliderControl
-              label="Compute Accelerators"
-              min={0}
-              max={16}
-              step={1}
-              unit="GPUs"
-              value={gpus}
-              onChange={(val: number) => setGpus(val)}
-            />
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="text-xs text-neutral-600 dark:text-neutral-400">
+                Provision high-throughput TensorCore accelerators.
+              </div>
+              <ScrubbableNumberInput
+                label="Accelerators"
+                min={0}
+                max={16}
+                step={1}
+                unit="GPUs"
+                value={gpus}
+                onChange={(val: number) => setGpus(val)}
+              />
+            </div>
           </div>
         </div>
 

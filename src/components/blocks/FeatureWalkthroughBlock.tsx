@@ -278,7 +278,7 @@ export function FeatureWalkthroughBlock({
                   <Code2 className="h-4 w-4 text-blue-400" />
                   <span>SYNCHRONIZED_CODE_STAGE</span>
                 </span>
-                <span className="text-neutral-500">Step {activeChapter.step} // {activeChapter.id.toUpperCase()}</span>
+                <span className="text-neutral-500">Step {activeChapter.step} {"//"} {activeChapter.id.toUpperCase()}</span>
               </div>
 
               <div className="mt-3 rounded-2xl bg-neutral-950 border border-neutral-800/80 p-4 font-mono text-xs overflow-x-auto">
