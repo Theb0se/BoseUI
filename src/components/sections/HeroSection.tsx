@@ -67,8 +67,10 @@ export function HeroSection() {
     setSelectedPreset(p.label);
   };
 
-  const scrollToRecentlyAdded = () => {
-    const el = document.getElementById("recently-added");
+  const scrollToFeaturedComponents = () => {
+    const el =
+      document.getElementById("featured-components") ||
+      document.getElementById("recently-added");
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     }
@@ -76,6 +78,7 @@ export function HeroSection() {
 
   return (
     <section className="relative flex min-h-[calc(100dvh-3.5rem)] flex-col justify-between py-8 sm:py-12 lg:py-16">
+
       {/* Top / Main Hero Content */}
       <div className="my-auto grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
         {/* Left Column: Direct Copy & Actions */}
@@ -91,7 +94,7 @@ export function HeroSection() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
             </span>
-            <span>Open-source React primitives</span>
+            <span>Motion you can feel.</span>
           </motion.div>
 
           {/* Headline (one line, plain) */}
@@ -101,7 +104,7 @@ export function HeroSection() {
             transition={{ type: "spring", stiffness: 320, damping: 28, delay: 0.05 }}
             className="text-4xl font-semibold tracking-[-0.03em] text-neutral-950 dark:text-white sm:text-5xl lg:text-[3.5rem] lg:leading-[1.08]"
           >
-            React components with <span className="text-neutral-600 dark:text-neutral-300">spring animations.</span>
+            Open-Source React UI Library with  <span className="text-neutral-600 dark:text-neutral-300">Tunable Spring Physics.</span>
           </motion.h1>
 
           {/* Subtext (one sentence) */}
@@ -136,72 +139,7 @@ export function HeroSection() {
               </Link>
             </motion.div>
 
-            {/* Install command as a copyable chip with sliding tab indicator */}
-            <div className="inline-flex h-10 items-center rounded-lg border border-neutral-200 bg-neutral-50/90 p-1 text-xs dark:border-neutral-800 dark:bg-neutral-950/90">
-              {/* Package manager toggle */}
-              <div className="relative flex items-center border-r border-neutral-200 pr-1 mr-1.5 dark:border-neutral-800">
-                {(["npm", "pnpm", "bun"] as const).map((pm) => (
-                  <button
-                    key={pm}
-                    type="button"
-                    onClick={() => setPkg(pm)}
-                    className={`relative rounded-md px-2.5 py-1 font-mono text-[11px] transition-colors z-10 ${pkg === pm
-                      ? "font-medium text-neutral-950 dark:text-white"
-                      : "text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
-                      }`}
-                  >
-                    {pkg === pm && (
-                      <motion.div
-                        layoutId="hero-pm-indicator"
-                        transition={{ type: "spring", stiffness: 500, damping: 35 }}
-                        className="absolute inset-0 rounded-md bg-white shadow-2xs dark:bg-neutral-900 -z-10"
-                      />
-                    )}
-                    {pm}
-                  </button>
-                ))}
-              </div>
 
-              {/* Command text & animated copy button */}
-              <div className="flex items-center gap-2.5 pl-1 pr-1.5">
-                <code className="font-mono text-[11px] text-neutral-700 dark:text-neutral-300">
-                  {INSTALL_COMMANDS[pkg]}
-                </code>
-                <button
-                  type="button"
-                  onClick={handleCopy}
-                  aria-label={`Copy ${pkg} install command`}
-                  title="Copy to clipboard"
-                  className="relative inline-flex h-7 w-7 items-center justify-center rounded-md text-neutral-500 hover:bg-neutral-200/50 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-white transition-colors"
-                >
-                  <AnimatePresence mode="wait" initial={false}>
-                    {copied ? (
-                      <motion.span
-                        key="check"
-                        initial={{ scale: 0.6, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.6, opacity: 0 }}
-                        transition={{ type: "spring", stiffness: 450, damping: 25 }}
-                        className="flex items-center justify-center text-emerald-600 dark:text-emerald-400"
-                      >
-                        <Check className="h-3.5 w-3.5" />
-                      </motion.span>
-                    ) : (
-                      <motion.span
-                        key="copy"
-                        initial={{ scale: 0.6, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.6, opacity: 0 }}
-                        transition={{ type: "spring", stiffness: 450, damping: 25 }}
-                        className="flex items-center justify-center"
-                      >
-                        <Copy className="h-3.5 w-3.5" />
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </button>
-              </div>
-            </div>
           </motion.div>
 
           {/* Small text line below */}
@@ -230,19 +168,6 @@ export function HeroSection() {
             <div className="rounded-xl border border-neutral-200/90 bg-white dark:border-neutral-800 dark:bg-neutral-950 overflow-hidden">
               {/* Top Header: window controls, lab title & segmented tabs */}
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-neutral-200/80 bg-neutral-50/80 px-4 py-3 dark:border-neutral-800 dark:bg-neutral-900/60">
-                <div className="flex items-center gap-2.5">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
-                  </span>
-                  <span className="font-mono text-xs font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
-                    spring.lab
-                  </span>
-                  <span className="rounded bg-neutral-200/70 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400">
-                    Interactive
-                  </span>
-                </div>
-
                 {/* Tab Switcher */}
                 <div className="inline-flex items-center rounded-lg border border-neutral-200/80 bg-neutral-100/80 p-0.5 text-xs dark:border-neutral-800 dark:bg-neutral-900">
                   {DEMO_TABS.map((tab) => {
@@ -431,34 +356,6 @@ export function HeroSection() {
                   })}
                 </div>
 
-                {/* Live Metrics & Slider */}
-                <div className="flex items-center gap-2.5 font-mono text-[11px] text-neutral-600 dark:text-neutral-400">
-                  <div className="flex items-center gap-1.5">
-                    <span>k:</span>
-                    <input
-                      type="range"
-                      min={140}
-                      max={600}
-                      step={20}
-                      value={stiffness}
-                      onChange={(e) => {
-                        setStiffness(Number(e.target.value));
-                        setSelectedPreset("custom");
-                      }}
-                      aria-label="Spring stiffness"
-                      className="h-1.5 w-16 sm:w-20 cursor-pointer accent-blue-600 dark:accent-blue-400"
-                    />
-                    <span className="w-8 text-right font-semibold text-neutral-900 dark:text-white">
-                      {stiffness}
-                    </span>
-                  </div>
-                  <span className="text-neutral-300 dark:text-neutral-700">|</span>
-                  <span className="text-[10px]">
-                    d: <strong className="text-neutral-900 dark:text-white">{damping}</strong>
-                  </span>
-                  <span className="text-neutral-300 dark:text-neutral-700">|</span>
-                  <span className="text-[10px] text-neutral-400">m: 0.6</span>
-                </div>
               </div>
             </div>
           </div>
@@ -474,7 +371,7 @@ export function HeroSection() {
       >
         <button
           type="button"
-          onClick={scrollToRecentlyAdded}
+          onClick={scrollToFeaturedComponents}
           aria-label="Scroll to explore components"
           className="group flex flex-col items-center gap-2 text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded p-1"
         >

@@ -34,7 +34,7 @@ describe("Sidebar component", () => {
   it("filters components when search query is typed", () => {
     render(<Sidebar />);
 
-    const searchInput = screen.getByPlaceholderText("Filter 104 components...");
+    const searchInput = screen.getByPlaceholderText(/Filter \d+ components\.\.\./);
     expect(searchInput).toBeInTheDocument();
 
     fireEvent.change(searchInput, { target: { value: "magnetic" } });
@@ -49,7 +49,7 @@ describe("Sidebar component", () => {
   it("shows empty state when no components match query", () => {
     render(<Sidebar />);
 
-    const searchInput = screen.getByPlaceholderText("Filter 104 components...");
+    const searchInput = screen.getByPlaceholderText(/Filter \d+ components\.\.\./);
     fireEvent.change(searchInput, { target: { value: "nonexistentxyz123" } });
 
     expect(screen.getByText("No components found")).toBeInTheDocument();

@@ -234,7 +234,7 @@ export function Sidebar() {
           type="text"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          placeholder="Filter 104 components..."
+          placeholder={`Filter ${PULSE_COMPONENTS.length} components...`}
           aria-label="Filter components"
           className="h-9 w-full rounded-xl border border-neutral-200 bg-neutral-50/80 pl-8 pr-12 text-xs text-neutral-900 placeholder:text-neutral-400 transition-colors focus:border-neutral-900 focus:bg-white focus:outline-none dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-neutral-300 dark:focus:bg-neutral-950"
         />

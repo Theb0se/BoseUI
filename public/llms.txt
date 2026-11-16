@@ -33,7 +33,7 @@ Our latest research on frontend engineering and UI/UX:
 - [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
 - [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
 
-## Available Kinetic Components (104)
+## Available Kinetic Components (106)
 
 ### AI Voice Orb (`AIVoiceOrb`)
 - **Slug**: `ai-voice-orb`
@@ -275,6 +275,69 @@ export function HeaderThemeButton() {
       theme={isDark ? "dark" : "light"}
       onThemeChange={(next) => setTheme(next)}
       glow
+    />
+  );
+}
+```
+
+---
+
+### Announcement Banner (`AnnouncementBanner`)
+- **Slug**: `announcement-banner`
+- **Category**: Navigation
+- **Tagline**: Spring-animated dismissible announcement banner with message rotation and sticky header awareness.
+- **Description**: Slim, animated top banner that announces product releases, features, or offers with Snappy spring physics, smooth rotation, and collapse animations.
+- **Docs URL**: https://boseui.site/components/announcement-banner
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/announcement-banner.json`
+- **Registry Manifest**: https://boseui.site/r/announcement-banner.json
+- **Key Features**:
+  - Snappy spring physics preset (stiffness 380, damping 24) powering enter, rotation, and collapse transitions.
+  - Zero-jump collapsing dismiss animation that smoothly slides the entire page content up.
+  - Auto-rotating message sequence that automatically pauses on hover, keyboard focus, and background tabs.
+  - SSR and hydration safe localStorage persistence with message-id invalidation.
+  - Dynamic --announcement-height CSS variable synchronization for sticky headers.
+  - Accessible keyboard navigation with visible focus rings and WCAG AA contrast across 3 color variants.
+- **Accessibility**:
+  - Landmark semantics with role='region' and aria-label='Announcement'.
+  - Rotating text container uses aria-live='off' to prevent interrupting screen readers.
+  - Accessible dismiss button with minimum hit target, keyboard focus states, and aria-label.
+  - Full reduced-motion compatibility disabling slide animations and auto-rotation.
+- **Props**:
+  - `messages` (AnnouncementMessage[]): Array of announcement messages. A single item displays statically; multiple items rotate automatically.
+  - `variant` ("default" | "accent" | "inverted", default: "default"): Visual style variant: subtle neutral ('default'), teal accent ('accent'), or high contrast ('inverted').
+  - `dismissible` (boolean, default: true): Whether to display the close button and enable banner dismissal.
+  - `storageKey` (string, default: "boseui-announcement"): Local storage key namespace. Dismissal tracks messages[0].id so updated announcements reappear.
+  - `rotateInterval` (number, default: 5000): Interval in milliseconds between rotating messages when multiple messages are supplied.
+  - `sticky` (boolean, default: false): If true, pins the banner to the top of the viewport during scrolling.
+  - `stiffness` (number, default: 380): Spring stiffness coefficient matching the Snappy preset.
+  - `damping` (number, default: 24): Spring damping coefficient controlling oscillation decay matching the Snappy preset.
+  - `onDismiss` (() => void, default: undefined): Callback invoked when the user dismisses the banner.
+  - `background` (React.ReactNode, default: undefined): Optional background element (e.g. FlickeringGrid or canvas texture).
+  - `className` (string, default: undefined): Additional Tailwind classes applied to the outer container.
+- **Usage Example**:
+```tsx
+import { AnnouncementBanner } from "@/components/ui/announcement-banner";
+
+export function Example() {
+  return (
+    <AnnouncementBanner
+      variant="accent"
+      messages={[
+        {
+          id: "text-hover-lens-launch",
+          badge: "New",
+          text: "Text Hover Lens follows your cursor with spring physics.",
+          href: "/components/text-hover-lens",
+          linkLabel: "Try it",
+        },
+        {
+          id: "boseui-catalog-update",
+          badge: "Catalog",
+          text: "105+ kinetic primitives engineered for tactile modern web apps.",
+          href: "/components",
+          linkLabel: "Explore",
+        },
+      ]}
     />
   );
 }
@@ -4044,6 +4107,56 @@ export function Example() {
       command="npm run build"
       output={["Compiled successfully in 1.4s", "Ready for deployment."]}
     />
+  );
+}
+```
+
+---
+
+### Text Hover Lens (`TextHoverLens`)
+- **Slug**: `text-hover-lens`
+- **Category**: Text
+- **Tagline**: Physics-driven circular lens revealing high-contrast typography on hover.
+- **Description**: Interactive text component where hovering opens a circular lens under the cursor with spring physics, revealing a contrasting color layer with optional magnification.
+- **Docs URL**: https://boseui.site/components/text-hover-lens
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/text-hover-lens.json`
+- **Registry Manifest**: https://boseui.site/r/text-hover-lens.json
+- **Key Features**:
+  - Dual-layer text architecture with zero layout shift and identical font metrics.
+  - Dynamic clip-path circle driven by Framer Motion motion values without React re-renders during mouse movement.
+  - Snappy spring physics preset (stiffness 380, damping 24) for natural cursor follow and soft open/close overshoot.
+  - Customizable magnification scale, lens diameter, and full CSS color support (hex, rgb, hsl, CSS variables).
+  - Touch device support with touch-down reveal and non-blocking page scroll.
+  - Respects system prefers-reduced-motion by bypassing spring physics for instant alignment.
+- **Accessibility**:
+  - Aria-hidden on the decorative lens layer ensures screen readers announce the text exactly once.
+  - Base layer text remains fully selectable with pointer-events: none on the overlay.
+  - Respects prefers-reduced-motion settings out of the box without jarring layout shifts.
+- **Props**:
+  - `text` (string): The text string to display and reveal through the lens.
+  - `lensColor` (string, default: "#0d9488"): Background color of the circular lens disc. Accepts any valid CSS color.
+  - `lensTextColor` (string, default: "#ffffff"): Color of the revealed text inside the lens disc. Must provide AA contrast against lensColor.
+  - `textColor` (string, default: "currentColor"): Color of the base text outside the lens.
+  - `lensSize` (number, default: 120): Diameter of the circular lens in pixels when fully open.
+  - `magnify` (number, default: 1): Scale multiplier for text inside the lens. 1 = no zoom, 1.2 = slight zoom.
+  - `stiffness` (number, default: 380): Hooke's Law spring stiffness coefficient matching the Snappy preset.
+  - `damping` (number, default: 24): Spring damping coefficient controlling oscillation decay matching the Snappy preset.
+  - `className` (string, default: undefined): Additional Tailwind or CSS classes applied to the outer wrapper.
+- **Usage Example**:
+```tsx
+import { TextHoverLens } from "@/components/ui/text-hover-lens";
+
+export function Example() {
+  return (
+    <h1 className="text-5xl font-black tracking-tight">
+      <TextHoverLens
+        text="REVEAL THE HIDDEN LAYER"
+        lensColor="#0d9488"
+        lensTextColor="#ffffff"
+        lensSize={140}
+        magnify={1.1}
+      />
+    </h1>
   );
 }
 ```

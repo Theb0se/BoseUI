@@ -6,6 +6,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { CommandPaletteProvider } from "@/components/layout/CommandPalette";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { AnnouncementBanner, type AnnouncementMessage } from "@/components/ui/AnnouncementBanner";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SITE_CONFIG } from "@/lib/utils";
@@ -71,9 +72,9 @@ export const metadata: Metadata = {
   creator: SITE_CONFIG.author.name,
   publisher: SITE_CONFIG.author.name,
   icons: {
-    icon: "/boseui-logo.png",
-    shortcut: "/boseui-logo.png",
-    apple: "/boseui-logo.png",
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
   alternates: {
     canonical: SITE_CONFIG.url,
@@ -104,6 +105,23 @@ export const metadata: Metadata = {
   },
 };
 
+const SITE_ANNOUNCEMENTS: AnnouncementMessage[] = [
+  {
+    id: "text-hover-lens-launch",
+    badge: "New",
+    text: "Text Hover Lens follows your cursor with spring physics.",
+    href: "/components/text-hover-lens",
+    linkLabel: "Try it",
+  },
+  {
+    id: "boseui-v2-components",
+    badge: "Release",
+    text: "BoseUI v2.1: 105+ kinetic React primitives with zero-runtime shadcn registry.",
+    href: "/components",
+    linkLabel: "Browse catalog",
+  },
+];
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -129,6 +147,11 @@ export default function RootLayout({
           <CommandPaletteProvider>
             <SmoothScroll>
               <div className="relative flex min-h-screen flex-col">
+                <AnnouncementBanner
+                  sticky
+                  variant="outline"
+                  messages={SITE_ANNOUNCEMENTS}
+                />
                 <Navbar />
                 <main className="flex-1">{children}</main>
                 <Footer />

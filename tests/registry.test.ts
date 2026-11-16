@@ -22,17 +22,22 @@ describe("Registry & Schema Integrity", () => {
   });
 
   it("verifies public/registry.json exists and is valid", () => {
+    const files = fs.readdirSync(uiDir);
+    const tsxFiles = files.filter((f) => f.endsWith(".tsx") && !f.endsWith(".test.tsx"));
+
     expect(fs.existsSync(registryJsonPath)).toBe(true);
     const raw = fs.readFileSync(registryJsonPath, "utf-8");
     const json = JSON.parse(raw);
     expect(json).toBeDefined();
     expect(Array.isArray(json.items)).toBe(true);
-    expect(json.items.length).toBe(104);
+    expect(json.items.length).toBe(tsxFiles.length);
   });
 
   it("ensures all public/r/*.json manifests exist and are valid JSON", () => {
+    const files = fs.readdirSync(uiDir);
+    const tsxFiles = files.filter((f) => f.endsWith(".tsx") && !f.endsWith(".test.tsx"));
     const rFiles = fs.readdirSync(rDir).filter((f) => f.endsWith(".json"));
-    expect(rFiles.length).toBe(104);
+    expect(rFiles.length).toBe(tsxFiles.length);
 
     for (const file of rFiles) {
       const content = fs.readFileSync(path.join(rDir, file), "utf-8");

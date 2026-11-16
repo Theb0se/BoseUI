@@ -1,6 +1,6 @@
 import React from "react";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { RecentlyAddedSection } from "@/components/sections/RecentlyAddedSection";
+import { FeaturedComponentsSection } from "@/components/sections/RecentlyAddedSection";
 import { BrowseCategorySection } from "@/components/sections/BrowseCategorySection";
 import { HowItWorksSection } from "@/components/sections/HowItWorksSection";
 import { FAQSection } from "@/components/sections/FAQSection";
@@ -76,13 +76,18 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="mx-auto max-w-[1100px] px-4 sm:px-6">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden max-h-screen">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,#000_60%,transparent_100%)]" />
+          <div className="absolute -top-40 left-1/2 -translate-x-1/2 h-[450px] w-[850px] rounded-full bg-gradient-to-tr from-blue-500/10 via-indigo-500/5 to-transparent blur-3xl" />
+        </div>
         {/* 100vh Hero Section */}
         <HeroSection />
 
         {/* Subsequent content sections */}
         <div className="space-y-20 sm:space-y-28 py-12 sm:py-20">
-          <div id="recently-added" className="scroll-mt-16">
-            <RecentlyAddedSection />
+          <div id="featured-components" className="scroll-mt-16">
+            <span id="recently-added" className="sr-only" />
+            <FeaturedComponentsSection />
           </div>
           <BrowseCategorySection />
           <HowItWorksSection />

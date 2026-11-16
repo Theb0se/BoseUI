@@ -13,6 +13,7 @@ import { AccordionStackCards } from "@/components/ui/AccordionStackCards";
 import { AgentStatusBadge } from "@/components/ui/AgentStatusBadge";
 import { AnimatedTabs } from "@/components/ui/AnimatedTabs";
 import { AnimatedThemeToggler } from "@/components/ui/AnimatedThemeToggler";
+import { AnnouncementBanner } from "@/components/ui/AnnouncementBanner";
 import { AppleContextMenu } from "@/components/ui/AppleContextMenu";
 import { AppleSearchField } from "@/components/ui/AppleSearchField";
 import { AtmosphericFog } from "@/components/ui/AtmosphericFog";
@@ -100,6 +101,7 @@ import { StarryNight } from "@/components/ui/StarryNight";
 import { StickyScrollStory } from "@/components/ui/StickyScrollStory";
 import { StoryCards } from "@/components/ui/StoryCards";
 import { TerminalWindowMockup } from "@/components/ui/TerminalWindowMockup";
+import { TextHoverLens } from "@/components/ui/TextHoverLens";
 import { TextMaskGrid } from "@/components/ui/TextMaskGrid";
 import { Thunderstorm } from "@/components/ui/Thunderstorm";
 import { TiltCreditCard3D } from "@/components/ui/TiltCreditCard3D";
@@ -119,6 +121,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "agent-status-badge": createComponentDemo("agent-status-badge", AgentStatusBadge),
   "animated-tabs": createComponentDemo("animated-tabs", AnimatedTabs),
   "animated-theme-toggler": createComponentDemo("animated-theme-toggler", AnimatedThemeToggler),
+  "announcement-banner": createComponentDemo("announcement-banner", AnnouncementBanner),
   "apple-context-menu": createComponentDemo("apple-context-menu", AppleContextMenu),
   "apple-search-field": createComponentDemo("apple-search-field", AppleSearchField),
   "atmospheric-fog": createComponentDemo("atmospheric-fog", AtmosphericFog),
@@ -206,6 +209,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "sticky-scroll-story": createComponentDemo("sticky-scroll-story", StickyScrollStory),
   "story-cards": createComponentDemo("story-cards", StoryCards),
   "terminal-window-mockup": createComponentDemo("terminal-window-mockup", TerminalWindowMockup),
+  "text-hover-lens": createComponentDemo("text-hover-lens", TextHoverLens),
   "text-mask-grid": createComponentDemo("text-mask-grid", TextMaskGrid),
   "thunderstorm": createComponentDemo("thunderstorm", Thunderstorm),
   "tilt-credit-card3-d": createComponentDemo("tilt-credit-card3-d", TiltCreditCard3D),

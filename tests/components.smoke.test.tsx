@@ -15,6 +15,8 @@ import { RollingNumberTicker } from "@/components/ui/RollingNumberTicker";
 import { ScrubbableNumberInput } from "@/components/ui/ScrubbableNumberInput";
 import { SpringBadgePill } from "@/components/ui/SpringBadgePill";
 import { AgentStatusBadge } from "@/components/ui/AgentStatusBadge";
+import { TextHoverLens } from "@/components/ui/TextHoverLens";
+import { AnnouncementBanner } from "@/components/ui/AnnouncementBanner";
 
 describe("Component Smoke Tests", () => {
   it("renders MagneticButton without throwing", () => {
@@ -90,6 +92,20 @@ describe("Component Smoke Tests", () => {
 
   it("renders AgentStatusBadge without throwing", () => {
     const { container } = render(<AgentStatusBadge status="reading-docs" />);
+    expect(container).toBeTruthy();
+  });
+
+  it("renders TextHoverLens without throwing", () => {
+    const { container } = render(<TextHoverLens text="Test Text" />);
+    expect(container).toBeTruthy();
+  });
+
+  it("renders AnnouncementBanner without throwing", () => {
+    const { container } = render(
+      <AnnouncementBanner
+        messages={[{ id: "test", text: "Test announcement" }]}
+      />
+    );
     expect(container).toBeTruthy();
   });
 });

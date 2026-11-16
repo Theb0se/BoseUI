@@ -186,14 +186,6 @@ export function HoldToConfirmButton({
           )}
         </span>
       </motion.button>
-
-      <span className="text-[11px] text-neutral-400 dark:text-neutral-500">
-        {disabled
-          ? "Action disabled"
-          : isConfirmed
-            ? "Click to reset state"
-            : `Press & hold for ${(holdDuration / 1000).toFixed(1)}s (or Spacebar)`}
-      </span>
     </div>
   );
 }

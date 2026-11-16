@@ -266,6 +266,53 @@ export function createComponentDemo(
           </div>
         );
 
+      case "text-hover-lens":
+        return (
+          <div className="flex flex-col items-center justify-center gap-6 py-12 px-4 text-center">
+            <h2 className="text-4xl sm:text-6xl font-black tracking-tight">
+              <Component
+                text="HOVER TO REVEAL"
+                lensColor="#0d9488"
+                lensTextColor="#ffffff"
+                lensSize={130}
+                magnify={1.12}
+                className={className}
+              />
+            </h2>
+            <span className="text-xs font-mono text-neutral-400">
+              Move cursor across typography • Snappy spring lens follows pointer
+            </span>
+          </div>
+        );
+
+      case "announcement-banner":
+        return (
+          <div className="flex flex-col gap-6 w-full max-w-4xl py-6 px-2">
+            <Component
+              variant="accent"
+              rotateInterval={3500}
+              storageKey="docs-preview-banner"
+              messages={[
+                {
+                  id: "ann-1",
+                  badge: "New",
+                  text: "Text Hover Lens follows your cursor with spring physics.",
+                  href: "/components/text-hover-lens",
+                  linkLabel: "Try it",
+                },
+                {
+                  id: "ann-2",
+                  badge: "Release",
+                  text: "BoseUI v2.1: 105+ kinetic primitives for React 18 & Next.js 14.",
+                  href: "/components",
+                  linkLabel: "Browse catalog",
+                },
+              ]}
+              className={className}
+            />
+          </div>
+        );
+
       default:
         return <Component className={className} />;
     }

@@ -52,7 +52,10 @@ export function Navbar() {
   const nextTheme = theme === "dark" ? "light" : "dark";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-white/90 backdrop-blur-md dark:border-neutral-800 dark:bg-black/90">
+    <header
+      className="sticky top-[var(--announcement-height,0px)] z-50 w-full border-b border-neutral-200 bg-white/90 backdrop-blur-md transition-[top] duration-200 dark:border-neutral-800 dark:bg-black/90"
+      style={{ top: "var(--announcement-height, 0px)" }}
+    >
       <div className="mx-auto flex h-14 max-w-[1100px] items-center justify-between gap-4 px-4 sm:px-6">
         {/* Left: Logo & Nav Links */}
         <div className="flex items-center gap-6">

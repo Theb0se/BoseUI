@@ -160,6 +160,33 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "announcement-banner",
+    "slug": "announcement-banner",
+    "componentName": "AnnouncementBanner",
+    "title": "Announcement Banner",
+    "description": "Slim, animated top banner that announces product releases, features, or offers with Snappy spring physics, smooth rotation, and collapse animations.",
+    "tagline": "Spring-animated dismissible announcement banner with message rotation and sticky header awareness.",
+    "category": "Navigation",
+    "badges": [
+      "New",
+      "Banner",
+      "Dismissible",
+      "Spring"
+    ],
+    "createdAt": "2026-11-16",
+    "featured": true,
+    "keywords": [
+      "announcement-banner",
+      "announcement banner",
+      "top banner",
+      "notification bar",
+      "dismissible",
+      "framer motion banner",
+      "rotating messages",
+      "spring physics"
+    ]
+  },
+  {
     "id": "apple-context-menu",
     "slug": "apple-context-menu",
     "componentName": "AppleContextMenu",
@@ -2212,6 +2239,35 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "code block",
       "developer mockup",
       "bash window"
+    ]
+  },
+  {
+    "id": "text-hover-lens",
+    "slug": "text-hover-lens",
+    "componentName": "TextHoverLens",
+    "title": "Text Hover Lens",
+    "description": "Interactive text component where hovering opens a circular lens under the cursor with spring physics, revealing a contrasting color layer with optional magnification.",
+    "tagline": "Physics-driven circular lens revealing high-contrast typography on hover.",
+    "category": "Text",
+    "badges": [
+      "New",
+      "Hover",
+      "Lens",
+      "Spring",
+      "Reveal"
+    ],
+    "createdAt": "2026-11-16",
+    "featured": true,
+    "keywords": [
+      "text-hover-lens",
+      "text hover lens",
+      "hover",
+      "lens",
+      "spring",
+      "reveal",
+      "framer-motion",
+      "typography",
+      "cursor effect"
     ]
   },
   {
