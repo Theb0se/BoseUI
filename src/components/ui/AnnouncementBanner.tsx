@@ -19,6 +19,15 @@ export interface AnnouncementMessage {
   linkLabel?: string;
 }
 
+export type AnnouncementBannerVariant =
+  | "default"
+  | "accent"
+  | "inverted"
+  | "glass"
+  | "fade"
+  | "outline"
+  | "highlight";
+
 export interface AnnouncementBannerProps {
   /**
    * One or more announcement messages.
@@ -30,9 +39,13 @@ export interface AnnouncementBannerProps {
    * - "default": Subtle neutral tone matching light/dark site styling.
    * - "accent": Teal accent tone.
    * - "inverted": High-contrast monochrome (dark in light mode, light in dark mode).
+   * - "glass": Frosted translucent backdrop with subtle border.
+   * - "fade": Gradient horizontal fade.
+   * - "outline": Minimalist transparent background with crisp border.
+   * - "highlight": High-visibility warning/alert yellow.
    * @default "default"
    */
-  variant?: "default" | "accent" | "inverted" | "glass" | "fade" | "outline" | "highlight";
+  variant?: AnnouncementBannerVariant;
   /**
    * Whether the user can dismiss and close the banner.
    * @default true
@@ -213,7 +226,7 @@ export function AnnouncementBanner({
     damping,
   };
 
-  const variantStyles = {
+  const variantStyles: Record<AnnouncementBannerVariant, string> = {
     default:
       "bg-neutral-50/95 dark:bg-neutral-900/90 border-neutral-200/90 dark:border-neutral-800/90 text-neutral-800 dark:text-neutral-200",
     accent:
@@ -230,30 +243,53 @@ export function AnnouncementBanner({
       "bg-gradient-to-r from-teal-50 via-white to-teal-50 dark:from-teal-950/50 dark:via-neutral-950 dark:to-teal-950/50 border-teal-200/90 dark:border-teal-900/60 text-neutral-900 dark:text-neutral-100",
   };
 
-  const badgeStyles = {
+  const badgeStyles: Record<AnnouncementBannerVariant, string> = {
     default:
       "bg-neutral-200/70 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200",
     accent:
       "bg-teal-100 dark:bg-teal-900/60 border-teal-300 dark:border-teal-700 text-teal-800 dark:text-teal-200",
     inverted:
       "bg-neutral-800 text-neutral-200 border-neutral-700 dark:bg-neutral-100 dark:text-neutral-800 dark:border-neutral-300",
+    highlight:
+      "bg-yellow-400/80 text-neutral-950 border-yellow-500 font-semibold",
+    glass:
+      "bg-neutral-200/50 dark:bg-white/10 border-neutral-300/60 dark:border-white/20 text-neutral-900 dark:text-white",
+    outline:
+      "bg-neutral-100 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200",
+    fade:
+      "bg-teal-100/80 dark:bg-teal-900/50 border-teal-300/80 dark:border-teal-800/60 text-teal-900 dark:text-teal-200",
   };
 
-  const linkStyles = {
+  const linkStyles: Record<AnnouncementBannerVariant, string> = {
     default:
       "text-neutral-950 dark:text-white hover:text-neutral-900 dark:hover:text-neutral-100",
     accent:
       "text-teal-950 dark:text-teal-200 hover:text-teal-900 dark:hover:text-teal-100",
     inverted: "text-white dark:text-neutral-950 font-semibold",
+    highlight: "text-neutral-950 font-bold hover:underline",
+    glass:
+      "text-neutral-950 dark:text-white font-medium hover:text-neutral-800 dark:hover:text-neutral-200",
+    outline:
+      "text-neutral-900 dark:text-white font-medium hover:text-neutral-700 dark:hover:text-neutral-300",
+    fade:
+      "text-teal-950 dark:text-teal-100 font-medium hover:text-teal-800 dark:hover:text-white",
   };
 
-  const closeStyles = {
+  const closeStyles: Record<AnnouncementBannerVariant, string> = {
     default:
       "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50 focus-visible:ring-neutral-400",
     accent:
       "text-teal-700 hover:text-teal-950 dark:text-teal-400 dark:hover:text-teal-100 hover:bg-teal-100 dark:hover:bg-teal-900/50 focus-visible:ring-teal-500",
     inverted:
       "text-neutral-400 hover:text-white dark:text-neutral-600 dark:hover:text-black hover:bg-neutral-800 dark:hover:bg-neutral-100 focus-visible:ring-neutral-400",
+    highlight:
+      "text-neutral-800 hover:text-neutral-950 hover:bg-yellow-400/60 focus-visible:ring-neutral-900",
+    glass:
+      "text-neutral-600 hover:text-neutral-950 dark:text-neutral-300 dark:hover:text-white hover:bg-neutral-200/40 dark:hover:bg-white/10 focus-visible:ring-neutral-400",
+    outline:
+      "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-visible:ring-neutral-400",
+    fade:
+      "text-teal-700 hover:text-teal-950 dark:text-teal-300 dark:hover:text-white hover:bg-teal-100/50 dark:hover:bg-teal-900/40 focus-visible:ring-teal-500",
   };
 
   return (

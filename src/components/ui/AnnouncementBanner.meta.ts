@@ -43,10 +43,10 @@ export const AnnouncementBannerMeta: PulseComponentMeta = {
     },
     {
       name: "variant",
-      type: '"default" | "accent" | "inverted"',
+      type: '"default" | "accent" | "inverted" | "glass" | "fade" | "outline" | "highlight"',
       default: '"default"',
       description:
-        "Visual style variant: subtle neutral ('default'), teal accent ('accent'), or high contrast ('inverted').",
+        "Visual style variant: subtle neutral ('default'), teal accent ('accent'), high contrast ('inverted'), frosted ('glass'), horizontal gradient ('fade'), minimal border ('outline'), or warning yellow ('highlight').",
     },
     {
       name: "dismissible",

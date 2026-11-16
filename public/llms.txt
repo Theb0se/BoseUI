@@ -304,7 +304,7 @@ export function HeaderThemeButton() {
   - Full reduced-motion compatibility disabling slide animations and auto-rotation.
 - **Props**:
   - `messages` (AnnouncementMessage[]): Array of announcement messages. A single item displays statically; multiple items rotate automatically.
-  - `variant` ("default" | "accent" | "inverted", default: "default"): Visual style variant: subtle neutral ('default'), teal accent ('accent'), or high contrast ('inverted').
+  - `variant` ("default" | "accent" | "inverted" | "glass" | "fade" | "outline" | "highlight", default: "default"): Visual style variant: subtle neutral ('default'), teal accent ('accent'), high contrast ('inverted'), frosted ('glass'), horizontal gradient ('fade'), minimal border ('outline'), or warning yellow ('highlight').
   - `dismissible` (boolean, default: true): Whether to display the close button and enable banner dismissal.
   - `storageKey` (string, default: "boseui-announcement"): Local storage key namespace. Dismissal tracks messages[0].id so updated announcements reappear.
   - `rotateInterval` (number, default: 5000): Interval in milliseconds between rotating messages when multiple messages are supplied.
