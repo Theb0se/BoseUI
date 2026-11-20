@@ -159,17 +159,22 @@ export function MovingTextBorder({
     return [m, ...seg, "Z"].join(" ");
   }, [dimensions, borderRadius, startAt]);
 
-  // Measure the real path length
+  // Measure the real path length safely (with fallback for jsdom / SSR)
   useLayoutEffect(() => {
-    if (pathRef.current) {
+    if (pathRef.current && typeof pathRef.current.getTotalLength === "function") {
       setPathLength(pathRef.current.getTotalLength());
+    } else {
+      setPathLength(2 * (dimensions.width + dimensions.height));
     }
-  }, [svgPathData]);
+  }, [svgPathData, dimensions]);
 
-  // Measure the real width of ONE text unit
+  // Measure the real width of ONE text unit safely (with fallback for jsdom / SSR)
   useLayoutEffect(() => {
     if (!measureRef.current) return;
-    const w = measureRef.current.getComputedTextLength();
+    const w =
+      typeof measureRef.current.getComputedTextLength === "function"
+        ? measureRef.current.getComputedTextLength()
+        : 0;
     // Fallback estimate if measurement isn't available yet
     setUnitWidth(w > 0 ? w : text.length * (fontSize * 0.6 + letterSpacing));
   }, [text, fontSize, letterSpacing, fontWeight]);
