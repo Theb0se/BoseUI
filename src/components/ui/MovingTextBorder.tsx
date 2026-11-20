@@ -63,7 +63,7 @@ export function MovingTextBorder({
   borderRadius = 16,
   trackColor,
   trackWidth = 1,
-  autoRepeat = true, // eslint-disable-line @typescript-eslint/no-unused-vars
+  autoRepeat = true,
   glow = false,
   className,
   contentClassName,
@@ -178,10 +178,11 @@ export function MovingTextBorder({
   // so shifting by exactly one unit is visually identical (seamless loop).
   const fullText = useMemo(() => {
     if (!text) return "";
+    if (!autoRepeat) return text;
     if (unitWidth <= 0 || pathLength <= 0) return text.repeat(8);
     const repeatCount = Math.ceil((pathLength + unitWidth) / unitWidth) + 1;
     return text.repeat(repeatCount);
-  }, [text, unitWidth, pathLength]);
+  }, [text, unitWidth, pathLength, autoRepeat]);
 
   // Infinite seamless animation
   useEffect(() => {
