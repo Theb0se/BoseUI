@@ -828,6 +828,32 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "footer",
+    "slug": "footer",
+    "componentName": "Footer",
+    "title": "Footer",
+    "description": "Comprehensive kinetic multi-column footer featuring an interactive newsletter subscription form, magnetic social buttons, live system status, and responsive navigation links.",
+    "tagline": "Kinetic multi-column footer with interactive newsletter physics, status pill, and social links.",
+    "category": "Navigation",
+    "badges": [
+      "New",
+      "Multi-column",
+      "Interactive",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-11-20",
+    "featured": true,
+    "keywords": [
+      "footer",
+      "navigation footer",
+      "footer navigation",
+      "multi-column footer",
+      "newsletter footer",
+      "framer motion footer",
+      "site footer"
+    ]
+  },
+  {
     "id": "galaxy-nebula",
     "slug": "galaxy-nebula",
     "componentName": "GalaxyNebula",
@@ -1418,6 +1444,31 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "mega-menu",
+    "slug": "mega-menu",
+    "componentName": "MegaMenu",
+    "title": "Mega Menu",
+    "description": "Kinetic multi-column navigation mega menu featuring spring category tabs, directional sliding content panels, interactive feature cards, and quick link references.",
+    "tagline": "Kinetic multi-column navigation menu with spring category tabs and feature cards.",
+    "category": "Navigation",
+    "badges": [
+      "New",
+      "Multi-column",
+      "Interactive",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-11-20",
+    "featured": false,
+    "keywords": [
+      "mega menu",
+      "navigation dropdown",
+      "multi-column navigation",
+      "flyout menu",
+      "framer motion mega menu",
+      "rich menu"
+    ]
+  },
+  {
     "id": "minimal-auth-card",
     "slug": "minimal-auth-card",
     "componentName": "MinimalAuthCard",
@@ -1562,6 +1613,33 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "moving-text-border",
+    "slug": "moving-text-border",
+    "componentName": "MovingTextBorder",
+    "title": "Moving Text Border",
+    "description": "Kinetic card wrapper with animated typography continuously flowing along the rounded perimeter using SVG textPath, dynamic geometry calculation, and zero-distortion responsiveness.",
+    "tagline": "Animated typography marching along the card perimeter via SVG textPath.",
+    "category": "Cards",
+    "badges": [
+      "New",
+      "SVG textPath",
+      "Border Animation",
+      "Kinetic"
+    ],
+    "createdAt": "2026-11-20",
+    "featured": true,
+    "keywords": [
+      "moving text border",
+      "animated text border",
+      "text border",
+      "svg textpath",
+      "marching text",
+      "kinetic card",
+      "framer motion border",
+      "available for work badge"
+    ]
+  },
+  {
     "id": "multi-select-tag-input",
     "slug": "multi-select-tag-input",
     "componentName": "MultiSelectTagInput",
@@ -1582,6 +1660,58 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "chip input",
       "token input",
       "autocomplete tags"
+    ]
+  },
+  {
+    "id": "navbar",
+    "slug": "navbar",
+    "componentName": "Navbar",
+    "title": "Navbar",
+    "description": "Kinetic responsive navigation bar with scroll-direction sensing, shared-layout spring indicators, multi-level dropdowns, and an animated mobile drawer.",
+    "tagline": "Responsive kinetic navigation bar with scroll detection, spring indicators, and mobile drawer.",
+    "category": "Navigation",
+    "badges": [
+      "New",
+      "Shared Layout",
+      "Responsive",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-11-20",
+    "featured": true,
+    "keywords": [
+      "navbar",
+      "navigation bar",
+      "header",
+      "responsive navbar",
+      "floating navbar",
+      "framer motion navbar",
+      "mobile menu",
+      "dropdown menu"
+    ]
+  },
+  {
+    "id": "pagination",
+    "slug": "pagination",
+    "componentName": "Pagination",
+    "title": "Pagination",
+    "description": "Kinetic spring-animated pagination component featuring a sliding active selection capsule, smart ellipsis windowing, jump-to-page input, and full arrow-key keyboard navigation.",
+    "tagline": "Kinetic spring pagination with sliding active pill and keyboard navigation.",
+    "category": "Navigation",
+    "badges": [
+      "New",
+      "Spring Physics",
+      "Shared Layout",
+      "WAI-ARIA"
+    ],
+    "createdAt": "2026-11-20",
+    "featured": false,
+    "keywords": [
+      "pagination",
+      "animated pagination",
+      "page switcher",
+      "spring pagination",
+      "framer motion pagination",
+      "navigation controls"
     ]
   },
   {
@@ -1936,6 +2066,32 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "falling stars css canvas",
       "space hero background",
       "streak animation"
+    ]
+  },
+  {
+    "id": "sidebar",
+    "slug": "sidebar",
+    "componentName": "Sidebar",
+    "title": "Sidebar",
+    "description": "Collapsible kinetic navigation sidebar with spring layout expansion, active selection capsule, popout hover tooltips, and nested sub-items.",
+    "tagline": "Collapsible kinetic navigation sidebar with spring expansion and popout tooltips.",
+    "category": "Navigation",
+    "badges": [
+      "New",
+      "Spring Physics",
+      "Collapsible",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-11-20",
+    "featured": true,
+    "keywords": [
+      "sidebar",
+      "navigation sidebar",
+      "collapsible sidebar",
+      "app sidebar",
+      "dashboard navigation",
+      "framer motion sidebar",
+      "rail menu"
     ]
   },
   {

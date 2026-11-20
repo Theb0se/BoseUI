@@ -15,6 +15,22 @@ const IGNORED_CORE_PACKAGES = new Set([
   "next",
 ]);
 
+async function writeWithRetry(
+  targetPath: string,
+  content: string,
+  retries = 5
+) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await fs.writeFile(targetPath, content, "utf-8");
+      return;
+    } catch (err: any) {
+      if (i === retries - 1) throw err;
+      await new Promise((r) => setTimeout(r, 150 * (i + 1)));
+    }
+  }
+}
+
 export function toKebabCase(input: string): string {
   return input
     .trim()
@@ -29,6 +45,7 @@ function inferCategory(meta: PulseComponentMeta): ComponentCategory {
   const hay = `${meta.title} ${(meta.badges || []).join(" ")}`.toLowerCase();
   if (hay.includes("button")) return "Buttons";
   if (hay.includes("card")) return "Cards";
+  if (hay.includes("nav") || hay.includes("sidebar") || hay.includes("footer") || hay.includes("menu") || hay.includes("pagination") || hay.includes("dock") || hay.includes("breadcrumb") || hay.includes("tabs")) return "Navigation";
   if (hay.includes("text") || hay.includes("typography")) return "Text";
   if (hay.includes("background") || hay.includes("canvas")) return "Backgrounds";
   if (hay.includes("overlay") || hay.includes("avatar")) return "Overlays";
@@ -270,10 +287,9 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     };
 
     const itemJsonPath = path.join(publicRDir, `${slug}.json`);
-    await fs.writeFile(
+    await writeWithRetry(
       itemJsonPath,
-      JSON.stringify(shadcnItem, null, 2) + "\n",
-      "utf-8"
+      JSON.stringify(shadcnItem, null, 2) + "\n"
     );
 
     registryItems.push(shadcnItem);
@@ -313,10 +329,9 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     author: `${SITE_CONFIG.author.name} (${SITE_CONFIG.author.portfolio})`,
     items: registryItems,
   };
-  await fs.writeFile(
+  await writeWithRetry(
     publicRegistryPath,
-    JSON.stringify(rootRegistry, null, 2) + "\n",
-    "utf-8"
+    JSON.stringify(rootRegistry, null, 2) + "\n"
   );
 
   // Generate src/registry/generated-demos.tsx ("use client" boundary for all interactive previews)
@@ -356,7 +371,7 @@ ${demoMapLines}
 };
 `;
 
-  await fs.writeFile(demosOutputPath, demosFileContent, "utf-8");
+  await writeWithRetry(demosOutputPath, demosFileContent);
 
   // Generate src/registry/generated-catalog.tsx (Server-safe pure catalog metadata)
   const catalogFileContent = `/* eslint-disable */
@@ -389,7 +404,7 @@ export function getCatalogComponentBySlug(
 }
 `;
 
-  await fs.writeFile(catalogOutputPath, catalogFileContent, "utf-8");
+  await writeWithRetry(catalogOutputPath, catalogFileContent);
 
   // Generate lightweight src/registry/catalog-index.ts (Strip heavy sourceCode strings for client-side search/nav)
   const catalogIndexPath = path.join(
@@ -442,7 +457,7 @@ export function getCatalogIndexItemBySlug(
 }
 `;
 
-  await fs.writeFile(catalogIndexPath, catalogIndexContent, "utf-8");
+  await writeWithRetry(catalogIndexPath, catalogIndexContent);
 
   console.log(
     `\x1b[32m✔ Registry Generated:\x1b[0m ${catalogItems.length} components discovered in src/components/ui/`

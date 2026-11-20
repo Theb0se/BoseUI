@@ -5,6 +5,7 @@ import { BrowseCategorySection } from "@/components/sections/BrowseCategorySecti
 import { HowItWorksSection } from "@/components/sections/HowItWorksSection";
 import { FAQSection } from "@/components/sections/FAQSection";
 
+
 const jsonLd = [
   {
     "@context": "https://schema.org",
@@ -93,7 +94,7 @@ export default function HomePage() {
           <HowItWorksSection />
           <FAQSection />
         </div>
-      </div>
+      </div >
     </>
   );
 }

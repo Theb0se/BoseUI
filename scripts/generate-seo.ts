@@ -12,6 +12,22 @@ export async function generateSeo() {
   const uiDir = path.join(rootDir, "src", "components", "ui");
   const publicDir = path.join(rootDir, "public");
 
+  const writeWithRetry = async (
+    targetPath: string,
+    content: string,
+    retries = 5
+  ) => {
+    for (let i = 0; i < retries; i++) {
+      try {
+        await fs.writeFile(targetPath, content, "utf-8");
+        return;
+      } catch (err: any) {
+        if (i === retries - 1) throw err;
+        await new Promise((r) => setTimeout(r, 150 * (i + 1)));
+      }
+    }
+  };
+
   await fs.mkdir(publicDir, { recursive: true });
 
   const entries = await fs.readdir(uiDir);
@@ -78,7 +94,7 @@ ${allUrls
 </urlset>
 `;
 
-  await fs.writeFile(path.join(publicDir, "sitemap.xml"), sitemapXml, "utf-8");
+  await writeWithRetry(path.join(publicDir, "sitemap.xml"), sitemapXml);
 
   // 2. Generate public/robots.txt
   const robotsTxt = `# BoseUI Search Crawler Directives
@@ -91,7 +107,7 @@ Allow: /r/
 Sitemap: ${SITE_CONFIG.url}/sitemap.xml
 `;
 
-  await fs.writeFile(path.join(publicDir, "robots.txt"), robotsTxt, "utf-8");
+  await writeWithRetry(path.join(publicDir, "robots.txt"), robotsTxt);
 
   // 3. Generate public/llms.txt (AI/LLM-friendly index)
   const llmsSections = discovered
@@ -149,7 +165,7 @@ ${blogSections}
 ${llmsSections}
 `;
 
-  await fs.writeFile(path.join(publicDir, "llms.txt"), llmsTxt, "utf-8");
+  await writeWithRetry(path.join(publicDir, "llms.txt"), llmsTxt);
 
   console.log(`\x1b[32m✔ SEO Artifacts Generated:\x1b[0m`);
   console.log(

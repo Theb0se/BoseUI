@@ -41,6 +41,7 @@ import { FileDropZone } from "@/components/ui/FileDropZone";
 import { FileTree } from "@/components/ui/FileTree";
 import { FlickeringGrid } from "@/components/ui/FlickeringGrid";
 import { FloatingLabelInput } from "@/components/ui/FloatingLabelInput";
+import { Footer } from "@/components/ui/Footer";
 import { GalaxyNebula } from "@/components/ui/GalaxyNebula";
 import { GlideDock } from "@/components/ui/GlideDock";
 import { GlyphTrail } from "@/components/ui/GlyphTrail";
@@ -66,13 +67,17 @@ import { MagneticPopoverMenu } from "@/components/ui/MagneticPopoverMenu";
 import { MagneticScatterText } from "@/components/ui/MagneticScatterText";
 import { MaskRevealSlideText } from "@/components/ui/MaskRevealSlideText";
 import { MatrixRain } from "@/components/ui/MatrixRain";
+import { MegaMenu } from "@/components/ui/MegaMenu";
 import { MinimalAuthCard } from "@/components/ui/MinimalAuthCard";
 import { ModalPopup } from "@/components/ui/ModalPopup";
 import { MorphingActionButton } from "@/components/ui/MorphingActionButton";
 import { MorphingDialog } from "@/components/ui/MorphingDialog";
 import { MorphingFlipText } from "@/components/ui/MorphingFlipText";
 import { MovingGridLines } from "@/components/ui/MovingGridLines";
+import { MovingTextBorder } from "@/components/ui/MovingTextBorder";
 import { MultiSelectTagInput } from "@/components/ui/MultiSelectTagInput";
+import { Navbar } from "@/components/ui/Navbar";
+import { Pagination } from "@/components/ui/Pagination";
 import { ParallaxTiltCard } from "@/components/ui/ParallaxTiltCard";
 import { ParticleNetwork } from "@/components/ui/ParticleNetwork";
 import { PeelRevealCard } from "@/components/ui/PeelRevealCard";
@@ -88,6 +93,7 @@ import { RippleBurstButton } from "@/components/ui/RippleBurstButton";
 import { RollingNumberTicker } from "@/components/ui/RollingNumberTicker";
 import { ScrubbableNumberInput } from "@/components/ui/ScrubbableNumberInput";
 import { ShootingStars } from "@/components/ui/ShootingStars";
+import { Sidebar } from "@/components/ui/Sidebar";
 import { Snowfall } from "@/components/ui/Snowfall";
 import { SolarFlare } from "@/components/ui/SolarFlare";
 import { SplitButton } from "@/components/ui/SplitButton";
@@ -149,6 +155,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "file-tree": createComponentDemo("file-tree", FileTree),
   "flickering-grid": createComponentDemo("flickering-grid", FlickeringGrid),
   "floating-label-input": createComponentDemo("floating-label-input", FloatingLabelInput),
+  "footer": createComponentDemo("footer", Footer),
   "galaxy-nebula": createComponentDemo("galaxy-nebula", GalaxyNebula),
   "glide-dock": createComponentDemo("glide-dock", GlideDock),
   "glyph-trail": createComponentDemo("glyph-trail", GlyphTrail),
@@ -174,13 +181,17 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "magnetic-scatter-text": createComponentDemo("magnetic-scatter-text", MagneticScatterText),
   "mask-reveal-slide-text": createComponentDemo("mask-reveal-slide-text", MaskRevealSlideText),
   "matrix-rain": createComponentDemo("matrix-rain", MatrixRain),
+  "mega-menu": createComponentDemo("mega-menu", MegaMenu),
   "minimal-auth-card": createComponentDemo("minimal-auth-card", MinimalAuthCard),
   "modal-popup": createComponentDemo("modal-popup", ModalPopup),
   "morphing-action-button": createComponentDemo("morphing-action-button", MorphingActionButton),
   "morphing-dialog": createComponentDemo("morphing-dialog", MorphingDialog),
   "morphing-flip-text": createComponentDemo("morphing-flip-text", MorphingFlipText),
   "moving-grid-lines": createComponentDemo("moving-grid-lines", MovingGridLines),
+  "moving-text-border": createComponentDemo("moving-text-border", MovingTextBorder),
   "multi-select-tag-input": createComponentDemo("multi-select-tag-input", MultiSelectTagInput),
+  "navbar": createComponentDemo("navbar", Navbar),
+  "pagination": createComponentDemo("pagination", Pagination),
   "parallax-tilt-card": createComponentDemo("parallax-tilt-card", ParallaxTiltCard),
   "particle-network": createComponentDemo("particle-network", ParticleNetwork),
   "peel-reveal-card": createComponentDemo("peel-reveal-card", PeelRevealCard),
@@ -196,6 +207,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "rolling-number-ticker": createComponentDemo("rolling-number-ticker", RollingNumberTicker),
   "scrubbable-number-input": createComponentDemo("scrubbable-number-input", ScrubbableNumberInput),
   "shooting-stars": createComponentDemo("shooting-stars", ShootingStars),
+  "sidebar": createComponentDemo("sidebar", Sidebar),
   "snowfall": createComponentDemo("snowfall", Snowfall),
   "solar-flare": createComponentDemo("solar-flare", SolarFlare),
   "split-button": createComponentDemo("split-button", SplitButton),

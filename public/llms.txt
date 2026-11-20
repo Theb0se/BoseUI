@@ -33,7 +33,7 @@ Our latest research on frontend engineering and UI/UX:
 - [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
 - [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
 
-## Available Kinetic Components (106)
+## Available Kinetic Components (112)
 
 ### AI Voice Orb (`AIVoiceOrb`)
 - **Slug**: `ai-voice-orb`
@@ -1599,6 +1599,52 @@ export function Example() {
 
 ---
 
+### Footer (`Footer`)
+- **Slug**: `footer`
+- **Category**: Navigation
+- **Tagline**: Kinetic multi-column footer with interactive newsletter physics, status pill, and social links.
+- **Description**: Comprehensive kinetic multi-column footer featuring an interactive newsletter subscription form, magnetic social buttons, live system status, and responsive navigation links.
+- **Docs URL**: https://boseui.site/components/footer
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/footer.json`
+- **Registry Manifest**: https://boseui.site/r/footer.json
+- **Key Features**:
+  - Multi-column responsive navigation grid with kinetic spring link translations on hover.
+  - Integrated interactive newsletter signup form with loading spinner, success checkmark, and error states.
+  - Live operational status pill with glowing pulsating radar dot.
+  - Social media links with spring scale lift, ambient hover borders, and active press states.
+  - Custom brand mission slot, dynamic copyright year, and legal policy links.
+- **Accessibility**:
+  - Semantic <footer role='contentinfo' aria-label='Site Footer'> landmark.
+  - Full form accessibility with descriptive aria-label on input and submit controls.
+  - External links include security rel='noreferrer noopener' and clear link descriptions.
+  - High contrast ratios meeting WCAG AA standards across dark and light modes.
+- **Props**:
+  - `brandName` (string, default: "BoseUI"): Brand title rendered at the top of the identity column.
+  - `description` (string, default: "Kinetic UI components engineered to make modern web interfaces feel alive and tactile."): Short brand statement or product value proposition.
+  - `columns` (FooterColumn[], default: DEFAULT_COLUMNS): Array of navigation columns, each with titles, links, and optional badges.
+  - `socials` (FooterSocial[], default: DEFAULT_SOCIALS): Social media profiles with icons and external targets.
+  - `statusText` (string, default: "All systems operational"): Text label for the live service operational indicator.
+  - `showNewsletter` (boolean, default: true): Whether to display the kinetic newsletter subscription box.
+  - `onNewsletterSubmit` ((email: string) => Promise<boolean> | boolean | void): Async handler triggered when a user submits an email address.
+- **Usage Example**:
+```tsx
+import { Footer } from "@/components/ui/Footer";
+
+export function Example() {
+  return (
+    <Footer
+      brandName="BoseUI"
+      description="Kinetic UI components engineered to make modern web interfaces feel alive."
+      onNewsletterSubmit={async (email) => {
+        console.log("Subscribed:", email);
+      }}
+    />
+  );
+}
+```
+
+---
+
 ### Galaxy & Nebula (`GalaxyNebula`)
 - **Slug**: `galaxy-nebula`
 - **Category**: Backgrounds
@@ -2684,6 +2730,44 @@ export function Example() {
 
 ---
 
+### Mega Menu (`MegaMenu`)
+- **Slug**: `mega-menu`
+- **Category**: Navigation
+- **Tagline**: Kinetic multi-column navigation menu with spring category tabs and feature cards.
+- **Description**: Kinetic multi-column navigation mega menu featuring spring category tabs, directional sliding content panels, interactive feature cards, and quick link references.
+- **Docs URL**: https://boseui.site/components/mega-menu
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/mega-menu.json`
+- **Registry Manifest**: https://boseui.site/r/mega-menu.json
+- **Key Features**:
+  - Shared layoutId active category pill for frictionless tab switching with spring physics.
+  - Direction-aware horizontal sliding content transitions between categories.
+  - Rich multi-column layout with feature cards, icon badges, descriptions, and CTA banners.
+  - Quick links rail for documentation, GitHub, and community shortcuts.
+  - Click outside and Escape key auto-dismissal.
+- **Accessibility**:
+  - Accessible trigger button with aria-haspopup='true' and aria-expanded state.
+  - Full keyboard navigation and auto-focus retention.
+  - Instant fallback transitions when prefers-reduced-motion is active.
+- **Props**:
+  - `categories` (MegaMenuCategory[], default: DEFAULT_CATEGORIES): Array of categorized mega menu sections containing items and featured cards.
+  - `activeCategory` (string): Controlled identifier for the currently active tab category.
+  - `triggerLabel` (string, default: "Explore Platform"): Text label displayed on the mega menu activator button.
+  - `onCategoryChange` ((categoryId: string) => void): Callback invoked when the active tab category changes.
+- **Usage Example**:
+```tsx
+import { MegaMenu } from "@/components/ui/MegaMenu";
+
+export function Example() {
+  return (
+    <div className="flex justify-center p-8">
+      <MegaMenu triggerLabel="Explore Products" />
+    </div>
+  );
+}
+```
+
+---
+
 ### Minimal Auth Card (`MinimalAuthCard`)
 - **Slug**: `minimal-auth-card`
 - **Category**: Inputs
@@ -2952,6 +3036,61 @@ export function HeroBackground() {
 
 ---
 
+### Moving Text Border (`MovingTextBorder`)
+- **Slug**: `moving-text-border`
+- **Category**: Cards
+- **Tagline**: Animated typography marching along the card perimeter via SVG textPath.
+- **Description**: Kinetic card wrapper with animated typography continuously flowing along the rounded perimeter using SVG textPath, dynamic geometry calculation, and zero-distortion responsiveness.
+- **Docs URL**: https://boseui.site/components/moving-text-border
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/moving-text-border.json`
+- **Registry Manifest**: https://boseui.site/r/moving-text-border.json
+- **Key Features**:
+  - Dynamic ResizeObserver geometry: recalculates the rounded-rect path on container resize for distortion-free letterforms.
+  - Hardware-accelerated SVG textPath animation with configurable loop duration and flow direction.
+  - Automatic perimeter tiling and repetition to seamlessly loop around cards of any aspect ratio.
+  - Unique instance-scoped SVG def IDs via React useId preventing collisions when multiple instances are mounted.
+  - Customizable typography styling (fill color, font size, letter spacing, font weight) and optional ambient glow.
+  - Respects system prefers-reduced-motion settings by halting rotation.
+- **Accessibility**:
+  - Decorative perimeter SVG is marked with aria-hidden='true' to prevent screen-reader spam.
+  - Respects prefers-reduced-motion by freezing text translation.
+  - Preserves natural DOM order and keyboard tab flow for wrapped child content.
+- **Props**:
+  - `children` (React.ReactNode): Content displayed inside the card wrapper.
+  - `text` (string, default: "AVAILABLE FOR WORK • AVAILABLE FOR WORK • "): Text string continuously marching around the perimeter.
+  - `duration` (number, default: 12): Duration in seconds for one complete circuit around the card.
+  - `reverse` (boolean, default: false): Whether text flows counter-clockwise instead of clockwise.
+  - `textColor` (string, default: "#a78bfa"): Fill color of the perimeter typography.
+  - `fontSize` (number, default: 10): Font size in pixels for the SVG text.
+  - `letterSpacing` (number, default: 2): Letter spacing in pixels between characters.
+  - `borderRadius` (number, default: 16): Corner radius in pixels for the card and SVG path.
+  - `trackColor` (string): Optional background guide path stroke color.
+  - `glow` (boolean, default: false): Whether to apply a soft Gaussian blur ambient glow filter to the text.
+  - `autoRepeat` (boolean, default: true): Whether to automatically repeat the text to fill the entire card perimeter.
+- **Usage Example**:
+```tsx
+import { MovingTextBorder } from "@/components/ui/MovingTextBorder";
+
+export function Example() {
+  return (
+    <MovingTextBorder
+      text="AVAILABLE FOR WORK • OPEN TO CONTRACTS • "
+      duration={12}
+      textColor="#a78bfa"
+      glow={true}
+      className="max-w-md"
+    >
+      <div className="py-6 text-center">
+        <h3 className="text-xl font-bold">Rishabh Bose</h3>
+        <p className="text-sm text-neutral-500">Design Engineer & Full-stack Creator</p>
+      </div>
+    </MovingTextBorder>
+  );
+}
+```
+
+---
+
 ### Multi-Select Tag Input (`MultiSelectTagInput`)
 - **Slug**: `multi-select-tag-input`
 - **Category**: Inputs
@@ -2990,6 +3129,122 @@ export function Example() {
       maxTags={6}
       allowCustomTags
       onChange={(tags) => console.log("Selected tags:", tags)}
+    />
+  );
+}
+```
+
+---
+
+### Navbar (`Navbar`)
+- **Slug**: `navbar`
+- **Category**: Navigation
+- **Tagline**: Responsive kinetic navigation bar with scroll detection, spring indicators, and mobile drawer.
+- **Description**: Kinetic responsive navigation bar with scroll-direction sensing, shared-layout spring indicators, multi-level dropdowns, and an animated mobile drawer.
+- **Docs URL**: https://boseui.site/components/navbar
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/navbar.json`
+- **Registry Manifest**: https://boseui.site/r/navbar.json
+- **Key Features**:
+  - Smart scroll sensing: automatically collapses or hides on downward scroll and glides back on upward scroll.
+  - Dual layoutId spring indicators: smooth hover capsule and active link indicator.
+  - Multi-level animated dropdown sub-menus with spring scale and staggered disclosure.
+  - Integrated mobile navigation drawer with animated hamburger toggle and backdrop blur.
+  - Multiple layout variants: floating island, fixed header, or frosted glass.
+  - Respects prefers-reduced-motion with instant fallback transitions.
+- **Accessibility**:
+  - Semantic <header> and <nav aria-label='Main Navigation'> landmark markup.
+  - Full keyboard navigation with Escape key dismissal of open dropdowns and mobile menus.
+  - Supports aria-expanded, aria-haspopup, and aria-current='page' attributes.
+  - High-contrast focus-visible rings for keyboard-only navigation.
+- **Props**:
+  - `brand` (React.ReactNode): Custom brand slot (logo and product name).
+  - `items` (NavbarItem[], default: DEFAULT_ITEMS): Array of navigation items, sub-menus, icons, and badge tags.
+  - `actions` (NavbarAction[], default: DEFAULT_ACTIONS): Right-aligned call-to-action buttons with primary or ghost variants.
+  - `variant` ("floating" | "fixed" | "glass", default: "floating"): Visual presentation mode for the navbar container.
+  - `hideOnScroll` (boolean, default: true): Whether to hide the navbar during downward scrolling.
+  - `activeHref` (string, default: "#features"): Active link href identifier for styling and aria-current.
+  - `onNavigate` ((href: string) => void): Callback fired when a user selects a navigation target.
+- **Usage Example**:
+```tsx
+import { Navbar } from "@/components/ui/Navbar";
+import { Sparkles } from "lucide-react";
+
+export function Example() {
+  return (
+    <Navbar
+      variant="floating"
+      hideOnScroll={true}
+      items={[
+        { label: "Features", href: "#features" },
+        {
+          label: "Products",
+          href: "#products",
+          badge: "New",
+          children: [
+            {
+              label: "Kinetic UI",
+              href: "#kinetic",
+              description: "Spring-animated UI primitives.",
+              icon: Sparkles,
+            },
+          ],
+        },
+        { label: "Showcase", href: "#showcase" },
+        { label: "Docs", href: "#docs" },
+      ]}
+      actions={[
+        { label: "Sign In", href: "/login", variant: "ghost" },
+        { label: "Get Started", href: "/signup", variant: "primary" },
+      ]}
+    />
+  );
+}
+```
+
+---
+
+### Pagination (`Pagination`)
+- **Slug**: `pagination`
+- **Category**: Navigation
+- **Tagline**: Kinetic spring pagination with sliding active pill and keyboard navigation.
+- **Description**: Kinetic spring-animated pagination component featuring a sliding active selection capsule, smart ellipsis windowing, jump-to-page input, and full arrow-key keyboard navigation.
+- **Docs URL**: https://boseui.site/components/pagination
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/pagination.json`
+- **Registry Manifest**: https://boseui.site/r/pagination.json
+- **Key Features**:
+  - Shared layoutId active selection pill that fluidly glides across page numbers with spring physics.
+  - Smart ellipsis windowing with interactive fast-forward / rewind preview buttons.
+  - First, previous, next, and last page skip controls with disabled tactile states.
+  - Optional direct jump-to-page input with boundary validation.
+  - Optional total items range counter ('Showing 1-10 of 120 items').
+  - Reduced motion fallback with immediate zero-latency transitions.
+- **Accessibility**:
+  - Complies with WAI-ARIA Pagination design pattern with semantic <nav role='navigation'>.
+  - Provides aria-current='page' on the active page button and descriptive aria-labels on controls.
+  - Full keyboard navigation: ArrowLeft, ArrowRight, Home, and End keys cycle through pages.
+  - High-contrast focus-visible rings for keyboard users.
+- **Props**:
+  - `totalPages` (number, default: 10): Total number of pages available.
+  - `currentPage` (number, default: 1): Controlled current active page number (1-indexed).
+  - `siblingCount` (number, default: 1): Number of page buttons displayed on each side of the active page.
+  - `showControls` (boolean, default: true): Whether to render previous and next chevron buttons.
+  - `showEdgeControls` (boolean, default: true): Whether to render first and last skip buttons.
+  - `showQuickJumper` (boolean, default: false): Whether to display the direct page jump numeric input.
+  - `onPageChange` ((page: number) => void): Callback invoked whenever the active page changes.
+- **Usage Example**:
+```tsx
+import { Pagination } from "@/components/ui/Pagination";
+import { useState } from "react";
+
+export function Example() {
+  const [page, setPage] = useState(1);
+
+  return (
+    <Pagination
+      totalPages={20}
+      currentPage={page}
+      onPageChange={setPage}
+      showEdgeControls={true}
     />
   );
 }
@@ -3591,6 +3846,68 @@ export function Example() {
       color="#FFFFFF"
       maxConcurrent={6}
     />
+  );
+}
+```
+
+---
+
+### Sidebar (`Sidebar`)
+- **Slug**: `sidebar`
+- **Category**: Navigation
+- **Tagline**: Collapsible kinetic navigation sidebar with spring expansion and popout tooltips.
+- **Description**: Collapsible kinetic navigation sidebar with spring layout expansion, active selection capsule, popout hover tooltips, and nested sub-items.
+- **Docs URL**: https://boseui.site/components/sidebar
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/sidebar.json`
+- **Registry Manifest**: https://boseui.site/r/sidebar.json
+- **Key Features**:
+  - Smooth Hooke's Law spring physics powering fluid width collapse (68px to 260px).
+  - Shared layoutId active indicator pill tracking selection changes with spring damping.
+  - Hover popout tooltips automatically enabled in collapsed icon-rail mode.
+  - Accordion-style nested submenus with spring-animated height reveal.
+  - Grouped section headings, badge counts, and user profile footer card.
+  - Full reduced-motion compatibility with instant layout snapping.
+- **Accessibility**:
+  - Semantic <aside aria-label='Application Sidebar'> markup.
+  - Supports keyboard focus navigation with clear 2px focus-visible outlines.
+  - Exposes aria-current='page' on active selection.
+  - Accessible collapse toggle button with screen-reader friendly aria-label and state description.
+- **Props**:
+  - `sections` (SidebarSection[], default: DEFAULT_SECTIONS): Array of grouped navigation sections with items, icons, and badges.
+  - `activeId` (string, default: "dashboard"): Identifier of the currently active navigation item.
+  - `collapsed` (boolean, default: false): Controlled state determining whether the sidebar is collapsed.
+  - `collapsible` (boolean, default: true): Whether the toggle button to collapse/expand the sidebar is displayed.
+  - `user` (SidebarUser): User details displayed in the bottom footer profile card.
+  - `onCollapsedChange` ((collapsed: boolean) => void): Callback fired when the user toggles the sidebar collapse state.
+  - `onItemSelect` ((item: SidebarItem) => void): Callback fired when a navigation item is clicked.
+- **Usage Example**:
+```tsx
+import { Sidebar } from "@/components/ui/Sidebar";
+import { LayoutDashboard, Layers, Settings, Users } from "lucide-react";
+
+export function Example() {
+  return (
+    <div className="h-[600px] flex">
+      <Sidebar
+        sections={[
+          {
+            title: "Application",
+            items: [
+              { id: "dash", label: "Dashboard", href: "#dash", icon: LayoutDashboard },
+              { id: "comp", label: "Components", href: "#comp", icon: Layers, badge: "106+" },
+            ],
+          },
+          {
+            title: "Settings",
+            items: [
+              { id: "team", label: "Team", href: "#team", icon: Users },
+              { id: "pref", label: "Preferences", href: "#pref", icon: Settings },
+            ],
+          },
+        ]}
+      />
+      <main className="flex-1 p-8">Content Area</main>
+    </div>
   );
 }
 ```

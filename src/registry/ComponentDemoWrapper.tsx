@@ -313,6 +313,103 @@ export function createComponentDemo(
           </div>
         );
 
+      case "navbar":
+        return (
+          <div className="relative w-full min-h-[160px] flex items-center justify-center p-4 overflow-visible">
+            <Component
+              variant="floating"
+              position="static"
+              hideOnScroll={false}
+              className="w-full max-w-4xl"
+            />
+          </div>
+        );
+
+      case "sidebar":
+        return (
+          <div className="w-full max-w-2xl h-[900px] overflow-hidden rounded-2xl border border-neutral-200/80 bg-neutral-50/50 dark:border-neutral-800 dark:bg-neutral-900/20 flex shadow-sm ">
+            <Component className="h-full border-r border-neutral-200/80 dark:border-neutral-800/80" />
+            <div className="flex-1 p-6 overflow-y-auto flex flex-col gap-4">
+              <div className="flex items-center justify-between pb-3 border-b border-neutral-200/70 dark:border-neutral-800/70">
+                <div>
+                  <h4 className="text-sm font-bold text-neutral-900 dark:text-white">Workspace Overview</h4>
+                  <p className="text-[11px] text-neutral-500">Live production metrics</p>
+                </div>
+                <div className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                  Healthy
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-xl border border-neutral-200/70 bg-white p-3 dark:border-neutral-800 dark:bg-neutral-900">
+                  <span className="text-[10px] text-neutral-400 font-mono">Monthly Active</span>
+                  <div className="text-lg font-bold text-neutral-900 dark:text-white mt-1">48.2k</div>
+                </div>
+                <div className="rounded-xl border border-neutral-200/70 bg-white p-3 dark:border-neutral-800 dark:bg-neutral-900">
+                  <span className="text-[10px] text-neutral-400 font-mono">Avg Latency</span>
+                  <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-1">12ms</div>
+                </div>
+              </div>
+              <div className="rounded-xl border border-dashed border-neutral-200/80 p-4 text-center text-xs text-neutral-400 dark:border-neutral-800">
+                Toggle the chevron in the sidebar header to test spring collapse (260px ↔ 72px) and popout tooltips.
+              </div>
+            </div>
+          </div>
+        );
+
+      case "footer":
+        return (
+          <div className="w-full overflow-hidden rounded-2xl border border-neutral-200/80 dark:border-neutral-800">
+            <Component className="w-full" />
+          </div>
+        );
+
+      case "pagination":
+        return (
+          <div className="flex flex-col items-center justify-center p-8">
+            <Component
+              totalPages={12}
+              defaultPage={4}
+              showEdgeControls={true}
+              showQuickJumper={true}
+            />
+          </div>
+        );
+
+      case "mega-menu":
+        return (
+          <div className="flex min-h-[440px] items-start justify-center p-6">
+            <Component triggerLabel="Explore BoseUI" />
+          </div>
+        );
+
+      case "moving-text-border":
+        return (
+          <div className="flex w-full items-center justify-center p-6">
+            <Component
+              text="AVAILABLE FOR WORK • OPEN FOR CONTRACTS • CRAFTING EXPERIENCES • "
+              duration={14}
+              textColor="#3f3f3f"
+              className="w-full max-w-sm"
+            >
+              <div className="flex flex-col items-center justify-center py-6 text-center">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500 mb-3 font-mono font-bold text-sm">
+                  RB
+                </div>
+                <h4 className="text-base font-bold text-neutral-900 dark:text-white">
+                  Rishabh Bose
+                </h4>
+                <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                  UI Engineer and Frontend Developer
+                </p>
+                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Available Now
+                </div>
+              </div>
+            </Component>
+          </div>
+        );
+
       default:
         return <Component className={className} />;
     }

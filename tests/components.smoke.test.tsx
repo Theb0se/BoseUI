@@ -17,6 +17,12 @@ import { SpringBadgePill } from "@/components/ui/SpringBadgePill";
 import { AgentStatusBadge } from "@/components/ui/AgentStatusBadge";
 import { TextHoverLens } from "@/components/ui/TextHoverLens";
 import { AnnouncementBanner } from "@/components/ui/AnnouncementBanner";
+import { Navbar } from "@/components/ui/Navbar";
+import { Sidebar } from "@/components/ui/Sidebar";
+import { Footer } from "@/components/ui/Footer";
+import { Pagination } from "@/components/ui/Pagination";
+import { MegaMenu } from "@/components/ui/MegaMenu";
+import { MovingTextBorder } from "@/components/ui/MovingTextBorder";
 
 describe("Component Smoke Tests", () => {
   it("renders MagneticButton without throwing", () => {
@@ -105,6 +111,40 @@ describe("Component Smoke Tests", () => {
       <AnnouncementBanner
         messages={[{ id: "test", text: "Test announcement" }]}
       />
+    );
+    expect(container).toBeTruthy();
+  });
+
+  it("renders Navbar without throwing", () => {
+    const { container } = render(<Navbar position="static" hideOnScroll={false} />);
+    expect(container).toBeTruthy();
+  });
+
+  it("renders Sidebar without throwing", () => {
+    const { container } = render(<Sidebar />);
+    expect(container).toBeTruthy();
+  });
+
+  it("renders Footer without throwing", () => {
+    const { container } = render(<Footer />);
+    expect(container).toBeTruthy();
+  });
+
+  it("renders Pagination without throwing", () => {
+    const { container } = render(<Pagination totalPages={5} defaultPage={2} />);
+    expect(container).toBeTruthy();
+  });
+
+  it("renders MegaMenu without throwing", () => {
+    const { container } = render(<MegaMenu />);
+    expect(container).toBeTruthy();
+  });
+
+  it("renders MovingTextBorder without throwing", () => {
+    const { container } = render(
+      <MovingTextBorder>
+        <p>Child content</p>
+      </MovingTextBorder>
     );
     expect(container).toBeTruthy();
   });
