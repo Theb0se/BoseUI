@@ -739,6 +739,34 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
     ]
   },
   {
+    "id": "expanding-arrow-button",
+    "slug": "expanding-arrow-button",
+    "componentName": "ExpandingArrowButton",
+    "title": "Expanding Arrow Button",
+    "description": "An interactive pill button featuring a spring-expanding accent block that morphs from an idle dotted chevron into a kinetic ordered Bayer dither pattern on hover and keyboard focus.",
+    "tagline": "Kinetic expanding button with animated Bayer dither pattern and spring physics.",
+    "category": "Buttons",
+    "badges": [
+      "New",
+      "Buttons",
+      "Dither Pattern",
+      "Spring Physics",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-11-22",
+    "featured": true,
+    "keywords": [
+      "expanding button",
+      "arrow button",
+      "dither button",
+      "animated dither",
+      "bayer matrix",
+      "spring button",
+      "motion button",
+      "interactive button"
+    ]
+  },
+  {
     "id": "file-drop-zone",
     "slug": "file-drop-zone",
     "componentName": "FileDropZone",
@@ -1279,6 +1307,41 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "segmented control",
       "framer motion tabs",
       "sliding pill navigation"
+    ]
+  },
+  {
+    "id": "loader",
+    "slug": "loader",
+    "componentName": "Loader",
+    "title": "Loader",
+    "description": "A collection of 17 expressive loading animations built with Framer Motion and Tailwind CSS, featuring classic spinners, dot matrixes, Bayer dithering, CLI agent ASCII sets, fluid shape morphing, gooey metaballs, and kinetic physics.",
+    "tagline": "17 expressive loading animations with Framer Motion, Bayer dither, ASCII cycles, and SVG morphing.",
+    "category": "Motion",
+    "badges": [
+      "New",
+      "Motion",
+      "Loaders",
+      "ASCII",
+      "Dither",
+      "Morph",
+      "A11y Ready"
+    ],
+    "createdAt": "2026-11-22",
+    "featured": true,
+    "keywords": [
+      "loader",
+      "spinner",
+      "loading animation",
+      "framer motion loader",
+      "ascii loader",
+      "braille spinner",
+      "dither loader",
+      "morph loader",
+      "metaballs",
+      "helix loader",
+      "newton cradle",
+      "scramble text",
+      "progress percent"
     ]
   },
   {
@@ -2181,6 +2244,33 @@ export const CATALOG_INDEX: CatalogIndexEntry[] = [
       "airport departure board ui",
       "3d flip text framer motion",
       "mechanical ticker"
+    ]
+  },
+  {
+    "id": "split-pane",
+    "slug": "split-pane",
+    "componentName": "SplitPane",
+    "title": "Split Pane",
+    "description": "A fluid, accessible split pane component supporting horizontal and vertical orientations, pointer-capture dragging, double-click collapse, keyboard navigation, and localStorage persistence.",
+    "tagline": "Resizable dual-pane layout with pointer capture, collapse support, and keyboard accessibility.",
+    "category": "Navigation",
+    "badges": [
+      "New",
+      "A11y Ready",
+      "Pointer Capture",
+      "Persistent"
+    ],
+    "createdAt": "2026-11-22",
+    "featured": true,
+    "keywords": [
+      "split pane",
+      "resizable pane",
+      "splitter",
+      "divider",
+      "collapsible pane",
+      "drag resize",
+      "dual pane",
+      "layout"
     ]
   },
   {

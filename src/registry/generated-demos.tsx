@@ -37,6 +37,7 @@ import { ElasticTagInput } from "@/components/ui/ElasticTagInput";
 import { ElasticWaveText } from "@/components/ui/ElasticWaveText";
 import { ExpandableBentoCard } from "@/components/ui/ExpandableBentoCard";
 import { ExpandableCards } from "@/components/ui/ExpandableCards";
+import { ExpandingArrowButton } from "@/components/ui/ExpandingArrowButton";
 import { FileDropZone } from "@/components/ui/FileDropZone";
 import { FileTree } from "@/components/ui/FileTree";
 import { FlickeringGrid } from "@/components/ui/FlickeringGrid";
@@ -60,6 +61,7 @@ import { KineticRollingCounter } from "@/components/ui/KineticRollingCounter";
 import { KineticStepIndicator } from "@/components/ui/KineticStepIndicator";
 import { KineticSwipeButton } from "@/components/ui/KineticSwipeButton";
 import { LiquidPillTabs } from "@/components/ui/LiquidPillTabs";
+import { Loader } from "@/components/ui/Loader";
 import { MagneticAvatarStack } from "@/components/ui/MagneticAvatarStack";
 import { MagneticBreadcrumb } from "@/components/ui/MagneticBreadcrumb";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -98,6 +100,7 @@ import { Snowfall } from "@/components/ui/Snowfall";
 import { SolarFlare } from "@/components/ui/SolarFlare";
 import { SplitButton } from "@/components/ui/SplitButton";
 import { SplitFlapText } from "@/components/ui/SplitFlapText";
+import { SplitPane } from "@/components/ui/SplitPane";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { SpotlightGlowRevealText } from "@/components/ui/SpotlightGlowRevealText";
 import { SpringBadgePill } from "@/components/ui/SpringBadgePill";
@@ -151,6 +154,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "elastic-wave-text": createComponentDemo("elastic-wave-text", ElasticWaveText),
   "expandable-bento-card": createComponentDemo("expandable-bento-card", ExpandableBentoCard),
   "expandable-cards": createComponentDemo("expandable-cards", ExpandableCards),
+  "expanding-arrow-button": createComponentDemo("expanding-arrow-button", ExpandingArrowButton),
   "file-drop-zone": createComponentDemo("file-drop-zone", FileDropZone),
   "file-tree": createComponentDemo("file-tree", FileTree),
   "flickering-grid": createComponentDemo("flickering-grid", FlickeringGrid),
@@ -174,6 +178,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "kinetic-step-indicator": createComponentDemo("kinetic-step-indicator", KineticStepIndicator),
   "kinetic-swipe-button": createComponentDemo("kinetic-swipe-button", KineticSwipeButton),
   "liquid-pill-tabs": createComponentDemo("liquid-pill-tabs", LiquidPillTabs),
+  "loader": createComponentDemo("loader", Loader),
   "magnetic-avatar-stack": createComponentDemo("magnetic-avatar-stack", MagneticAvatarStack),
   "magnetic-breadcrumb": createComponentDemo("magnetic-breadcrumb", MagneticBreadcrumb),
   "magnetic-button": createComponentDemo("magnetic-button", MagneticButton),
@@ -212,6 +217,7 @@ export const COMPONENT_DEMOS: Record<string, React.ComponentType> = {
   "solar-flare": createComponentDemo("solar-flare", SolarFlare),
   "split-button": createComponentDemo("split-button", SplitButton),
   "split-flap-text": createComponentDemo("split-flap-text", SplitFlapText),
+  "split-pane": createComponentDemo("split-pane", SplitPane),
   "spotlight-card": createComponentDemo("spotlight-card", SpotlightCard),
   "spotlight-glow-reveal-text": createComponentDemo("spotlight-glow-reveal-text", SpotlightGlowRevealText),
   "spring-badge-pill": createComponentDemo("spring-badge-pill", SpringBadgePill),

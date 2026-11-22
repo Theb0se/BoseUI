@@ -23,6 +23,9 @@ import { Footer } from "@/components/ui/Footer";
 import { Pagination } from "@/components/ui/Pagination";
 import { MegaMenu } from "@/components/ui/MegaMenu";
 import { MovingTextBorder } from "@/components/ui/MovingTextBorder";
+import { SplitPane } from "@/components/ui/SplitPane";
+import { ExpandingArrowButton } from "@/components/ui/ExpandingArrowButton";
+import { Loader, type LoaderVariant } from "@/components/ui/Loader";
 
 describe("Component Smoke Tests", () => {
   it("renders MagneticButton without throwing", () => {
@@ -147,5 +150,49 @@ describe("Component Smoke Tests", () => {
       </MovingTextBorder>
     );
     expect(container).toBeTruthy();
+  });
+
+  it("renders SplitPane without throwing", () => {
+    const { container } = render(
+      <SplitPane direction="horizontal" defaultSize={200}>
+        <div>Pane 1</div>
+        <div>Pane 2</div>
+      </SplitPane>
+    );
+    expect(container).toBeTruthy();
+  });
+
+  it("renders ExpandingArrowButton without throwing", () => {
+    const { container } = render(
+      <ExpandingArrowButton>Click Me</ExpandingArrowButton>
+    );
+    expect(container).toBeTruthy();
+  });
+
+  it("renders Loader with all 17 variants without throwing", () => {
+    const variants: LoaderVariant[] = [
+      "spinner",
+      "dots",
+      "bars",
+      "dot-matrix",
+      "dither",
+      "ascii",
+      "ascii-line",
+      "ascii-braille",
+      "ascii-blocks",
+      "ascii-bounce",
+      "morph",
+      "comet",
+      "scramble",
+      "metaballs",
+      "newton",
+      "helix",
+      "percent",
+    ];
+
+    for (const v of variants) {
+      const { container } = render(<Loader variant={v} />);
+      expect(container).toBeTruthy();
+    }
   });
 });

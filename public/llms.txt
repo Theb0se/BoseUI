@@ -33,7 +33,7 @@ Our latest research on frontend engineering and UI/UX:
 - [Building High-Performance Data Tables](https://boseui.site/blog/building-high-performance-data-tables) - Techniques for rendering thousands of rows using virtualization, windowing, and efficient DOM updates.
 - [The State of WebAssembly in UI Development](https://boseui.site/blog/state-of-webassembly-ui) - How Rust, Go, and C++ are being compiled to Wasm to power compute-heavy frontend features.
 
-## Available Kinetic Components (112)
+## Available Kinetic Components (115)
 
 ### AI Voice Orb (`AIVoiceOrb`)
 - **Slug**: `ai-voice-orb`
@@ -1414,6 +1414,61 @@ export function Example() {
 
 ---
 
+### Expanding Arrow Button (`ExpandingArrowButton`)
+- **Slug**: `expanding-arrow-button`
+- **Category**: Buttons
+- **Tagline**: Kinetic expanding button with animated Bayer dither pattern and spring physics.
+- **Description**: An interactive pill button featuring a spring-expanding accent block that morphs from an idle dotted chevron into a kinetic ordered Bayer dither pattern on hover and keyboard focus.
+- **Docs URL**: https://boseui.site/components/expanding-arrow-button
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/expanding-arrow-button.json`
+- **Registry Manifest**: https://boseui.site/r/expanding-arrow-button.json
+- **Key Features**:
+  - Smooth layout-spring expansion from a compact 52px pill to full button width.
+  - Integrated ordered Bayer 4x4 dither pattern with seamless continuous animation.
+  - Kinetic wave columns that pulse and oscillate across the expanded surface.
+  - Smart touch handling with useHoverCapable to prevent sticky hover states on mobile.
+  - Seamless keyboard focus activation with high-contrast visible focus rings.
+  - Tactile press spring feedback (whileTap={{ scale: 0.97 }}).
+  - Automatic compliance with prefers-reduced-motion.
+- **Accessibility**:
+  - Uses semantic HTML <button> element with full keyboard tab focus.
+  - Focus triggers the same kinetic expansion as hover, ensuring parity for keyboard users.
+  - Visible high-contrast focus rings with focus-visible.
+  - Respects prefers-reduced-motion by substituting spring physics with instantaneous transitions.
+- **Props**:
+  - `children` (ReactNode): Text or elements displayed inside the button.
+  - `accentClassName` (string, default: "bg-lime-300 text-neutral-950"): Custom classes for the expanding accent block surface.
+  - `labelClassName` (string): Custom classes for the default unexpanded label text.
+  - `expandedLabelClassName` (string): Custom classes for the label text when expanded over the dither surface.
+  - `showLabelOnExpand` (boolean, default: true): Whether to render the text label over the dither pattern when expanded.
+  - `ditherClassName` (string): Custom classes for the animated dither pattern container.
+  - `stiffness` (number, default: 420): Spring physics stiffness value for the pill expansion.
+  - `damping` (number, default: 30): Spring physics damping value for the pill expansion.
+- **Usage Example**:
+```tsx
+import { ExpandingArrowButton } from "@/components/ui/ExpandingArrowButton";
+
+export function Example() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-4 p-8">
+      {/* Default Lime Accent */}
+      <ExpandingArrowButton>
+        Explore Components
+      </ExpandingArrowButton>
+
+      {/* Custom Teal Accent */}
+      <ExpandingArrowButton
+        accentClassName="bg-teal-400 text-neutral-950"
+      >
+        Get Started Now
+      </ExpandingArrowButton>
+    </div>
+  );
+}
+```
+
+---
+
 ### File Drop Zone (`FileDropZone`)
 - **Slug**: `file-drop-zone`
 - **Category**: Motion
@@ -2453,6 +2508,71 @@ export function Example() {
         { id: "code", label: "Source" },
       ]}
     />
+  );
+}
+```
+
+---
+
+### Loader (`Loader`)
+- **Slug**: `loader`
+- **Category**: Motion
+- **Tagline**: 17 expressive loading animations with Framer Motion, Bayer dither, ASCII cycles, and SVG morphing.
+- **Description**: A collection of 17 expressive loading animations built with Framer Motion and Tailwind CSS, featuring classic spinners, dot matrixes, Bayer dithering, CLI agent ASCII sets, fluid shape morphing, gooey metaballs, and kinetic physics.
+- **Docs URL**: https://boseui.site/components/loader
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/loader.json`
+- **Registry Manifest**: https://boseui.site/r/loader.json
+- **Key Features**:
+  - 17 distinct variants: spinner, dots, bars, dot-matrix, dither, ascii, ascii-line, ascii-braille, ascii-blocks, ascii-bounce, morph, comet, scramble, metaballs, newton, helix, and percent.
+  - Bayer 4x4 ordered dither matrix threshold animation that shimmers like a dissolving halftone.
+  - Point-to-point 24-sample SVG path morphing between circle, square, triangle, hexagon, and diamond.
+  - 5 terminal-style ASCII/Braille glyph sets popular in CLI AI agents and developer tools.
+  - Fluid SVG filter-based metaballs with gooey merge effect.
+  - Newton's cradle impulse simulation with precise keyframe impact timing.
+  - Full WAI-ARIA role='status' compliance with screen reader announcements.
+  - Graceful prefers-reduced-motion fallbacks for all 17 animation variants.
+- **Accessibility**:
+  - Uses role='status' with an aria-label and visually hidden fallback text for assistive tech.
+  - Respects prefers-reduced-motion by substituting intense transforms with calm opacity pulses or slowed glyph switches.
+  - SVG paths and graphics include accessible <title> elements.
+- **Props**:
+  - `variant` (LoaderVariant, default: "spinner"): Which animation to render: "spinner" | "dots" | "bars" | "dot-matrix" | "dither" | "ascii" | "ascii-line" | "ascii-braille" | "ascii-blocks" | "ascii-bounce" | "morph" | "comet" | "scramble" | "metaballs" | "newton" | "helix" | "percent".
+  - `size` (number, default: 32): Base square size in pixels from which all geometry scales proportionally.
+  - `speed` (number, default: 1): Cycle duration in seconds for one full loop of the animation.
+  - `label` (string, default: "Loading"): Accessible label announced to screen readers.
+  - `labels` (Partial<LoaderMessages>): Override dictionary for accessible strings and scramble target word.
+  - `className` (string): Custom classes applied to the root status element.
+- **Usage Example**:
+```tsx
+import { Loader } from "@/components/ui/Loader";
+
+export function Example() {
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 p-8 items-center justify-items-center">
+      {/* Classic Spinner */}
+      <Loader variant="spinner" size={32} />
+
+      {/* Bayer 4x4 Halftone Dither */}
+      <Loader variant="dither" size={36} />
+
+      {/* 24-point SVG Shape Morph */}
+      <Loader variant="morph" size={36} />
+
+      {/* Gooey Metaballs */}
+      <Loader variant="metaballs" size={40} />
+
+      {/* CLI Agent Braille Spinner */}
+      <Loader variant="ascii-braille" size={28} />
+
+      {/* Newton's Cradle */}
+      <Loader variant="newton" size={36} />
+
+      {/* DNA Double Helix */}
+      <Loader variant="helix" size={36} />
+
+      {/* Hacker Text Scramble */}
+      <Loader variant="scramble" size={32} />
+    </div>
   );
 }
 ```
@@ -4077,6 +4197,72 @@ export function Example() {
       stiffness={380}
       damping={24}
     />
+  );
+}
+```
+
+---
+
+### Split Pane (`SplitPane`)
+- **Slug**: `split-pane`
+- **Category**: Navigation
+- **Tagline**: Resizable dual-pane layout with pointer capture, collapse support, and keyboard accessibility.
+- **Description**: A fluid, accessible split pane component supporting horizontal and vertical orientations, pointer-capture dragging, double-click collapse, keyboard navigation, and localStorage persistence.
+- **Docs URL**: https://boseui.site/components/split-pane
+- **shadcn CLI Install**: `npx shadcn@latest add https://boseui.site/r/split-pane.json`
+- **Registry Manifest**: https://boseui.site/r/split-pane.json
+- **Key Features**:
+  - Supports both horizontal (columns) and vertical (rows) splitting directions.
+  - Hardware-accelerated pointer capture resizing with touch, mouse, and pen support.
+  - Full-screen transparent drag overlay preventing iframe or text-selection interruptions.
+  - Double-click divider or press Enter to collapse or expand with smooth 200ms ease-out transitions.
+  - Instant 0ms latency during dragging with zero layout shift.
+  - Automatic percentage scaling when container resizes.
+  - Responsive breakpoint switching from horizontal to stacked vertical on mobile screens.
+  - LocalStorage persistence key support to remember pane sizes across visits.
+  - Full nesting support for complex multi-split IDE or dashboard layouts.
+- **Accessibility**:
+  - Divider uses role='separator' with dynamic aria-orientation, aria-valuenow, aria-valuemin, and aria-valuemax.
+  - Keyboard accessible with Tab focus: Arrow keys resize by 10px (Shift for 50px increments).
+  - Home and End keys jump immediately to minSize and maxSize.
+  - Enter key toggles collapsible state.
+  - High-contrast visible focus ring on the divider.
+- **Props**:
+  - `direction` ("horizontal" | "vertical", default: "horizontal"): Layout direction of the panes.
+  - `defaultSize` (number | string, default: "50%"): Initial size of Pane A in pixels (number) or percentage (string).
+  - `minSize` (number, default: 120): Minimum allowable size for Pane A in pixels.
+  - `maxSize` (number | string): Maximum allowable size for Pane A in pixels or percentage.
+  - `minSizeB` (number, default: 120): Minimum allowable size for Pane B in pixels.
+  - `collapsible` (boolean, default: false): Whether Pane A can collapse on double-click or Enter key.
+  - `collapsedSize` (number, default: 0): Size of Pane A when collapsed in pixels.
+  - `responsiveBreakpoint` (number): Screen width in pixels below which layout collapses into vertical stack.
+  - `onResize` ((size: number) => void): Callback fired continuously during dragging with new pixel size.
+  - `onResizeEnd` ((size: number) => void): Callback fired when the drag operation completes.
+  - `persistKey` (string): LocalStorage key to save and restore pane sizes across reloads.
+- **Usage Example**:
+```tsx
+import { SplitPane } from "@/components/ui/SplitPane";
+
+export function Example() {
+  return (
+    <div className="h-96 w-full rounded-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+      <SplitPane
+        direction="horizontal"
+        defaultSize="35%"
+        minSize={150}
+        collapsible
+        persistKey="demo-split-pane"
+      >
+        <div className="p-4 bg-neutral-50 dark:bg-neutral-900/50 h-full">
+          <h3 className="font-semibold text-sm">Sidebar Navigation</h3>
+          <p className="text-xs text-neutral-500 mt-1">Double click divider to collapse.</p>
+        </div>
+        <div className="p-4 h-full">
+          <h3 className="font-semibold text-sm">Main Content Editor</h3>
+          <p className="text-xs text-neutral-500 mt-1">Drag the divider to adjust pane ratio.</p>
+        </div>
+      </SplitPane>
+    </div>
   );
 }
 ```

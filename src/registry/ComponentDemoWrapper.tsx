@@ -35,6 +35,126 @@ export function createComponentDemo(
           />
         );
 
+      case "expanding-arrow-button":
+        return (
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 p-6">
+            <Component>Explore Components</Component>
+            <Component accentClassName="bg-teal-400 text-neutral-950">
+              Get Started
+            </Component>
+          </div>
+        );
+
+      case "loader": {
+        const variants = [
+          { variant: "spinner", name: "Spinner", category: "Classic", size: 30 },
+          { variant: "dots", name: "Dots", category: "Classic", size: 28 },
+          { variant: "bars", name: "Bars", category: "Classic", size: 28 },
+          { variant: "dot-matrix", name: "Dot Matrix", category: "Matrix", size: 28 },
+          { variant: "dither", name: "Dither", category: "Matrix", size: 28 },
+          { variant: "morph", name: "Morph", category: "Geometric", size: 30 },
+          { variant: "comet", name: "Comet", category: "Geometric", size: 30 },
+          { variant: "metaballs", name: "Metaballs", category: "Physics", size: 32 },
+          { variant: "helix", name: "Helix", category: "Physics", size: 28 },
+          { variant: "newton", name: "Newton", category: "Physics", size: 28 },
+          { variant: "percent", name: "Percent", category: "Status", size: 22 },
+          { variant: "scramble", name: "Scramble", category: "Terminal", size: 24 },
+          { variant: "ascii", name: "ASCII Standard", category: "CLI Glyphs", size: 22 },
+          { variant: "ascii-line", name: "ASCII Line", category: "CLI Glyphs", size: 22 },
+          { variant: "ascii-braille", name: "ASCII Braille", category: "CLI Glyphs", size: 22 },
+          { variant: "ascii-blocks", name: "ASCII Blocks", category: "CLI Glyphs", size: 22 },
+          { variant: "ascii-bounce", name: "ASCII Bounce", category: "CLI Glyphs", size: 22 },
+        ];
+
+        return (
+          <div className="flex w-full max-w-4xl flex-col items-center gap-6 p-4 sm:p-6">
+            <div className="flex flex-wrap items-center justify-between gap-2 w-full border-b border-neutral-200 dark:border-neutral-800 pb-3">
+              <div>
+                <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                  All 17 Loader Variants
+                </h4>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  Geometric morphs, Bayer dither, physics simulations &amp; CLI agent terminal glyphs
+                </p>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-teal-500/10 px-2.5 py-0.5 text-xs font-mono font-medium text-teal-600 dark:text-teal-400">
+                17 types
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-3.5 w-full">
+              {variants.map((item) => (
+                <div
+                  key={item.variant}
+                  className="group relative flex flex-col items-center justify-between gap-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-900/60 p-4 transition-all duration-200 hover:border-neutral-300 dark:hover:border-neutral-700 hover:shadow-xs min-h-[110px]"
+                >
+                  <div className="flex w-full items-center justify-between text-[10px] text-neutral-400">
+                    <span className="font-mono uppercase tracking-wider truncate">
+                      {item.name}
+                    </span>
+                    <span className="text-[9px] opacity-70">{item.category}</span>
+                  </div>
+
+                  <div className="flex h-10 w-full items-center justify-center">
+                    <Component variant={item.variant} size={item.size} />
+                  </div>
+
+                  <span className="text-[10px] font-mono text-neutral-400 opacity-60 group-hover:opacity-100 transition-opacity">
+                    {item.variant}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      case "split-pane":
+        return (
+          <div className="h-80 w-full max-w-xl rounded-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden shadow-xs">
+            <Component
+              direction="horizontal"
+              defaultSize="38%"
+              minSize={120}
+              collapsible
+            >
+              <div className="flex h-full flex-col justify-between p-4 bg-neutral-50 dark:bg-neutral-900/60">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-teal-500" />
+                    <span className="text-xs font-semibold text-neutral-800 dark:text-neutral-200">
+                      Explorer
+                    </span>
+                  </div>
+                  <p className="mt-2 text-[11px] text-neutral-500 leading-relaxed">
+                    Double-click the divider or press Enter to collapse.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-2 text-[10px] font-mono text-neutral-400">
+                  Pane A • Left
+                </div>
+              </div>
+
+              <div className="flex h-full flex-col justify-between p-4 bg-white dark:bg-neutral-900">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-indigo-500" />
+                    <span className="text-xs font-semibold text-neutral-800 dark:text-neutral-200">
+                      Editor Buffer
+                    </span>
+                  </div>
+                  <p className="mt-2 text-[11px] text-neutral-500 leading-relaxed">
+                    Drag the divider to resize fluidly. Arrow keys also work with keyboard focus.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 p-2 text-[10px] font-mono text-neutral-400">
+                  Pane B • Flex 1
+                </div>
+              </div>
+            </Component>
+          </div>
+        );
+
       case "spotlight-card":
         return (
           <Component enableTilt className={className ?? "w-full max-w-sm"}>
