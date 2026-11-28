@@ -107,19 +107,13 @@ export const metadata: Metadata = {
 
 const SITE_ANNOUNCEMENTS: AnnouncementMessage[] = [
   {
-    id: "text-hover-lens-launch",
+    id: "hooks",
     badge: "New",
-    text: "Text Hover Lens follows your cursor with spring physics.",
-    href: "/components/text-hover-lens",
-    linkLabel: "Try it",
+    text: "Introducing Hooks section with  production-ready React hooks.",
+    href: "/hooks",
+    linkLabel: "Explore Hooks",
   },
-  {
-    id: "boseui-v2-components",
-    badge: "Release",
-    text: "BoseUI v2.1: 105+ kinetic React primitives with zero-runtime shadcn registry.",
-    href: "/components",
-    linkLabel: "Browse catalog",
-  },
+
 ];
 
 export default function RootLayout({
@@ -151,6 +145,7 @@ export default function RootLayout({
                   sticky
                   variant="outline"
                   messages={SITE_ANNOUNCEMENTS}
+                  showAlways
                 />
                 <Navbar />
                 <main className="flex-1">{children}</main>

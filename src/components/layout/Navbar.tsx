@@ -11,6 +11,7 @@ import { cn, SITE_CONFIG } from "@/lib/utils";
 
 const NAV_LINKS = [
   { href: "/components", label: "Components" },
+  { href: "/hooks", label: "Hooks" },
   { href: "/docs", label: "Docs" },
   { href: "/blog", label: "Blog" },
 ];

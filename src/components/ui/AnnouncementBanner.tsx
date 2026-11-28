@@ -92,6 +92,8 @@ export interface AnnouncementBannerProps {
   /**
    * Additional classes for the outer wrapper element.
    */
+
+  showAlways?: boolean;
   className?: string;
 }
 
@@ -107,6 +109,7 @@ export function AnnouncementBanner({
   onDismiss,
   background,
   className,
+  showAlways = false,
 }: AnnouncementBannerProps) {
   // SSR-safe state: null during hydration to prevent flash of already-dismissed banner
   const [isDismissed, setIsDismissed] = useState<boolean | null>(null);
@@ -121,6 +124,11 @@ export function AnnouncementBanner({
   useEffect(() => {
     if (!messages || messages.length === 0) {
       setIsDismissed(true);
+      return;
+    }
+
+    if (showAlways) {
+      setIsDismissed(false);
       return;
     }
 

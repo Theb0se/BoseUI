@@ -21,8 +21,14 @@ import {
   Flame,
   Laptop,
   ChevronsUpDown,
+  Webhook,
+  Clock,
+  Wrench,
+  Database,
 } from "lucide-react";
 import { PULSE_COMPONENTS } from "@/registry/generated-catalog";
+import { HOOKS_REGISTRY } from "@/hooks-lib/registry";
+import { HOOK_CATEGORIES } from "@/hooks-lib/types";
 import { isBlock } from "@/lib/blocks";
 import { cn } from "@/lib/utils";
 
@@ -57,8 +63,24 @@ const CATEGORY_ORDER = [
   "Mockups",
 ];
 
+const HOOK_CATEGORY_CONFIG: Record<
+  string,
+  {
+    name: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }
+> = {
+  Timing: { name: "Timing & Timers", icon: Clock },
+  State: { name: "State & Storage", icon: Layers },
+  "DOM & Events": { name: "DOM & Events", icon: MousePointerClick },
+  "Data & Async": { name: "Data & Async", icon: Database },
+  Utilities: { name: "Browser & Utilities", icon: Wrench },
+};
+
 export function Sidebar() {
   const pathname = usePathname();
+  const isHooksRoute =
+    pathname === "/hooks" || pathname.startsWith("/hooks/");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [filter, setFilter] = useState("");
   const searchInputRef = useRef<HTMLInputElement | null>(null);
@@ -98,6 +120,43 @@ export function Sidebar() {
     }));
   }, []);
 
+  // Group all hooks into categories (sorted alphabetically inside each category)
+  const categorizedHooks = useMemo(() => {
+    const map = new Map<string, typeof HOOKS_REGISTRY>();
+
+    for (const hook of HOOKS_REGISTRY) {
+      const cat = hook.category;
+      if (!map.has(cat)) {
+        map.set(cat, []);
+      }
+      map.get(cat)!.push(hook);
+    }
+
+    for (const [cat, list] of map.entries()) {
+      list.sort((a, b) =>
+        a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
+      );
+      map.set(cat, list);
+    }
+
+    return HOOK_CATEGORIES.filter((k) => map.has(k)).map((catKey) => ({
+      key: catKey,
+      name: HOOK_CATEGORY_CONFIG[catKey]?.name || catKey,
+      icon: HOOK_CATEGORY_CONFIG[catKey]?.icon || Webhook,
+      items: map.get(catKey) || [],
+    }));
+  }, []);
+
+  const activeHookInfo = useMemo(() => {
+    if (!pathname.startsWith("/hooks/")) return null;
+    const slug = pathname.replace("/hooks/", "").toLowerCase();
+    const found = HOOKS_REGISTRY.find(
+      (h) =>
+        h.slug.toLowerCase() === slug || h.name.toLowerCase() === slug
+    );
+    return found ? { slug: found.slug, category: found.category } : null;
+  }, [pathname]);
+
   // Determine active component and its category
   const activeComponentInfo = useMemo(() => {
     if (!pathname.startsWith("/components/")) return null;
@@ -116,6 +175,9 @@ export function Sidebar() {
     for (const cat of CATEGORY_ORDER) {
       initial[cat] = true; // Default all categories open for instant discoverability
     }
+    for (const cat of HOOK_CATEGORIES) {
+      initial[`hook:${cat}`] = true;
+    }
     return initial;
   });
 
@@ -127,7 +189,13 @@ export function Sidebar() {
         [activeComponentInfo.category]: true,
       }));
     }
-  }, [activeComponentInfo]);
+    if (activeHookInfo?.category) {
+      setOpenCategories((prev) => ({
+        ...prev,
+        [`hook:${activeHookInfo.category}`]: true,
+      }));
+    }
+  }, [activeComponentInfo, activeHookInfo]);
 
   // Automatically scroll active link into view
   useEffect(() => {
@@ -185,17 +253,26 @@ export function Sidebar() {
   }, []);
 
   const allExpanded = useMemo(() => {
+    if (isHooksRoute) {
+      return categorizedHooks.every((c) => openCategories[`hook:${c.key}`] !== false);
+    }
     return categorizedComponents.every((c) => openCategories[c.key] !== false);
-  }, [categorizedComponents, openCategories]);
+  }, [isHooksRoute, categorizedHooks, categorizedComponents, openCategories]);
 
   const toggleAllCategories = useCallback(() => {
     const targetState = !allExpanded;
-    const nextState: Record<string, boolean> = {};
-    for (const cat of categorizedComponents) {
-      nextState[cat.key] = targetState;
+    const nextState: Record<string, boolean> = { ...openCategories };
+    if (isHooksRoute) {
+      for (const cat of categorizedHooks) {
+        nextState[`hook:${cat.key}`] = targetState;
+      }
+    } else {
+      for (const cat of categorizedComponents) {
+        nextState[cat.key] = targetState;
+      }
     }
     setOpenCategories(nextState);
-  }, [allExpanded, categorizedComponents]);
+  }, [allExpanded, isHooksRoute, categorizedHooks, categorizedComponents, openCategories]);
 
   // Filtered categories when search query is entered
   const filteredCategories = useMemo(() => {
@@ -220,9 +297,33 @@ export function Sidebar() {
       .filter((cat) => cat.items.length > 0);
   }, [filter, categorizedComponents]);
 
+  const filteredHookCategories = useMemo(() => {
+    const q = filter.trim().toLowerCase();
+    if (!q) return categorizedHooks;
+
+    return categorizedHooks
+      .map((cat) => {
+        const matchingItems = cat.items.filter(
+          (h) =>
+            h.name.toLowerCase().includes(q) ||
+            h.slug.toLowerCase().includes(q) ||
+            h.category.toLowerCase().includes(q) ||
+            h.tags.some((t) => t.toLowerCase().includes(q))
+        );
+        return {
+          ...cat,
+          items: matchingItems,
+        };
+      })
+      .filter((cat) => cat.items.length > 0);
+  }, [filter, categorizedHooks]);
+
   const totalMatches = useMemo(() => {
+    if (isHooksRoute) {
+      return filteredHookCategories.reduce((sum, cat) => sum + cat.items.length, 0);
+    }
     return filteredCategories.reduce((sum, cat) => sum + cat.items.length, 0);
-  }, [filteredCategories]);
+  }, [isHooksRoute, filteredHookCategories, filteredCategories]);
 
   const sidebarContent = (
     <div className="flex min-h-full flex-col px-3 py-4">
@@ -234,8 +335,12 @@ export function Sidebar() {
           type="text"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          placeholder={`Filter ${PULSE_COMPONENTS.length} components...`}
-          aria-label="Filter components"
+          placeholder={
+            isHooksRoute
+              ? `Filter ${HOOKS_REGISTRY.length} hooks...`
+              : `Filter ${PULSE_COMPONENTS.length} components...`
+          }
+          aria-label={isHooksRoute ? "Filter hooks" : "Filter components"}
           className="h-9 w-full rounded-xl border border-neutral-200 bg-neutral-50/80 pl-8 pr-12 text-xs text-neutral-900 placeholder:text-neutral-400 transition-colors focus:border-neutral-900 focus:bg-white focus:outline-none dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-neutral-300 dark:focus:bg-neutral-950"
         />
         <div className="absolute right-2.5 top-1/2 flex -translate-y-1/2 items-center gap-1">
@@ -293,6 +398,33 @@ export function Sidebar() {
               </li>
               <li>
                 <Link
+                  href="/hooks"
+                  onClick={() => setMobileOpen(false)}
+                  className={cn(
+                    "flex items-center justify-between rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors",
+                    pathname === "/hooks" || pathname.startsWith("/hooks/")
+                      ? "bg-neutral-950 font-semibold text-white shadow-2xs dark:bg-white dark:text-black"
+                      : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-white"
+                  )}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Webhook className="h-3.5 w-3.5 shrink-0" />
+                    <span>Hooks</span>
+                  </div>
+                  <span
+                    className={cn(
+                      "rounded-full px-1.5 py-0.2 font-mono text-[10px]",
+                      pathname === "/hooks" || pathname.startsWith("/hooks/")
+                        ? "bg-white/20 text-white dark:bg-black/20 dark:text-black"
+                        : "bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
+                    )}
+                  >
+                    {HOOKS_REGISTRY.length}
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/docs"
                   onClick={() => setMobileOpen(false)}
                   className={cn(
@@ -345,10 +477,12 @@ export function Sidebar() {
           </div>
 
           {/* Search with no results */}
-          {filteredCategories.length === 0 && (
+          {(isHooksRoute
+            ? filteredHookCategories.length === 0
+            : filteredCategories.length === 0) && (
             <div className="px-3 py-8 text-center">
               <p className="text-xs font-medium text-neutral-700 dark:text-neutral-300">
-                No components found
+                {isHooksRoute ? "No hooks found" : "No components found"}
               </p>
               <p className="mt-1 text-[11px] text-neutral-400 dark:text-neutral-500">
                 No matches for &ldquo;{filter}&rdquo;
@@ -363,8 +497,91 @@ export function Sidebar() {
             </div>
           )}
 
-          {/* Category Accordion Groups */}
-          {filteredCategories.map((category) => {
+          {/* Hooks Category Accordion Groups (when on /hooks or /hooks/*) */}
+          {isHooksRoute &&
+            filteredHookCategories.map((category) => {
+              const Icon = category.icon;
+              const catStateKey = `hook:${category.key}`;
+              const isOpen = filter ? true : openCategories[catStateKey] !== false;
+              const categoryHasActive = activeHookInfo?.category === category.key;
+
+              return (
+                <div key={category.key} className="space-y-1">
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={() => toggleCategory(catStateKey)}
+                    className={cn(
+                      "group flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-xs font-semibold transition-colors",
+                      categoryHasActive && !isOpen
+                        ? "text-neutral-950 dark:text-white"
+                        : "text-neutral-700 hover:bg-neutral-100/70 hover:text-neutral-950 dark:text-neutral-300 dark:hover:bg-neutral-900/60 dark:hover:text-white"
+                    )}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Icon className="h-3.5 w-3.5 shrink-0 text-neutral-500 transition-colors group-hover:text-neutral-900 dark:text-neutral-400 dark:group-hover:text-white" />
+                      <span>{category.name}</span>
+                    </div>
+
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-mono text-[10px] text-neutral-400 dark:text-neutral-500">
+                        {category.items.length}
+                      </span>
+                      <ChevronRight
+                        className={cn(
+                          "h-3.5 w-3.5 text-neutral-400 transition-transform duration-200",
+                          isOpen && "rotate-90 text-neutral-600 dark:text-neutral-300"
+                        )}
+                      />
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <ul className="ml-3.5 space-y-0.5 border-l border-neutral-200 pl-2.5 dark:border-neutral-800">
+                      {category.items.map((hook) => {
+                        const href = `/hooks/${hook.slug}`;
+                        const isActive =
+                          pathname.toLowerCase() === href.toLowerCase();
+
+                        return (
+                          <li key={hook.slug}>
+                            <Link
+                              ref={isActive ? activeLinkRef : undefined}
+                              href={href}
+                              onClick={() => setMobileOpen(false)}
+                              className={cn(
+                                "group flex items-center justify-between rounded-lg px-2.5 py-1.5 font-mono text-xs transition-colors",
+                                isActive
+                                  ? "bg-neutral-950 font-semibold text-white shadow-2xs dark:bg-white dark:text-black"
+                                  : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-900/80 dark:hover:text-white"
+                              )}
+                            >
+                              <span className="truncate">{hook.name}</span>
+                              {hook.isNew && (
+                                <span
+                                  className={cn(
+                                    "ml-1.5 shrink-0 rounded px-1 py-0.2 font-sans text-[9px] font-semibold uppercase tracking-wider",
+                                    isActive
+                                      ? "bg-white/20 text-white dark:bg-black/20 dark:text-black"
+                                      : "border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                                  )}
+                                >
+                                  New
+                                </span>
+                              )}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+              );
+            })}
+
+          {/* Component Category Accordion Groups (when not on /hooks) */}
+          {!isHooksRoute &&
+            filteredCategories.map((category) => {
             const Icon = category.icon;
             // When filtering, all matching categories remain expanded
             const isOpen = filter ? true : openCategories[category.key] !== false;
@@ -494,11 +711,13 @@ export function Sidebar() {
           ) : (
             <PanelLeftOpen className="h-3.5 w-3.5" />
           )}
-          <span>Browse Components</span>
+          <span>{isHooksRoute ? "Browse Hooks" : "Browse Components"}</span>
         </button>
 
         <span className="font-mono text-[11px] text-neutral-500">
-          {PULSE_COMPONENTS.length} Components
+          {isHooksRoute
+            ? `${HOOKS_REGISTRY.length} Hooks`
+            : `${PULSE_COMPONENTS.length} Components`}
         </span>
       </div>
 
